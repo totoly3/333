@@ -2,6 +2,13 @@ package com.kh.ccc.board.charboard.model.vo;
 
 import java.sql.Date;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class CharBoard {
 	
 	private int cbNo;			//캐릭터 게시판 글번호
@@ -11,6 +18,7 @@ public class CharBoard {
 	private String cbContent;	//글 내용
 	private int cbViews;		//조회수
 	private int cbLike;			//좋아요
-	private Date cbCreateDate;	//
+	private Date cbCreateDate;	//작성날짜
+	private String status;		//상태값(Y/N)
 	
 }
