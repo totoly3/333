@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,7 +72,7 @@
             <div id="header_1_right">
                 <!-- 로그인 전 -->
                 <a href="">회원가입</a>
-                <a data-toggle="modal" data-target="#loginModal">로그인</a> <!-- 모달의 원리 : 이 버튼 클릭시 data-targer에 제시되어있는 해당 아이디의 div요소를 띄워줌 -->
+               <a href="mainAdmin.me">관리자페이지</a>
                 
                 <!-- 로그인 후 -->
                 <!-- 
