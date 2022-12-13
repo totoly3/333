@@ -1,4 +1,4 @@
-package com.kh.ccc.freeboard.controller;
+package com.kh.ccc.board.freeboard.controller;
 
 import javax.servlet.http.HttpSession;
 

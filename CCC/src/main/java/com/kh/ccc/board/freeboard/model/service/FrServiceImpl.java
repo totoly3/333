@@ -1,4 +1,4 @@
-package com.kh.ccc.freeboard.model.service;
+package com.kh.ccc.board.freeboard.model.service;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
