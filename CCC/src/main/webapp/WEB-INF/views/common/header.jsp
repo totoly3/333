@@ -66,7 +66,7 @@
     <div id="header">
         <div id="header_1">
             <div id="header_1_left">
-                <img src="https://www.iei.or.kr/resources/images/common/top_logo_s.jpg" alt="">
+                <img src="https://w7.pngwing.com/pngs/563/658/png-transparent-air-force-nike-free-swoosh-adidas-nike-logo-angle-text-monochrome.png" alt="">
             </div>
             <div id="header_1_center"></div>
             <div id="header_1_right">
@@ -84,10 +84,10 @@
         </div>
         <div id="header_2">
             <ul>
-                <li><a href="">HOME</a></li>
+                <li><a href="${ pageContext.request.contextPath }">HOME</a></li>
                 <li><a href="">공지사항</a></li>
                 <li><a href="">자유게시판</a></li>
-                <li><a href="">캐릭터게시판</a></li>
+                <li><a href="list.ch">캐릭터게시판</a></li>
             </ul>
         </div>
     </div>
