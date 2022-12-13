@@ -1,16 +1,24 @@
-package com.kh.ccc.board.charboard.model.service;
+package com.kh.ccc.board.charBoard.model.service;
 
 import java.util.ArrayList;
 
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.ccc.board.charboard.model.vo.CharBoard;
-import com.kh.ccc.board.charboard.model.vo.CharReply;
+import com.kh.ccc.board.charBoard.model.dao.CharBoardDao;
+import com.kh.ccc.board.charBoard.model.vo.CharBoard;
+import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.common.model.vo.PageInfo;
 
 @Service
 public class CharBoardServiceImpl implements CharBoardService {
 
+	@Autowired
+	private CharBoardDao boardDao;
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+	
 	//1.게시글의 총 개수
 	@Override
 	public int selectListCount() {
