@@ -7,4 +7,16 @@ public class Reply {
 	
 	private String userName;
 
+	//생성자작성 (3번째 test중입니다)
+	public Reply() {
+		super();
+	}
+
+	public Reply(String userName) {
+		super();
+		this.userName = userName;
+	}
+	
+	
+
 }
