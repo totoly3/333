@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>자유게시판</title>
+  <title>자유게시판 상세보기</title>
 
 
   <!-- Favicons -->
@@ -18,7 +18,7 @@
 
  
   <!-- Template Main CSS File -->
-  <link href="../resources/jyResources/assets/css/style.css" rel="stylesheet">  <!--1번변경-->
+  <link href="../resources/jyResources/assets/css/style.css" rel="stylesheet">  <!--1ë²ë³ê²½-->
 
 
 </head>
@@ -30,7 +30,7 @@
 
     <div class="d-flex align-items-center justify-content-between">
       <a href="index.jsp" class="logo d-flex align-items-center">
-        <img src="jyResources/assets/img/logo.png" alt=""> <!-- 2번변경 -->
+        <img src="jyResources/assets/img/logo.png" alt=""> <!-- 2ë²ë³ê²½ -->
         <span class="d-none d-lg-block"></span>
       </a>
   
@@ -71,7 +71,7 @@
               <h5 class="card-title">Card with an image on bottom</h5>
               <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
             </div>
-            <img src="jyResources/assets/img/card.jpg" class="card-img-bottom" alt="..."> <!--3번병경-->
+            <img src="jyResources/assets/img/card.jpg" class="card-img-bottom" alt="..."> <!--3ë²ë³ê²½-->
           </div><!-- End Card with an image on bottom -->
 
         </div>
