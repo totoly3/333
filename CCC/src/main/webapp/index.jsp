@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>여기는 인덱스임마</h1>
+	<jsp:include page="WEB-INF/views/main.jsp"/>
 </body>
 </html>
