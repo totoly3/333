@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,13 +66,13 @@
     <div id="header">
         <div id="header_1">
             <div id="header_1_left">
-                <img src="https://www.iei.or.kr/resources/images/common/top_logo_s.jpg" alt="">
+                <img src="https://w7.pngwing.com/pngs/563/658/png-transparent-air-force-nike-free-swoosh-adidas-nike-logo-angle-text-monochrome.png" alt="">
             </div>
             <div id="header_1_center"></div>
             <div id="header_1_right">
                 <!-- 로그인 전 -->
                 <a href="">회원가입</a>
-                <a data-toggle="modal" data-target="#loginModal">로그인</a> <!-- 모달의 원리 : 이 버튼 클릭시 data-targer에 제시되어있는 해당 아이디의 div요소를 띄워줌 -->
+               <a href="mainAdmin.me">관리자페이지</a>
                 
                 <!-- 로그인 후 -->
                 <!-- 
@@ -84,11 +84,14 @@
         </div>
         <div id="header_2">
             <ul>
-                <li><a href="">HOME</a></li>
+                <li><a href="${ pageContext.request.contextPath }">HOME</a></li>
                 <li><a href="">공지사항</a></li>
+
                 <li><a href="list.fr">자유게시판</a></li>
-    
-                <li><a href="">캐릭터게시판</a></li>
+
+
+                <li><a href="list.ch">캐릭터게시판</a></li>
+
             </ul>
         </div>
     </div>
