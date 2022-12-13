@@ -3,13 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+
+  
+
 <title>Insert title here</title>
 </head>
 <body>
 
-<jsp:forward page="WEB-INF/views/admin/header.jsp"></jsp:forward>
 
+  <h1>안녕</h1>
 
 </body>
 </html>
