@@ -1,18 +1,16 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <!-- jQuery ¶óÀÌºê·¯¸® -->
+    <!-- jQuery ë¼ì´ë¸ŒëŸ¬ë¦¬ -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- ºÎÆ®½ºÆ®·¦¿¡¼­ Á¦°øÇÏ°í ÀÖ´Â ½ºÅ¸ÀÏ -->
+    <!-- ë¶€íŠ¸ìŠ¤íŠ¸ëž©ì—ì„œ ì œê³µí•˜ê³  ìžˆëŠ” ìŠ¤íƒ€ì¼ -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- ºÎÆ®½ºÆ®·¦¿¡¼­ Á¦°øÇÏ°í ÀÖ´Â ½ºÅ©¸³Æ® -->
+    <!-- ë¶€íŠ¸ìŠ¤íŠ¸ëž©ì—ì„œ ì œê³µí•˜ê³  ìžˆëŠ” ìŠ¤í¬ë¦½íŠ¸ -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         div {box-sizing:border-box;}
@@ -47,7 +45,7 @@
 
         #header a {text-decoration:none; color:black;}
 
-        /* ¼¼ºÎÆäÀÌÁö¸¶´Ù °øÅëÀûÀ¸·Î À¯ÁöÇÒ style */
+        /* ì„¸ë¶€íŽ˜ì´ì§€ë§ˆë‹¤ ê³µí†µì ìœ¼ë¡œ ìœ ì§€í•  style */
         .content {
             background-color:rgb(247, 245, 245);
             width:80%;
@@ -72,30 +70,29 @@
             </div>
             <div id="header_1_center"></div>
             <div id="header_1_right">
-                <!-- ·Î±×ÀÎ Àü -->
-                <a href="">È¸¿ø°¡ÀÔ</a>
-                <a href="mainAdmin.me">°ü¸®ÀÚÆäÀÌÁö</a>
+                <!-- ë¡œê·¸ì¸ ì „ -->
+                <a href="">íšŒì›ê°€ìž…</a>
+               <a href="mainAdmin.me">ê´€ë¦¬ìžíŽ˜ì´ì§€</a>
                 
-                
-                <!-- ·Î±×ÀÎ ÈÄ -->
+                <!-- ë¡œê·¸ì¸ í›„ -->
                 <!-- 
-                    <lable>È«±æµ¿´Ô È¯¿µÇÕ´Ï´Ù</label> &nbsp;&nbsp;
-                    <a href="">¸¶ÀÌÆäÀÌÁö</a>
-                    <a href="">·Î±×¾Æ¿ô</a>
+                    <lable>í™ê¸¸ë™ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤</label> &nbsp;&nbsp;
+                    <a href="">ë§ˆì´íŽ˜ì´ì§€</a>
+                    <a href="">ë¡œê·¸ì•„ì›ƒ</a>
                 -->
             </div>
         </div>
         <div id="header_2">
             <ul>
                 <li><a href="">HOME</a></li>
-                <li><a href="">°øÁö»çÇ×</a></li>
-                <li><a href="">ÀÚÀ¯°Ô½ÃÆÇ</a></li>
-                <li><a href="">»çÁø°Ô½ÃÆÇ</a></li>
+                <li><a href="">ê³µì§€ì‚¬í•­</a></li>
+                <li><a href="">ìžìœ ê²Œì‹œíŒ</a></li>
+                <li><a href="">ìºë¦­í„°ê²Œì‹œíŒ</a></li>
             </ul>
         </div>
     </div>
 
-    <!-- ·Î±×ÀÎ Å¬¸¯ ½Ã ¶ß´Â ¸ð´Þ (±âÁ¸¿¡´Â ¾Èº¸ÀÌ´Ù°¡ À§ÀÇ a Å¬¸¯ ½Ã º¸ÀÓ) -->
+    <!-- ë¡œê·¸ì¸ í´ë¦­ ì‹œ ëœ¨ëŠ” ëª¨ë‹¬ (ê¸°ì¡´ì—ëŠ” ì•ˆë³´ì´ë‹¤ê°€ ìœ„ì˜ a í´ë¦­ ì‹œ ë³´ìž„) -->
     <div class="modal fade" id="loginModal">
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
@@ -105,7 +102,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
         
-                <form action="·Î±×ÀÎ¿äÃ»¹Þ¾ÆÁÖ´Â¼­¹ö" method="post">
+                <form action="ë¡œê·¸ì¸ìš”ì²­ë°›ì•„ì£¼ëŠ”ì„œë²„" method="post">
                     <!-- Modal body -->
                     <div class="modal-body">
                         <label for="userId" class="mr-sm-2">ID : </label>
@@ -116,7 +113,8 @@
                            
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Ãë¼Ò</button>
+                        <button type="submit" class="btn btn-primary">ë¡œê·¸ì¸</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">ì·¨ì†Œ</button>
                     </div>
                 </form>
             </div>
