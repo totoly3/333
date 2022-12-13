@@ -1,4 +1,4 @@
-package com.kh.ccc.freeboard.model.vo;
+package com.kh.ccc.board.freeboard.model.vo;
 
 import java.sql.Date;
 
