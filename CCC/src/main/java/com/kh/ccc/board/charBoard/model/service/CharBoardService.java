@@ -2,8 +2,6 @@ package com.kh.ccc.board.charBoard.model.service;
 
 import java.util.ArrayList;
 
-import org.springframework.stereotype.Service;
-
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.common.model.vo.PageInfo;
