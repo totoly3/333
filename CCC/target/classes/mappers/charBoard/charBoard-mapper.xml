@@ -15,7 +15,8 @@
 	</resultMap>
 	
 	<insert id="insertBoard" parameterType="charBoard">
-		INSERT INTO TB_CHARACTER_BOARD(CB_NO
+		INSERT INTO TB_CHARACTER_BOARD(
+									   CB_NO
 									  ,CB_TITLE
 									  ,CB_CONTENT)
 					VALUES(SEQ_CBNO.NEXTVAL
@@ -23,9 +24,22 @@
 						  ,#{ boardContent })
 	</insert>
 	
-	<insert id="insertAttach" parameterType="ArrayList">
-		INSERT INTO TB_CHARACTER_ATTACH()
-	
+	<insert id="insertAttach" parameterType="java.util.List">
+		INSERT INTO TB_CHARACTER_ATTACH(
+									    CA_NO
+									   ,CB_NO
+									   ,CA_ORIGIN_NAME
+									   ,CA_CHANGE_NAME
+									   ,CA_LEVEL)
+		SELECT SEQ_CANO.NEXTVAL,SEQ_CBNO.CURRVAL, A.*
+		FROM(
+			 <foreach collection="list" item="item" index="index" separator="union all">
+			 		SELECT #{ item.originName }
+			 			  ,#{ item.changeName }
+			 			  ,#{ item.level }
+			 		FROM SYS.DUAL
+			 </foreach>
+			 )A
 	</insert>
 
 </mapper>

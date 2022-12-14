@@ -37,9 +37,7 @@ public class CharBoardServiceImpl implements CharBoardService {
 	public int insertCharBoard(CharBoard cb,ArrayList<CharAttach> list) {
 		
 		int result = boardDao.insertBoard(sqlSession,cb);
-		
 		int result2 = boardDao.insertAttach(sqlSession,list);
-		
 		int finalResult = result * result2;
 		
 		return finalResult;

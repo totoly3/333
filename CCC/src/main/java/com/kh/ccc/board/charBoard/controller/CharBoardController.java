@@ -61,17 +61,9 @@ public class CharBoardController {
 	//캐릭터 게시판 글 등록
 	@PostMapping("insert.ch")
 	public ModelAndView insertCharBoard(CharBoard cb,
-										CharAttach ca,
 										ArrayList<MultipartFile> upfile,
 										ModelAndView mv,
 										HttpSession session) {
-		
-//		System.out.println(cb.getBoardTitle());
-//		System.out.println(cb.getBoardContent());
-//		System.out.println(upfile.get(0).getOriginalFilename());
-//		System.out.println(upfile.get(1).getOriginalFilename());
-//		System.out.println(upfile.get(2).getOriginalFilename());
-//		System.out.println(upfile.get(3).getOriginalFilename());
 		
 		//첨부파일이 여러개 넘어올 수 있기 때문에 ArrayList에 담아주자
 		ArrayList<CharAttach> list = new ArrayList<>();
@@ -82,20 +74,23 @@ public class CharBoardController {
 				//아래의 saveFile메서드 활용
 				String changeName = saveFile(upfile.get(i),session);
 				//(아래에 이어)8.원본명,서버에 업로드한 경로를 Board객체에 담아주기
+				CharAttach ca = new CharAttach();
 				ca.setOriginName(upfile.get(i).getOriginalFilename());
 				ca.setChangeName("resources/charBoardImg/" + changeName);
 				
-				if(i==1) {
+				if(i==0) {
 					ca.setLevel(1);
 				}else {
 					ca.setLevel(2);
 				}
 				
-				list.add(i, ca);
+				list.add(ca);
 			}
 		}
 		
 		int result = boardService.insertCharBoard(cb,list);
+		
+		System.out.println(result);
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "게시글 등록 성공!");
