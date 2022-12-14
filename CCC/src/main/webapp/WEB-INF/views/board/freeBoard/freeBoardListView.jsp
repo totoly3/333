@@ -49,7 +49,7 @@
             <h2>게시판</h2>
             <br>
    
-            <a class="btn btn-secondary" style="float:right;" href="insert.fr">글쓰기</a>
+            <a class="btn btn-secondary" style="float:right;" href="insert.fpom">글쓰기</a>
         
             <br>
             <br>
@@ -64,22 +64,22 @@
                         <th>첨부파일</th>
                     </tr>
                 </thead>
-                <tbody>
-           
-                	
-                	<c:forEach var="fb" items="${flist}">
-
-					<tr>
-                        <td>${fb.fNo }</td>
-                        <td>${fb.fTitle} </td>
-                        <td>${fb.fWriter} </td>
-                        <td>${fb.fCountNumber }</td>
-                        <td>${fb.fCreateDate }</td>
-                        <td>
-                        <c:if test="${not empty fb.originName }">★
-                        </c:if>
-                        </td>
-                    </tr>
+                <tbody>               	
+                <script>
+                	console.log("${list}");	
+                </script>
+                	<c:forEach var="B" items="${list}">
+						<tr>
+	                        <td>${B.fNo }</td>
+	                        <td>${B.fTitle } </td>
+	                        <td>${B.fWriter } </td>
+	                        <td>${B.fCount }</td>
+	                        <td>${B.fCreateDate }</td>
+	                        <td>
+	                        <c:if test="${not empty f.fTitleimg}">★
+	                        </c:if>
+	                        </td>
+	                    </tr>
                 	</c:forEach>
            	
                     
@@ -135,7 +135,7 @@
  	 <script>
  	$(function(){
  		 $("#boardList>tbody>tr").click(function(){
- 			 location.href="detail.fr?bno="+$(this).children().eq(0).text();
+ 			 location.href="detail.fbo?fno="+$(this).children().eq(0).text();
  			 console.log(this);
  		 })
  	
