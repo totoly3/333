@@ -24,7 +24,7 @@ import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
 import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.common.template.Pagenation;
-
+//악성 글 지우기 
 @Controller
 public class CharBoardController {
 
