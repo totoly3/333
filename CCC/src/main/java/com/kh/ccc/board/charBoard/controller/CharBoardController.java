@@ -39,4 +39,5 @@ public class CharBoardController {
 		
 		return "board/charBoard/charBoardListView";
 	}
+
 }
