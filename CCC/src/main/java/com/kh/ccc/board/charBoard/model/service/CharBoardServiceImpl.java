@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.ccc.board.charBoard.model.dao.CharBoardDao;
+import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.common.model.vo.PageInfo;
@@ -31,11 +32,17 @@ public class CharBoardServiceImpl implements CharBoardService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	//게시글 등록
+	//게시글 등록 (게시글,첨부파일)
 	@Override
-	public int insertBoard(CharBoard cb) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertCharBoard(CharBoard cb,ArrayList<CharAttach> list) {
+		
+		int result = boardDao.insertBoard(sqlSession,cb);
+		
+		int result2 = boardDao.insertAttach(sqlSession,list);
+		
+		int finalResult = result * result2;
+		
+		return finalResult;
 	}
 	//1.게시글 조회수 증가
 	@Override

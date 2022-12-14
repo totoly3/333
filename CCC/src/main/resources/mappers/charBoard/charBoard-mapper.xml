@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="charBoardMapper">
+
+	<resultMap type="charBoard" id="charBoardResultSet">
+		<result column="CB_NO" property="boardNo"/>
+		<result column="C_NO" property="charNo"/>
+		<result column="CB_WRITER" property="boardWriter"/>
+		<result column="CB_TITLE" property="boardTitle"/>
+		<result column="CB_CONTENT" property="boardContent"/>
+		<result column="CB_VIEWS" property="views"/>
+		<result column="CB_LIKE" property="like"/>
+		<result column="CB_CREATE_DATE" property="createDate"/>
+		<result column="CB_STATUS" property="status"/>
+	</resultMap>
+	
+	<insert id="insertBoard" parameterType="charBoard">
+		INSERT INTO TB_CHARACTER_BOARD(CB_NO
+									  ,CB_TITLE
+									  ,CB_CONTENT)
+					VALUES(SEQ_CBNO.NEXTVAL
+						  ,#{ boardTitle }
+						  ,#{ boardContent })
+	</insert>
+	
+	<insert id="insertAttach" parameterType="ArrayList">
+		INSERT INTO TB_CHARACTER_ATTACH()
+	
+	</insert>
+
+</mapper>
