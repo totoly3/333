@@ -15,7 +15,7 @@ import com.kh.ccc.common.template.Pagenation;
 
 @Controller
 public class CharBoardController {
-	
+	//이런씨발
 	@Autowired
 	private CharBoardService boardService;
 	
