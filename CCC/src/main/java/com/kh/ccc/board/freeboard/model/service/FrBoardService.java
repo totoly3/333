@@ -3,6 +3,7 @@ package com.kh.ccc.board.freeboard.model.service;
 import java.util.ArrayList;
 
 import com.kh.ccc.board.freeboard.model.vo.FrBoard;
+import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
 import com.kh.ccc.common.model.vo.PageInfo;
 
 public interface FrBoardService {
@@ -16,15 +17,26 @@ public interface FrBoardService {
 		//게시글 리스트 조회 
 		ArrayList<FrBoard>selectList(PageInfo pi);
 
+
+//		//아래는 게시글 조회수 증가 
+		int increaseCount(int fno);
+
+		//아래는 게시글 자세히보기 
+		FrBoard frboardDetailView(int fno);
+
+		//아래는 사진포함 게시글등록 (글만)
+		int insertFrBoard1(FrBoard fb);
+
+		//아래는 사진포함 게시글등록 (사진포함)
+		int insertAttFrBoard2(FrBoardAttach fab);
+
 //		
-//		//아래는 게시글 작성 (사진포함)
-//		int insertBoard(FrBoard b);
+
 //		
 //		//게시글 상세 조회 
 //		FrBoard boardDetailView(int bno);
 //		
-//		//아래는 게시글 조회수 증가 
-//		int increaseCount(int BoardNo);
+
 //		
 //		//아래는 게시물 상세 보기 -선생님  -현재 선생님 버전으로 진행중
 //		FrBoard selectBoard(int BoardNo);

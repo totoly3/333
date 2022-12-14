@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ccc.board.freeboard.model.dao.FrBoardDao;
 import com.kh.ccc.board.freeboard.model.vo.FrBoard;
+import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
 import com.kh.ccc.common.model.vo.PageInfo;
 @Service
 public class FrBoardServiceImpl implements FrBoardService{
@@ -33,33 +34,35 @@ public class FrBoardServiceImpl implements FrBoardService{
 		return FrBoardDao.selectList(sqlSession,pi);
 		
 	}
-	
-//	//아래는 게시글 작성 (사진포함)
-//	@Override
-//	public int insertBoard(FrBoard b) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
 //	//아래는 //게시글 상세 조회
-//	@Override
-//	public FrBoard boardDetailView(int bno) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//	//아래는 게시글 조회수 증가 
-//	@Override
-//	public int increaseCount(int BoardNo) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
-//	
-//	//아래는 게시물 상세 보기 -선생님  -현재 선생님 버전으로 진행중
-//	@Override
-//	public FrBoard selectBoard(int BoardNo) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//	
+	@Override
+	public int increaseCount(int fno) {
+		return FrBoardDao.increaseCount(sqlSession,fno);
+	
+	}
+	//아래는 게시판 상세 보기 
+		@Override
+		public FrBoard frboardDetailView(int fno) {
+			return FrBoardDao.frboardDetailView(sqlSession,fno);
+			
+		}
+		
+	//아래는 게시글 등록 	(글만)
+		@Override
+		public int insertFrBoard1(FrBoard fb) {
+			return FrBoardDao.insertFrBoard1(sqlSession,fb);
+			
+		}
+	//아래는 게시글 등록 (사진)
+		@Override
+		public int insertAttFrBoard2(FrBoardAttach fab) {
+		
+			return FrBoardDao.insertAttFrBoard2(sqlSession,fab);
+		}
+	
+
+
+
 //	//게시글 삭제 
 //	@Override
 //	public int deleteBoard(int bno) {
