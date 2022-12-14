@@ -247,7 +247,6 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>회원리스트
-                                <a href="memberList.ad">더보기</a>	
                             </div>
                             <div class="card-body">
                                 <table id="datatablesSimple">
@@ -256,14 +255,28 @@
                                             <th>회원번호</th>
                                             <th>회원아이디</th>
                                             <th>회원이름</th>
-                                            <th>성별</th>
                                             <th>회원등급</th>
+                                            <th>성별</th>
                                             <th>회원점수</th>
                                         </tr>
                                     </thead>
           			   
+          			   
+          			   	<tbody>	
+                   <c:forEach var="a" items="${mList}">
+					<tr>
+						<td>${a.mNo }</td>
+						<td>${a.mId }</td>
+						<td>${a.mName }</td>
+						<td>${a.mgNo }</td>
+						<td>${a.mGender }</td>
+						<td>${a.mPointNumber }</td> 
+					</tr>
+				</c:forEach>
+         			</tbody>	
+          			   
 
-
+				<!--  
                                     
                                <tbody>
                                         <tr>
@@ -725,7 +738,7 @@
 
                                            </tbody>       
                                    
-                                
+                                -->
                                 
                                 
                                 </table>

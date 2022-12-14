@@ -43,5 +43,15 @@
   
   
   
+  	
+	<select id="selectListCount" resultType="_int">
+	
+		SELECT COUNT(*)
+		FROM TB_MEMBER
+		WHERE STATUS = 'Y'
+	
+	</select>
+  
+  
   
   </mapper>

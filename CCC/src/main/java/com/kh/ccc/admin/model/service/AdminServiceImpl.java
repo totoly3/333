@@ -29,4 +29,15 @@ public class AdminServiceImpl implements AdminService{
 		return mList;
 	}
 
+
+
+	//회원수
+	@Override
+	public int selectListCount() {
+		
+		int result = adminDao.selectListCount(sqlSession);
+		
+		return result;
+	}
+
 }

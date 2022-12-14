@@ -26,26 +26,21 @@ public class AdminController {
 	}
 	
 	
+	
 	@RequestMapping("member.ad")
-	public String memberAdmin() {
-		
-		return "admin/memberAdmin";
-		
-	}
-	
-	
-	@RequestMapping("memberList.ad")
 	public String memberList(Model model) {
 		
 		ArrayList<Member> mList = adminService.memberList();
 		
 		System.out.println(mList);
 		
+		
 		model.addAttribute("mList",mList);
 		
-		return "admin/mList";
+		return "admin/memberAdmin";
 		
 	}
+	
 	
 
 	
