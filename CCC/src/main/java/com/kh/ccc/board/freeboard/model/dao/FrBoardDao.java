@@ -39,7 +39,7 @@ public class FrBoardDao {
 		return sqlSession.selectOne("frBoardMapper.frboardDetailView",fno);
 		
 	}
-	
+	//
 	//아래는 게시글 등록(글만)
 	public int insertFrBoard1(SqlSessionTemplate sqlSession, FrBoard fb) {
 		
