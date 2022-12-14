@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="adminMapper">
+  
+  
+  	<resultMap type="adminMember" id="memberResultSet">
+		<result column="M_NO" property="mNo" />
+		<result column="M_ID" property="mId" />
+		<result column="M_PWD" property="mPwd" />
+		<result column="M_NAME" property="mName" />
+		<result column="MG_NO" property="mgNo" />
+		<result column="M_EMAIL" property="mEmail" />
+		<result column="M_PHONE" property="mPhone" />
+		<result column="M_ADDRESS" property="mAddress" />
+		<result column="M_GENDER" property="mGender" />
+		<result column="M_AGE" property="mAge" />
+		<result column="M_CREATE_DATE" property="mCreateDate" />
+		<result column="M_UPDATE_DATE" property="mUpdateDate" />
+		<result column="M_DELETE_DATE" property="mDeleteDate" />
+		<result column="M_POINT" property="mPointNumber" />
+		<result column="M_STATUS" property="mStatus" />
+	</resultMap>
+	
+	
+	
+	<select id="memberList" resultMap="memberResultSet">
+	
+				SELECT 
+				M_NO,
+				M_ID,
+			    M_NAME,
+			    MG_NO,
+			    M_GENDER,
+			    M_POINT
+		FROM TB_MEMBER 
+		WHERE M_STATUS = 'Y'
+		ORDER BY M_NO ASC
+	
+	</select>
+  
+  
+  
+  
+  </mapper>

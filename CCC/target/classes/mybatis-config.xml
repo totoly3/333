@@ -8,12 +8,14 @@
 
 	<typeAliases>
 		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoard" alias="FrBoard"/>
+		<typeAlias type="com.kh.ccc.admin.model.vo.Member" alias="adminMember"/>
 		
 		</typeAliases>
 	
 	
 	<mappers>
 		<mapper resource="/mappers/frBoard-mapper.xml"/>
+		<mapper resource="/mappers/admin-mapper.xml"/>
 	
 	</mappers>
 	
