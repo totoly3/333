@@ -1,4 +1,4 @@
-package com.kh.ccc.board.charboard.model.vo;
+package com.kh.ccc.board.charBoard.model.vo;
 
 import java.sql.Date;
 
