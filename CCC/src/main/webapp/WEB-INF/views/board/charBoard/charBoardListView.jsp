@@ -47,66 +47,34 @@
     <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
-            <h2>게시판</h2>
+            <h2>사진게시판</h2>
             <br>
             <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
-            <a class="btn btn-secondary" style="float:right;" href="">글쓰기</a>
-            <br>
-            <br>
-            <table id="boardList" class="table table-hover" align="center">
-                <thead>
-                    <tr>
-                        <th>글번호</th>
-                        <th>제목</th>
-                        <th>작성자</th>
-                        <th>조회수</th>
-                        <th>작성일</th>
-                        <th>첨부파일</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>5</td>
-                        <td>마지막 공지사항제목</td>
-                        <td>admin</td>
-                        <td>10</td>
-                        <td>2020-02-10</td>
-                        <td>★</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>네번째 공지사항제목</td>
-                        <td>admin</td>
-                        <td>10</td>
-                        <td>2020-02-07</td>
-                        <td>★</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>세번째 공지사항제목</td>
-                        <td>admin</td>
-                        <td>10</td>
-                        <td>2020-02-03</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>두번째 공지사항제목</td>
-                        <td>admin</td>
-                        <td>100</td>
-                        <td>2020-02-01</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>첫번째 공지사항제목</td>
-                        <td>admin</td>
-                        <td>45</td>
-                        <td>2019-12-25</td>
-                        <td>★</td>
-                    </tr>
-                </tbody>
-            </table>
+           <div class="outer">
+		
+		<div align="center">
+			<button onclick="location.href='insert.ch'">글작성</button>
+		</div>			
+		
+		<div class="list-area">		
+			<div class="thumbnail" align="center">
+				<input type="hidden" value="">
+				<img src="" width="200px" height="150px" onclick="test();">
+				<p>
+					No.<br>
+					조회수 :
+				</p>
+			</div>				
+		</div>
+		
+		<script>
+// 			$(function(){
+// 				$(".thumbnail").click(function(){
+// 					location.href="${ pageContext.request.contextPath }/detail.ch?bno="+$(this).children().eq(0).val();
+// 				})
+// 			})
+		</script>
+​
             <br>
 
             <div id="pagingArea">
