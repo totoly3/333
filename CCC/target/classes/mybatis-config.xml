@@ -6,7 +6,15 @@
 		<setting name="jdbcTypeForNull" value="NULL"/>
 	</settings>
 
+	<typeAliases>
+		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoard" alias="FrBoard"/>
+		
+		</typeAliases>
+	
+	
 	<mappers>
+		<mapper resource="/mappers/frBoard-mapper.xml"/>
+	
 	</mappers>
 	
 </configuration>

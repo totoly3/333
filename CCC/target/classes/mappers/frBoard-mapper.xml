@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="frBoardMapper">
+  
+  <!-- 아래는 게시글 갯수 -->
+	<select id="selectListCount" resultType="_int">
+	SELECT  COUNT(*)
+ 	 	FROM TB_FREE
+  	WHERE F_STATUS='Y'
+	
+	</select>
+  
+  		<!--//게시글 조회 메소드  게시글 전체 조회1 -->
+  	<resultMap type="frBoard" id="frBoardResultSet">
+  	
+  	<result column="F_NO" property="fNo"/>
+   	<result column="F_WRITER" property="fWriter"/>
+   	<result column="F_TYPE" property="fType"/>
+   	<result column="F_TITLE" property="fTitle"/>
+   	<result column="F_CONTENT" property="fContent"/>
+   	<result column="F_COUNT" property="fCountNumber"/>
+   	<result column="F_CREATE_DATE" property="fCreateDate"/>
+   	<result column="F_UPDATE_DATE" property="fUpdateDate"/>
+   	<result column="F_DELETE_DATE" property="fDeleteDate"/>
+    <result column="F_STATUS" property="fStatus"/>
+   	
+  	</resultMap>
+  	
+	<!-- 게시글 조회2 -->
+	<select id="selectList" resultMap="frBoardResultSet">
+	SELECT 		 FRB.F_NO
+				,FRB.F_TITLE
+				,FRB.F_WRITER		
+				,TRBA.FA_ORIGIN_NAME	
+				,FRB.F_COUNT	
+				,FRB.F_CREATE_DATE
+	FROM TB_FREE FRB , TB_FREE_ATTACH TRBA
+	WHERE F_STATUS='Y'
+	AND FRB.F_NO = TRBA.F_NO
+	ORDER BY FRB.F_NO DESC
+	</select>
+  
+  
+  </mapper>

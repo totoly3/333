@@ -1,4 +1,4 @@
-package com.kh.ccc.freeboard.model.vo;
+package com.kh.ccc.board.freeboard.model.vo;
 
 import java.sql.Date;
 
@@ -9,9 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class FrBoard {
+	
  private int fNo;					//	F_NO	NUMBER
  private int fWriter;					//	F_WRITER	NUMBER
- private int fType;					//	F_TYPE	NUMBER
+ private int fType;				//	F_TYPE	NUMBER
  private String fTitle;					//	F_TITLE	VARCHAR2(100 BYTE)
  private String fContent;					//	F_CONTENT	VARCHAR2(3000 BYTE)
  private int	fCountNumber;				//	F_COUNT	NUMBER

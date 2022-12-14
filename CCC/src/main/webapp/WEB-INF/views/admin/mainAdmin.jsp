@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<jsp:include page="../admin/header.jsp" />
+
 
   <a href="member.me">회원 관리</a> <br>
   <a href="board.me">게시판 관리</a> <br>

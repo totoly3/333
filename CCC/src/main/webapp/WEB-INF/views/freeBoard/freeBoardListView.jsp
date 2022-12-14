@@ -42,7 +42,7 @@
     </style>
 </head>
 <body>
-   
+   <jsp:include page="/WEB-INF/views/common/header.jsp"/>
     <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
@@ -65,21 +65,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                	<c:forEach var="fb" items="${list}">
-<%--                     <tr onclick="location.href='detail.th?bno=${b.boardNo}'"> --%>
-<!--                 	<tr class="detailBo" > -->
+           
+                	
+                	<c:forEach var="fb" items="${flist}">
+
 					<tr>
-                        <td>${fb.boardNo }</td>
-                        <td>${fb.boardTitle} </td>
-                        <td>${fb.boardWriter} </td>
-                        <td>${fb.count }</td>
-                        <td>${fb.createDate }</td>
+                        <td>${fb.fNo }</td>
+                        <td>${fb.fTitle} </td>
+                        <td>${fb.fWriter} </td>
+                        <td>${fb.fCountNumber }</td>
+                        <td>${fb.fCreateDate }</td>
                         <td>
                         <c:if test="${not empty fb.originName }">★
                         </c:if>
                         </td>
                     </tr>
                 	</c:forEach>
+           	
                     
                 </tbody>
             </table>
