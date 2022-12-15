@@ -12,41 +12,69 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <style>
-.dropBox {
-  width: 90vw;
-  height: 80vh;
-   
-  margin: .6rem;
-  overflow: auto;
-  
-  display: flex;
-  justify-content: center;
+:root {
+  --bgColor: #3a3a3a;
+  --hoverBg: #616161;
+  --text: #bbb;
+}
+
+.container {
+  width: clamp(0px, 100%, 512px);
+  margin: 32px auto;
+  text-align: center;
+}
+
+.label {
+  width: 100%;
+  height: 100%;
+  margin: 0px auto;
+  cursor: pointer;
+  background-color: var(--bgColor);
+}
+
+.inner {
+  width: 100%;
+  height: 128px
+  margin: 64px auto;
+  border-radius: 8px;
+  font-size: 16px;
+  line-height: 128px;
+  background-color: var(--bgColor);
+  color: var(--text);
+}
+
+@media (any-hover: hover){
+  .inner:hover{
+    background-color: var(--hoverBg);
+  }
+}
+
+.label--hover{
+  background-color: var(--hoverBg);
+}
+
+.preview-title{
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.preview {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  border-radius: 8px;
   align-items: center;
-
-  border-radius: 5px;
-  border: 4px dashed #ddd;
-  user-select: none;
-  transition: 0.4s;
+  background-color: var(--bgColor);
 }
 
-/* 드롭 반응 */
-.dropBox.active {
-  background: #ddd;
-}
-
-.dropBox h1 {
-  font-size: 1.8rem;
-}
-
-/* ----------- */
-
-@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Pretendard, 'Malgun Gothic', sans-serif;
+.embed-img{
+  width: 100%;
+  height: 128px;
+  object-position: center;
+  object-fit: cover;
+  border-radius: 8px;
 }
 </style>
 
@@ -66,9 +94,17 @@
       <label for="content">내용</label>
       <input type="text" class="form-control" id="frcontent" name="fContent">
     </div>
-  	<div class="dropBox" name="dropBox">
-	  <h1>이곳에 파일을 드롭해주세요. </h1>
-  	</div>
+  	<!--  아래는 드래그  -->
+  	 <main class="container">
+    <label class="label" id="label" for="input">
+      <div class="inner" id="inner">드래그하거나 클릭해서 업로드</div>
+    </label>
+    <input id="input" class="input" accept="image/*" type="file" required="true" multiple="true" hidden="true">
+    <p class="preview-title">preview</p>
+    <div class="preview" id="preview"></div>
+  </main>
+  	<!--  위에는 드래그 -->
+  	
 <input type="file" id="upfile" class="form-control-file border" name="upfile">
 	    
   	
@@ -78,39 +114,113 @@
 </div>
 
 <script >
-// const $drop = document.querySelector(".dropBox");
-// const $title = document.querySelector(".dropBox h1");
+var input = document.getElementById("input");
+var initLabel = document.getElementById("label");
 
-// // 드래그한 파일 객체가 해당 영역에 놓였을 때
-// $drop.ondrop = (e) => {
-//   e.preventDefault();
-//   $drop.className = "dropBox";
-   
-//   // 파일 리스트
-//   const files = [...e.dataTransfer?.files];
+input.addEventListener("change", (event) => {
+  const files = changeEvent(event);
+  handleUpdate(files);
+});
 
-//   $title.innerHTML = files.map(v => v.name).join("<br>");
-// }
+initLabel.addEventListener("mouseover", (event) => {
+  event.preventDefault();
+  const label = document.getElementById("label");
+  label?.classList.add("label--hover");
+});
 
-// // ondragover 이벤트가 없으면 onDrop 이벤트가 실핻되지 않습니다.
-// $drop.ondragover = (e) => {
-//   e.preventDefault();
-// }
+initLabel.addEventListener("mouseout", (event) => {
+  event.preventDefault();
+  const label = document.getElementById("label");
+  label?.classList.remove("label--hover");
+});
 
-// // 드래그한 파일이 최초로 진입했을 때
-// $drop.ondragenter = (e) => {
-//   e.preventDefault();
- 
-//   $drop.classList.add("active");
-// }
+document.addEventListener("dragenter", (event) => {
+  event.preventDefault();
+  console.log("dragenter");
+  if (event.target.className === "inner") {
+    event.target.style.background = "#616161";
+  }
+});
 
-// // 드래그한 파일이 영역을 벗어났을 때
-// $drop.ondragleave = (e) => {
-//   e.preventDefault();
-  
-//   $drop.classList.remove("active");
-// }
+document.addEventListener("dragover", (event) => {
+  console.log("dragover");
+  event.preventDefault();
+});
+
+document.addEventListener("dragleave", (event) => {
+  event.preventDefault();
+  console.log("dragleave");
+  if (event.target.className === "inner") {
+    event.target.style.background = "#3a3a3a";
+  }
+});
+
+document.addEventListener("drop", (event) => {
+  event.preventDefault();
+  console.log("drop");
+  if (event.target.className === "inner") {
+    const files = event.dataTransfer?.files;
+    event.target.style.background = "#3a3a3a";
+    handleUpdate([...files]);
+  }
+});
+
+function changeEvent(event){
+  const { target } = event;
+  return [...target.files];
+};
+
+function handleUpdate(fileList){
+  const preview = document.getElementById("preview");
+
+  fileList.forEach((file) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", (event) => {
+      const img = el("img", {
+        className: "embed-img",
+        src: event.target?.result,
+      });
+      const imgContainer = el("div", { className: "container-img" }, img);
+      preview.append(imgContainer);
+    });
+    reader.readAsDataURL(file);
+  });
+};
+
+function el(nodeName, attributes, ...children) {
+  const node =
+    nodeName === "fragment"
+      ? document.createDocumentFragment()
+      : document.createElement(nodeName);
+
+  Object.entries(attributes).forEach(([key, value]) => {
+    if (key === "events") {
+      Object.entries(value).forEach(([type, listener]) => {
+        node.addEventListener(type, listener);
+      });
+    } else if (key in node) {
+      try {
+        node[key] = value;
+      } catch (err) {
+        node.setAttribute(key, value);
+      }
+    } else {
+      node.setAttribute(key, value);
+    }
+  });
+
+  children.forEach((childNode) => {
+    if (typeof childNode === "string") {
+      node.appendChild(document.createTextNode(childNode));
+    } else {
+      node.appendChild(childNode);
+    }
+  });
+
+  return node;
+}
 </script>
+
 
 </body>
 </html>
