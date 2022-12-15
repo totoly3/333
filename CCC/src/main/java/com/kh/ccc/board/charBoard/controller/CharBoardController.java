@@ -65,6 +65,8 @@ public class CharBoardController {
 										ModelAndView mv,
 										HttpSession session) {
 		
+		System.out.println(upfile);
+		
 		//첨부파일이 여러개 넘어올 수 있기 때문에 ArrayList에 담아주자
 		ArrayList<CharAttach> list = new ArrayList<>();
 		

@@ -43,14 +43,14 @@
 <body>
 	
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-
+	
     <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
             <h2>사진게시판</h2>
             <br>
             <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
-           <div class="outer">
+        	<div class="outer">
 		
 		<div align="center">
 			<button onclick="location.href='insert.ch'">글작성</button>
