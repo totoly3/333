@@ -23,14 +23,12 @@ public class CharBoardServiceImpl implements CharBoardService {
 	//1.게시글의 총 개수
 	@Override
 	public int selectListCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return boardDao.selectListCount(sqlSession);
 	}
 	//2.게시글 리스트 조회
 	@Override
 	public ArrayList<CharBoard> selectList(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+		return boardDao.selectList(sqlSession, pi);
 	}
 	//게시글 등록 (게시글,첨부파일)
 	@Override
