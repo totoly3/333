@@ -35,9 +35,9 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int selectListCount() {
 		
-		int result = adminDao.selectListCount(sqlSession);
+		int listCount = adminDao.selectListCount(sqlSession);
 		
-		return result;
+		return listCount;
 	}
 
 }

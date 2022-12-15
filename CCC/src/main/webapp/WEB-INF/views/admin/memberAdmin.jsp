@@ -158,9 +158,9 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                                Earnings (Monthly)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                                            <div class="text-s font-weight-bold text-danger text-uppercase mb-1">
+                                               	 &ensp;전체 회원수</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">&ensp;${listCount}명</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -176,9 +176,9 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                                            <div class="text-s font-weight-bold text-warning text-uppercase mb-1">
+                                                 &ensp;새로운 게시글 수</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">&ensp;36개</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -194,7 +194,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Tasks
+                                            <div class="text-s font-weight-bold text-success text-uppercase mb-1">Tasks
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
@@ -223,9 +223,9 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                Pending Requests</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                            <div class="text-s font-weight-bold text-info text-uppercase mb-1">
+                                                 &ensp;Earnings (Annual)</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">&ensp;$215,000</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -278,23 +278,42 @@
                                         </tr>
                                     </thead>
           			   
-          			   
-          			   	<tbody>	
-                   <c:forEach var="a" items="${mList}">
-					<tr>
-						<td><input type="checkbox" name="check" value="VCheck"></td> 
-						<td>${a.mNo }</td>
-						<td>${a.mId }</td>
-						<td>${a.mName }</td>
-						<td>${a.mGender }</td>	
-						<td>${a.mgNo }</td>
-						<td>${a.mPointNumber }</td> 
-					</tr>
-				</c:forEach>
-         			</tbody>	
-          			   
-
-                                                  
+		          			   
+		          		<tbody>	
+		          			<form method="post">
+		          		
+			                   <c:forEach var="a" items="${mList}">
+									<tr>
+										<td><input type="checkbox" name="check" value="VCheck"></td> 
+										<td>${a.mNo }</td>
+										<td>${a.mId }</td>
+										<td>${a.mName }</td>
+										<td>${a.mGender }</td>	
+										
+										<c:choose>
+											<c:when test="${a.mgNo eq 1}">
+												<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-danger'>V.I.P</span></td>
+											</c:when>
+											
+											<c:when test="${a.mgNo eq 2}">
+												<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-warning'>Gold</span></td>
+											</c:when>
+											
+											<c:when test="${a.mgNo eq 3}">
+												<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-info'>Silver</span></td>
+											</c:when>
+				                			<c:otherwise>
+				                   				<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-secondary'>Bronze</span></td>
+				                			</c:otherwise>
+										</c:choose>
+										
+										<td>${a.mPointNumber }</td> 
+									</tr>
+								</c:forEach>
+							</form>
+		         		</tbody>	
+		          			   
+                 
                                 </table>
                             </div>
                         </div>

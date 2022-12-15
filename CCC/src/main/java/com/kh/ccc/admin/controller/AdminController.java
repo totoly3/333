@@ -30,6 +30,12 @@ public class AdminController {
 	@RequestMapping("member.ad")
 	public String memberList(Model model) {
 		
+		//회원수
+		int listCount = adminService.selectListCount();
+		
+		model.addAttribute("listCount",listCount);
+		
+		//리스트조회
 		ArrayList<Member> mList = adminService.memberList();
 		
 		model.addAttribute("mList",mList);
