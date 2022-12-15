@@ -39,12 +39,14 @@ public class CharBoardController {
 		//캐릭터 게시판 총 게시글 수 가져오기
 		int listCount = boardService.selectListCount();
 		int pageLimit = 10; //하단에 보여질 페이징바의 최대 개수
-		int boardLimit = 10; //한 페이지에 보여질 게시글의 개수
+		int boardLimit = 6; //한 페이지에 보여질 게시글의 개수
 		
 		PageInfo pi = Pagenation.getPageinfo(listCount, currentPage, pageLimit, boardLimit);
 		
 		//게시글 리스트 조회
 		ArrayList<CharBoard> list = boardService.selectList(pi);
+		
+		System.out.println(list);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
