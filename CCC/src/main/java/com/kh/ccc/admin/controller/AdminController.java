@@ -32,9 +32,6 @@ public class AdminController {
 		
 		ArrayList<Member> mList = adminService.memberList();
 		
-		System.out.println(mList);
-		
-		
 		model.addAttribute("mList",mList);
 		
 		return "admin/memberAdmin";
