@@ -2,6 +2,7 @@ package com.kh.ccc.board.charBoard.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.common.model.vo.PageInfo;
@@ -14,8 +15,8 @@ public interface CharBoardService {
 	//2.게시글 리스트 조회
 	ArrayList<CharBoard> selectList(PageInfo pi);
 	
-	//게시글 등록
-	int insertBoard(CharBoard cb);
+	//캐릭터 게시판 게시글 등록
+	int insertCharBoard(CharBoard cb,ArrayList<CharAttach> list);
 	
 	//게시글 상세조회 및 조회수 증가
 	//1.게시글 조회수 증가
