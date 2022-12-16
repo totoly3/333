@@ -71,6 +71,14 @@ public class FrBoardServiceImpl implements FrBoardService{
 	
 	}
 	
+	//아래는 자유게시판 글 삭제 
+	@Override
+	public int frboardDelete(int fno) {
+		int result =FrBoardDao.frboardDelete(sqlSession,fno);
+		System.out.println("삭제 성공했으면 1"+result);
+		return result;
+	}
+	
 		
 
 	
