@@ -79,7 +79,9 @@
             <div id="header_1_right">
                 <!-- 로그인 전 -->
                 <a href="">회원가입</a>
-               <a href="mainAdmin.ad">관리자페이지</a>
+                <a href="loginform.me">로그인</a>
+                <a href="mainAdmin.ad">관리자페이지</a>
+                <a href="mypageEnroll.me">마이페이지</a>
                 
                 <!-- 로그인 후 -->
                 <!-- 
