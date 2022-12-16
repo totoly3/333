@@ -104,6 +104,7 @@
                <li><a href="${ pageContext.request.contextPath }">H O M E</a></li>
                <li><a href="">N O T I C E</a></li>
                <li><a href="list.fr">F R E E - B O A R D</a></li>
+               <li><a href="list.fr">T I P</a></li>
                <li><a href="list.ch">C H A R A C T E R</a></li>
                <li><a href="list.ch">W O R L D - C U P</a></li>
            </ul>
