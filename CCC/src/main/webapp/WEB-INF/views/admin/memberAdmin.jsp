@@ -263,56 +263,55 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>회원리스트
-                            </div>
-                            <div class="card-body">
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>회원번호</th>
-                                            <th>회원아이디</th>
-                                            <th>회원이름</th>
-                                            <th>성별</th>
-                                            <th>회원등급</th>
-                                            <th>회원점수</th>
-                                        </tr>
-                                    </thead>
-          			   
-		          			   
-		          		<tbody>	
-		          			<form method="post">
-		          		
-			                   <c:forEach var="a" items="${mList}">
-									<tr>
-										<td><input type="checkbox" name="check" value="VCheck"></td> 
-										<td>${a.mNo }</td>
-										<td>${a.mId }</td>
-										<td>${a.mName }</td>
-										<td>${a.mGender }</td>	
-										
-										<c:choose>
-											<c:when test="${a.mgNo eq 1}">
-												<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-danger'>V.I.P</span></td>
-											</c:when>
+                                <form action="excelDownload.ad" method="post">
+                                	<input type="submit" value="EXCEL 다운로드" style="float:right">
+								</form>
+                              </div>
+	                            <div class="card-body">
+	                                <table id="datatablesSimple">
+	                                    <thead>
+	                                        <tr>
+	                                            <th>No.</th>
+	                                            <th>회원번호</th>
+	                                            <th>회원아이디</th>
+	                                            <th>회원이름</th>
+	                                            <th>성별</th>
+	                                            <th>회원등급</th>
+	                                            <th>회원점수</th>
+	                                        </tr>
+	                                    </thead>
+	          			   
+			          			   
+			          			<tbody>	
+				                   <c:forEach var="a" items="${mList}">
+										<tr>
+											<td><input type="checkbox" name="check" value="VCheck"></td> 
+											<td>${a.mNo }</td>
+											<td>${a.mId }</td>
+											<td>${a.mName }</td>
+											<td>${a.mGender }</td>	
 											
-											<c:when test="${a.mgNo eq 2}">
-												<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-warning'>Gold</span></td>
-											</c:when>
+											<c:choose>
+												<c:when test="${a.mgNo eq 1}">
+													<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-danger'>V.I.P</span></td>
+												</c:when>
+												
+												<c:when test="${a.mgNo eq 2}">
+													<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-warning'>Gold</span></td>
+												</c:when>
+												
+												<c:when test="${a.mgNo eq 3}">
+													<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-info'>Silver</span></td>
+												</c:when>
+					                			<c:otherwise>
+					                   				<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-secondary'>Bronze</span></td>
+					                			</c:otherwise>
+											</c:choose>
 											
-											<c:when test="${a.mgNo eq 3}">
-												<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-info'>Silver</span></td>
-											</c:when>
-				                			<c:otherwise>
-				                   				<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-secondary'>Bronze</span></td>
-				                			</c:otherwise>
-										</c:choose>
-										
-										<td>${a.mPointNumber }</td> 
-									</tr>
-								</c:forEach>
-							</form>
-		         		</tbody>	
-		          			   
+											<td>${a.mPointNumber }</td> 
+										</tr>
+									</c:forEach>
+			         			</tbody>
                  
                                 </table>
                             </div>

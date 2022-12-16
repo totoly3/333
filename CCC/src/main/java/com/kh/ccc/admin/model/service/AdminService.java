@@ -2,6 +2,9 @@ package com.kh.ccc.admin.model.service;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import com.kh.ccc.admin.model.vo.Member;
 
 public interface AdminService {
@@ -11,5 +14,7 @@ public interface AdminService {
 	
 	//회원수
 	int selectListCount();
+	
+
 
 }

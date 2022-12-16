@@ -51,7 +51,8 @@
 		WHERE M_STATUS = 'Y'
 	
 	</select>
-  
+	
+	
   
   
   </mapper>
