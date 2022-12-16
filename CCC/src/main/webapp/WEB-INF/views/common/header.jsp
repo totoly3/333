@@ -113,7 +113,7 @@
    <div id="header4">
         <div id="header_4">     <!--여기가 리스트 -->
             <ul id="navi44444">
-                <li><a href=""><img src="../user1.png" width="20px;"></a></li>
+                <li><a href=""><img src="../resources/header2Img/user1.png" width="20px;"></a></li>
                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/key.png" width="25px;"></a></li>
                 <li><a href="cart.ca"><img src="./resources/header2Img/cart.png" width="22px;"></a></li>
                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/menu.png" width="14px;"></a></li>
