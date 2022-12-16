@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -84,7 +84,7 @@
             z-index: 6;
             position: relative;
             top: -100px;
-            left: 1200px;
+            left: 1300px;
         }
 
 
@@ -94,7 +94,7 @@
 <body>
 	
     <div id="jini1">
-        <img src="./resources/header2Img/navi2.jpg" alt="navi2">      
+    	<img src="./resources/header2Img/navi2.jpg" alt="navi2">      
     </div>
 
 
@@ -113,7 +113,7 @@
    <div id="header4">
         <div id="header_4">     <!--여기가 리스트 -->
             <ul id="navi44444">
-                <li><a href=""><img src="../resources/header2Img/user1.png" width="20px;"></a></li>
+                <li><a href=""><img src="./resources/header2Img/user1.png" width="20px;"></a></li>
                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/key.png" width="25px;"></a></li>
                 <li><a href="cart.ca"><img src="./resources/header2Img/cart.png" width="22px;"></a></li>
                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/menu.png" width="14px;"></a></li>

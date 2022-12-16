@@ -80,7 +80,7 @@
 
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+<jsp:include page="/WEB-INF/views/common/header2.jsp"/>
    
 <div class="container">
   <h2></h2>

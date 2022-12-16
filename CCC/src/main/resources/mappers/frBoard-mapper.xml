@@ -84,7 +84,7 @@
 	</select>
 	
 	<!-- 아래는 게시글 상세보기 파일 -->
-		<select id="frboardDetailView" resultMap="frAttBoardResultSet">
+		<select id="frboardAttDetailView" resultMap="frAttBoardResultSet">
 	SELECT 	FA_NO
 				,F_NO
 				,FA_ORIGIN_NAME
