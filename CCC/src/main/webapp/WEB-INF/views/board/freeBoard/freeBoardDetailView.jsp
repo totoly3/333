@@ -42,15 +42,15 @@
             <table id="contentArea" algin="center" class="table">
                 <tr>
                     <th width="10">제목</th>
-                    <td colspan="3">${fb.fTitle}</td>
+                    <td colspan="3">${fb.get(0).fTitle}</td>
                 </tr>
                 
 <%--                 <c:forEach var="b" items="${b}"> --%>
                 <tr>
                     <th>작성자</th>
-                    <td>${fb.fWriter }</td>
+                    <td>${fb.get(0).fWriter }</td>
                     <th>작성일</th>
-                    <td>${fb.fCreateDate}</td>
+                    <td>${fb.get(0).fCreateDate }</td>
                 </tr>
                
                 <tr>
@@ -58,14 +58,14 @@
                     <td colspan="3"></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><p style="height:150px;">${fb.fContent}</p></td>
+                    <td colspan="4"><p style="height:150px;">${fb.get(0).fContent }</p></td>
                 </tr>
                 <tr>
                 	<th>이미지</th>
                 	<td colspan="3"></td>
                 </tr>
                 <tr>
-                	<td><p style="height:150px;">${fb.fTitleimg }</p></td>
+                	<td><p style="height:150px;">${fb.get(0).fTitleimg }</p></td>
                 </tr>
                 
                  <tr>

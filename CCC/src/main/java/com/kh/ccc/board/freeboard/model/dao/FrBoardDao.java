@@ -41,7 +41,7 @@ public class FrBoardDao {
 		return frbalist;
 		
 	}
-	//아래는 게시글 상세보기 파일
+	//아래는 게시글 상세보기 첨부파일 가져오려고
 	public FrBoardAttach frboardAttDetailView(SqlSessionTemplate sqlSession, int fno) {
 		
 		return sqlSession.selectOne("frBoardMapper.frboardAttDetailView");
@@ -63,5 +63,11 @@ public class FrBoardDao {
 			System.out.println("result2 게시글 등록되었으면 2"+result2);
 			return result2;
 	}
+		
+	//아래는 자유게시판 글 삭제 
+		public int frboardDelete(SqlSessionTemplate sqlSession, int fno) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
 
 }

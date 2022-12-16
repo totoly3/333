@@ -153,5 +153,14 @@ public class FrBoardController {
 				return changeName;
 			}
 		
-
+			
+			//아래는 지유게시판 글 삭제하기 
+			@RequestMapping("delete.fbo")
+			public ModelAndView frboardDelete(int fno ,String filePath,ModelAndView mv,HttpSession session) {
+				
+				int result=FrBoardService.frboardDelete(fno);
+				
+				return mv;
+				
+			}
 }
