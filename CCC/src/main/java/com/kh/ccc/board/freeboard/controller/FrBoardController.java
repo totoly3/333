@@ -68,7 +68,11 @@ public class FrBoardController {
 			//아래는 조회 
 			ArrayList<FrBoard> fb=FrBoardService.frboardDetailView(fno);
 			
-			System.out.println("fb????:"+fb);
+			System.out.println("fb :"+fb);
+			
+			//아래는 파일만 가져오기 
+			FrBoardAttach frba= FrBoardService.frboardAttDetailView(fno);
+			mv.addObject("frba",frba).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능 
 			mv.addObject("fb",fb).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능 
 			
 		}else {

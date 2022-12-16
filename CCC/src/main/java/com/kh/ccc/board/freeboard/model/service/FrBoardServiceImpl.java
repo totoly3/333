@@ -49,6 +49,12 @@ public class FrBoardServiceImpl implements FrBoardService{
 			
 			
 		}
+	//아래는 게시판 상세보기 파일 
+	@Override
+	public FrBoardAttach frboardAttDetailView(int fno) {
+		return FrBoardDao.frboardAttDetailView(sqlSession,fno);
+		
+	}
 		
 	//아래는 글쓰기 
 	@Override
@@ -64,6 +70,7 @@ public class FrBoardServiceImpl implements FrBoardService{
 		return finalResult;
 	
 	}
+	
 		
 
 	

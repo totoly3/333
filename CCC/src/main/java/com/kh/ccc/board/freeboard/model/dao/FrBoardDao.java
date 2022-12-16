@@ -41,7 +41,12 @@ public class FrBoardDao {
 		return frbalist;
 		
 	}
-	//
+	//아래는 게시글 상세보기 파일
+	public FrBoardAttach frboardAttDetailView(SqlSessionTemplate sqlSession, int fno) {
+		
+		return sqlSession.selectOne("frBoardMapper.frboardAttDetailView");
+	}
+	
 	//아래는 게시글 등록(글만)
 	public int insertFrBoard1(SqlSessionTemplate sqlSession, FrBoard fb) {
 		

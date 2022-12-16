@@ -24,8 +24,13 @@ public interface FrBoardService {
 		//아래는 게시글 상세보기 
 		ArrayList<FrBoard> frboardDetailView(int fno);
 
+		//아래는 게시글 상세보기 (파일)
+		FrBoardAttach frboardAttDetailView(int fno);
+	
 		//글쓰기 (사진,글)
 		int insertFrBoard(FrBoard fb, ArrayList<FrBoardAttach> falist);
+
+
 
 
 

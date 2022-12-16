@@ -67,6 +67,13 @@
                 <tr>
                 	<td><p style="height:150px;">${fb.fTitleimg }</p></td>
                 </tr>
+                
+                 <tr>
+                    <th>첨부파일</th>
+                    <td colspan="3">
+                        <a href="${frba.faChangeName }" download="${frba.faOrginName}">${frba.faOrginName}</a>
+                    </td>
+                </tr>
 <%--                </c:forEach> --%>
             </table>
             <br>
