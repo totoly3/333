@@ -55,12 +55,7 @@
             z-index: 1;
         }
         
-        .jini2{
-            width:100%;
-            z-index: 8;
-            position: relative;
-            top: -500px;
-        }
+
 
         #header_2{
             z-index: 5;
@@ -126,11 +121,6 @@
         </div>
     </div>
 
-
-    <div id="jini2">
-        <img src="./resources/header2Img/main.jpg" alt="navi2"> 
-    </div>
-    
     
     <br clear="both">
     
