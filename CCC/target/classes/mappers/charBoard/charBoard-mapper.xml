@@ -11,9 +11,44 @@
 		<result column="CB_VIEWS" property="views"/>
 		<result column="CB_LIKE" property="like"/>
 		<result column="CB_CREATE_DATE" property="createDate"/>
+		<result column="CA_CHANGE_NAME" property="changeName"/>
 		<result column="CB_STATUS" property="status"/>
 	</resultMap>
 	
+	<resultMap type="charAttach" id="charAttachResultSet">
+		<result column="CA_NO" property="fileNo"/>
+		<result column="CB_NO" property="refBno"/>
+		<result column="CA_ORIGIN_NAME" property="originName"/>
+		<result column="CA_CHANGE_NAME" property="changeName"/>
+		<result column="CA_LEVEL" property="level"/>
+		<result column="CA_CREATE_DATE" property="createDate"/>
+		<result column="CA_STATUS" property="status"/>
+	</resultMap>
+	
+	<!-- 전체 개시글 수 반환 -->
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM TB_CHARACTER_BOARD
+	</select>
+	
+	<!-- 게시글 리스트 조회 -->
+	<select id="selectList" resultMap="charBoardResultSet">
+		SELECT CB_NO
+		      ,CB_WRITER
+		      ,CB_TITLE
+		      ,CB_CONTENT
+		      ,CA_CHANGE_NAME
+		      ,CB_VIEWS
+		      ,CB_LIKE
+		      ,CB_CREATE_DATE
+		FROM TB_CHARACTER_BOARD
+		JOIN TB_CHARACTER_ATTACH USING(CB_NO)
+		WHERE CB_STATUS = 'Y'
+		AND CA_LEVEL = 1
+		ORDER BY CB_CREATE_DATE DESC
+	</select>
+	
+	<!-- 게시글 등록 (글) -->
 	<insert id="insertBoard" parameterType="charBoard">
 		INSERT INTO TB_CHARACTER_BOARD(
 									   CB_NO
@@ -23,7 +58,7 @@
 						  ,#{ boardTitle }
 						  ,#{ boardContent })
 	</insert>
-	
+	<!-- 게시글 등록 (첨부파일) -->
 	<insert id="insertAttach" parameterType="java.util.List">
 		INSERT INTO TB_CHARACTER_ATTACH(
 									    CA_NO

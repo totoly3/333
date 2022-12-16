@@ -19,6 +19,7 @@ public class CharBoard {
 	private int 	views;			//조회수
 	private int 	like;			//좋아요
 	private Date	createDate;		//작성날짜
+	private String  changeName;		//파일경로 (테이블에는 없음)
 	private String 	status;			//상태값(Y/N)
 	
 }

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -13,7 +13,8 @@
     <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
-        div {box-sizing:border-box;}
+        
+        div {box-sizing:border-box;} 
         #header {
             width:80%;
             height:100px;
@@ -24,28 +25,15 @@
         #header_1 {height:40%;}
         #header_2 {height:60%;}
 
-        #header_1>div{
-            height:100%;
-            float:left;
-        }
-        #header_1_left {width:30%; position:relative;}
-        #header_1_center {width:40%;}
-        #header_1_right {width:30%;}
-
-        #header_1_left>img {height:80%; position:absolute; margin:auto; top:0px; bottom:0px; right:0px; left:0px;}
-        #header_1_right {text-align:center; line-height:35px; font-size:12px; text-indent:35px;}
-        #header_1_right>a {margin:5px;}
-        #header_1_right>a:hover {cursor:pointer;}
 
         #header_2>ul {width:100%; height:100%; list-style-type:none; margin:auto; padding:0;}
-        #header_2>ul>li {float:left; width:25%; height:100%; line-height:55px; text-align:center;}
-        #header_2>ul>li a {text-decoration:none; color:black; font-size:18px; font-weight:900;}
+        #header_2>ul>li {float:left; width:10%; height:100%; line-height:55px; text-align:center;}
+        #header_2>ul>li a {text-decoration:none; color:rgb(255, 255, 255); font-size:12px; font-weight:600;}
+        
 
-        #header_2 {border-top:1px solid lightgray;}
-
-        #header a {text-decoration:none; color:black;}
 
         /* 세부페이지마다 공통적으로 유지할 style */
+        
         .content {
             background-color:rgb(247, 245, 245);
             width:80%;
@@ -59,18 +47,59 @@
             background-color:white;
         }
 
+
+        /* 조지니 네비바 style */
+
+        .jini1{
+            width:100%;
+            z-index: 1;
+        }
+
+        #header_2{
+            z-index: 5;
+            position: relative;
+            top: -75px;
+            left: 30px;
+        }
+
+        #navi22222{
+            z-index: 6;
+            position: relative;
+            top: -100px;
+            left: 900px;
+        }
+
+        #header_4>ul {width:100%; height:100%; list-style-type:none; margin:auto; padding:0;}
+        #header_4>ul>li {float:left; width:4%; height:100%; line-height:55px; text-align:center;}
+        #header_4>ul>li a {text-decoration:none; color:rgb(255, 255, 255); font-size:12px; font-weight:600;}
+        
+        #header_4{
+            z-index: 5;
+            position: relative;
+            top: -58px;
+            left: 30px;
+        }
+
+        #navi44444{
+            z-index: 6;
+            position: relative;
+            top: -100px;
+            left: 1200px;
+        }
+
+
+
     </style>
 </head>
 <body>
-	<!-- 알람 메시지 실행 구문 -->
-	<c:if test="${not empty alertMsg}">
-		<script>
-			alert("${alertMsg}");
-		</script>
-		<c:remove var="alertMsg" scope="session"/>
-	</c:if>
+	
+    <div id="jini1">
+        <img src="./resources/header2Img/navi2.jpg" alt="navi2">      
+    </div>
+
 
     <div id="header">
+
         <div id="header_1">
             <div id="header_1_left">
                 <img src="https://w7.pngwing.com/pngs/563/658/png-transparent-air-force-nike-free-swoosh-adidas-nike-logo-angle-text-monochrome.png" alt="">
@@ -98,9 +127,29 @@
                 <li><a href="list.fr">자유게시판</a></li>
                 <li><a href="list.ch">캐릭터게시판</a></li>
 
+        <div id="header_2">     <!--여기가 리스트 -->
+           <ul id="navi11111">
+               <li><a href="${ pageContext.request.contextPath }">H O M E</a></li>
+               <li><a href="">N O T I C E</a></li>
+               <li><a href="list.fr">F R E E - B O A R D</a></li>
+               <li><a href="list.ch">C H A R A C T E R</a></li>
+               <li><a href="list.ch">W O R L D - C U P</a></li>
+           </ul>
+       </div>
+   </div>
+
+   <div id="header4">
+        <div id="header_4">     <!--여기가 리스트 -->
+            <ul id="navi44444">
+                <li><a href=""><img src="../resources/header2Img/user1.png" width="20px;"></a></li>
+                <li><a href="mainAdmin.ad"><img src="./resources/header2Img/key.png" width="25px;"></a></li>
+                <li><a href="cart.ca"><img src="./resources/header2Img/cart.png" width="22px;"></a></li>
+                <li><a href="mainAdmin.ad"><img src="./resources/header2Img/menu.png" width="14px;"></a></li>
             </ul>
         </div>
     </div>
+
+
 
     <!-- 로그인 클릭 시 뜨는 모달 (기존에는 안보이다가 위의 a 클릭 시 보임) -->
     <div class="modal fade" id="loginModal">
@@ -133,5 +182,6 @@
     </div>
     
     <br clear="both">
+    
 </body>
 </html>

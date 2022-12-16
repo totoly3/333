@@ -71,7 +71,7 @@
 			10*1024*1024
 			xml 에서는 계산식으로 적용이 불가하기때문에 직접 계산한 값을 넣어야한다
 		 -->
-		<property name="maxUploadSize" value="10000000"></property>
-		<property name="maxUploadSizePerFile" value="10000000"></property>
+		<property name="maxUploadSize" value="1000000000"></property>
+		<property name="maxUploadSizePerFile" value="1000000000"></property>
 	</bean>
 </beans>
