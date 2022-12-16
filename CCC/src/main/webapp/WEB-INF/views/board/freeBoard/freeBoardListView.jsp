@@ -65,9 +65,7 @@
                     </tr>
                 </thead>
                 <tbody>               	
-                <script>
-                	console.log("${list}");	
-                </script>
+       
                 	<c:forEach var="B" items="${list}">
 						<tr>
 	                        <td>${B.fNo }</td>
@@ -76,7 +74,7 @@
 	                        <td>${B.fCount }</td>
 	                        <td>${B.fCreateDate }</td>
 	                        <td>
-	                        <c:if test="${not empty f.fTitleimg}">★
+	                        <c:if test="${not empty B.fTitleimg}">★
 	                        </c:if>
 	                        </td>
 	                    </tr>

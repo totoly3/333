@@ -58,14 +58,17 @@
 	<select id="frboardDetailView" resultMap="frBoardResultSet">
 	SELECT 		 FRB.F_NO
 				,FRB.F_TITLE
+				,FRB.F_CONTENT
 				,FRB.F_WRITER		
 				,TRBA.FA_ORIGIN_NAME	
 				,FRB.F_COUNT	
 				,FRB.F_CREATE_DATE
+				,TRBA.FA_FILE_PATH || TRBA.FA_CHANGE_NAME "fTitleimg"
+				
 	FROM TB_FREE FRB , TB_FREE_ATTACH TRBA
 	WHERE F_STATUS='Y'
-	AND FRB.F_NO = TRBA.F_NO
-	AND  FRB.F_NO = #{fNo}
+		AND FRB.F_NO = TRBA.F_NO
+		AND  FRB.F_NO = #{fNo}
 	ORDER BY FRB.F_NO DESC
 	</select>
 	
@@ -73,37 +76,34 @@
 	<!--  게시글등록 1 (사진 미포함) -->
 	<insert id="insertFrBoard1">
 	INSERT INTO TB_FREE(
-				 F_NO
-				,F_TITLE
-				,F_WRITER	
-				,F_CONTENT	
-				,F_TYPE	
-	)VALUES(
-		SEQ_FNO.NEXTVAL
-		,#{fTitle}
-		,#{fWriter}
-		,#{fContent}
-		,'2'
-		)	
+						 F_NO
+						,F_TITLE			
+						,F_CONTENT	
+						,F_TYPE	
+				)VALUES(
+						SEQ_FNO.NEXTVAL
+						,#{fTitle}		
+						,#{fContent}
+						,2
+						)	
 	</insert>
 	
 	<!--  게시글등록 2 (사진 포함) -->
-	<insert id="insertAttFrBoard2">
+	<insert id="insertAttFrBoard2" parameterType="java.util.List">
 	INSERT INTO TB_FREE_ATTACH(
 				 FA_NO
-				 ,F_NO
+				,F_NO
 				,FA_ORIGIN_NAME
-				,FA_CHANGE_NAME	
-				,FA_FILE_PATH
-				,FA_STATUS	
-	)VALUES(
-		SEQ_FANO.NEXTVAL
-		,#{fNo}
-		,#{faOrginName}
-		,#{faChangeName}
-		,#{faFilePath}
-		,#{faStatus}
-		)	
+				,FA_CHANGE_NAME			
+				
+	)SELECT SEQ_FANO.NEXTVAL,SEQ_FNO.CURRVAL, A.*
+		FROM (
+				<foreach collection="list" item="item" index="index" separator="union all">
+					SELECT #{ item.faOrginName }
+						  ,#{ item.faChangeName }
+					FROM SYS.DUAL	  
+				</foreach>
+			  )A
 	</insert>
   
   

@@ -38,7 +38,7 @@ public class FrBoardController {
 			
 			int pageLimit = 10;	//하단에 페이징바 갯수
 			int boardLimit =5; //한페이지에 몇개씩 띄울껀지!
-		//		
+			
 			PageInfo pi=Pagenation.getPageinfo(listCount, currentPage, pageLimit, boardLimit);
 			
 			//아래는 게시글 조회 
@@ -66,8 +66,9 @@ public class FrBoardController {
 			
 		if(result>0) {
 			//아래는 조회 
-			FrBoard fb=FrBoardService.frboardDetailView(fno);
-
+			ArrayList<FrBoard> fb=FrBoardService.frboardDetailView(fno);
+			
+			System.out.println("fb????:"+fb);
 			mv.addObject("fb",fb).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능 
 			
 		}else {
@@ -86,53 +87,41 @@ public class FrBoardController {
 		
 		
 		//아래는 게시글 등록 (사진포함)
-		@RequestMapping("insert.frbo")
-		public ModelAndView insertFrBoard(ModelAndView mv,FrBoard Fb,
-				FrBoardAttach Fab,MultipartFile upfile
-				,MultipartFile dropBox,HttpSession session) {
-			
-			
-		
-			System.out.println("Fb:"+Fb);
-			System.out.println(upfile.getOriginalFilename());
-			
-			
-			//바로아래는  새로운 첨부파일이 있는지 없는지 확인 
-			if(!upfile.getOriginalFilename().equals("")) {
-			
-			//바로아래는 만약에 첨부파일이 있던경우 삭제 
-			if(Fab.getFaOrginName()!=null) {
-				new File(session.getServletContext().getRealPath(Fab.getFaChangeName())).delete();
-			}
-			
-			String fabChangeName = saveFile(upfile,session);
-			Fab.setFaOrginName(upfile.getOriginalFilename());
-			Fab.setFaChangeName("resources/freeBoardImg/"+fabChangeName);
-			
-		}else {
-			
-		}
-			
-		int result1=FrBoardService.insertFrBoard1(Fb);
-		System.out.println("결과1은?"+result1);
-		
-		int result2=FrBoardService.insertAttFrBoard2(Fab);
-		System.out.println("결과2은?"+result2);
-		
-		System.out.println(upfile.getOriginalFilename());
-		System.out.println(dropBox.getOriginalFilename());
-		
-		
-		
-		int result3 = result1*result2;
-		
-			if(result3>0) {
-				System.out.println("등록완료");
-			}else {
+				@RequestMapping("insert.frbo")
+				public ModelAndView insertFrBoard(ModelAndView mv,FrBoard fb,
+						ArrayList<MultipartFile> upfile
+						,HttpSession session) {
+					System.out.println(fb);
+					System.out.println(upfile);
+					
+					ArrayList<FrBoardAttach> falist = new ArrayList<>();
+					
+					for(int i=0; i<=1; i++) {
+						if (!upfile.get(i).getOriginalFilename().equals("")) {
+						
+							String changeName = saveFile(upfile.get(i),session);
+							
+							FrBoardAttach fab= new FrBoardAttach();
+							
+							fab.setFaOrginName(upfile.get(i).getOriginalFilename());
+							fab.setFaChangeName("resources/freeBoardImg/"+changeName);
+							falist.add(fab);
+							System.out.println("falist:"+falist);
+						}
+					}
+						
+				int finalResult=FrBoardService.insertFrBoard(fb,falist);
+						
+				if(finalResult>0) {
+					System.out.println("등록완료");
+					session.setAttribute("alertMsg", "게시글 등록 성공!");
+					mv.setViewName("redirect:/list.fr");
+				}else {
+					mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
+				}
 				
+				return mv;
 			}
-			return mv;
-		}
 		
 		// 현재 넘어온 첨부파일 그 자체를 서버의 폴더에 저장시키는 메소드 (모듈)
 
