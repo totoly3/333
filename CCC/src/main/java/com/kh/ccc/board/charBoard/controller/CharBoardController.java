@@ -137,9 +137,51 @@ public class CharBoardController {
 		return changeName;
 	}
 	
+	//게시글 상세보기
+	@RequestMapping("detail.ch")
+	public ModelAndView detailBoard(@RequestParam(value="bno") int bno,
+							ModelAndView mv) {
+		
+		//1.게시글 조회수 증가
+		int result = boardService.increseCount(bno);
+		
+		//2.조회수 증가가 이루어지면 해당 게시글의 정보 조회
+		if(result != 0) {
+			CharBoard cb = boardService.selectBoard(bno);
+			mv.addObject("cb", cb).setViewName("board/charBoard/charBoardDetailView");
+		}else {
+			mv.addObject("errorMsg", "게시글을 조회할 수 없습니다.").setViewName("common/errorPage");
+		}
+		
+		return mv;
+	}
 	
+	//게시글 수정
 	
-	
+	//게시글 삭제
+	@RequestMapping("delete.ch")
+	public String deleteBoard(int bno
+							 ,String filePath
+							 ,HttpSession session
+							 ,Model model) {
+		
+		int result = boardService.deleteBoard(bno);
+		
+		if(result != 0) {
+			
+			if(!filePath.equals("")) {
+				String realPath = session.getServletContext().getRealPath(filePath);
+				new File(realPath).delete();
+			}
+			session.setAttribute("alertMsg", "게시글 삭제 성공!");
+			
+		}else {
+			model.addAttribute("errorMsg", "게시글 삭제에 실패했습니다.");
+			return "common/errorPage";
+		}
+		
+		return "redirect:/list.ch";
+	}
 	
 	
 	

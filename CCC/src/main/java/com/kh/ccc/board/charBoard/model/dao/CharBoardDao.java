@@ -35,4 +35,20 @@ public class CharBoardDao {
 	public int insertAttach(SqlSessionTemplate sqlSession, ArrayList<CharAttach> list) {
 		return sqlSession.insert("charBoardMapper.insertAttach", list);
 	}
+	//게시글 조회수 증가
+	public int increaseCount(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.update("charBoardMapper.increaseCount", bno);	
+	}
+	//게시글 상세정보 조회 (게시글 1개)
+	public CharBoard selectBoard(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.selectOne("charBoardMapper.selectBoard", bno);
+	}
+	//게시글 삭제
+	public int deleteBoard(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.update("charBoardMapper.deleteBoard", bno);
+	}
+	//게시글 첨부파일 삭제
+	public int deleteAttach(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.update("charBoardMapper.deleteAttach", bno);
+	}
 }

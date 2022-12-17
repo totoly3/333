@@ -20,12 +20,15 @@ public interface CharBoardService {
 	
 	//게시글 상세조회 및 조회수 증가
 	//1.게시글 조회수 증가
-	int increseCount(int boardNo);
+	int increseCount(int bno);
 	//2.게시글 상세 조회
-	CharBoard selectBoard(int boardNo);
+	CharBoard selectBoard(int bno);
 	
 	//게시글 수정
 	int updateBoard(CharBoard cb);
+	
+	//게시글 삭제
+	int deleteBoard(int bno);
 	
 	//댓글 리스트 출력
 	ArrayList<CharReply> selectReplyList(int boardNo);
