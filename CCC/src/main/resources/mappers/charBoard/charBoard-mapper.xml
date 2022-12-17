@@ -11,6 +11,7 @@
 		<result column="CB_VIEWS" property="views"/>
 		<result column="CB_LIKE" property="like"/>
 		<result column="CB_CREATE_DATE" property="createDate"/>
+		<result column="CA_ORIGIN_NAME" property="originName"/>
 		<result column="CA_CHANGE_NAME" property="changeName"/>
 		<result column="CB_STATUS" property="status"/>
 	</resultMap>
@@ -24,6 +25,28 @@
 		<result column="CA_CREATE_DATE" property="createDate"/>
 		<result column="CA_STATUS" property="status"/>
 	</resultMap>
+	
+	<!-- 게시글 조회수 증가 -->
+	<update id="increaseCount" parameterType="_int">
+		UPDATE TB_CHARACTER_BOARD
+		SET CB_VIEWS = CB_VIEWS +1
+		WHERE CB_NO = #{ bno }
+		AND CB_STATUS = 'Y'
+	</update>
+	
+	<!-- 게시글 상세 조회 -->
+	<select id="selectBoard" resultMap="charBoardResultSet" parameterType="_int">
+		SELECT CB_NO
+			  ,CB_TITLE
+		      ,CB_CONTENT
+		      ,CB_CREATE_DATE
+		      ,CA_ORIGIN_NAME
+		      ,CA_CHANGE_NAME
+		FROM TB_CHARACTER_BOARD
+		JOIN TB_CHARACTER_ATTACH USING(CB_NO)
+		WHERE CA_STATUS = 'Y'
+		AND CB_NO = #{ bno }
+	</select>
 	
 	<!-- 전체 개시글 수 반환 -->
 	<select id="selectListCount" resultType="_int">
@@ -44,6 +67,7 @@
 		FROM TB_CHARACTER_BOARD
 		JOIN TB_CHARACTER_ATTACH USING(CB_NO)
 		WHERE CB_STATUS = 'Y'
+		AND CA_STATUS = 'Y'
 		AND CA_LEVEL = 1
 		ORDER BY CB_CREATE_DATE DESC
 	</select>
@@ -58,6 +82,7 @@
 						  ,#{ boardTitle }
 						  ,#{ boardContent })
 	</insert>
+	
 	<!-- 게시글 등록 (첨부파일) -->
 	<insert id="insertAttach" parameterType="java.util.List">
 		INSERT INTO TB_CHARACTER_ATTACH(
@@ -76,5 +101,18 @@
 			 </foreach>
 			 )A
 	</insert>
+	
+	<!-- 게시글 삭제 -->
+	<update id="deleteBoard" parameterType="_int">
+		UPDATE TB_CHARACTER_BOARD
+		SET CB_STATUS = 'N'
+		WHERE CB_NO = #{ bno }
+	</update>
+	<!-- 게시글 첨부파일 삭제 -->
+	<update id="deleteAttach" parameterType="_int">
+		UPDATE TB_CHARACTER_ATTACH
+		SET CA_STATUS = 'N'
+		WHERE CB_NO = #{ bno }
+	</update>
 
 </mapper>
