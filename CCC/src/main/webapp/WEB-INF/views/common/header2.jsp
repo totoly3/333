@@ -43,6 +43,8 @@
             width:100%;
             z-index: 1;
         }
+
+
         #header_2{
             z-index: 5;
             position: relative;
@@ -70,6 +72,7 @@
             top: -100px;
             left: 1300px;
         }
+
     </style>
 </head>
 <body>
@@ -98,6 +101,7 @@
             </ul>
         </div>
     </div>
+
     <!-- 로그인 클릭 시 뜨는 모달 (기존에는 안보이다가 위의 a 클릭 시 보임) -->
     <div class="modal fade" id="loginModal">
         <div class="modal-dialog modal-sm">
@@ -124,6 +128,7 @@
             </div>
         </div>
     </div>
+
     <br clear="both">
 </body>
 </html>

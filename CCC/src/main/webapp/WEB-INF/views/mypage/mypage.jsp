@@ -212,9 +212,9 @@ Coded by www.creative-tim.com
                       <i class="nc-icon nc-money-coins text-success"></i>
                     </div>
                   </div>
-                  <div class="col-7 col-md-8">
+                  <div class="col-7 col-md-8" onclick="location.href='mychar.me'">
                     <div class="numbers">
-                      <p class="card-category">장바구니 내역</p>
+                      <p class="card-category" >내 캐릭터</p>
                       <p class="card-title">$ 1,345
                       <p>
                     </div>
@@ -374,6 +374,8 @@ Coded by www.creative-tim.com
       </footer>
     </div>
   </div>
+  
+  
   <!--   Core JS Files   -->
   <script src="resources/paper-dashboard-master/assets/js/core/jquery.min.js"></script>
   <script src="resources/paper-dashboard-master/assets/js/core/popper.min.js"></script>

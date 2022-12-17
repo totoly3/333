@@ -15,7 +15,7 @@ public class MyPageController{
  
  
 	//마이페이지 조회
-	@RequestMapping("mypageEnroll.me")
+	@RequestMapping("mypage.me")
 	public String myPage() {
 		return "mypage/mypage";
 	}
@@ -37,6 +37,15 @@ public class MyPageController{
 		
 		return "mypage/profile";
 	}
+	
+	
+	@RequestMapping("mychar.me")
+	public String myCharpage() {
+		
+		return "mypage/mychar";
+	}
+	
+	
 	
 	
 //	//마이페이지 

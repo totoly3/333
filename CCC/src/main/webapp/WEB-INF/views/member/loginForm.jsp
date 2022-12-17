@@ -31,7 +31,11 @@
                             <span class="checkmark"></span> </label> </div>
                     <div class="ml-auto"> <a href="#" id="forgot"></a> </div>
                 </div><button class="btn btn-block text-center my-3">로그인</button>
-                <div class="text-center pt-3 text-muted">Not a member? <a href="enrollForm.me">Sign up</a></div>
+                <div class="text-center pt-3 text-muted">Not a member? 
+                <a href="enrollForm.me">Sign up</a><br>
+                <br>
+                <a href="mypage.me">마이페이지</a>
+                </div>
             </form>
         </div>
     </div>

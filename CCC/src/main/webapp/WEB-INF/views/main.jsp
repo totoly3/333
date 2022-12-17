@@ -8,10 +8,12 @@
 </head>
 <body>
 	<jsp:include page="common/header2.jsp"/>
+	<br><br>
+	<jsp:include page="common/mainViewPage.jsp"/>
 
 	<div style="text-align : center;">
-		<!-- <img src="https://web-cf-image.cjenm.com/crop/660x950/public/share/metamng/programs/dts_pos_t_01.jpg?v=1670228345"> -->			
-			
+		
+	
 
 	</div>
 	
