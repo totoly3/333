@@ -18,21 +18,22 @@ public interface FrBoardService {
 		ArrayList<FrBoard>selectList(PageInfo pi);
 
 
-//		//아래는 게시글 조회수 증가 
+		//아래는 게시글 조회수 증가 
 		int increaseCount(int fno);
 
-		//아래는 게시글 자세히보기 
-		FrBoard frboardDetailView(int fno);
+		//아래는 게시글 상세보기 
+		ArrayList<FrBoard> frboardDetailView(int fno);
 
-		//아래는 사진포함 게시글등록 (글만)
-		int insertFrBoard1(FrBoard fb);
+		//아래는 게시글 상세보기 (파일)
+		FrBoardAttach frboardAttDetailView(int fno);
+	
+		//글쓰기 (사진,글)
+		int insertFrBoard(FrBoard fb, ArrayList<FrBoardAttach> falist);
 
-		//아래는 사진포함 게시글등록 (사진포함)
-		int insertAttFrBoard2(FrBoardAttach fab);
+		//아래는 자유게시판 글 삭제 
+		int frboardDelete(int fno);
 
-//		
-
-//		
+	
 //		//게시글 상세 조회 
 //		FrBoard boardDetailView(int bno);
 //		

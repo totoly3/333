@@ -1,96 +1,96 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="ko">
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .content {
+            background-color:rgb(247, 245, 245);
+            width:80%;
+            margin:auto;
+        }
+        .innerOuter {
+            border:1px solid lightgray;
+            width:80%;
+            margin:auto;
+            padding:5% 10%;
+            background-color:white;
+        }
 
-
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>자유게시판 상세보기</title>
-
-
-  <!-- Favicons -->
-  <link href="jyResources/assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
- 
-  <!-- Template Main CSS File -->
-  <link href="../resources/jyResources/assets/css/style.css" rel="stylesheet">  <!--1ë²ë³ê²½-->
-
-
+        table * {margin:5px;}
+        table {width:100%;}
+    </style>
 </head>
-
 <body>
+      <jsp:include page="/WEB-INF/views/common/header2.jsp"/>
 
-  <!-- ======= Header ======= -->
-  <header id="header" class="header fixed-top d-flex align-items-center">
+    <div class="content">
+        <br><br>
+        <div class="innerOuter">
+            <h2>게시글 상세보기</h2>
+            <br>
 
-    <div class="d-flex align-items-center justify-content-between">
-      <a href="index.jsp" class="logo d-flex align-items-center">
-        <img src="jyResources/assets/img/logo.png" alt=""> <!-- 2ë²ë³ê²½ -->
-        <span class="d-none d-lg-block"></span>
-      </a>
-  
-    </div><!-- End Logo -->
+            <a class="btn btn-secondary" style="float:right;" href="">목록으로</a>
+            <br><br>
 
-  </header><!-- End Header -->
-
-
-    </ul>
-
-  </aside><!-- End Sidebar-->
-
-  <main id="main" class="main">
-
-    <div class="pagetitle">
-      <h1>Cards</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.jsp">Home</a></li>
-
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-
-    <section class="section">
-      <div class="row align-items-top">
-        <div class="col-lg-6">
-
-        </div>
-
-        <div class="col-lg-3">
-
-          
-
-          <!-- Card with an image on bottom -->
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Card with an image on bottom</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <table id="contentArea" algin="center" class="table">
+                <tr>
+                    <th width="10">제목</th>
+                    <td colspan="3">${fb.get(0).fTitle}</td>
+                </tr>
+                
+<%--                 <c:forEach var="b" items="${b}"> --%>
+                <tr>
+                    <th>작성자</th>
+                    <td>${fb.get(0).fWriter }</td>
+                    <th>작성일</th>
+                    <td>${fb.get(0).fCreateDate }</td>
+                </tr>
+               
+                <tr>
+                    <th>내용</th>
+                    <td colspan="3"></td>
+                </tr>
+                <tr>
+                    <td colspan="4"><p style="height:150px;">${fb.get(0).fContent }</p></td>
+                </tr>
+                <tr>
+                	<th>이미지</th>
+                	<td colspan="3"></td>
+                </tr>
+                <tr>
+                	<td><p style="height:150px;">${fb.get(0).fTitleimg }</p></td>
+                </tr>
+                
+                 <tr>
+                    <th>첨부파일</th>
+                    <td colspan="3">
+                        <a href="${frba.faChangeName }" download="${frba.faOrginName}">${frba.faOrginName}</a>
+                    </td>
+                </tr>
+<%--                </c:forEach> --%>
+            </table>
+            <br>
+            <!--아래는 로그인 유저의 아이디가 글작성자와 일치한다면 수정하기 삭제하기 버튼이 보이게 끔 !  -->
+	         <div align="center">
+                <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
+                <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
+                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
             </div>
-            <img src="jyResources/assets/img/card.jpg" class="card-img-bottom" alt="..."> <!--3ë²ë³ê²½-->
-          </div><!-- End Card with an image on bottom -->
-
-        </div>
-
-        <div class="col-lg-3">
-
-
-        </div>
-
-      </div>
-    </section>
-
-  </main><!-- End #main -->
-
-
-
-  <!-- Template Main JS File -->
-  <script src="jyResources/assets/js/main.js"></script>
-
+            <br><br>
+            
+<!--             <form id="postForm" method="post"> -->
+<%--             	<input type="hidden" name="bno" value="${fb.fNo }"> --%>
+            	
+<%--             	<input type="hidden" name="filePath" value="${b.changeName}"> --%>
+<!--             </form> -->
+            
+       
 </body>
-
 </html>

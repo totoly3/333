@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -54,6 +54,8 @@
             width:100%;
             z-index: 1;
         }
+        
+
 
         #header_2{
             z-index: 5;
@@ -84,17 +86,15 @@
             z-index: 6;
             position: relative;
             top: -100px;
-            left: 1200px;
+            left: 1300px;
         }
-
-
 
     </style>
 </head>
 <body>
 	
     <div id="jini1">
-        <img src="./resources/header2Img/navi2.jpg" alt="navi2">      
+    	<img src="./resources/header2Img/navi2.jpg" alt="navi2">      
     </div>
 
 
@@ -113,7 +113,7 @@
    <div id="header4">
         <div id="header_4">     <!--여기가 리스트 -->
             <ul id="navi44444">
-                <li><a href=""><img src="../resources/header2Img/user1.png" width="20px;"></a></li>
+                <li><a href=""><img src="./resources/header2Img/user1.png" width="20px;"></a></li>
                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/key.png" width="25px;"></a></li>
                 <li><a href="cart.ca"><img src="./resources/header2Img/cart.png" width="22px;"></a></li>
                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/menu.png" width="14px;"></a></li>
@@ -121,37 +121,6 @@
         </div>
     </div>
 
-
-
-    <!-- 로그인 클릭 시 뜨는 모달 (기존에는 안보이다가 위의 a 클릭 시 보임) -->
-    <div class="modal fade" id="loginModal">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Login</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-        
-                <form action="로그인요청받아주는서버" method="post">
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <label for="userId" class="mr-sm-2">ID : </label>
-                        <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter ID" id="userId" name=""> <br>
-                        <label for="userPwd" class="mr-sm-2">Password : </label>
-                        <input type="password" class="form-control mb-2 mr-sm-2" placeholder="Enter Password" id="userPwd" name="">
-                    </div>
-                           
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">로그인</button>
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-    </div>
     
     <br clear="both">
     

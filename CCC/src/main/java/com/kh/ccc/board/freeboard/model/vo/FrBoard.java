@@ -9,17 +9,18 @@ import lombok.NoArgsConstructor;
 
 public class FrBoard {
 	
-	 private int fNo;					//	F_NO	NUMBER
-	 private int fWriter;					//	F_WRITER	NUMBER
-	 private int fType;				//	F_TYPE	NUMBER
-	 private String fTitle;					//	F_TITLE	VARCHAR2(100 BYTE)
-	 private String fContent;					//	F_CONTENT	VARCHAR2(3000 BYTE)
-	 private int	fCount;				//	F_COUNT	NUMBER
-	 private Date	fCreateDate;				//	F_CREATE_DATE	DATE
-	 private Date	fUpdateDate;					//	F_UPDATE_DATE	DATE
-	 private Date	fDeleteDate;					//	F_DELETE_DATE	DATE
-	 private String fStatus;					//	F_STATUS	VARCHAR2(1 BYTE)
-	 private String fTitleimg;
+	 private int	fNo;		//자유게시판 글번호			
+	 private int	fWriter;	//자유게시판 작성자번호
+	 private int 	fType;		//자유게시판 유형
+	 private String fTitle;		//자유게시판 제목		
+	 private String fContent;	//자유게시판 내용	
+	 private int	fCount;		//자유게시판 조회수	
+	 private Date	fCreateDate;//자유게시판 작성일			
+	 private Date	fUpdateDate;//자유게시판 수정일	
+	 private Date	fDeleteDate;//자유게시판 삭제일			
+	 private String fStatus;	//자유게시판 상태			
+	 private String fTitleimg;  //자유게시판 파일이미지
+	 
 public FrBoard() {
 	super();
 }
