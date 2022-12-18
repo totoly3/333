@@ -26,6 +26,17 @@
 		<result column="CA_STATUS" property="status"/>
 	</resultMap>
 	
+	<resultMap type="charReply" id="charReplyResultSet">
+		<result column="CR_NO" property="reNo"/>
+		<result column="CB_NO" property="refBno"/>
+		<result column="CR_CONTENT" property="reContent"/>
+		<result column="CR_WRITER" property="reWriter"/>
+		<result column="CR_PARENT_NO" property="reParentNo"/>
+		<result column="CR_LEVEL" property="reLevel"/>
+		<result column="CR_CREATE_DATE" property="reCreateDate"/>
+		<result column="CR_STATUS" property="reStatus"/>		
+	</resultMap>
+	
 	<!-- 게시글 조회수 증가 -->
 	<update id="increaseCount" parameterType="_int">
 		UPDATE TB_CHARACTER_BOARD
@@ -109,6 +120,7 @@
 			CB_CONTENT = #{ boardContent }
 		WHERE CB_STATUS = 'Y'
 	</update>
+	
 	<!-- 첨부파일 수정 -->
 	<update id="updateAttach" parameterType="charBoard">
 		UPDATE TB_CHARACTER_ATTACH
@@ -123,11 +135,59 @@
 		SET CB_STATUS = 'N'
 		WHERE CB_NO = #{ bno }
 	</update>
+	
 	<!-- 게시글 첨부파일 삭제 -->
 	<update id="deleteAttach" parameterType="_int">
 		UPDATE TB_CHARACTER_ATTACH
 		SET CA_STATUS = 'N'
 		WHERE CB_NO = #{ bno }
+	</update>
+	
+	<!-- 댓글 리스트 조회 -->
+	<select id="selectReplyList" resultMap="charReplyResultSet" parameterType="_int">
+		SELECT CR_NO
+			  ,CB_NO
+			  ,CR_CONTENT
+			  ,CR_WRITER
+			  ,CR_PARENT_NO
+			  ,CR_LEVEL
+			  ,CR_CREATE_DATE
+		FROM TB_CHARACTER_REPLY
+		WHERE CR_STATUS = 'Y'
+		AND CB_NO = #{ boardNo }
+	</select>
+		
+	<!-- 댓글 등록 -->
+	<insert id="insertReply" parameterType="charReply">
+		INSERT INTO TB_CHARACTER_REPLY(
+									   CR_NO
+									  ,CB_NO
+									  ,CR_WRITER
+									  ,CR_CONTENT
+									  )
+							    VALUES(
+							    	   SEQ_CRNO.NEXTVAL
+							    	  ,#{ refBno }
+							    	  ,1
+							    	  ,#{ reContent }
+							  		  )
+	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateReply" parameterType="charReply">
+		UPDATE TB_CHARACTER_REPLY
+		SET CR_CONTENT = #{ reContent }
+		WHERE CR_STATUS = 'Y'
+		AND CR_NO = #{ reNo }
+		AND CB_NO = #{ refBno }
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<update id="deleteReply" parameterType="charReply">
+		UPDATE TB_CHARACTER_REPLY
+		SET CR_STATUS = 'N'
+		WHERE CR_NO = #{ reNo }
+		AND CB_NO = #{ refBno }
 	</update>
 
 </mapper>

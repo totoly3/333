@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
+import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.common.model.vo.PageInfo;
 
 @Repository
@@ -58,5 +59,21 @@ public class CharBoardDao {
 	//게시글 첨부파일 삭제
 	public int deleteAttach(SqlSessionTemplate sqlSession, int bno) {
 		return sqlSession.update("charBoardMapper.deleteAttach", bno);
+	}
+	//댓글 리스트 조회
+	public ArrayList<CharReply> selectReplyList(SqlSessionTemplate sqlSession, int boardNo) {
+		return (ArrayList)sqlSession.selectList("charBoardMapper.selectReplyList", boardNo);
+	}
+	//댓글 등록
+	public int insertReply(SqlSessionTemplate sqlSession, CharReply cr) {
+		return sqlSession.insert("charBoardMapper.insertReply", cr);
+	}
+	//댓글 수정
+	public int updateReply(SqlSessionTemplate sqlSession, CharReply cr) {
+		return sqlSession.update("charBoardMapper.updateReply", cr);
+	}
+	//댓글 삭제
+	public int deleteReply(SqlSessionTemplate sqlSession, CharReply cr) {
+		return sqlSession.update("charBoardMapper.deleteReply", cr);
 	}
 }

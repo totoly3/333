@@ -36,4 +36,10 @@ public interface CharBoardService {
 	//댓글 등록
 	int insertReply(CharReply cr);
 	
+	//댓글 수정
+	int updateReply(CharReply cr);
+	
+	//댓글 삭제
+	int deleteReply(CharReply cr);
+	
 }

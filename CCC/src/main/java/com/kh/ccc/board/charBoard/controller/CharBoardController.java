@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,12 +15,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.ccc.board.charBoard.model.service.CharBoardService;
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
+import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.common.template.Pagenation;
 //악성 글 지우기 
@@ -221,6 +223,48 @@ public class CharBoardController {
 		}
 		
 		return "redirect:/list.ch";
+	}
+	
+	//댓글 등록
+	@ResponseBody
+	@RequestMapping(value="insertReply.ch",produces="text/html; charset=UTF-8")
+	public String insertReply(CharReply cr) {
+		
+		int result = boardService.insertReply(cr);
+		
+		return (result != 0) ? "NNNNY" : "NNNNN";
+	}
+	
+	//댓글 리스트 조회
+	@ResponseBody
+	@RequestMapping(value="selectRlist.ch",produces="application/json; charset=UTF-8")
+	public String selectReplyList(int boardNo) {
+		
+		ArrayList<CharReply> list = boardService.selectReplyList(boardNo);
+		
+		return new Gson().toJson(list);
+	}
+	
+	//댓글 수정
+	@ResponseBody
+	@RequestMapping(value="updateReply.ch",produces="text/html; charset=UTF-8")
+	public String updateReply(CharReply cr) {
+		
+		int result = boardService.updateReply(cr);
+		
+		return (result != 0) ? "NNNNY" : "NNNNN";
+	}
+	
+	//댓글 삭제
+	@ResponseBody
+	@RequestMapping(value="deleteReply.ch",produces="text/html; charset=UTF-8")
+	public String deleteReply(CharReply cr) {
+		
+		System.out.println(cr);
+		
+		int result = boardService.deleteReply(cr);
+		
+		return (result != 0) ? "NNNNY" : "NNNNN";
 	}
 	
 	
