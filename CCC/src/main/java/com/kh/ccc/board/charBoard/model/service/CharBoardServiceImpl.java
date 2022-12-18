@@ -53,14 +53,21 @@ public class CharBoardServiceImpl implements CharBoardService {
 	//게시글 수정
 	@Override
 	public int updateBoard(CharBoard cb) {
-		// TODO Auto-generated method stub
-		return 0;
+		//게시글 내용 수정
+		int result = boardDao.updateBoard(sqlSession, cb);
+		//게시글 첨부파일 수정
+		int result2 = boardDao.updateAttach(sqlSession, cb);
+		
+		int finalResult = result * result2;
+		
+		return finalResult;
 	}
 	//게시글 삭제
 	@Override
 	public int deleteBoard(int bno) {
-		
+		//게시글 내용 삭제
 		int result = boardDao.deleteBoard(sqlSession, bno);
+		//게시글 첨부파일 삭제
 		int result2 = boardDao.deleteAttach(sqlSession, bno);
 		
 		int finalResult = result * result2;

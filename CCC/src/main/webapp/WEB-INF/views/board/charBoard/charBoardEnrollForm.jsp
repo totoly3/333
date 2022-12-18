@@ -68,8 +68,7 @@
 
 			<!-- 파일 첨부 영역 -->
 			<div id="file-area" align="center">
-				<!-- input[type=file id=file$ name=file$]*4 -->
-				<input type="file" id="file1" name="upfile" onchange="loadImg(this,1);"> <!--대표이미지라서 필수!-->
+				<input type="file" id="file1" name="upfile" onchange="loadImg(this,1);" required> <!--대표이미지라서 필수!-->
 				<input type="file" id="file2" name="upfile" onchange="loadImg(this,2);">
 				<input type="file" id="file3" name="upfile" onchange="loadImg(this,3);">
 				<input type="file" id="file4" name="upfile" onchange="loadImg(this,4);">

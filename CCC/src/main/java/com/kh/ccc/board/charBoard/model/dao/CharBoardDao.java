@@ -43,6 +43,14 @@ public class CharBoardDao {
 	public CharBoard selectBoard(SqlSessionTemplate sqlSession, int bno) {
 		return sqlSession.selectOne("charBoardMapper.selectBoard", bno);
 	}
+	//게시글 수정
+	public int updateBoard(SqlSessionTemplate sqlSession, CharBoard cb) {
+		return sqlSession.update("charBoardMapper.updateBoard", cb);
+	}
+	//게시글 첨부파일 수정
+	public int updateAttach(SqlSessionTemplate sqlSession, CharBoard cb) {
+		return sqlSession.update("charBoardMapper.updateAttach", cb);
+	}
 	//게시글 삭제
 	public int deleteBoard(SqlSessionTemplate sqlSession, int bno) {
 		return sqlSession.update("charBoardMapper.deleteBoard", bno);

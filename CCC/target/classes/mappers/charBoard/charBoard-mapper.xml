@@ -102,6 +102,21 @@
 			 )A
 	</insert>
 	
+	<!-- 게시글 수정 -->
+	<update id="updateBoard" parameterType="charBoard">
+		UPDATE TB_CHARACTER_BOARD
+		SET CB_TITLE = #{ boardTitle },
+			CB_CONTENT = #{ boardContent }
+		WHERE CB_STATUS = 'Y'
+	</update>
+	<!-- 첨부파일 수정 -->
+	<update id="updateAttach" parameterType="charBoard">
+		UPDATE TB_CHARACTER_ATTACH
+		SET CA_ORIGIN_NAME = #{ originName },
+			CA_CHANGE_NAME = #{ changeName }
+		WHERE CA_STATUS = 'Y'
+	</update>
+	
 	<!-- 게시글 삭제 -->
 	<update id="deleteBoard" parameterType="_int">
 		UPDATE TB_CHARACTER_BOARD

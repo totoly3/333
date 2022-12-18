@@ -156,7 +156,47 @@ public class CharBoardController {
 		return mv;
 	}
 	
+	//게시글 수정페이지로 포워딩
+	@RequestMapping("updateForm.ch")
+	public String updateForm(Model model
+							,int bno) {
+		
+		CharBoard cb = boardService.selectBoard(bno);
+		
+		model.addAttribute("cb", cb);
+		
+		return "board/charBoard/charBoardUpdateForm";
+	}
+	
 	//게시글 수정
+	@RequestMapping("update.ch")
+	public ModelAndView updateBoard(CharBoard cb
+							 ,MultipartFile upfile
+							 ,HttpSession session
+							 ,ModelAndView mv) {
+		//새로운 첨부파일이 있다면
+		if(!upfile.getOriginalFilename().equals("")) {
+			//기존 첨부파일이 있는경우 삭제
+			if(cb.getOriginName() != null) {
+				new File(session.getServletContext().getRealPath(cb.getChangeName())).delete();
+			}
+			//새로운 첨부파일 등록
+			String changeName = saveFile(upfile,session);
+			cb.setOriginName(upfile.getOriginalFilename());
+			cb.setChangeName("resources/charBoardImg/" + changeName);
+		}
+		
+		int result = boardService.updateBoard(cb);
+		
+		if(result != 0) {
+			session.setAttribute("alertMsg", "게시글 수정 성공!");
+			mv.setViewName("redirect:/detail.ch?bno=" + cb.getBoardNo() );
+		}else {
+			mv.addObject("errorMsg", "게시글 수정에 실패했습니다.").setViewName("common/errorPage");
+		}
+		
+		return mv;
+	}
 	
 	//게시글 삭제
 	@RequestMapping("delete.ch")
