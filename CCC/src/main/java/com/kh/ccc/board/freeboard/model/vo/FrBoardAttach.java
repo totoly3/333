@@ -7,7 +7,7 @@ public class FrBoardAttach {
 	private String faChangeName;	//첨부파일 수정후 파일명	FA_CHANGE_NAME	VARCHAR2(500 BYTE)
 	private String faFilePath;		//첨부파일 경로	FA_FILE_PATH	VARCHAR2(500 BYTE)
 	private String faStatus;		//	FA_STATUS	VARCHAR2(1 BYTE)
-	
+	//
 	public FrBoardAttach() {
 		super();
 	}
