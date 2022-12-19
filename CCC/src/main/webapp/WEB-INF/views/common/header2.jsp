@@ -27,7 +27,7 @@
 
 
         #header_2>ul {width:100%; height:100%; list-style-type:none; margin:auto; padding:0;}
-        #header_2>ul>li {float:left; width:10%; height:100%; line-height:55px; text-align:center;}
+        #header_2>ul>li {float:left; width:9%; height:100%; line-height:55px; text-align:center;}
         #header_2>ul>li a {text-decoration:none; color:rgb(255, 255, 255); font-size:12px; font-weight:600;}
         
 
@@ -104,9 +104,9 @@
                <li><a href="${ pageContext.request.contextPath }">H O M E</a></li>
                <li><a href="">N O T I C E</a></li>
                <li><a href="list.fr">F R E E - B O A R D</a></li>
-               <li><a href="list.fr">T I P</a></li>
+               <li><a href="list.tp">T I P - B O A R D</a></li>
                <li><a href="list.ch">C H A R A C T E R</a></li>
-               <li><a href="list.ch">W O R L D - C U P</a></li>
+               <li><a href="list.wc">W O R L D - C U P</a></li>
            </ul>
        </div>
    </div>
