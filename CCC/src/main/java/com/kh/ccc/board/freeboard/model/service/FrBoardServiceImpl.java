@@ -42,23 +42,45 @@ public class FrBoardServiceImpl implements FrBoardService{
 	}
 	//아래는 게시판 상세 보기 
 		@Override
-		public FrBoard frboardDetailView(int fno) {
-			return FrBoardDao.frboardDetailView(sqlSession,fno);
+		public ArrayList<FrBoard> frboardDetailView(int fno) {
+			ArrayList<FrBoard> list	=FrBoardDao.frboardDetailView(sqlSession,fno);
+			System.out.println("상세보기 서비스impl"+list);
+			return list;
+			
 			
 		}
+	//아래는 게시판 상세보기 파일 
+	@Override
+	public FrBoardAttach frboardAttDetailView(int fno) {
+		return FrBoardDao.frboardAttDetailView(sqlSession,fno);
 		
-	//아래는 게시글 등록 	(글만)
-		@Override
-		public int insertFrBoard1(FrBoard fb) {
-			return FrBoardDao.insertFrBoard1(sqlSession,fb);
+	}
+		
+	//아래는 글쓰기 
+	@Override
+	public int insertFrBoard(FrBoard fb, ArrayList<FrBoardAttach> falist) {
+		int result1 =FrBoardDao.insertFrBoard1(sqlSession,fb);
+		int result2 =FrBoardDao.insertAttFrBoard2(sqlSession,falist);
+		
+			System.out.println("글등록됬으면(사진말고)1:"+result1);
+			System.out.println("글등록됬으면(사진포함)1:"+result2);
 			
-		}
-	//아래는 게시글 등록 (사진)
-		@Override
-		public int insertAttFrBoard2(FrBoardAttach fab) {
+		int finalResult= (result1 + result2);
+			System.out.println("2이면 둘다성공 1은둘중하나"+finalResult);	
+		return finalResult;
+	
+	}
+	
+	//아래는 자유게시판 글 삭제 
+	@Override
+	public int frboardDelete(int fno) {
+		int result =FrBoardDao.frboardDelete(sqlSession,fno);
+		System.out.println("삭제 성공했으면 1"+result);
+		return result;
+	}
+	
 		
-			return FrBoardDao.insertAttFrBoard2(sqlSession,fab);
-		}
+
 	
 
 

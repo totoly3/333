@@ -34,12 +34,19 @@ public class FrBoardDao {
 		
 	}
 	//게시물  상세보기
-	public FrBoard frboardDetailView(SqlSessionTemplate sqlSession, int fno) {
+	public ArrayList<FrBoard> frboardDetailView(SqlSessionTemplate sqlSession, int fno) {
 
-		return sqlSession.selectOne("frBoardMapper.frboardDetailView",fno);
+		ArrayList<FrBoard> frbalist=(ArrayList)sqlSession.selectList("frBoardMapper.frboardDetailView",fno);
+		System.out.println("frbalist :"+frbalist);
+		return frbalist;
 		
 	}
-	//
+	//아래는 게시글 상세보기 첨부파일 가져오려고
+	public FrBoardAttach frboardAttDetailView(SqlSessionTemplate sqlSession, int fno) {
+		
+		return sqlSession.selectOne("frBoardMapper.frboardAttDetailView");
+	}
+	
 	//아래는 게시글 등록(글만)
 	public int insertFrBoard1(SqlSessionTemplate sqlSession, FrBoard fb) {
 		
@@ -48,12 +55,19 @@ public class FrBoardDao {
 		return result1;
 	}
 	
+	
 	// 아래는 게시글 등록 (사진 )
-	public int insertAttFrBoard2(SqlSessionTemplate sqlSession, FrBoardAttach fab) {
-		int result2 =sqlSession.insert("frBoardMapper.insertAttFrBoard2",fab);
-		System.out.println("result2 게시글 등록되었으면 1"+result2);
+		public int insertAttFrBoard2(SqlSessionTemplate sqlSession, ArrayList<FrBoardAttach> falist) {
 
-		return result2;
+			int result2 =sqlSession.insert("frBoardMapper.insertAttFrBoard2",falist);
+			System.out.println("result2 게시글 등록되었으면 2"+result2);
+			return result2;
 	}
+		
+	//아래는 자유게시판 글 삭제 
+		public int frboardDelete(SqlSessionTemplate sqlSession, int fno) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
 
 }

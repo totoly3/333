@@ -11,11 +11,14 @@ import lombok.NoArgsConstructor;
 @Data
 public class CharReply {
 	
-	private int crNo;	//댓글 번호
-	private int cbNO;	//참조캐릭터 게시글 번호
-	private String crContent; //댓글 내용
-	private int crWriter;	//작성자 회원번호
-	private Date crCreateDate;	//작성일
-	private String crStatus;	//상태값(Y/N)
+	private int 	reNo;			//댓글 번호
+	private int 	refBno;			//참조게시글 번호
+	private String 	reContent; 		//댓글 내용
+	private int 	reWriter;		//작성자 회원번호
+	private int		reParentNo;		//참조댓글번호
+	private int		reStep;			//대댓글의 순서
+	private int		reLevel;		//댓글계층
+	private Date 	reCreateDate;	//작성일
+	private String 	reStatus;		//상태값(Y/N)
 	
 }

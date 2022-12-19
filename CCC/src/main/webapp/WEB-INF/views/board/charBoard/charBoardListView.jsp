@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +43,7 @@
 </head>
 <body>
 	
-	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+	<jsp:include page="/WEB-INF/views/common/header2.jsp"/>
 	
     <div class="content">
         <br><br>
@@ -57,22 +58,33 @@
 		</div>			
 		
 		<div class="list-area">		
-			<div class="thumbnail" align="center">
-				<input type="hidden" value="">
-				<img src="" width="200px" height="150px" onclick="test();">
-				<p>
-					No.<br>
-					조회수 :
-				</p>
-			</div>				
+			<c:choose>
+				<c:when test="${ not empty list }">
+					<c:forEach var="b" items="${ list }">
+							<div class="thumbnail" align="center">
+								<input type="hidden" value="${ b.boardNo }">
+								<img src="${ pageContext.request.contentType }${ b.changeName }" width="400px" height="300px">
+								<p>
+									No.${ b.boardNo } ${ b.boardTitle }<br>
+									조회수 : ${ b.views }
+									<br>
+								</p>
+							</div>				
+					</c:forEach>
+				</c:when>
+				
+				<c:otherwise>
+					조회된 게시글이 없습니당...
+				</c:otherwise>
+			</c:choose>
 		</div>
 		
 		<script>
-// 			$(function(){
-// 				$(".thumbnail").click(function(){
-// 					location.href="${ pageContext.request.contextPath }/detail.ch?bno="+$(this).children().eq(0).val();
-// 				})
-// 			})
+			$(function(){
+				$(".thumbnail").click(function(){
+					location.href="${ pageContext.request.contextPath }/detail.ch?bno="+$(this).children().eq(0).val();
+				})
+			})
 		</script>
 ​
             <br>

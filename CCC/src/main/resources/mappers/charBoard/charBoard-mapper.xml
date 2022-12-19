@@ -11,9 +11,79 @@
 		<result column="CB_VIEWS" property="views"/>
 		<result column="CB_LIKE" property="like"/>
 		<result column="CB_CREATE_DATE" property="createDate"/>
+		<result column="CA_ORIGIN_NAME" property="originName"/>
+		<result column="CA_CHANGE_NAME" property="changeName"/>
 		<result column="CB_STATUS" property="status"/>
 	</resultMap>
 	
+	<resultMap type="charAttach" id="charAttachResultSet">
+		<result column="CA_NO" property="fileNo"/>
+		<result column="CB_NO" property="refBno"/>
+		<result column="CA_ORIGIN_NAME" property="originName"/>
+		<result column="CA_CHANGE_NAME" property="changeName"/>
+		<result column="CA_LEVEL" property="level"/>
+		<result column="CA_CREATE_DATE" property="createDate"/>
+		<result column="CA_STATUS" property="status"/>
+	</resultMap>
+	
+	<resultMap type="charReply" id="charReplyResultSet">
+		<result column="CR_NO" property="reNo"/>
+		<result column="CB_NO" property="refBno"/>
+		<result column="CR_CONTENT" property="reContent"/>
+		<result column="CR_WRITER" property="reWriter"/>
+		<result column="CR_PARENT_NO" property="reParentNo"/>
+		<result column="CR_LEVEL" property="reLevel"/>
+		<result column="CR_CREATE_DATE" property="reCreateDate"/>
+		<result column="CR_STATUS" property="reStatus"/>		
+	</resultMap>
+	
+	<!-- 게시글 조회수 증가 -->
+	<update id="increaseCount" parameterType="_int">
+		UPDATE TB_CHARACTER_BOARD
+		SET CB_VIEWS = CB_VIEWS +1
+		WHERE CB_NO = #{ bno }
+		AND CB_STATUS = 'Y'
+	</update>
+	
+	<!-- 게시글 상세 조회 -->
+	<select id="selectBoard" resultMap="charBoardResultSet" parameterType="_int">
+		SELECT CB_NO
+			  ,CB_TITLE
+		      ,CB_CONTENT
+		      ,CB_CREATE_DATE
+		      ,CA_ORIGIN_NAME
+		      ,CA_CHANGE_NAME
+		FROM TB_CHARACTER_BOARD
+		JOIN TB_CHARACTER_ATTACH USING(CB_NO)
+		WHERE CA_STATUS = 'Y'
+		AND CB_NO = #{ bno }
+	</select>
+	
+	<!-- 전체 개시글 수 반환 -->
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM TB_CHARACTER_BOARD
+	</select>
+	
+	<!-- 게시글 리스트 조회 -->
+	<select id="selectList" resultMap="charBoardResultSet">
+		SELECT CB_NO
+		      ,CB_WRITER
+		      ,CB_TITLE
+		      ,CB_CONTENT
+		      ,CA_CHANGE_NAME
+		      ,CB_VIEWS
+		      ,CB_LIKE
+		      ,CB_CREATE_DATE
+		FROM TB_CHARACTER_BOARD
+		JOIN TB_CHARACTER_ATTACH USING(CB_NO)
+		WHERE CB_STATUS = 'Y'
+		AND CA_STATUS = 'Y'
+		AND CA_LEVEL = 1
+		ORDER BY CB_CREATE_DATE DESC
+	</select>
+	
+	<!-- 게시글 등록 (글) -->
 	<insert id="insertBoard" parameterType="charBoard">
 		INSERT INTO TB_CHARACTER_BOARD(
 									   CB_NO
@@ -24,6 +94,7 @@
 						  ,#{ boardContent })
 	</insert>
 	
+	<!-- 게시글 등록 (첨부파일) -->
 	<insert id="insertAttach" parameterType="java.util.List">
 		INSERT INTO TB_CHARACTER_ATTACH(
 									    CA_NO
@@ -41,5 +112,82 @@
 			 </foreach>
 			 )A
 	</insert>
+	
+	<!-- 게시글 수정 -->
+	<update id="updateBoard" parameterType="charBoard">
+		UPDATE TB_CHARACTER_BOARD
+		SET CB_TITLE = #{ boardTitle },
+			CB_CONTENT = #{ boardContent }
+		WHERE CB_STATUS = 'Y'
+	</update>
+	
+	<!-- 첨부파일 수정 -->
+	<update id="updateAttach" parameterType="charBoard">
+		UPDATE TB_CHARACTER_ATTACH
+		SET CA_ORIGIN_NAME = #{ originName },
+			CA_CHANGE_NAME = #{ changeName }
+		WHERE CA_STATUS = 'Y'
+	</update>
+	
+	<!-- 게시글 삭제 -->
+	<update id="deleteBoard" parameterType="_int">
+		UPDATE TB_CHARACTER_BOARD
+		SET CB_STATUS = 'N'
+		WHERE CB_NO = #{ bno }
+	</update>
+	
+	<!-- 게시글 첨부파일 삭제 -->
+	<update id="deleteAttach" parameterType="_int">
+		UPDATE TB_CHARACTER_ATTACH
+		SET CA_STATUS = 'N'
+		WHERE CB_NO = #{ bno }
+	</update>
+	
+	<!-- 댓글 리스트 조회 -->
+	<select id="selectReplyList" resultMap="charReplyResultSet" parameterType="_int">
+		SELECT CR_NO
+			  ,CB_NO
+			  ,CR_CONTENT
+			  ,CR_WRITER
+			  ,CR_PARENT_NO
+			  ,CR_LEVEL
+			  ,CR_CREATE_DATE
+		FROM TB_CHARACTER_REPLY
+		WHERE CR_STATUS = 'Y'
+		AND CB_NO = #{ boardNo }
+	</select>
+		
+	<!-- 댓글 등록 -->
+	<insert id="insertReply" parameterType="charReply">
+		INSERT INTO TB_CHARACTER_REPLY(
+									   CR_NO
+									  ,CB_NO
+									  ,CR_WRITER
+									  ,CR_CONTENT
+									  )
+							    VALUES(
+							    	   SEQ_CRNO.NEXTVAL
+							    	  ,#{ refBno }
+							    	  ,1
+							    	  ,#{ reContent }
+							  		  )
+	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id="updateReply" parameterType="charReply">
+		UPDATE TB_CHARACTER_REPLY
+		SET CR_CONTENT = #{ reContent }
+		WHERE CR_STATUS = 'Y'
+		AND CR_NO = #{ reNo }
+		AND CB_NO = #{ refBno }
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<update id="deleteReply" parameterType="charReply">
+		UPDATE TB_CHARACTER_REPLY
+		SET CR_STATUS = 'N'
+		WHERE CR_NO = #{ reNo }
+		AND CB_NO = #{ refBno }
+	</update>
 
 </mapper>
