@@ -10,15 +10,17 @@
 		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoard" alias="FrBoard"/>
 		<typeAlias type="com.kh.ccc.admin.model.vo.Member" alias="adminMember"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharBoard" alias="charBoard"/>
+		<typeAlias type="com.kh.ccc.member.model.vo.Member" alias="member"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharAttach" alias="charAttach"/>
+		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharReply" alias="charReply"/>
 		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoardAttach" alias="frAttBoard"/>
-	
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/frBoard-mapper.xml"/>
 		<mapper resource="/mappers/admin-mapper.xml"/>
 		<mapper resource="/mappers/charBoard/charBoard-mapper.xml"/>
+		<mapper resource="/mappers/member-mapper.xml"/>
 	</mappers>
 	
 </configuration>

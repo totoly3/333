@@ -8,15 +8,13 @@
 </head>
 <body>
 	<jsp:include page="common/header2.jsp"/>
+	
 	<br><br>
+	
 	<jsp:include page="common/mainViewPage.jsp"/>
 
 	<div style="text-align : center;">
-		
-	
 
-	</div>
-
-	
+	</div>	
 </body>
 </html>

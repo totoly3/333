@@ -1,12 +1,14 @@
-package com.kh.ccc.board.freeboard.model.service;
+package com.kh.ccc.board.tipBoard.model.service;
 
 import java.util.ArrayList;
 
 import com.kh.ccc.board.freeboard.model.vo.FrBoard;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
+import com.kh.ccc.board.tipBoard.model.vo.TipBoard;
+import com.kh.ccc.board.tipBoard.model.vo.TipBoardAttach;
 import com.kh.ccc.common.model.vo.PageInfo;
 
-public interface FrBoardService {
+public interface TipBoardService {
 
 	//게시글 리스트 조회 + 페이징처리 
 	
@@ -15,41 +17,25 @@ public interface FrBoardService {
 		
 		
 		//게시글 리스트 조회 
-		ArrayList<FrBoard>selectList(PageInfo pi);
+		ArrayList<TipBoard>selectList(PageInfo pi);
 
 
-//		//아래는 게시글 조회수 증가 
-		int increaseCount(int fno);
+		//아래는 게시글 조회수 증가 
+		int increaseCount(int tno);
 
 		//아래는 게시글 상세보기 
-		ArrayList<FrBoard> frboardDetailView(int fno);
+		ArrayList<TipBoard> tipboardDetailView(int tno);
 
 		//아래는 게시글 상세보기 (파일)
-		FrBoardAttach frboardAttDetailView(int fno);
+		TipBoardAttach tipboardAttDetailView(int tno);
 	
 		//글쓰기 (사진,글)
-		int insertFrBoard(FrBoard fb, ArrayList<FrBoardAttach> falist);
+		int insertTipBoard(TipBoard tb, ArrayList<TipBoardAttach> talist);
 
-
-
-
-
-
-
+		//아래는 자유게시판 글 삭제 
+		int tipboardDelete(int tno);
 
 	
-//		//아래는 사진포함 게시글등록 (글만)
-//		int insertFrBoard1(FrBoard fb);
-//
-//		//아래는 사진포함 게시글등록 (사진포함)
-//		int insertAttFrBoard2(FrBoardAttach fab);
-
-
-
-	
-//		
-
-//		
 //		//게시글 상세 조회 
 //		FrBoard boardDetailView(int bno);
 //		

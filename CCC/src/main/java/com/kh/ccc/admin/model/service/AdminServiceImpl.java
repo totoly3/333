@@ -1,13 +1,21 @@
 package com.kh.ccc.admin.model.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.ccc.admin.model.dao.AdminDao;
 import com.kh.ccc.admin.model.vo.Member;
+
 
 @Service
 public class AdminServiceImpl implements AdminService{
@@ -35,9 +43,12 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int selectListCount() {
 		
-		int result = adminDao.selectListCount(sqlSession);
+		int listCount = adminDao.selectListCount(sqlSession);
 		
-		return result;
+		return listCount;
 	}
+
+
+
 
 }

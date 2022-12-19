@@ -1,4 +1,4 @@
-package com.kh.ccc.board.freeboard.controller;
+package com.kh.ccc.board.tipBoard.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,18 +23,18 @@ import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.common.template.Pagenation;
 
 @Controller
-public class FrBoardController {
+public class TipBoardController {
 
 	@Autowired
-	private FrBoardService FrBoardService;
+	private TipBoardService Tip;
 	
 	//view 페이지 포워딩 
-		@RequestMapping("list.fr")
+		@RequestMapping("list.tp")
 		public ModelAndView selectList(@RequestParam(value="currentPage",defaultValue="1")int currentPage,
 													ModelAndView  mv) {
 			
 				
-			int listCount = FrBoardService.selectListCount(); //총 게시글 개수  db에서 조회해오기 .
+			int listCount = TipBoardService.selectListCount(); //총 게시글 개수  db에서 조회해오기 .
 			
 			int pageLimit = 10;	//하단에 페이징바 갯수
 			int boardLimit =5; //한페이지에 몇개씩 띄울껀지!
@@ -42,7 +42,7 @@ public class FrBoardController {
 			PageInfo pi=Pagenation.getPageinfo(listCount, currentPage, pageLimit, boardLimit);
 			
 			//아래는 게시글 조회 
-			ArrayList<FrBoard> list = FrBoardService.selectList(pi);
+			ArrayList<FrBoard> list = TipBoardService.selectList(pi);
 			
 //			if(flist.isEmpty()) {
 //			}else {
@@ -51,29 +51,29 @@ public class FrBoardController {
 				mv.addObject("list", list);
 				mv.addObject("pi",pi);  //페이징바 처리해줄 
 				
-				mv.setViewName("board/freeBoard/freeBoardListView");
+				mv.setViewName("board/tipBoard/tipBoardListView");
 //				mv.addObject("alertMsg","비어있으").setViewName("common/errorPage");
 //	
 			return mv;
 		}
-		
+		//
 		//아래는 게시물 상세보기 
-		@RequestMapping("detail.fbo")
+		@RequestMapping("detail.tbo")
 		public ModelAndView boardDetailView(int fno,ModelAndView mv,HttpSession session) {
 			
 			//아래는 조회수 증가 
-		int result=FrBoardService.increaseCount(fno);
+		int result = TipBoardService.increaseCount(fno);
 			
 		if(result>0) {
 			//아래는 조회 
-			ArrayList<FrBoard> fb=FrBoardService.frboardDetailView(fno);
+			ArrayList<TipBoard> fb = TipBoardService.tipboardDetailView(tno);
 			
 			System.out.println("fb :"+fb);
 			
 			//아래는 파일만 가져오기 
-			FrBoardAttach frba= FrBoardService.frboardAttDetailView(fno);
-			mv.addObject("frba",frba).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능 
-			mv.addObject("fb",fb).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능 
+			TipBoardAttach trba= TipBoardService.tipboardAttDetailView(tno);
+			mv.addObject("trba",trba).setViewName("board/tipBoard/tipBoardDetailView"); //한줄작성가능 
+			mv.addObject("tb",tb).setViewName("board/tipBoard/tipBoardDetailView"); //한줄작성가능 
 			
 		}else {
 			System.out.println("실패");
@@ -84,42 +84,42 @@ public class FrBoardController {
 		}
 		
 		//아래는 글쓰기 누르면 글작성 폼으로 이동 
-		@GetMapping("insert.fpom")
-		public String insertFrPomBoard() {
-			return "board/freeBoard/frBoardEnrollForm";
+		@GetMapping("insert.tpom")
+		public String insertTipPomBoard() {
+			return "board/tipBoard/TipBoardEnrollForm";
 		}
 		
 		
 		//아래는 게시글 등록 (사진포함)
-				@RequestMapping("insert.frbo")
-				public ModelAndView insertFrBoard(ModelAndView mv,FrBoard fb,
+				@RequestMapping("insert.trbo")
+				public ModelAndView insertFrBoard(ModelAndView mv,FrBoard tb,
 						ArrayList<MultipartFile> upfile
 						,HttpSession session) {
-					System.out.println(fb);
+					System.out.println(tb);
 					System.out.println(upfile);
 					
-					ArrayList<FrBoardAttach> falist = new ArrayList<>();
+					ArrayList<TipBoardAttach> talist = new ArrayList<>();
 					
 					for(int i=0; i<=1; i++) {
 						if (!upfile.get(i).getOriginalFilename().equals("")) {
 						
 							String changeName = saveFile(upfile.get(i),session);
 							
-							FrBoardAttach fab= new FrBoardAttach();
+							TipBoardAttach tab= new TipBoardAttach();
 							
-							fab.setFaOrginName(upfile.get(i).getOriginalFilename());
-							fab.setFaChangeName("resources/freeBoardImg/"+changeName);
-							falist.add(fab);
-							System.out.println("falist:"+falist);
+							tab.setFaOrginName(upfile.get(i).getOriginalFilename());
+							tab.setFaChangeName("resources/freeBoardImg/"+changeName);
+							talist.add(tab);
+							System.out.println("falist:"+talist);
 						}
 					}
 						
-				int finalResult=FrBoardService.insertFrBoard(fb,falist);
+				int finalResult=TipBoardService.insertFrBoard(tb,talist);
 						
 				if(finalResult>0) {
 					System.out.println("등록완료");
 					session.setAttribute("alertMsg", "게시글 등록 성공!");
-					mv.setViewName("redirect:/list.fr");
+					mv.setViewName("redirect:/list.tp");
 				}else {
 					mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
 				}
@@ -153,5 +153,14 @@ public class FrBoardController {
 				return changeName;
 			}
 		
-
+			
+			//아래는 팁 게시판 글 삭제하기 
+			@RequestMapping("delete.fbo")
+			public ModelAndView tipboardDelete(int tno ,String filePath,ModelAndView mv,HttpSession session) {
+				
+				int result = TipBoardService.tipboardDelete(tno);
+				
+				return mv;
+				
+			}
 }

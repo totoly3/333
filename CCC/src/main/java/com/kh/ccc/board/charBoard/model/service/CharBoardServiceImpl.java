@@ -30,6 +30,7 @@ public class CharBoardServiceImpl implements CharBoardService {
 	public ArrayList<CharBoard> selectList(PageInfo pi) {
 		return boardDao.selectList(sqlSession, pi);
 	}
+	
 	//게시글 등록 (게시글,첨부파일)
 	@Override
 	public int insertCharBoard(CharBoard cb,ArrayList<CharAttach> list) {
@@ -40,35 +41,66 @@ public class CharBoardServiceImpl implements CharBoardService {
 		
 		return finalResult;
 	}
+	
 	//1.게시글 조회수 증가
 	@Override
-	public int increseCount(int boardNo) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int increseCount(int bno) {
+		return boardDao.increaseCount(sqlSession, bno);
 	}
 	//2.게시글 상세 조회
 	@Override
-	public CharBoard selectBoard(int boardNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public CharBoard selectBoard(int bno) {
+		return boardDao.selectBoard(sqlSession, bno);
 	}
+	
 	//게시글 수정
 	@Override
 	public int updateBoard(CharBoard cb) {
-		// TODO Auto-generated method stub
-		return 0;
+		//게시글 내용 수정
+		int result = boardDao.updateBoard(sqlSession, cb);
+		//게시글 첨부파일 수정
+		int result2 = boardDao.updateAttach(sqlSession, cb);
+		
+		int finalResult = result * result2;
+		
+		return finalResult;
 	}
-	//댓글 리스트 출력
+	
+	//게시글 삭제
+	@Override
+	public int deleteBoard(int bno) {
+		//게시글 내용 삭제
+		int result = boardDao.deleteBoard(sqlSession, bno);
+		//게시글 첨부파일 삭제
+		int result2 = boardDao.deleteAttach(sqlSession, bno);
+		
+		int finalResult = result * result2;
+		
+		return finalResult;
+	}
+	
+	//댓글 리스트 조회
 	@Override
 	public ArrayList<CharReply> selectReplyList(int boardNo) {
-		// TODO Auto-generated method stub
-		return null;
+		return boardDao.selectReplyList(sqlSession, boardNo);
 	}
+	
 	//댓글 등록
 	@Override
 	public int insertReply(CharReply cr) {
-		// TODO Auto-generated method stub
-		return 0;
+		return boardDao.insertReply(sqlSession, cr);
+	}
+	
+	//댓글 수정
+	@Override
+	public int updateReply(CharReply cr) {
+		return boardDao.updateReply(sqlSession, cr);
+	}
+	
+	//댓글 삭제
+	@Override
+	public int deleteReply(CharReply cr) {
+		return boardDao.deleteReply(sqlSession, cr);
 	}
 
 }
