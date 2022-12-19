@@ -93,7 +93,8 @@
         <div id="header_2">     <!--여기가 리스트 -->
            <ul id="navi11111">
                <li><a href="${ pageContext.request.contextPath }">H O M E</a></li>
-               <li><a href="">N O T I C E</a></li>
+               <li><a href="list.no">N O T I C E</a></li>
+               <li><a href="list.qu">Q U E S T I O N</a></li>
                <li><a href="list.fr">F R E E - B O A R D</a></li>
                <li><a href="list.ch">C H A R A C T E R</a></li>
                <li><a href="list.ch">W O R L D - C U P</a></li>

@@ -13,12 +13,22 @@
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharAttach" alias="charAttach"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharReply" alias="charReply"/>
 		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoardAttach" alias="frAttBoard"/>
+		<!-- 공지사항 -->
+		<typeAlias type="com.kh.ccc.board.notice.model.vo.Notice" alias="notice"/>
+		<typeAlias type="com.kh.ccc.board.notice.model.vo.NoticeAttach" alias="noticeAttach"/>
+		<typeAlias type="com.kh.ccc.admin.model.vo.Admin" alias="admin"/>
+		<!-- 문의게시판 -->
+		<typeAlias type="com.kh.ccc.board.question.model.vo.Question" alias="question"/>
+		<typeAlias type="com.kh.ccc.board.question.model.vo.QuestionAttach" alias="questionAttach"/>
+		<typeAlias type="com.kh.ccc.board.question.model.vo.QuestionReply" alias="questionReply"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/frBoard-mapper.xml"/>
 		<mapper resource="/mappers/charBoard/charBoard-mapper.xml"/>
 		<mapper resource="/mappers/member-mapper.xml"/>
+		<mapper resource="/mappers/notice-mapper.xml"/>
+		<mapper resource="/mappers/question-mapper.xml"/>
 	</mappers>
 	
 </configuration>
