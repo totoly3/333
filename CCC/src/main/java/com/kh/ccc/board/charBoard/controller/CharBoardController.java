@@ -255,12 +255,27 @@ public class CharBoardController {
 		return (result != 0) ? "NNNNY" : "NNNNN";
 	}
 	
+	//대댓글 등록
+	@ResponseBody
+	@RequestMapping(value="replyAnswer.ch",produces="text/html; charset=UTF-8")
+	public String insertReplyAnswer(CharReply cr) {
+		
+		int reNo = cr.getReNo();
+		int refBno = cr.getRefBno();
+		String reAnswer = cr.getReContent();
+		
+		System.out.println(cr);
+		
+		
+		return null;
+	}
+	
+	
+	
 	//댓글 삭제
 	@ResponseBody
 	@RequestMapping(value="deleteReply.ch",produces="text/html; charset=UTF-8")
 	public String deleteReply(CharReply cr) {
-		
-		System.out.println(cr);
 		
 		int result = boardService.deleteReply(cr);
 		
