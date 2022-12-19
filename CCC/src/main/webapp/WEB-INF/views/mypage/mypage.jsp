@@ -375,7 +375,6 @@ Coded by www.creative-tim.com
     </div>
   </div>
   
-  
   <!--   Core JS Files   -->
   <script src="resources/paper-dashboard-master/assets/js/core/jquery.min.js"></script>
   <script src="resources/paper-dashboard-master/assets/js/core/popper.min.js"></script>

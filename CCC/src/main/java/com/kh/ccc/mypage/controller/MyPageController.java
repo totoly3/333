@@ -39,11 +39,16 @@ public class MyPageController{
 	}
 	
 	
+	
+	//마이페이지 캐릭터로 이동
 	@RequestMapping("mychar.me")
 	public String myCharpage() {
 		
 		return "mypage/mychar";
 	}
+	
+	
+	//마이페이지 캐릭터업로드
 	
 	
 	
@@ -52,6 +57,10 @@ public class MyPageController{
 //	@RequestMapping("mypage.me")
 //	public String updateMember(Member m,HttpSession session, Model model) {
 //	}
+	
+	
+	
+	
 	
 
 }
