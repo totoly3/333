@@ -24,9 +24,10 @@ public class AdminDao {
 	//회원수
 	public int selectListCount(SqlSessionTemplate sqlSession) {
 		
-		int result =sqlSession.selectOne("adminMapper.selectListCount");
+		int listCount =sqlSession.selectOne("adminMapper.selectListCount");
 		
-		return result;
+		return listCount;
 	}
 
+	
 }

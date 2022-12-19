@@ -48,10 +48,11 @@
 	
 		SELECT COUNT(*)
 		FROM TB_MEMBER
-		WHERE STATUS = 'Y'
+		WHERE M_STATUS = 'Y'
 	
 	</select>
-  
+	
+	
   
   
   </mapper>
