@@ -43,7 +43,7 @@
 </head>
 <body>
 	
-	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+	<jsp:include page="/WEB-INF/views/common/header2.jsp"/>
 	
     <div class="content">
         <br><br>
@@ -80,11 +80,11 @@
 		</div>
 		
 		<script>
-// 			$(function(){
-// 				$(".thumbnail").click(function(){
-// 					location.href="${ pageContext.request.contextPath }/detail.ch?bno="+$(this).children().eq(0).val();
-// 				})
-// 			})
+			$(function(){
+				$(".thumbnail").click(function(){
+					location.href="${ pageContext.request.contextPath }/detail.ch?bno="+$(this).children().eq(0).val();
+				})
+			})
 		</script>
 ​
             <br>
