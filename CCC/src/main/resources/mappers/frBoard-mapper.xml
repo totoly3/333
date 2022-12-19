@@ -10,12 +10,11 @@
 	SELECT  COUNT(*)
  	 	FROM TB_FREE
   	WHERE F_STATUS='Y'
-	
 	</select>
+  
   
   		<!--//게시글 조회 메소드  게시글 전체 조회1 -->
   	<resultMap type="frBoard" id="frBoardResultSet">
-  	
   	<result column="F_NO" property="fNo"/>
    	<result column="F_WRITER" property="fWriter"/>
    	<result column="F_TYPE" property="fType"/>
@@ -26,7 +25,6 @@
    	<result column="F_UPDATE_DATE" property="fUpdateDate"/>
    	<result column="F_DELETE_DATE" property="fDeleteDate"/>
     <result column="F_STATUS" property="fStatus"/>
-   	
   	</resultMap>
   	
   	<!-- 아ㅏ래는 attach  -->
