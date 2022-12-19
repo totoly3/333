@@ -76,4 +76,16 @@ public class CharBoardDao {
 	public int deleteReply(SqlSessionTemplate sqlSession, CharReply cr) {
 		return sqlSession.update("charBoardMapper.deleteReply", cr);
 	}
+	//대댓글 번호 생성?
+	public int maxNum(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("charBoardMapper.maxNum");
+	}
+	//대댓글 (부모댓글의 그룹번호와 계층 알아오기)
+	public CharReply replySelect(SqlSessionTemplate sqlSession, int reNo) {
+		return sqlSession.selectOne("charBoardMapper.replySelect", reNo);
+	}
+	//대댓글 (댓글중에서 새로운 댓글을 달때 맨 아래로 가기 위한 로직)
+	public int maxStep(SqlSessionTemplate sqlSession, int reGroupNo) {
+		return sqlSession.selectOne("charBoardMapper.maxStep", reGroupNo);
+	}
 }

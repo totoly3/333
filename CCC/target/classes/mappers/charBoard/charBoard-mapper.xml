@@ -31,7 +31,8 @@
 		<result column="CB_NO" property="refBno"/>
 		<result column="CR_CONTENT" property="reContent"/>
 		<result column="CR_WRITER" property="reWriter"/>
-		<result column="CR_PARENT_NO" property="reParentNo"/>
+		<result column="CR_GROUP_NO" property="reGroupNo"/>
+		<result column="CR_STEP" property="reStep"/>
 		<result column="CR_LEVEL" property="reLevel"/>
 		<result column="CR_CREATE_DATE" property="reCreateDate"/>
 		<result column="CR_STATUS" property="reStatus"/>		
@@ -149,7 +150,7 @@
 			  ,CB_NO
 			  ,CR_CONTENT
 			  ,CR_WRITER
-			  ,CR_PARENT_NO
+			  ,CR_GROUP_NO
 			  ,CR_LEVEL
 			  ,CR_CREATE_DATE
 		FROM TB_CHARACTER_REPLY
@@ -189,5 +190,27 @@
 		WHERE CR_NO = #{ reNo }
 		AND CB_NO = #{ refBno }
 	</update>
+	
+	<!-- 대댓글 번호 생성? -->
+	<select id="maxNum" resultType="_int">
+		SELECT NVL(MAX(CR_NO), 0) + 1
+		FROM TB_CHARACTER_REPLY
+		WHERE CR_STATUS = 'Y'
+	</select>
+	
+	<!-- 대댓글 (부모댓글의 그룹번호와 계층 알아오기) -->
+	<select id="replySelect" parameterType="_int" resultMap="charReply">
+		SELECT CR_STEP
+			  ,CR_LEVEL
+		FROM TB_CHARACTER_REPLY
+		WHERE CR_NO = #{ reNo }
+		AND CR_STATUS = 'Y'
+	</select>
+	
+	<select id="maxStep" parameterType="_int" resultType="_int">
+		SELECT NVL(MAX(CR_STEP), 0) + 1
+		FROM TB_CHARACTER_REPLY
+		WHERE CR_GROUP_NO = #{ reGroupNo }
+	</select>
 
 </mapper>

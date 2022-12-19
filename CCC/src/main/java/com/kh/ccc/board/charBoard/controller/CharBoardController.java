@@ -47,9 +47,7 @@ public class CharBoardController {
 		
 		//게시글 리스트 조회
 		ArrayList<CharBoard> list = boardService.selectList(pi);
-		
-		System.out.println(list);
-		
+
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
 		
@@ -93,8 +91,6 @@ public class CharBoardController {
 		}
 		
 		int result = boardService.insertCharBoard(cb,list);
-		
-		System.out.println(result);
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "게시글 등록 성공!");
@@ -241,7 +237,7 @@ public class CharBoardController {
 	public String selectReplyList(int boardNo) {
 		
 		ArrayList<CharReply> list = boardService.selectReplyList(boardNo);
-		
+			
 		return new Gson().toJson(list);
 	}
 	
@@ -260,11 +256,30 @@ public class CharBoardController {
 	@RequestMapping(value="replyAnswer.ch",produces="text/html; charset=UTF-8")
 	public String insertReplyAnswer(CharReply cr) {
 		
-		int reNo = cr.getReNo();
-		int refBno = cr.getRefBno();
-		String reAnswer = cr.getReContent();
+		int number = boardService.maxNum(); // 새 댓글 번호 생성, 참조댓글번호(reGroupNo)는 부모댓글번호(reNo)와 같다
 		
-		System.out.println(cr);
+		int reStep = 0, reLevel = 0; 		  //첫번째 댓글은 0으로 기본 세팅
+		int refBno = cr.getRefBno(); 		  //댓글을 단 게시글 번호
+		int reNo = cr.getReNo();	 		  //대댓글을 단 부모 댓글의 번호
+		String reContent = cr.getReContent(); //대댓글의 내용
+		
+		if(reNo != 0) { //부모 댓글번호가 있다면
+			CharReply cr1 = boardService.replySelect(reNo);
+			
+			if(cr1.getReStep() == 0 && cr1.getReLevel() == 0) {
+				cr.setReGroupNo(reNo); // 대댓글끼리 그룹핑하기 위해 부모댓글의 번호로 참조댓글번호 세팅
+				int maxStep = boardService.maxStep(cr1.getReGroupNo()); //새로운 대댓글을 작성하면 아래로 가도록 하기위해
+				cr.setReStep(maxStep);
+				cr.setReLevel(cr1.getReLevel() + 1);
+			}
+			else { //댓글의 대댓글을 작성할 때
+				
+				
+			}
+			
+			
+			
+		}
 		
 		
 		return null;

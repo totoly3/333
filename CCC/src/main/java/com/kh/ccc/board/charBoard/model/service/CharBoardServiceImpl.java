@@ -102,5 +102,30 @@ public class CharBoardServiceImpl implements CharBoardService {
 	public int deleteReply(CharReply cr) {
 		return boardDao.deleteReply(sqlSession, cr);
 	}
+	
+	//대댓글 번호 생성?
+	@Override
+	public int maxNum() {
+		return boardDao.maxNum(sqlSession);
+	}
+
+	//대댓글 (부모댓글의 그룹번호와 계층 알아오기)
+	@Override
+	public CharReply replySelect(int reNo) {
+		return boardDao.replySelect(sqlSession, reNo);
+	}
+	
+	//대댓글 (댓글중에서 새로운 댓글을 달때 맨 아래로 가기 위한 로직)
+	@Override
+	public int maxStep(int reGroupNo) {
+		return boardDao.maxStep(sqlSession, reGroupNo);
+	}
+	
+	@Override
+	public int insertReplyAnswer(CharReply cr) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
 
 }
