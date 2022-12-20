@@ -32,6 +32,7 @@
 		<result column="CR_CONTENT" property="reContent"/>
 		<result column="CR_WRITER" property="reWriter"/>
 		<result column="CR_GROUP_NO" property="reGroupNo"/>
+		<result column="CR_PARENT_NO" property="reParentNo"/>
 		<result column="CR_STEP" property="reStep"/>
 		<result column="CR_LEVEL" property="reLevel"/>
 		<result column="CR_CREATE_DATE" property="reCreateDate"/>
@@ -166,6 +167,7 @@
 									  ,CR_CONTENT
 									  ,CR_WRITER
 									  ,CR_GROUP_NO
+									  ,CR_PARENT_NO
 									  ,CR_STEP
 									  ,CR_LEVEL
 									  )
@@ -175,6 +177,7 @@
 							    	  ,#{ reContent }
 							    	  ,1
 							    	  ,#{ reGroupNo }
+							    	  ,#{ reParentNo }
 							    	  ,#{ reStep }
 							    	  ,#{ reLevel }
 							  		  )
@@ -208,6 +211,7 @@
 		SELECT CR_NO
 			  ,CB_NO
 			  ,CR_GROUP_NO
+			  ,CR_PARENT_NO
 			  ,CR_STEP
 			  ,CR_LEVEL
 		FROM TB_CHARACTER_REPLY

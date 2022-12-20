@@ -16,7 +16,7 @@ public class CharReply {
 	private String 	reContent; 		//댓글 내용
 	private int 	reWriter;		//작성자 회원번호
 	private int		reGroupNo;		//참조댓글번호
-	private int		reParent;		//부모댓글번호
+	private int		reParentNo;		//부모댓글번호
 	private int		reStep;			//대댓글의 순서
 	private int		reLevel;		//댓글계층
 	private Date 	reCreateDate;	//작성일
