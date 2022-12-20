@@ -193,7 +193,7 @@
         		if(reContent.trim().length != 0){
         			
 	        		$.ajax({
-	        			url : "insertReply.ch",
+	        			url : "replyAnswer.ch",
 	        			data : {
 	        				refBno : ${ cb.boardNo },
 	        				reContent : reContent
@@ -294,7 +294,15 @@
         			},
         			type : "post",
         			success : function(result){
-        				console.log("통신성공!");
+        				
+        				if(result == "NNNNY"){
+        					alert("댓글이 등록되었습니다!");
+        					$("#reAnswerContent").val("");
+        					selectReplyList();
+        				}else{
+        					alert("댓글 등록에 실패했습니다.");
+        				}
+        				
         			},
         			error : function(){
         				console.log("통신실패!");
