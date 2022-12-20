@@ -78,11 +78,11 @@
                 	<td colspan="3"></td>
                 </tr>
 
-		 <c:if test="${frba.size()==0}">
+		 <c:if test="${fb.size()==0}">
    			 	비어있음
        	 </c:if>
  
-          <c:if test="${frba.size()==1}">
+          <c:if test="${fb.size()==1}">
 		    	<c:choose>
                 	<c:when test="${!fb.get(0).fTitleimg.isEmpty()}">
          	              <tr>
@@ -97,7 +97,7 @@
 	          	</c:choose>
           </c:if> 	
    
-        <c:if test="${fb.size()==2}">
+          	<c:if test="${fb.size()==2}">
 		    	<c:choose>
                 	<c:when test="${!fb.get(0).fTitleimg.isEmpty()}">
          	              <tr>
@@ -163,49 +163,45 @@
             
             <form id="postForm" method="post">
             	<input type="hidden" name="fno" value="${fb.get(0).fNo }">
-            		<!-- 아래는 만약 첨부파일이 있다면  파일패스 가져가서 글 삭제할때 파일도 동시에 삭제 -->
-            		<c:if test="${frba.size()>0}">
-             			<input type="hidden" name="filePath" value="${frba.get(0).faChangeName}">
-            		</c:if>
+            	
+            	<input type="hidden" name="filePath" value="${frba.get(0).faChangeName}">
             </form>
       </div>
    </div>
    
-<!--     댓글 기능은 나중에 ajax 배우고 나서 구현할 예정! 우선은 화면구현만 해놓음 -->
-<!--             <table id="replyArea" class="table" align="center"> -->
-<!--                 <thead> -->
-<!-- 		              	<tr> -->
-<!-- 	                        <th colspan="2"> -->
-<!-- 	                            <textarea class="form-control" name="rcontent" id="rcontent" cols="55" rows="2" style="resize:none; width:100%;"></textarea> -->
-<!-- 	                        </th> -->
-<!-- 	                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addReply();">등록하기</button></th> -->
-<!-- 	                	</tr> -->
-
-  
-<!-- 	          	        <tr> -->
-<!-- 	                       <td colspan="3" > 댓글(<span id="rcount"></span>)</td> -->
-<!-- 	                    </tr> -->
-<!--                 </thead> -->
-                
-<!--                 <tbody> -->
-       						
-<!--                 </tbody> -->
-            </table>
-   
-   
-   
      <script >
-//  	     아래는 체크박스 (전체선택)
-// 	      function selectAll(selectAll)  {
-// 		  const checkboxes = document.getElementsByName('all');
+	     //아래는 체크박스 (전체선택)
+	      function selectAll(selectAll)  {
+		  const checkboxes = document.getElementsByName('all');
 		  
-// 				  checkboxes.forEach((checkbox) => {checkbox.checked = selectAll.checked;}
-// 				  							)
-// 										}
+				  checkboxes.forEach((checkbox) => {checkbox.checked = selectAll.checked;}
+				  							)
+										}
      
 	     function postFormSubmit(num){
-
-			//action에 속성값을 넣고 submit을 진행하면 된다.
+	 		//동적으로 DOM요소 만들어서 이벤트(submit)해보기
+// 	 		var form = $("<form>");
+// 	 		var cBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${b.boardNo}");
+// 				var cFp = $("<input>").prop("type","hidden").prop("name","filePath").prop("value","${b.changeName}");
+				
+// 				//form태그에 input요소 두개 넣기
+// 				form.append(cBno).append(cFp);
+				
+// 				if(num==1){ //수정하기 버튼이 눌렸을때 요청주소는 update.bo 요청타입은 get타입으로 
+// 					form.prop("action","updateForm.bo");
+// 				}else{// 삭제하기 버튼이 눌렸을때 요청 주소는 delete.bo 요청타입은 post타입 
+					
+// 					form.prop("action","delete.bo");
+// 				}
+				
+				
+				// 만들어놓은 form 요소를 body에 추가하기 
+// 				$("body").append(form);
+				
+// 				form.prop("method","POST").submit();
+				
+				
+// 	 		action에 속성값을 넣고 submit을 진행하면 된다.
 	 		if(num ==1){ //수정하기 버튼 클릭시 1이 넘어온다
 	     		$("#postForm").attr("action","updatefm.fbo").submit();
 	 		}else{ //삭제하기 버튼 클릭시 
@@ -213,68 +209,6 @@
 	 		}
 	 	}
 	    
-	     //아래는 댓글
-// 	   $(function(){
-//     		selectReplyList(); //dom 요소 생성 후 맨처음에(페이지 구성될때 댓글리스트 조회해오기) 
-//     	})
-    	
-// 		//댓글 조회 함수    	
-//     	function selectReplyList(){
-//     		$.ajax({
-//     			url :"frlist.fbo",
-//     			data : {fno : ${fb.get(0).fNo}},
-//     			success : function(result){
-//     				console.log(result);
-// 					var resultStr = "";
-					
-// 					for(var i=0; i<result.length; i++){
-// 						resultStr += "<tr>"
-// 									+"<th>"+result[i].frWriter+"</th>"
-// 									+"<td>"+result[i].frContent+"</td>"
-// 									+"<td>"+result[i].frCreateDate+"</td>"	
-// 									+"</tr>";
-// 							}	
-					
-// 					$("#replyArea > tbody").html(resultStr).css(margin-left:<c:out value="${20*result.frLevel}"/>px);
-// 					$("#rcount").text(result.length);
-// 	    			},
-//     			error :function(){
-//    				console.log("통신 실패");
-//     			}
-//     		})
-//     	}
-    	
-//     //아래는 댓글 등록 
-//     	function addReply(){
-//     		var $vali = $("#rcontent");
-    		
-//     		//바로아래는 공백제거 후 댓글이 작성되었는지 확인 (공백작성불가하게 막기 )
-//     		if($vali.val().trim().length != 0){
-// 	    	    	$.ajax({
-// 			    		url : "frInsert.fbo",
-// 			    		data : {
-// 			    				fno : ${fb.get(0).fNo},
-// 			    				frContent :$vali.val(),
-// // 			    				frWriter : "${loginUser.userId}" 
-// 			    					//admin 문자 자체로 나오기때문에 문자열 처리를 해줘야함  하지않으면 변수로인식하기때문임.
-// 			    			},
-// 		    			success : function(result){
-// 		    				console.log(result);
-// 		    				if(result=="yes"){
-// 		    					selectReplyList();
-// 		    					$vali.val("");
-// 		    				}
-// 		    			},
-// 		    			error : function(){
-// 		    				console.log("통신실패");
-// 		    			}
-// 			    		});
-//    				 }else{ //공백을 넣었거나 댓글을 작성하지 않은경우 
-//    	    			alert("댓글을작성하세요 . 공백은 작성불가");
-//    				 	$vali.val("");
-//    	    		}
-//     		}
-    
      
     </script>
 </body>

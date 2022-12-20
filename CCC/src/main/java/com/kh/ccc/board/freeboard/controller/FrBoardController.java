@@ -10,15 +10,19 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.ccc.board.freeboard.model.service.FrBoardService;
 import com.kh.ccc.board.freeboard.model.vo.FrBoard;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
+import com.kh.ccc.board.freeboard.model.vo.FrBoardReply;
 import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.common.template.Pagenation;
 
@@ -60,10 +64,11 @@ public class FrBoardController {
 		//아래는 게시물 상세보기 
 		@RequestMapping("detail.fbo")
 		public ModelAndView boardDetailView(int fno,ModelAndView mv,HttpSession session) {
+			System.out.println("fno"+fno);
 			
 			//아래는 조회수 증가 
 		int result=FrBoardService.increaseCount(fno);
-			
+			System.out.println("리저트"+result);
 		if(result>0) {
 			//아래는 조회 
 			ArrayList<FrBoard> fb=FrBoardService.frboardDetailView(fno);
@@ -71,7 +76,10 @@ public class FrBoardController {
 			System.out.println("fb :"+fb);
 			
 			//아래는 파일만 가져오기 
-			FrBoardAttach frba= FrBoardService.frboardAttDetailView(fno);
+			
+			ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
+			System.out.println("frba:"+frba);
+			
 			mv.addObject("frba",frba).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능 
 			mv.addObject("fb",fb).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능 
 			
@@ -109,21 +117,33 @@ public class FrBoardController {
 							
 							fab.setFaOrginName(upfile.get(i).getOriginalFilename());
 							fab.setFaChangeName("resources/freeBoardImg/"+changeName);
+							
 							falist.add(fab);
 							System.out.println("falist:"+falist);
 						}
 					}
-						
-				int finalResult=FrBoardService.insertFrBoard(fb,falist);
-						
-				if(finalResult>0) {
-					System.out.println("등록완료");
-					session.setAttribute("alertMsg", "게시글 등록 성공!");
-					mv.setViewName("redirect:/list.fr");
-				}else {
-					mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
-				}
-				
+					
+				if(falist.isEmpty()) { //글만 작성할때
+					int result1=FrBoardService.insertFrBoardOnlyWrite(fb);
+					
+						if(result1>0) {
+							System.out.println("등록완료");
+							session.setAttribute("alertMsg", "게시글 등록 성공!");
+							mv.setViewName("redirect:/list.fr");
+						}else {
+							mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
+							}
+				}else {//파일두개 등록할때
+					int finalResult=FrBoardService.insertFrBoard(fb,falist);
+					
+						if(finalResult>0) {
+							System.out.println("등록완료");
+							session.setAttribute("alertMsg", "게시글 등록 성공!");
+							mv.setViewName("redirect:/list.fr");
+						}else {
+							mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
+						}
+					}
 				return mv;
 			}
 		
@@ -152,15 +172,100 @@ public class FrBoardController {
 				}
 				return changeName;
 			}
-		
+			//아래는 주말동안한거 
+			//아래는 주말동안한거 
+			//아래는 주말동안한거 
+			//아래는 주말동안한거 
+			//아래는 주말동안한거 
+			//아래는 주말동안한거 
+			
 			
 			//아래는 지유게시판 글 삭제하기 
-			@RequestMapping("delete.fbo")
-			public ModelAndView frboardDelete(int fno ,String filePath,ModelAndView mv,HttpSession session) {
-				
-				int result=FrBoardService.frboardDelete(fno);
-				
-				return mv;
-				
+			@RequestMapping("delete.frbo")
+			public String frboardDelete(int fno, String filePath, ModelAndView mv, HttpSession session) {
+
+				int result = FrBoardService.frboardDelete(fno);
+				System.out.println("삭제할떄 fno는 가져오나 " + fno);
+
+				if (result > 0) {
+					if (!filePath.equals("")) {
+						// 파일이 있는경우 삭제
+						// 물리적인 경로 찾기
+						String realPath = session.getServletContext().getRealPath(filePath);
+
+						// 해당 경로와 연결시켜 파일객체 생성후 삭제 메소드(해당 파일 삭제)
+						new File(realPath).delete();
+						session.setAttribute("alertMsg", "삭제성공!");
+						mv.setViewName("freeBoard/freeBoardListView");
+						}else {
+							//파일이 비어있으면
+						}
+					} else {
+						session.setAttribute("alertMsg", "삭제실패!");
+						mv.setViewName("common/errorPage");
+				}
+				return "redirect:/list.fr";
 			}
-}
+			
+			//아래는 수정하기 누르면 폼으로 가는거
+			@RequestMapping("updatefm.fbo")
+			public ModelAndView updateFrboardForm(int fno,ModelAndView mv) {
+			
+				//아래는 글번호로 가져온 fb들 
+				ArrayList<FrBoard> fb=FrBoardService.frboardDetailView(fno);
+				
+				//아래는 글번호로 가져온 frba
+				ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
+				
+				mv.addObject("fb",fb);
+				mv.addObject("frba",frba);
+				mv.setViewName("board/freeBoard/frBoardEnrollForm");
+			
+				return mv;
+			}
+			
+//			//아래는 수정 폼에서 등록하기 누르면~
+//			@RequestMapping("update.frbo")
+//			public ModelAndView updateFrboard(MultipartFile upfile,ArrayList<FrBoard> fb,ModelAndView mv,ArrayList<FrBoardAttach> frba,HttpSession session) {
+//					//새로운첨부파일이 있는지 없는지 확인 
+//				if(!upfile.getOriginalFilename().equals("")) {
+//					if(frba.get(0).getFaOrginName() != null) {//기존 첨부파일의 이름이 담겨있는 경우
+//						new File(session.getServletContext().getRealPath(frba.get(0).getFaChangeName())).delete();
+//					}
+//					//새로운 첨부파일 업로드 
+//					String changeName = saveFile(upfile,session);//아래에서 작업한 saveFile메소드 사용 
+//					
+//					
+//					//새 데이터 DB에 등록
+//					frba.setFaOrginName(upfile.getOriginalFilename());
+//					frba.setFaChangeName("resources/board/freeBoard/"+changeName);
+//					
+//					FrBoardService.updateFrboard(fb,frba);
+//				return mv;
+//			}
+			
+			
+//			아래는 게시판 detail 뷰 댓글 전체조회 
+			@ResponseBody
+			@RequestMapping(value="frlist.fbo",produces="application/json; charset=UTF-8")
+			public String detailFrBoardReviewSelect(int fno, ModelAndView mv) {
+				System.out.println("댓글조회 번호가져오나 fno:"+fno);				
+				ArrayList<FrBoardReply> rlist=FrBoardService.detailFrBoardReviewSelect(fno);
+			
+				return new Gson().toJson(rlist);
+			}
+			
+			
+			//아래는 댓글 등록 
+			@ResponseBody
+			@RequestMapping(value="frInsert.fbo",produces="text/html; charset=UTF-8")
+			public String insertFrReply(FrBoardReply refb) {
+
+				System.out.println("refb"+refb);
+				int result = FrBoardService.insertFrReply(refb);
+
+				System.out.println("댓글등록 성공했으면1: "+result); 
+				return result>0 ? "yes" : "no";
+			}
+			
+	}	
