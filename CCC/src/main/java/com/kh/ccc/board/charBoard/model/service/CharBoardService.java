@@ -42,4 +42,11 @@ public interface CharBoardService {
 	//댓글 삭제
 	int deleteReply(CharReply cr);
 	
+	//대댓글 등록
+	int maxNum();
+	CharReply replySelect(int reNo);
+	int maxStep(int reGroupNo);
+	void updateStep(CharReply cr);
+	int insertCharReply(CharReply cr);
+	
 }
