@@ -88,4 +88,8 @@ public class CharBoardDao {
 	public int maxStep(SqlSessionTemplate sqlSession, int reGroupNo) {
 		return sqlSession.selectOne("charBoardMapper.maxStep", reGroupNo);
 	}
+	//대댓글 (댓글의 계층을 업데이트하기 위한 로직)
+	public void updateStep(SqlSessionTemplate sqlSession, CharReply cr) {
+		sqlSession.update("charBoardMapper.updateStep", cr);
+	}
 }

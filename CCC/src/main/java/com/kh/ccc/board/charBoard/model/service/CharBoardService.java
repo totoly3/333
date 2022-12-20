@@ -46,6 +46,7 @@ public interface CharBoardService {
 	int maxNum();
 	CharReply replySelect(int reNo);
 	int maxStep(int reGroupNo);
-	int insertReplyAnswer(CharReply cr);
+	void updateStep(CharReply cr);
+	int insertCharReply(CharReply cr);
 	
 }

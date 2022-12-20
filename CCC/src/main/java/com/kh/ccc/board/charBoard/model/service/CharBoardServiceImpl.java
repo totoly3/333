@@ -121,11 +121,18 @@ public class CharBoardServiceImpl implements CharBoardService {
 		return boardDao.maxStep(sqlSession, reGroupNo);
 	}
 	
+	//대댓글 (댓글의 계층을 업데이트하기 위한 로직)
 	@Override
-	public int insertReplyAnswer(CharReply cr) {
+	public void updateStep(CharReply cr) {
+		boardDao.updateStep(sqlSession, cr);
+	}
+	//댓글/대댓글 등록 (새롭게 만든 메소드)
+	@Override
+	public int insertCharReply(CharReply cr) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	
 	
 
 }

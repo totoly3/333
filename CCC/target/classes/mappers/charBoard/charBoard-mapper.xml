@@ -199,18 +199,30 @@
 	</select>
 	
 	<!-- 대댓글 (부모댓글의 그룹번호와 계층 알아오기) -->
-	<select id="replySelect" parameterType="_int" resultMap="charReply">
-		SELECT CR_STEP
+	<select id="replySelect" parameterType="_int" resultMap="charReplyResultSet">
+		SELECT CR_NO
+			  ,CB_NO
+			  ,CR_GROUP_NO
+			  ,CR_STEP
 			  ,CR_LEVEL
 		FROM TB_CHARACTER_REPLY
 		WHERE CR_NO = #{ reNo }
 		AND CR_STATUS = 'Y'
 	</select>
 	
+	<!-- 대댓글 (댓글중에서 새로운 댓글을 달때 맨 아래로 가기 위한 로직)  -->
 	<select id="maxStep" parameterType="_int" resultType="_int">
 		SELECT NVL(MAX(CR_STEP), 0) + 1
 		FROM TB_CHARACTER_REPLY
 		WHERE CR_GROUP_NO = #{ reGroupNo }
 	</select>
+	
+	<!-- 대댓글 (댓글의 계층을 업데이트하기 위한 로직) -->
+	<update id="updateStep" parameterType="charReply">
+		UPDATE TB_CHARACTER_REPLY
+		SET CR_STEP = CR_STEP + 1
+		WHERE CR_GROUP_NO = #{ reGroupNo }
+		AND CR_STEP > #{ reStep }
+	</update>
 
 </mapper>

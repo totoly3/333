@@ -188,7 +188,7 @@ public class CharBoardController {
 		
 		if(result != 0) {
 			session.setAttribute("alertMsg", "게시글 수정 성공!");
-			mv.setViewName("redirect:/detail.ch?bno=" + cb.getBoardNo() );
+			mv.setViewName("redirect:/detail.ch?bno=" + cb.getBoardNo());
 		}else {
 			mv.addObject("errorMsg", "게시글 수정에 실패했습니다.").setViewName("common/errorPage");
 		}
@@ -254,8 +254,9 @@ public class CharBoardController {
 	//대댓글 등록
 	@ResponseBody
 	@RequestMapping(value="replyAnswer.ch",produces="text/html; charset=UTF-8")
-	public String insertReplyAnswer(CharReply cr) {
+	public String insertReplyAnswer(CharReply cr, HttpSession session) {
 		
+		//int reWriter = session.getAttribute("회원번호");
 		int number = boardService.maxNum(); // 새 댓글 번호 생성, 참조댓글번호(reGroupNo)는 부모댓글번호(reNo)와 같다
 		
 		int reStep = 0, reLevel = 0; 		  //첫번째 댓글은 0으로 기본 세팅
@@ -273,16 +274,30 @@ public class CharBoardController {
 				cr.setReLevel(cr1.getReLevel() + 1);
 			}
 			else { //댓글의 대댓글을 작성할 때
+				cr.setReGroupNo(cr1.getReGroupNo()); //대댓글끼리 뭉치기위해,부모댓글의 댓글번호로 reGroupNo세팅
+				cr.setReStep(cr1.getReStep()); 		
+				//새로운 댓글은 댓글 사이에 끼어야하기 때문에
+				//새로 작성된 대댓글의 그룹번호(부모번호)가 같고 reStep(대댓의 순서)이 해당 댓글의 순서보다 크면 그 댓글보다 reStep + 1을 해준다
+				boardService.updateStep(cr);
 				
-				
+				cr.setReGroupNo(cr1.getReGroupNo());
+				cr.setReStep(cr1.getReStep() + 1); 	 //부모댓글의 step보다 +1 증가
+				cr.setReLevel(cr1.getReLevel() + 1); //부모댓글의 level보다 +1 증가
 			}
-			
-			
-			
+		}else {
+			cr.setReGroupNo(number);
+			cr.setReStep(reStep); 	 //기본 댓글에는 0으로 세팅
+			cr.setReLevel(reLevel);  //기본 댓글에는 계층 0으로 세팅
 		}
 		
+		cr.setReContent(reContent); //댓글 내용 담기
+		cr.setReNo(reNo); 			//댓글의 번호 생성? (시퀀스 어쩔..?)
+		cr.setRefBno(refBno); 		//댓글이 작성된 게시글 번호 담기
+		//cr.setReWriter(reWriter); //댓글 작성자 (아직 안넣음)
 		
-		return null;
+		int result = boardService.insertCharReply(cr);
+		
+		return "redirect:/detail.ch?bno=" + cr.getRefBno();
 	}
 	
 	
