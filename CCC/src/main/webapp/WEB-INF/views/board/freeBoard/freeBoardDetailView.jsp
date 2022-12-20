@@ -77,11 +77,11 @@
                 	<th>이미지</th>
                 	<td colspan="3"></td>
                 </tr>
-
+			<!--frba list가  0 이면  -->
 		 <c:if test="${frba.size()==0}">
    			 	비어있음
        	 </c:if>
- 
+ 			<!-- 아래는 frba list가  1이면  -->
           <c:if test="${frba.size()==1}">
 		    	<c:choose>
                 	<c:when test="${!fb.get(0).fTitleimg.isEmpty()}">
@@ -191,6 +191,29 @@
        						
                 </tbody>
             </table>
+   
+   <!-- 댓글 수정 모달 -->
+		<div class="modal fade" id="updateReply" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">댓글 수정 내용을 입력해주세요!</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		      	<textarea id="updateContent" rows="2" cols="49.8"
+									style="resize: none;"></textarea>
+					<div id="reply_cnt">(0 / 50)</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+		        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="UpdateReply();">수정하기</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
    
    
    

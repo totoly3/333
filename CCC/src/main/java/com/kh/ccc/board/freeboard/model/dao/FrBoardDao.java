@@ -74,6 +74,18 @@ public class FrBoardDao {
 			return delete;
 		}
 		
+		//아래는 자유게시판 수정 (글만 수정)
+		public int updateFrboard1(SqlSessionTemplate sqlSession, ArrayList<FrBoard> fb) {
+			int result1=sqlSession.update("frBoardMapper.updateFrboard1");
+			return result1;
+		}
+		
+		//아래는 자유게시판 수정 (파일까지 수정 )
+		public int updateFrboard2(SqlSessionTemplate sqlSession, ArrayList<FrBoardAttach> frba) {
+			int result2=sqlSession.update("frBoardMapper.updateFrboard2");
+			return result2;
+		}
+		
 	//아래는 댓글 조회 	
 		public ArrayList<FrBoardReply> detailFrBoardReviewSelect(SqlSessionTemplate sqlSession, int fno) {
 			 ArrayList<FrBoardReply> flist = (ArrayList)sqlSession.selectList("frBoardMapper.detailFrBoardReviewSelect",fno);

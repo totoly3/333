@@ -43,24 +43,10 @@ public interface FrBoardService {
 		//댓글등록
 		int insertFrReply(FrBoardReply refb);
 
-//		//아래는 수정하기
-//		int updateFrboard(ArrayList<FrBoard> fb, ArrayList<FrBoardAttach> frba);
+		//아래는 수정하기 
+		int updateFrboard(ArrayList<FrBoard> fb, ArrayList<FrBoardAttach> frba);
 
 
-	
-//		//게시글 상세 조회 
-//		FrBoard boardDetailView(int bno);
-//		
-
-//		
-//		//아래는 게시물 상세 보기 -선생님  -현재 선생님 버전으로 진행중
-//		FrBoard selectBoard(int BoardNo);
-//		
-//		//게시글 삭제 
-//		int deleteBoard(int bno);
-//		
-//		//게시글 수정
-//		int updateBoard(FrBoard fb);
 
 //		//게시글 리뷰작성 
 //		ArrayList<Reply> detailBoardReviewSelect(int bno);

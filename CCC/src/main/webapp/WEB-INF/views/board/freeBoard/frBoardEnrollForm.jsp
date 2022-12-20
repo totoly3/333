@@ -105,9 +105,9 @@
 <!--   </main> -->
    	<!--  위에는 드래그 --> 
   	
-<input type="file" id="upfile" class="form-control-file border" name="upfile">
-<input type="file" id="upfile" class="form-control-file border" name="upfile">	    
-  	
+	<input type="file" id="upfile" class="form-control-file border" name="upfile">
+	<input type="file" id="upfile" class="form-control-file border" name="upfile">	    
+	  	
     <button type="submit" class="btn btn-primary">글 등록하기</button>
   <br><br><br> <br><br><br> <br><br><br>
   </form>

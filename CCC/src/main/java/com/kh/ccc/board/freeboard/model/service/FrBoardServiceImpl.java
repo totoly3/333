@@ -87,6 +87,21 @@ public class FrBoardServiceImpl implements FrBoardService{
 		System.out.println("삭제 성공했으면 1"+result);
 		return result;
 	}
+	//아래는  자유게시판 수정 
+	@Override
+	public int updateFrboard(ArrayList<FrBoard> fb, ArrayList<FrBoardAttach> frba) {
+		
+		//글만 바꾸는경우 
+		int result1 = FrBoardDao.updateFrboard1(sqlSession,fb);
+		System.out.println("글은 수정되었나?"+result1);
+		
+		//파일도 있는경우
+		if(!frba.isEmpty()) {
+			int result2 = FrBoardDao.updateFrboard2(sqlSession,frba);
+			System.out.println("파일은 수정되었나"+result2);
+		}
+		return result1;
+	}
 	
 	//댓글조회
 	@Override
@@ -103,16 +118,8 @@ public class FrBoardServiceImpl implements FrBoardService{
 		return FrBoardDao.insertFrReply(sqlSession,refb);
 		
 	}
+	
 
-
-
-
-//	//게시글 삭제 
-//	@Override
-//	public int deleteBoard(int bno) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
 //	
 //	//게시글 수정
 //	@Override
