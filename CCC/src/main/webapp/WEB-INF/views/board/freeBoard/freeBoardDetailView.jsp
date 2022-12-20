@@ -97,7 +97,7 @@
 	          	</c:choose>
           </c:if> 	
    
-        <c:if test="${fb.size()==2}">
+        <c:if test="${frba.size()==2}">
 		    	<c:choose>
                 	<c:when test="${!fb.get(0).fTitleimg.isEmpty()}">
          	              <tr>
@@ -224,7 +224,7 @@
     			url :"frlist.fbo",
     			data : {fno : ${fb.get(0).fNo}},
     			success : function(result){
-    				console.log(result);
+    				console.log("댓글조회되나");
 					var resultStr = "";
 					
 					for(var i=0; i<result.length; i++){
@@ -235,7 +235,7 @@
 									+"</tr>";
 							}	
 					
-					$("#replyArea > tbody").html(resultStr).css(margin-left:<c:out value="${20*result.frLevel}"/>px);
+					$("#replyArea > tbody").html(resultStr);
 					$("#rcount").text(result.length);
 	    			},
     			error :function(){
@@ -253,8 +253,8 @@
 	    	    	$.ajax({
 			    		url : "frInsert.fbo",
 			    		data : {
-			    				fno : ${fb.get(0).fNo},
-			    				frContent :$vali.val(),
+			    				fNo : ${fb.get(0).fNo},
+			    				frContent :$vali.val()
 // 			    				frWriter : "${loginUser.userId}" 
 			    					//admin 문자 자체로 나오기때문에 문자열 처리를 해줘야함  하지않으면 변수로인식하기때문임.
 			    			},
