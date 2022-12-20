@@ -220,26 +220,31 @@ public class FrBoardController {
 				return mv;
 			}
 			
-//			//아래는 수정 폼에서 등록하기 누르면~
-//			@RequestMapping("update.frbo")
-//			public ModelAndView updateFrboard(MultipartFile upfile,ArrayList<FrBoard> fb,ModelAndView mv,ArrayList<FrBoardAttach> frba,HttpSession session) {
-//					//새로운첨부파일이 있는지 없는지 확인 
-//				if(!upfile.getOriginalFilename().equals("")) {
-//					if(frba.get(0).getFaOrginName() != null) {//기존 첨부파일의 이름이 담겨있는 경우
-//						new File(session.getServletContext().getRealPath(frba.get(0).getFaChangeName())).delete();
-//					}
-//					//새로운 첨부파일 업로드 
-//					String changeName = saveFile(upfile,session);//아래에서 작업한 saveFile메소드 사용 
-//					
-//					
-//					//새 데이터 DB에 등록
-//					frba.setFaOrginName(upfile.getOriginalFilename());
-//					frba.setFaChangeName("resources/board/freeBoard/"+changeName);
-//					
-//					FrBoardService.updateFrboard(fb,frba);
-//				return mv;
-//			}
-			
+			//아래는 수정 폼에서 등록하기 누르면~
+			@RequestMapping("update.frbo")
+			public ModelAndView updateFrboard(MultipartFile upfile,ArrayList<FrBoard> fb,ModelAndView mv,ArrayList<FrBoardAttach> frba,HttpSession session) {
+					//새로운첨부파일이 있는지 없는지 확인 
+				if(!upfile.getOriginalFilename().equals("")) {
+					if(frba.get(0).getFaOrginName() != null) {//기존 첨부파일의 이름이 담겨있는 경우
+						new File(session.getServletContext().getRealPath(frba.get(0).getFaChangeName())).delete();
+					}
+					//새로운 첨부파일 업로드 
+					String changeName = saveFile(upfile,session);//아래에서 작업한 saveFile메소드 사용 
+					
+					//새 데이터 DB에 등록
+					frba.get(0).setFaOrginName(upfile.getOriginalFilename());
+					frba.get(0).setFaChangeName("resources/board/freeBoard/"+changeName);
+					
+					int result =FrBoardService.updateFrboard(fb,frba);
+					
+					if(result>0) {
+						mv.addObject("frba",frba);
+						mv.setViewName("redirect:/detail.fbo");
+					}
+				}
+				//상세보기로 이동
+				return mv;
+			}	
 			
 //			아래는 게시판 detail 뷰 댓글 전체조회 
 			@ResponseBody
