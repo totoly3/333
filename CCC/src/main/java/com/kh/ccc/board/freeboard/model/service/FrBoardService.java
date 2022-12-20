@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.ccc.board.freeboard.model.vo.FrBoard;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
+import com.kh.ccc.board.freeboard.model.vo.FrBoardReply;
 import com.kh.ccc.common.model.vo.PageInfo;
 
 public interface FrBoardService {
@@ -25,13 +26,26 @@ public interface FrBoardService {
 		ArrayList<FrBoard> frboardDetailView(int fno);
 
 		//아래는 게시글 상세보기 (파일)
-		FrBoardAttach frboardAttDetailView(int fno);
+		ArrayList<FrBoardAttach> frboardAttDetailView(int fno);
 	
-		//글쓰기 (사진,글)
+		//글쓰기 파일두개일때 (사진,글)
 		int insertFrBoard(FrBoard fb, ArrayList<FrBoardAttach> falist);
 
+		//글만 등록할떄
+		int insertFrBoardOnlyWrite(FrBoard fb);
+		
 		//아래는 자유게시판 글 삭제 
 		int frboardDelete(int fno);
+
+		//댓글 조회 
+		ArrayList<FrBoardReply> detailFrBoardReviewSelect(int fno);
+
+		//댓글등록
+		int insertFrReply(FrBoardReply refb);
+
+//		//아래는 수정하기
+//		int updateFrboard(ArrayList<FrBoard> fb, ArrayList<FrBoardAttach> frba);
+
 
 	
 //		//게시글 상세 조회 

@@ -254,7 +254,7 @@
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-bar me-1"></i>
-                                     	   월별 방문자수
+                                    	   월별 방문자수
                                     </div>
                                     <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                                 </div>
@@ -308,7 +308,7 @@
 					                			</c:otherwise>
 											</c:choose>
 											
-											<td>${a.mPointNumber }</td> 
+											<td>${a.mPoint }</td> 
 										</tr>
 									</c:forEach>
 			         			</tbody>

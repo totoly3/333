@@ -99,6 +99,34 @@
 
 
     <div id="header">
+
+        <div id="header_1">
+            <div id="header_1_left">
+                <img src="https://w7.pngwing.com/pngs/563/658/png-transparent-air-force-nike-free-swoosh-adidas-nike-logo-angle-text-monochrome.png" alt="">
+            </div>
+            <div id="header_1_center"></div>
+            <div id="header_1_right">
+                <!-- 로그인 전 -->
+                <a href="">회원가입</a>
+                <a href="loginform.me">로그인</a>
+                <a href="mainAdmin.ad">관리자페이지</a>
+                <a href="mypageEnroll.me">마이페이지</a>
+                
+                <!-- 로그인 후 -->
+                <!-- 
+                    <lable>홍길동님 환영합니다</label> &nbsp;&nbsp;
+                    <a href="">마이페이지</a>
+                    <a href="">로그아웃</a>
+                -->
+            </div>
+        </div>
+        <div id="header_2">
+            <ul>
+                <li><a href="${ pageContext.request.contextPath }">HOME</a></li>
+                <li><a href="">공지사항</a></li>
+                <li><a href="list.fr">자유게시판</a></li>
+                <li><a href="list.ch">캐릭터게시판</a></li>
+
         <div id="header_2">     <!--여기가 리스트 -->
            <ul id="navi11111">
                <li><a href="${ pageContext.request.contextPath }">H O M E</a></li>
