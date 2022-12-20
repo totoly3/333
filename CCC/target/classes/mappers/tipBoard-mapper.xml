@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="tipBoardMapper">
+  
+  <!-- 게시글 갯수 -->
+	<select id="selectListCount" resultType="_int">
+	SELECT COUNT(*)
+ 	 	FROM TB_TIP
+  	WHERE F_STATUS='Y'
+	</select>
+  
+  
+  		<!--//게시글 조회 메소드  게시글 전체 조회1 -->
+  	<resultMap type="tipBoard" id="tipBoardResultSet">
+  	<result column="T_NO" property="tNo"/>
+   	<result column="T_WRITER" property="tWriter"/>
+   	<result column="T_TYPE" property="tType"/>
+   	<result column="T_TITLE" property="tTitle"/>
+   	<result column="T_CONTENT" property="tContent"/>
+   	<result column="T_COUNT" property="count"/>
+   	<result column="T_CREATE_DATE" property="tCreateDate"/>
+   	<result column="T_UPDATE_DATE" property="tUpdateDate"/>
+   	<result column="T_DELETE_DATE" property="tDeleteDate"/>
+    <result column="T_STATUS" property="status"/>
+  	</resultMap>
+  	
+  	<!-- 아래는 attach  -->
+  	
+  	<resultMap type="tipAttBoard" id="tipAttBoardResultSet">
+  	<result column="TA_NO" property="taNo"/>
+   	<result column="T_NO" property="refBno"/>
+   	<result column="TA_ORIGIN_NAME" property="taOrginName"/>
+   	<result column="TA_CHANGE_NAME" property="taChangeName"/>
+   	<result column="TA_FILE_PATH" property="taFilePath"/>
+   	<result column="TA_STATUS" property="status"/>
+   	</resultMap>
+  	
+	<!-- 게시글 조회2 -->
+	<select id="selectList" resultMap="tipBoardResultSet">
+	  SELECT T_NO
+			,T_WRITER
+			,T_TYPE
+			,T_TITLE
+			,T_CONTENT
+			,T_COUNT
+			,T_CREATE_DATE
+			,T_UPDATE_DATE
+			,T_DELETE_DATE
+			,T_STATUS
+    FROM TB_TIP 
+    WHERE T_STATUS='Y' 
+   ORDER BY T_NO DESC
+	</select>
+	
+		<!-- 조회수증가  -->
+	<update id="increaseCount">
+	UPDATE TB_TIP 
+	SET T_COUNT = T_COUNT + 1 
+	WHERE T_NO = #{tNo}
+	AND T_STATUS ='Y'
+	</update>
+	
+	<!-- 아래는 게시판 상세보기 -->
+	<select id="tipBoardDetailView" resultMap="tipBoardResultSet">
+	SELECT 		 FRB.T_NO
+				,FRB.T_TITLE
+				,FRB.T_CONTENT
+				,FRB.T_WRITER		
+				,TRBA.TA_ORIGIN_NAME	
+				,FRB.T_COUNT	
+				,FRB.T_CREATE_DATE
+				,TRBA.TA_FILE_PATH || TRBA.TA_CHANGE_NAME "tTitleimg"
+				
+	FROM TB_TIP FRB , TB_TIP_ATTACH TRBA
+	WHERE T_STATUS='Y'
+		AND FRB.T_NO = TRBA.T_NO
+		AND  FRB.T_NO = #{fNo}
+	ORDER BY FRB.T_NO DESC
+	</select>
+	
+	<!-- 아래는 게시글 상세보기 파일 -->
+		<select id="tipboardAttDetailView" resultMap="tipAttBoardResultSet">
+	SELECT 	TA_NO
+				,T_NO
+				,TA_ORIGIN_NAME
+				,TA_CHANGE_NAME
+				,TA_FILE_PATH
+				,TA_STATUS
+	FROM TB_TIP_ATTACH
+	WHERE TA_STATUS='Y'
+		AND  T_NO = #{tNo}
+	ORDER BY T_NO DESC
+	</select>
+	
+	
+	<!--  게시글등록 1 (사진 미포함) -->
+	<insert id="insertTipBoard1">
+	INSERT INTO TB_TIP(
+						 T_NO
+						,T_TITLE			
+						,T_CONTENT	
+						,T_TYPE	
+				)VALUES(
+						SEQ_TNO.NEXTVAL
+						,#{tTitle}		
+						,#{content}
+						,2
+						)	
+	</insert>
+	
+	<!--  게시글등록 2 (사진 포함) -->
+	<insert id="insertAttTipBoard2" parameterType="java.util.List">
+	INSERT INTO TB_TIP_ATTACH(
+				 TA_NO
+				,T_NO
+				,TA_ORIGIN_NAME
+				,TA_CHANGE_NAME			
+				
+	)SELECT SEQ_TANO.NEXTVAL,SEQ_TNO.CURRVAL, A.*
+		FROM (
+				<foreach collection="list" item="item" index="index" separator="union all">
+					SELECT #{ item.taOrginName }
+						  ,#{ item.taChangeName }
+					FROM SYS.DUAL	  
+				</foreach>
+			  )A
+	</insert>
+  
+  
+  </mapper>

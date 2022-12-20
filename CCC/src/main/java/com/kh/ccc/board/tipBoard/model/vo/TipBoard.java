@@ -2,44 +2,40 @@ package com.kh.ccc.board.tipBoard.model.vo;
 
 import java.sql.Date;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 public class TipBoard {
-	//
-	 private int	tNo;			// 팁 게시판 글번호			
-	 private int	tWriter;		// 팁 게시판 작성자번호
-	 private int 	tType;			// 팁 게시판 유형
-	 private String tTitle;			// 팁 게시판 제목		
-	 private String tContent;		// 팁 게시판 내용	
-	 private int	tCount;			// 팁 게시판 조회수	
-	 private Date	tCreateDate;	// 팁 게시판 작성일			
-	 private Date	tUpdateDate;	// 팁 게시판 수정일	
-	 private Date	tDeleteDate;	// 팁 게시판 삭제일			
-	 private String tStatus;		// 팁 게시판 상태			
-	 private String tTitleimg;  	// 팁 게시판 파일이미지
-	 
-	 
+	
+	private int 	tNo;			// 팁 글 번호
+	private String 	tWriter;		// 팁 작성자
+	private String 	tType;			// 팁 유형
+	private String 	tTitle;			// 팁 글 제목
+	private String 	tContent;		// 팁 글 내용
+	private int 	count;			// 팁 글 조회수
+	private Date	tCreateDate;	// 팁 글 작성일
+	private Date	tUpdateDate;	// 팁 글 수정일
+	private Date	tDeleteDate;	// 팁 글 삭제일
+	private String 	status;			// 팁 글 상태
+	
 	public TipBoard() {
 		super();
 	}
 
-	public TipBoard(int tNo, int tWriter, int tType, String tTitle, String tContent, int tCount, Date tCreateDate,
-			Date tUpdateDate, Date tDeleteDate, String tStatus, String tTitleimg) {
+	public TipBoard(int tNo, String tWriter, String tType, String tTitle, String tContent, int count, Date tCreateDate,
+			Date tUpdateDate, Date tDeleteDate, String status) {
 		super();
 		this.tNo = tNo;
 		this.tWriter = tWriter;
 		this.tType = tType;
 		this.tTitle = tTitle;
 		this.tContent = tContent;
-		this.tCount = tCount;
+		this.count = count;
 		this.tCreateDate = tCreateDate;
 		this.tUpdateDate = tUpdateDate;
 		this.tDeleteDate = tDeleteDate;
-		this.tStatus = tStatus;
-		this.tTitleimg = tTitleimg;
+		this.status = status;
 	}
 
 	public int gettNo() {
@@ -50,19 +46,19 @@ public class TipBoard {
 		this.tNo = tNo;
 	}
 
-	public int gettWriter() {
+	public String gettWriter() {
 		return tWriter;
 	}
 
-	public void settWriter(int tWriter) {
+	public void settWriter(String tWriter) {
 		this.tWriter = tWriter;
 	}
 
-	public int gettType() {
+	public String gettType() {
 		return tType;
 	}
 
-	public void settType(int tType) {
+	public void settType(String tType) {
 		this.tType = tType;
 	}
 
@@ -82,12 +78,12 @@ public class TipBoard {
 		this.tContent = tContent;
 	}
 
-	public int gettCount() {
-		return tCount;
+	public int getCount() {
+		return count;
 	}
 
-	public void settCount(int tCount) {
-		this.tCount = tCount;
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 	public Date gettCreateDate() {
@@ -114,29 +110,21 @@ public class TipBoard {
 		this.tDeleteDate = tDeleteDate;
 	}
 
-	public String gettStatus() {
-		return tStatus;
+	public String getStatus() {
+		return status;
 	}
 
-	public void settStatus(String tStatus) {
-		this.tStatus = tStatus;
-	}
-
-	public String gettTitleimg() {
-		return tTitleimg;
-	}
-
-	public void settTitleimg(String tTitleimg) {
-		this.tTitleimg = tTitleimg;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@Override
 	public String toString() {
 		return "TipBoard [tNo=" + tNo + ", tWriter=" + tWriter + ", tType=" + tType + ", tTitle=" + tTitle
-				+ ", tContent=" + tContent + ", tCount=" + tCount + ", tCreateDate=" + tCreateDate + ", tUpdateDate="
-				+ tUpdateDate + ", tDeleteDate=" + tDeleteDate + ", tStatus=" + tStatus + ", tTitleimg=" + tTitleimg
-				+ "]";
+				+ ", tContent=" + tContent + ", count=" + count + ", tCreateDate=" + tCreateDate + ", tUpdateDate="
+				+ tUpdateDate + ", tDeleteDate=" + tDeleteDate + ", status=" + status + "]";
 	}
- 
- 
+	
+	
+	
 }

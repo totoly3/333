@@ -6,69 +6,74 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kh.ccc.board.freeboard.model.vo.FrBoard;
-import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
+import com.kh.ccc.board.tipBoard.model.vo.TipAttach;
 import com.kh.ccc.board.tipBoard.model.vo.TipBoard;
+import com.kh.ccc.board.tipBoard.model.vo.TipReply;
 import com.kh.ccc.common.model.vo.PageInfo;
 
 @Repository
 public class TipBoardDao {
-	//게시글 갯수 조회
+
+	//게시글 총 개수 조회
 	public int selectListCount(SqlSessionTemplate sqlSession) {
-		int result = sqlSession.selectOne("frBoardMapper.selectListCount");
-		return result ;
+		return sqlSession.selectOne("tipBoardMapper.selectListCount");
 	}
-	//아래는 게시글 리스트 조회 
+	//게시글 조회
 	public ArrayList<TipBoard> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
-		int limit = pi.getBoardLimit();
-		int offset =(pi.getCurrentPage()-1)* limit;	
+		
+		int limit = pi.getBoardLimit(); //게시글 몇개를 조회할 건지
+		int offset = (pi.getCurrentPage()-1) * limit; //몇개의 게시글을 건너뛰고 조회할 것인지에 대한 값
 		
 		RowBounds rowBounds = new RowBounds(offset,limit);
-		ArrayList<TipBoard> tlist=(ArrayList)sqlSession.selectList("tipBoardMapper.selectList",null,rowBounds);
-		return tlist;
+		//매개변수 3개짜리 selectList사용
+		return (ArrayList)sqlSession.selectList("tipBoardMapper.selectList", null, rowBounds);
 	}
-
-	//d아래는 조회수 증가 
-	public int increaseCount(SqlSessionTemplate sqlSession, int tno) {
-		
-		return sqlSession.update("tipBoardMapper.increaseCount",tno);
-		
+	//게시글 등록 (글)
+	public int insertBoard(SqlSessionTemplate sqlSession, TipBoard tb) {
+		return sqlSession.insert("tipBoardMapper.insertBoard", tb);
 	}
-	//게시물  상세보기
-	public ArrayList<TipBoard> tipboardDetailView(SqlSessionTemplate sqlSession, int tno) {
-
-		ArrayList<TipBoard> trbalist=(ArrayList)sqlSession.selectList("tipBoardMapper.tipboardDetailView",fno);
-		System.out.println("tipbalist :"+tipbalist);
-		return tipbalist;
-		
+	//게시글 첨부파일 등록
+	public int insertAttach(SqlSessionTemplate sqlSession, ArrayList<TipAttach> list) {
+		return sqlSession.insert("tipBoardMapper.insertAttach", list);
 	}
-	//아래는 게시글 상세보기 첨부파일 가져오려고
-	public FrBoardAttach frboardAttDetailView(SqlSessionTemplate sqlSession, int fno) {
-		
-		return sqlSession.selectOne("tipBoardMapper.frboardAttDetailView");
+	//게시글 조회수 증가
+	public int increaseCount(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.update("tipBoardMapper.increaseCount", bno);	
 	}
-	
-	//아래는 게시글 등록(글만)
-	public int insertFrBoard1(SqlSessionTemplate sqlSession, FrBoard tb) {
-		
-		int result1 =sqlSession.insert("tipBoardMapper.insertFrBoard1",tb);
-		System.out.println("result1 게시글 등록되었으면 1"+result1);
-		return result1;
+	//게시글 상세정보 조회 (게시글 1개)
+	public TipBoard selectBoard(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.selectOne("tipBoardMapper.selectBoard", bno);
 	}
-	
-	
-	// 아래는 게시글 등록 (사진 )
-		public int insertAttFrBoard2(SqlSessionTemplate sqlSession, ArrayList<FrBoardAttach> falist) {
-
-			int result2 =sqlSession.insert("frBoardMapper.insertAttFrBoard2",falist);
-			System.out.println("result2 게시글 등록되었으면 2"+result2);
-			return result2;
+	//게시글 수정
+	public int updateBoard(SqlSessionTemplate sqlSession, TipBoard cb) {
+		return sqlSession.update("tipBoardMapper.updateBoard", cb);
 	}
-		
-	//아래는 자유게시판 글 삭제 
-		public int frboardDelete(SqlSessionTemplate sqlSession, int fno) {
-			// TODO Auto-generated method stub
-			return 0;
-		}
-
+	//게시글 첨부파일 수정
+	public int updateAttach(SqlSessionTemplate sqlSession, TipBoard cb) {
+		return sqlSession.update("tipBoardMapper.updateAttach", cb);
+	}
+	//게시글 삭제
+	public int deleteBoard(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.update("tipBoardMapper.deleteBoard", bno);
+	}
+	//게시글 첨부파일 삭제
+	public int deleteAttach(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.update("tipBoardMapper.deleteAttach", bno);
+	}
+	//댓글 리스트 조회
+	public ArrayList<TipReply> selectReplyList(SqlSessionTemplate sqlSession, int boardNo) {
+		return (ArrayList)sqlSession.selectList("tipBoardMapper.selectReplyList", boardNo);
+	}
+	//댓글 등록
+	public int insertReply(SqlSessionTemplate sqlSession, TipReply tr) {
+		return sqlSession.insert("tipBoardMapper.insertReply", tr);
+	}
+	//댓글 수정
+	public int updateReply(SqlSessionTemplate sqlSession, TipReply cr) {
+		return sqlSession.update("tipBoardMapper.updateReply", cr);
+	}
+	//댓글 삭제
+	public int deleteReply(SqlSessionTemplate sqlSession, TipReply cr) {
+		return sqlSession.update("tipBoardMapper.deleteReply", cr);
+	}
 }

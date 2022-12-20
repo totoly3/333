@@ -2,8 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,10 +44,10 @@
     <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
-            <h2>게시판</h2>
+            <h2>팁 게시판</h2>
             <br>
    
-            <a class="btn btn-secondary" style="float:right;" href="insert.tpom">글쓰기</a>
+            <a class="btn btn-danger" style="float:right;" href="insert.tpom">글쓰기</a>
         
             <br>
             <br>
@@ -68,13 +66,13 @@
        
                 	<c:forEach var="B" items="${list}">
 						<tr>
-	                        <td>${B.tipNo }</td>
-	                        <td>${B.tipTitle } </td>
-	                        <td>${B.tipWriter } </td>
-	                        <td>${B.tipCount }</td>
-	                        <td>${B.tipCreateDate }</td>
+	                        <td>${B.tNo }</td>
+	                        <td>${B.tTitle } </td>
+	                        <td>${B.tWriter } </td>
+	                        <td>${B.tCount }</td>
+	                        <td>${B.tCreateDate }</td>
 	                        <td>
-	                        <c:if test="${not empty B.tipTitleimg}">★
+	                        <c:if test="${not empty B.tTitleimg}">★
 	                        </c:if>
 	                        </td>
 	                    </tr>
@@ -122,7 +120,7 @@
                 <div class="text">
                     <input type="text" class="form-control" name="keyword">
                 </div>
-                <button type="submit" class="searchBtn btn btn-secondary">검색</button>
+                <button type="submit" class="searchBtn btn btn-danger">검색</button>
             </form>
             <br><br>
         </div>

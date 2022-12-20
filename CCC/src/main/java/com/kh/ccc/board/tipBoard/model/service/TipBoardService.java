@@ -2,61 +2,45 @@ package com.kh.ccc.board.tipBoard.model.service;
 
 import java.util.ArrayList;
 
-import com.kh.ccc.board.freeboard.model.vo.FrBoard;
-import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
+import com.kh.ccc.board.tipBoard.model.vo.TipAttach;
 import com.kh.ccc.board.tipBoard.model.vo.TipBoard;
-import com.kh.ccc.board.tipBoard.model.vo.TipBoardAttach;
+import com.kh.ccc.board.tipBoard.model.vo.TipReply;
 import com.kh.ccc.common.model.vo.PageInfo;
 
 public interface TipBoardService {
-
-	//게시글 리스트 조회 + 페이징처리 
 	
-		// 아래는 게시글 총개수
-		int selectListCount();
-		
-		
-		//게시글 리스트 조회 
-		ArrayList<TipBoard>selectList(PageInfo pi);
-
-
-		//아래는 게시글 조회수 증가 
-		int increaseCount(int tno);
-
-		//아래는 게시글 상세보기 
-		ArrayList<TipBoard> tipboardDetailView(int tno);
-
-		//아래는 게시글 상세보기 (파일)
-		TipBoardAttach tipboardAttDetailView(int tno);
+	//1.게시글의 총 개수
+	int selectListCount();
 	
-		//글쓰기 (사진,글)
-		int insertTipBoard(TipBoard tb, ArrayList<TipBoardAttach> talist);
-
-		//아래는 자유게시판 글 삭제 
-		int tipboardDelete(int tno);
-
+	//2.게시글 리스트 조회
+	ArrayList<TipBoard> selectList(PageInfo pi);
 	
-//		//게시글 상세 조회 
-//		FrBoard boardDetailView(int bno);
-//		
-
-//		
-//		//아래는 게시물 상세 보기 -선생님  -현재 선생님 버전으로 진행중
-//		FrBoard selectBoard(int BoardNo);
-//		
-//		//게시글 삭제 
-//		int deleteBoard(int bno);
-//		
-//		//게시글 수정
-//		int updateBoard(FrBoard fb);
-
-//		//게시글 리뷰작성 
-//		ArrayList<Reply> detailBoardReviewSelect(int bno);
-//
-//		//댓글 등록
-//		int insertReply(Reply r);
-
-		//조회수 top5 메인에 게시글 조회
-
-//		ArrayList<FrBoard> topBoard();
+	
+	//캐릭터 게시판 게시글 등록
+	int insertCharBoard(TipBoard cb,ArrayList<TipAttach> list);
+	
+	//게시글 상세조회 및 조회수 증가
+	//1.게시글 조회수 증가
+	int increseCount(int bno);
+	//2.게시글 상세 조회
+	TipBoard selectBoard(int bno);
+	
+	//게시글 수정
+	int updateBoard(TipBoard cb);
+	
+	//게시글 삭제
+	int deleteBoard(int bno);
+	
+	//댓글 리스트 출력
+	ArrayList<TipReply> selectReplyList(int boardNo);
+	
+	//댓글 등록
+	int insertReply(TipReply cr);
+	
+	//댓글 수정
+	int updateReply(TipReply cr);
+	
+	//댓글 삭제
+	int deleteReply(TipReply cr);
+	
 }
