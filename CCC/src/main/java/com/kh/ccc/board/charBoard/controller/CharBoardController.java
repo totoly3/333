@@ -251,24 +251,25 @@ public class CharBoardController {
 		return (result != 0) ? "NNNNY" : "NNNNN";
 	}
 	
-	//대댓글 등록
+	//댓글 등록
 	@ResponseBody
 	@RequestMapping(value="replyAnswer.ch",produces="text/html; charset=UTF-8")
 	public String insertReplyAnswer(CharReply cr, HttpSession session) {
-		
+			
 		//int reWriter = session.getAttribute("회원번호");
-		int number = boardService.maxNum(); // 새 댓글 번호 생성, 참조댓글번호(reGroupNo)는 부모댓글번호(reNo)와 같다
+		int number = boardService.maxNum(); // 새 댓글 번호 생성, 참조댓글번호(reGroupNo)는 부모댓글번호(reNo)와 같다 (시퀀스가 필요없나?)
 		
 		int reStep = 0, reLevel = 0; 		  //첫번째 댓글은 0으로 기본 세팅
 		int refBno = cr.getRefBno(); 		  //댓글을 단 게시글 번호
-		int reNo = cr.getReNo();	 		  //대댓글을 단 부모 댓글의 번호
+		int reGroupNo = cr.getReNo();	 	  //대댓글을 단 부모 댓글의 번호
 		String reContent = cr.getReContent(); //대댓글의 내용
 		
-		if(reNo != 0) { //부모 댓글번호가 있다면
-			CharReply cr1 = boardService.replySelect(reNo);
+		if(reGroupNo != 0) { //댓글에 댓글을 작성할 때
+			
+			CharReply cr1 = boardService.replySelect(reGroupNo); //읽어온 댓글의 reStep과 re_level을 알기 위해서
 			
 			if(cr1.getReStep() == 0 && cr1.getReLevel() == 0) {
-				cr.setReGroupNo(reNo); // 대댓글끼리 그룹핑하기 위해 부모댓글의 번호로 참조댓글번호 세팅
+				cr.setReGroupNo(reGroupNo); // 대댓글끼리 그룹핑하기 위해 부모댓글의 번호로 참조댓글번호 세팅
 				int maxStep = boardService.maxStep(cr1.getReGroupNo()); //새로운 대댓글을 작성하면 아래로 가도록 하기위해
 				cr.setReStep(maxStep);
 				cr.setReLevel(cr1.getReLevel() + 1);
@@ -284,6 +285,7 @@ public class CharBoardController {
 				cr.setReStep(cr1.getReStep() + 1); 	 //부모댓글의 step보다 +1 증가
 				cr.setReLevel(cr1.getReLevel() + 1); //부모댓글의 level보다 +1 증가
 			}
+
 		}else {
 			cr.setReGroupNo(number);
 			cr.setReStep(reStep); 	 //기본 댓글에는 0으로 세팅
@@ -291,16 +293,14 @@ public class CharBoardController {
 		}
 		
 		cr.setReContent(reContent); //댓글 내용 담기
-		cr.setReNo(reNo); 			//댓글의 번호 생성? (시퀀스 어쩔..?)
+		cr.setReNo(number); 		//새로 생성한 댓글의 번호 담기 (시퀀스 어쩔..?)
 		cr.setRefBno(refBno); 		//댓글이 작성된 게시글 번호 담기
 		//cr.setReWriter(reWriter); //댓글 작성자 (아직 안넣음)
 		
-		int result = boardService.insertCharReply(cr);
+		int result = boardService.insertReply(cr);
 		
-		return "redirect:/detail.ch?bno=" + cr.getRefBno();
+		return (result != 0) ? "NNNNY" : "NNNNN";
 	}
-	
-	
 	
 	//댓글 삭제
 	@ResponseBody
