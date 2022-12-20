@@ -156,6 +156,24 @@
 			 WHERE F_NO = #{fNo} 
 			 AND F_STATUS = 'Y'
 	   </update>
+	   
+	    <!-- 아래는 게시글 수정 (글만)  -->
+		<update id="updateFrboard1" >
+			 UPDATE TB_FREE 
+			 SET F_TITLE =#{fTitle},
+				 F_CONTENT = #{fContent}
+			 WHERE F_NO = #{fNo} 
+			 AND F_STATUS = 'Y'
+	   </update>
+	   
+	    <!-- 아래는 게시글 수정(첨부파일)  -->
+		<update id="updateFrboard2">
+			 UPDATE TB_FREE_ATTACH 
+			 SET FA_ORIGIN_NAME = #{faOrginName} 
+				,FA_CHANGE_NAME=#{faChangeName}
+			 WHERE F_NO = #{fNo} 
+			 AND F_STATUS = 'Y'
+	   </update>
 		
 	  <!-- 아래는 게시글 댓글 리뷰  -->  
 	   <select id="detailFrBoardReviewSelect" resultMap="frReplyBoardResultSet">
@@ -168,16 +186,18 @@
 	   <!--  아래는 댓글 등록  -->
 	   <insert id="insertFrReply">
 		INSERT INTO TB_FREE_REPLY
+		
 					(FR_NO
 					,FR_CONTENT
 					,F_NO
 					,FR_WRITER
 					)
-			VALUES(SEQ_FRNO.NEXTVAL
+			VALUES(
+					SEQ_FRNO.NEXTVAL
 					,#{frContent}
 					,#{fNo}
-					,#{frWriter}
-							)
+					,1
+					)
 					
 	</insert>
 </mapper>
