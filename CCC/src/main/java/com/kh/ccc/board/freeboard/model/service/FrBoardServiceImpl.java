@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.ccc.board.freeboard.model.dao.FrBoardDao;
 import com.kh.ccc.board.freeboard.model.vo.FrBoard;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
+import com.kh.ccc.board.freeboard.model.vo.FrBoardReply;
 import com.kh.ccc.common.model.vo.PageInfo;
 @Service
 public class FrBoardServiceImpl implements FrBoardService{
@@ -51,12 +52,12 @@ public class FrBoardServiceImpl implements FrBoardService{
 		}
 	//아래는 게시판 상세보기 파일 
 	@Override
-	public FrBoardAttach frboardAttDetailView(int fno) {
+	public ArrayList<FrBoardAttach> frboardAttDetailView(int fno) {
 		return FrBoardDao.frboardAttDetailView(sqlSession,fno);
 		
 	}
 		
-	//아래는 글쓰기 
+	//아래는 글쓰기 파일두개일때
 	@Override
 	public int insertFrBoard(FrBoard fb, ArrayList<FrBoardAttach> falist) {
 		int result1 =FrBoardDao.insertFrBoard1(sqlSession,fb);
@@ -71,6 +72,14 @@ public class FrBoardServiceImpl implements FrBoardService{
 	
 	}
 	
+	//아래는 글만 
+	@Override
+	public int insertFrBoardOnlyWrite(FrBoard fb) {
+		int result1 =FrBoardDao.insertFrBoard1(sqlSession,fb);
+		return result1;
+	}
+	
+	
 	//아래는 자유게시판 글 삭제 
 	@Override
 	public int frboardDelete(int fno) {
@@ -79,9 +88,22 @@ public class FrBoardServiceImpl implements FrBoardService{
 		return result;
 	}
 	
+	//댓글조회
+	@Override
+	public ArrayList<FrBoardReply> detailFrBoardReviewSelect(int fno) {
 		
-
+		ArrayList<FrBoardReply> frlist = FrBoardDao.detailFrBoardReviewSelect(sqlSession,fno);
+		System.out.println("frlist"+frlist);
+		return frlist;
+	}
 	
+	//아래는 댓글 등록
+	@Override
+	public int insertFrReply(FrBoardReply refb) {
+		return FrBoardDao.insertFrReply(sqlSession,refb);
+		
+	}
+
 
 
 
