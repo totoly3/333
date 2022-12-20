@@ -156,19 +156,19 @@
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
-		        <h5 class="modal-title" id="exampleModalLabel">대댓글 내용을 입력해주세요!</h5>
+		        <h5 class="modal-title" id="exampleModalLabel">답글 내용을 입력해주세요!</h5>
 		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 		          <span aria-hidden="true">&times;</span>
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		      	<textarea id="reReContent" rows="2" cols="49.8"
+		      	<textarea id="reAnswerContent" rows="2" cols="49.8"
 									style="resize: none;"></textarea>
 					<div id="reReply_cnt">(0 / 50)</div>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-		        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="">등록하기</button>
+		        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="ReplyAnswer();">등록하기</button>
 		      </div>
 		    </div>
 		  </div>
@@ -238,8 +238,8 @@
         							   + "<th>"+reList[i].reWriter+"</th>"
         							   + "<td>"+reList[i].reContent+"</td>"
         							   + "<td>"+reList[i].reCreateDate+"</td>"
-        							   + "<td><button class='btn btn-outline-primary' data-toggle='modal' data-target='#reReply'"
-        							   + "id='reUpdateNo' value=+"+reList[i].reNo+">대댓글등록</button>"
+        							   + "<td><button class='btn btn-outline-success' data-toggle='modal' data-target='#reReply'"
+        							   + "id='reUpdateNo' value=+"+reList[i].reNo+">답글</button>"
         							   + "<button class='btn btn-outline-primary' data-toggle='modal' data-target='#updateReply'"
         							   + "id='reUpdateNo' value=+"+reList[i].reNo+">수정</button>"
         							   + "<button onclick='return deleteReply("+reList[i].reNo+")' class='btn btn-outline-danger'>삭제</button></td>"     							   
@@ -283,6 +283,25 @@
         		});
         	}
         	
+        	//대댓글 등록
+        	function ReplyAnswer(){
+        		$.ajax({
+        			url : "replyAnswer.ch",
+        			data : {
+        				refBno : ${ cb.boardNo },
+        				reNo : reUpdateNo,
+        				reContent : $("#reAnswerContent").val()
+        			},
+        			type : "post",
+        			success : function(result){
+        				console.log("통신성공!");
+        			},
+        			error : function(){
+        				console.log("통신실패!");
+        			}
+        		});
+        	}
+        	
         	//댓글 삭제
         	function deleteReply(reNo){
         		$.ajax({
@@ -317,7 +336,7 @@
 			});
         	
 			//대댓글 수정 글자 수 제한
-			$('#reReContent').on('keyup',function(){
+			$('#reAnswerContent').on('keyup',function(){
 				$('#reReply_cnt').html("("+$(this).val().length+" / 50)");
 				
 				if($(this).val().length > 50){
