@@ -172,11 +172,7 @@ public class FrBoardController {
 				}
 				return changeName;
 			}
-			//아래는 주말동안한거 
-			//아래는 주말동안한거 
-			//아래는 주말동안한거 
-			//아래는 주말동안한거 
-			//아래는 주말동안한거 
+		
 			//아래는 주말동안한거 
 			
 			
@@ -260,7 +256,7 @@ public class FrBoardController {
 			@ResponseBody
 			@RequestMapping(value="frInsert.fbo",produces="text/html; charset=UTF-8")
 			public String insertFrReply(FrBoardReply refb) {
-
+	
 				System.out.println("refb"+refb);
 				int result = FrBoardService.insertFrReply(refb);
 

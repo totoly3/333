@@ -168,16 +168,18 @@
 	   <!--  아래는 댓글 등록  -->
 	   <insert id="insertFrReply">
 		INSERT INTO TB_FREE_REPLY
+		
 					(FR_NO
 					,FR_CONTENT
 					,F_NO
 					,FR_WRITER
 					)
-			VALUES(SEQ_FRNO.NEXTVAL
+			VALUES(
+					SEQ_FRNO.NEXTVAL
 					,#{frContent}
 					,#{fNo}
-					,#{frWriter}
-							)
+					,1
+					)
 					
 	</insert>
 </mapper>
