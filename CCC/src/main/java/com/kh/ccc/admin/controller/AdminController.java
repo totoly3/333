@@ -26,17 +26,17 @@ import com.kh.ccc.member.model.vo.Member;
 @Controller
 public class AdminController {
 	
-	@Autowired
-	private AdminService adminService;
+		@Autowired
+		private AdminService adminService;
 	
 	
-	
-	@RequestMapping("mainAdmin.ad")
-	public String mainAdmin() {
+		//전달
+		@RequestMapping("mainAdmin.ad")
+		public String mainAdmin() {
 		
 		return "admin/mainAdmin";
 		
-	}
+		}
 	
 	
 		//리스트 조회 + 회원수
@@ -110,10 +110,9 @@ public class AdminController {
 	    bodyCell6.setCellValue(m.getmPoint());
 		
 		}
-		
-		
+
 	 	response.setContentType("ms-vnd/excel");
-        response.setHeader("Content-Disposition", "attachment;filename=CCC_memberList.xls");
+        response.setHeader("Content-Disposition", "attachment;filename=CCC_memberList.xlsx");
  
         try {
 			workbook.write(response.getOutputStream());

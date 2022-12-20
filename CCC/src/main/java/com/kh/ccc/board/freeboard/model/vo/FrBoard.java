@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 public class FrBoard {
-	//
+	////
 	 private int	fNo;		//자유게시판 글번호			
 	 private int	fWriter;	//자유게시판 작성자번호
 	 private int 	fType;		//자유게시판 유형
