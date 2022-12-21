@@ -88,7 +88,7 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="selectAdmin.ad">관리자조회</a>
+                                    <a class="nav-link" href="adminList.ad">관리자조회</a>
                                     <a class="nav-link" href="layout-sidenav-light.html">관리자등록</a>
                                 </nav>
                             </div>

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.ccc.admin.model.service.AdminService;
+import com.kh.ccc.admin.model.vo.Admin;
 import com.kh.ccc.member.model.vo.Member;
 
 
@@ -131,10 +132,13 @@ public class AdminController {
 	}
 		
 		
-		//특수관리자(관리자조회 페이지)
-		@RequestMapping("selectAdmin.ad")
-		public String selectAdmin() {
+		//관리자리스트 조회 (특수관리자페이지)
+		@RequestMapping("adminList.ad.ad")
+		public String selectAdmin(Model model) {
 			
+		ArrayList<Admin> aList = adminService.adminList();
+			
+		model.addAttribute("aList",aList);	
 			
 		return "admin/selectAdmin";
 			
