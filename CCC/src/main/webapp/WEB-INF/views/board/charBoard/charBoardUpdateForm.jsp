@@ -39,11 +39,11 @@
 
             <form id="updateForm" method="post" action="update.ch" enctype="multipart/form-data">
             	<!-- 글번호 히든으로 넘기기 -->
-            	<input type="hidden" name="boardNo" value="${ cbList.get(0).boardNo }">
+            	<input type="hidden" name="boardNo" value="${ cb.boardNo }">
                 <table algin="center">
                     <tr>
                         <th><label for="title">제목</label></th>
-                        <td><input type="text" id="title" class="form-control" value="${ cbList.get(0).boardTitle }" name="boardTitle" required></td>
+                        <td><input type="text" id="title" class="form-control" value="${ cb.boardTitle }" name="boardTitle" required></td>
                     </tr>
                     <tr>
                         <th><label for="writer">작성자</label></th>
@@ -52,12 +52,27 @@
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
                         <td>
-                            <input type="file" id="upfile" class="form-control-file border" name="upfile">
+                            <div id="file-area" align="center">
+								<input type="file" id="file1" name="upfile" onchange="loadImg(this,1);" required\> <!--대표이미지라서 필수!-->
+								<input type="file" id="file2" name="upfile" onchange="loadImg(this,2);">
+								<input type="file" id="file3" name="upfile" onchange="loadImg(this,3);">
+								<input type="file" id="file4" name="upfile" onchange="loadImg(this,4);">
+							</div>
                            	현재 업로드된 파일 : 
-                            <a href="${ cbList.get(0).changeName }" download="${ cbList.get(0).originName }">${ cbList.get(0).originName }</a>
+                           	<c:choose>
+                           		<c:when test="${ not empty caList }">
+                           			<c:forEach var="c" items="${ caList }">	
+				                    	<a href="${ c.changeName }" download="${ c.originName }">${ c.originName }</a>                       												
+                           			</c:forEach>
+                           		</c:when>
+                           		<c:otherwise>
+                           			업로드된 파일이 없습니다.
+                           		</c:otherwise>
+                           	</c:choose>
+                           	
                             <!-- 파일 이름과 경로 히든으로 넘기기 -->
-                            <input type="hidden" name="originName" value="${ cbList.get(0).originName }">
-                            <input type="hidden" name="changeName" value="${ cbList.get(0).changeName }">
+<%--                             <input type="hidden" name="originName" value="${ cbList.get(0).originName }"> --%>
+<%--                             <input type="hidden" name="changeName" value="${ cbList.get(0).changeName }"> --%>
                         </td>
                     </tr>
                     <tr>
@@ -74,7 +89,7 @@
             </form>
         </div>
         <br><br>
-
+        
     </div>
     
     <br><br><br>

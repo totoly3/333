@@ -43,20 +43,20 @@
             <table id="contentArea" algin="center" class="table">
                 <tr>
                     <th width="100">제목</th>
-                    <td colspan="3">${ cbList.get(0).boardTitle }</td>
+                    <td colspan="3">${ cb.boardTitle }</td>
                 </tr>
                 <tr>
                     <th>작성자</th>
                     <td>admin</td>
                     <th>작성일</th>
-                    <td>${ cbList.get(0).createDate }</td>
+                    <td>${ cb.createDate }</td>
                 </tr>
                 <tr>
                     <th>첨부파일</th>
                     <c:choose>
-                    	<c:when test="${ not empty cbList }">
+                    	<c:when test="${ not empty caList }">
 			                    <td colspan="3">
-                    				<c:forEach var="c" items="${ cbList }">
+                    				<c:forEach var="c" items="${ caList }">
 			                       		<a href="${ c.changeName }" download="${ c.originName }">${ c.originName }</a>
                     				</c:forEach>
 			                    </td>
@@ -74,16 +74,16 @@
                     <td colspan="3"></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><p style="height:150px;">${ cbList.get(0).boardContent }</p></td>
+                    <td colspan="4"><p style="height:150px;">${ cb.boardContent }</p></td>
                 </tr>
                 <tr>
                 	<th>이미지</th>
                 	<td colspan="3"></td>
                 </tr>
                 <c:choose>
-                	<c:when test="${ not empty cbList }">
+                	<c:when test="${ not empty caList }">
                 		<td colspan="3">
-                			<c:forEach var="c" items="${ cbList }">
+                			<c:forEach var="c" items="${ caList }">
                 				<img style="margin: auto;" alt="" src="${ c.changeName }" width="400px" height="300px">
                 			</c:forEach>
                 		</td>
@@ -109,8 +109,8 @@
             <script>
             	function postFormSubmit(num){
             		let form = $("<form>");
-            		let subBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${ cbList.get(0).boardNo }");
-        			let subFilePath = $("<input>").prop("type","hidden").prop("name","filePath").prop("value","${ cbList.get(0).changeName }");
+            		let subBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${ cb.boardNo }");
+        			let subFilePath = $("<input>").prop("type","hidden").prop("name","filePath").prop("value","${ cb.changeName }");
         			
         			form.append(subBno).append(subFilePath);
          			
@@ -212,7 +212,7 @@
 	        		$.ajax({
 	        			url : "replyAnswer.ch",
 	        			data : {
-	        				refBno : ${ cbList.get(0).boardNo },
+	        				refBno : ${ cb.boardNo },
 	        				reContent : reContent
 	        			},
 	        			success : function(result){
@@ -246,7 +246,7 @@
         	function selectReplyList(){
         		$.ajax({
         			url : "selectRlist.ch",
-        			data : { boardNo : ${ cbList.get(0).boardNo } },
+        			data : { boardNo : ${ cb.boardNo } },
         			success : function(reList){
         				let resultStr = "";
         				
@@ -278,7 +278,7 @@
         		$.ajax({
         			url : "updateReply.ch",
         			data : {
-        				refBno : ${ cbList.get(0).boardNo },
+        				refBno : ${ cb.boardNo },
         				reNo : reUpdateNo,
         				reContent : $("#updateContent").val()
         			},
@@ -305,7 +305,7 @@
         		$.ajax({
         			url : "replyAnswer.ch",
         			data : {
-        				refBno : ${ cbList.get(0).boardNo },
+        				refBno : ${ cb.boardNo },
         				reNo : reUpdateNo,
         				reContent : $("#reAnswerContent").val()
         			},
@@ -332,7 +332,7 @@
         		$.ajax({
         			url : "deleteReply.ch",
         			data : {
-        				refBno : ${ cbList.get(0).boardNo },
+        				refBno : ${ cb.boardNo },
         				reNo : reNo
         			},
         			success : function(result){

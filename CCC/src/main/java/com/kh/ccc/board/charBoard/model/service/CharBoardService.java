@@ -21,11 +21,15 @@ public interface CharBoardService {
 	//게시글 상세조회 및 조회수 증가
 	//1.게시글 조회수 증가
 	int increseCount(int bno);
-	//2.게시글 상세 조회
-	ArrayList<CharBoard> selectBoard(int bno);
+	//2.게시글 상세 조회 (글)
+	CharBoard selectBoard(int bno);
+	//3.게시글 상세 조회 (첨부파일)
+	ArrayList<CharAttach> selectAttach(int bno);
 	
-	//게시글 수정
+	//1.게시글 수정 (글)
 	int updateBoard(CharBoard cb);
+	//2.게시글 수정 (첨부파일)
+	int updateAttach(ArrayList<CharAttach> caList);
 	
 	//게시글 삭제
 	int deleteBoard(int bno);

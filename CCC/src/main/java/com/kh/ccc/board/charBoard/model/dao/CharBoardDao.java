@@ -40,10 +40,14 @@ public class CharBoardDao {
 	public int increaseCount(SqlSessionTemplate sqlSession, int bno) {
 		return sqlSession.update("charBoardMapper.increaseCount", bno);	
 	}
-	//게시글 상세정보 조회 (게시글 1개)
-	public ArrayList<CharBoard> selectBoard(SqlSessionTemplate sqlSession, int bno) {
-		return (ArrayList)sqlSession.selectList("charBoardMapper.selectBoard", bno);
+	//게시글 상세정보 조회 (글)
+	public CharBoard selectBoard(SqlSessionTemplate sqlSession, int bno) {
+		return sqlSession.selectOne("charBoardMapper.selectBoard", bno);
 	}
+	//게시글 상세정보 조회 (첨부파일)
+	public ArrayList<CharAttach> selectAttach(SqlSessionTemplate sqlSession, int bno) {
+		return (ArrayList)sqlSession.selectList("charBoardMapper.selectAttach", bno);
+	}	
 	//게시글 수정
 	public int updateBoard(SqlSessionTemplate sqlSession, CharBoard cb) {
 		return sqlSession.update("charBoardMapper.updateBoard", cb);

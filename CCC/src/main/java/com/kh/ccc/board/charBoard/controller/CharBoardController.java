@@ -70,7 +70,7 @@ public class CharBoardController {
 		//첨부파일이 여러개 넘어올 수 있기 때문에 ArrayList에 담아주자
 		ArrayList<CharAttach> list = new ArrayList<>();
 		
-		for(int i=0; i<=3; i++) {	
+		for(int i=0; i<upfile.size(); i++) {	
 			//만약 첨부파일이 있다면 (파일명이 빈 문자열이 아니라면)
 			if(!upfile.get(i).getOriginalFilename().equals("")) {
 				//아래의 saveFile메서드 활용
@@ -145,9 +145,10 @@ public class CharBoardController {
 		
 		//2.조회수 증가가 이루어지면 해당 게시글의 정보 조회
 		if(result != 0) {
-			ArrayList<CharBoard> cbList = boardService.selectBoard(bno);
-			System.out.println(cbList);
-			mv.addObject("cbList", cbList).setViewName("board/charBoard/charBoardDetailView");
+			CharBoard cb = boardService.selectBoard(bno);
+			ArrayList<CharAttach> caList = boardService.selectAttach(bno);
+			
+			mv.addObject("cb", cb).addObject("caList", caList).setViewName("board/charBoard/charBoardDetailView");
 		}else {
 			mv.addObject("errorMsg", "게시글을 조회할 수 없습니다.").setViewName("common/errorPage");
 		}
@@ -160,9 +161,11 @@ public class CharBoardController {
 	public String updateForm(Model model
 							,int bno) {
 		
-		ArrayList<CharBoard> cbList = boardService.selectBoard(bno);
+		CharBoard cb = boardService.selectBoard(bno);
+		ArrayList<CharAttach> caList = boardService.selectAttach(bno);
 		
-		model.addAttribute("cbList", cbList);
+		model.addAttribute("cb", cb);
+		model.addAttribute("caList", caList);
 		
 		return "board/charBoard/charBoardUpdateForm";
 	}
@@ -170,30 +173,71 @@ public class CharBoardController {
 	//게시글 수정
 	@RequestMapping("update.ch")
 	public ModelAndView updateBoard(CharBoard cb
-							 ,MultipartFile upfile
+							 ,ArrayList<MultipartFile> upfile
 							 ,HttpSession session
 							 ,ModelAndView mv) {
-		//새로운 첨부파일이 있다면
-		if(!upfile.getOriginalFilename().equals("")) {
-			//기존 첨부파일이 있는경우 삭제
-			if(cb.getOriginName() != null) {
-				new File(session.getServletContext().getRealPath(cb.getChangeName())).delete();
+		
+		//게시글 번호를 이용해 해당 게시글의 파일 정보를 가져온다
+		ArrayList<CharAttach> caList = boardService.selectAttach(cb.getBoardNo());
+		
+		System.out.println(caList.size());
+		
+		//만약 새로운 첨부파일이 하나라도 있다면
+		if(!upfile.get(0).getOriginalFilename().equals("")) {
+			//기존 첨부파일 다 지우기
+			for(int i=0; i<caList.size(); i++) {
+				if(caList.get(i).getOriginName() != null) {
+					new File(session.getServletContext().getRealPath(caList.get(i).getChangeName())).delete();
+				}
 			}
-			//새로운 첨부파일 등록
-			String changeName = saveFile(upfile,session);
-			cb.setOriginName(upfile.getOriginalFilename());
-			cb.setChangeName("resources/charBoardImg/" + changeName);
+			
+			for(int i=0; i<upfile.size(); i++) {
+				String changeName = saveFile(upfile.get(i),session);
+				caList.get(i).setOriginName(upfile.get(i).getOriginalFilename());
+				caList.get(i).setChangeName("resources/charBoardImg/" + changeName);
+				
+				if(i==0) {
+					caList.get(i).setLevel(1);
+				}else {
+					caList.get(i).setLevel(2);
+				}
+			}
+			
 		}
 		
 		int result = boardService.updateBoard(cb);
+		int result2 = boardService.updateAttach(caList);
 		
-		if(result != 0) {
+		int finalResult = result * result2;
+		
+		if(finalResult != 0) {
 			session.setAttribute("alertMsg", "게시글 수정 성공!");
 			mv.setViewName("redirect:/detail.ch?bno=" + cb.getBoardNo());
 		}else {
 			mv.addObject("errorMsg", "게시글 수정에 실패했습니다.").setViewName("common/errorPage");
 		}
 		
+//		//새로운 첨부파일이 있다면
+//		if(!upfile.getOriginalFilename().equals("")) {
+//			//기존 첨부파일이 있는경우 삭제
+//			if(cb.getOriginName() != null) {
+//				new File(session.getServletContext().getRealPath(cb.getChangeName())).delete();
+//			}
+//			//새로운 첨부파일 등록
+//			String changeName = saveFile(upfile,session);
+//			cb.setOriginName(upfile.getOriginalFilename());
+//			cb.setChangeName("resources/charBoardImg/" + changeName);
+//		}
+//		
+//		int result = boardService.updateBoard(cb);
+//		
+//		if(result != 0) {
+//			session.setAttribute("alertMsg", "게시글 수정 성공!");
+//			mv.setViewName("redirect:/detail.ch?bno=" + cb.getBoardNo());
+//		}else {
+//			mv.addObject("errorMsg", "게시글 수정에 실패했습니다.").setViewName("common/errorPage");
+//		}
+//		
 		return mv;
 	}
 	
