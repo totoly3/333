@@ -163,14 +163,20 @@
 		INSERT INTO TB_CHARACTER_REPLY(
 									   CR_NO
 									  ,CB_NO
-									  ,CR_WRITER
 									  ,CR_CONTENT
+									  ,CR_WRITER
+									  ,CR_GROUP_NO
+									  ,CR_STEP
+									  ,CR_LEVEL
 									  )
 							    VALUES(
-							    	   SEQ_CRNO.NEXTVAL
+							    	   #{ reNo }
 							    	  ,#{ refBno }
-							    	  ,1
 							    	  ,#{ reContent }
+							    	  ,1
+							    	  ,#{ reGroupNo }
+							    	  ,#{ reStep }
+							    	  ,#{ reLevel }
 							  		  )
 	</insert>
 	
@@ -191,11 +197,10 @@
 		AND CB_NO = #{ refBno }
 	</update>
 	
-	<!-- 대댓글 번호 생성? -->
+	<!-- 댓글의 번호 생성 -->
 	<select id="maxNum" resultType="_int">
 		SELECT NVL(MAX(CR_NO), 0) + 1
 		FROM TB_CHARACTER_REPLY
-		WHERE CR_STATUS = 'Y'
 	</select>
 	
 	<!-- 대댓글 (부모댓글의 그룹번호와 계층 알아오기) -->
