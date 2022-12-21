@@ -38,40 +38,27 @@
 				<table id="table_id" class="table table-striped table-bordered" style="width:50%">
 				        <thead>
 				            <tr>
-				                <th>Name</th>
-				                <th>Position</th>
-				                <th>Office</th>
-				                <th>Age</th>
-				                <th>Start date</th>
-				                <th>Salary</th>
+				           		<th>관리자번호</th>
+				                <th>이름</th>
+				                <th>아이디</th>
+				                <th>전화번호</th>
+				                <th>이메일</th>
+				                <th>입사일</th>
 				            </tr>
 				        </thead>
-				        <tbody>
-				            <tr>
-				                <td>Tiger Nixon</td>
-				                <td>System Architect</td>
-				                <td>Edinburgh</td>
-				                <td>61</td>
-				                <td>2011/04/25</td>
-				                <td>$320,800</td>
-				            </tr>
-				            <tr>
-				                <td>Garrett Winters</td>
-				                <td>Accountant</td>
-				                <td>Tokyo</td>
-				                <td>63</td>
-				                <td>2011/07/25</td>
-				                <td>$170,750</td>
-				            </tr>
-				            <tr>
-				                <td>Ashton Cox</td>
-				                <td>Junior Technical Author</td>
-				                <td>San Francisco</td>
-				                <td>66</td>
-				                <td>2009/01/12</td>
-				                <td>$86,000</td>
-				            </tr>
-				        </tbody>
+				       
+				        <tbody  id="test">	
+							<tr>
+								<td>${a.aNo }</td>
+								<td>${a.aName }</td>
+								<td>${a.aId }</td>
+								<td>${a.aPhone }</td>
+								<td>${a.aEmail }</td>
+								<td>${a.aHireDate }</td>
+								
+							</tr>
+							
+			         	</tbody>
 				</table>
 	</div>
 	

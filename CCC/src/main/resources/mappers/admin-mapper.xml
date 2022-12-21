@@ -31,6 +31,20 @@
 		ORDER BY A_NO ASC
 	
 	</select>
+	
+	
+	
+	<!-- 회원 상세조회 (관리자페이지) -->
+	<select id="detailAdmin" resultMap="adminResultSet">
+	
+		SELECT *
+		FROM TB_ADMIN
+		WHERE A_NO=#{aNo}
+		AND A_STATUS='Y'
+	
+	</select>
+	
+	
   
   
 

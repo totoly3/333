@@ -145,18 +145,18 @@ public class AdminController {
 		}
 		
 	
-		//관리자리스트 조회 (특수관리자페이지)
+		//관리자 상세조회 (특수관리자페이지)
 		@RequestMapping("adminDetail.ad")
 		public String detailAdmin(int ano,Model model) {
 			
 			System.out.println("번호는:"+ano);
 			
-			return null;
+			Admin a = adminService.detailAdmin(ano);
 			
-		
+			model.addAttribute("a",a);	
 			
-			
-			
+			return "admin/testDetail";
+
 			
 		}
 		

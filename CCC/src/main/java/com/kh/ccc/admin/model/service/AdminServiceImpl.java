@@ -54,6 +54,17 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 
+
+	//관리자 상세조회 (특수관리자페이지)
+	@Override
+	public Admin detailAdmin(int ano) {
+		
+		Admin a =adminDao.detailAdmin(sqlSession,ano);
+		
+		return a;
+	}
+
+
 	
 
 

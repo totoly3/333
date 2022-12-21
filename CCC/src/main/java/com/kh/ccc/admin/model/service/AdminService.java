@@ -16,6 +16,9 @@ public interface AdminService {
 
 	//관리자리스트 조회 (특수관리자페이지)
 	ArrayList<Admin> adminList();
+
+	//관리자 상세조회 (특수관리자페이지)
+	Admin detailAdmin(int ano);
 	
 
 

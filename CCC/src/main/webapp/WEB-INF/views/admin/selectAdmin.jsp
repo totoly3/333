@@ -150,7 +150,7 @@
                                             <th>업데이트</th>
                                         </tr>
                                     </thead>
-                                  <tbody>	
+                                  <tbody  id="test">	
 				                   <c:forEach var="a" items="${aList}">
 										<tr>
 											<td><input type="checkbox" name="check" value="VCheck"></td> 
@@ -192,7 +192,7 @@
     
     	<script>
 		$(function(){
-			$("#detailBtn").click(function(){
+			$("#datatablesSimple>tbody>tr>td>button").click(function(){
 			console.log($(this).parents().eq(1).children().eq(1).text());
 			location.href="adminDetail.ad?ano="+$(this).parents().eq(1).children().eq(1).text();
 			})
