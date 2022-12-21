@@ -32,7 +32,8 @@ public class TipBoardController {
 
 	@Autowired
 	private TipBoardService boardService;
-
+	
+	//리스트 조회
 	@RequestMapping("list.tp")
 	public String selectList(@RequestParam(value="currentPage"
 							,defaultValue = "1") int currentPage
@@ -56,53 +57,52 @@ public class TipBoardController {
 	}
 	
 	
-	
-	
-	
-	/*
-	//캐릭터 게시판 글 등록 view로 이동
-	@GetMapping("insert.ch")
+	//글 등록 view
+	@GetMapping("insert.tpom")
 	public String insertBoard() {
 		return "board/tipBoard/tipBoardEnrollForm";
 	}
 	
-	//캐릭터 게시판 글 등록
-	@PostMapping("insert.ch")
-	public ModelAndView insertCharBoard(TipBoard cb,
+	
+	//글 등록
+	@PostMapping("insert.tpom")
+	public ModelAndView insertTipBoard(TipBoard tb,
 										ArrayList<MultipartFile> upfile,
 										ModelAndView mv,
 										HttpSession session) {
 	
-		//첨부파일이 여러개 넘어올 수 있기 때문에 ArrayList에 담아주자
 		ArrayList<TipAttach> list = new ArrayList<>();
 		
-		for(int i=0; i<=3; i++) {	
+		for(int i=0; i<=4; i++) {	
 			//만약 첨부파일이 있다면 (파일명이 빈 문자열이 아니라면)
 			if(!upfile.get(i).getOriginalFilename().equals("")) {
 				//아래의 saveFile메서드 활용
 				String changeName = saveFile(upfile.get(i),session);
 				//(아래에 이어)8.원본명,서버에 업로드한 경로를 Board객체에 담아주기
-				TipAttach ca = new TipAttach();
-				ca.setTaOriginName(upfile.get(i).getOriginalFilename());
-				ca.setTaChangeName("resources/charBoardImg/" + changeName);
+				TipAttach ta = new TipAttach();
+				ta.setTaOriginName(upfile.get(i).getOriginalFilename());
+				ta.setTaChangeName("resources/tipBoardImg/" + changeName);
 				
-				list.add(ca);
+				list.add(ta);
 			}
 		}
 		
-		int result = boardService.insertCharBoard(cb,list);
+		int result = boardService.insertTipBoard(tb,list);
 		
 		System.out.println(result);
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "게시글 등록 성공!");
-			mv.setViewName("redirect:/list.ch");
+			mv.setViewName("redirect:/list.tpom");
 		}else {
 			mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
 		}
 		return mv;
 	}
 
+
+	
+	
 	//글 등록시 넘어온 첨부파일 자체를 서버의 폴더에 저장시키는 메소드 (모듈)
 	public String saveFile(MultipartFile upfile, HttpSession session) {
 		
@@ -137,24 +137,29 @@ public class TipBoardController {
 		return changeName;
 	}
 	
+	
+	 
 	//게시글 상세보기
-	@RequestMapping("detail.ch")
+	@RequestMapping("detail.tpom")
 	public ModelAndView detailBoard(@RequestParam(value="bno") int bno,
-							ModelAndView mv) {
+									ModelAndView mv) {
 		
 		//1.게시글 조회수 증가
 		int result = boardService.increseCount(bno);
 		
 		//2.조회수 증가가 이루어지면 해당 게시글의 정보 조회
 		if(result != 0) {
-			TipBoard cb = boardService.selectBoard(bno);
-			mv.addObject("cb", cb).setViewName("board/tipBoard/tipBoardDetailView");
+			TipBoard tb = boardService.selectBoard(bno);
+			mv.addObject("tb", tb).setViewName("board/tipBoard/tipBoardDetailView");
 		}else {
 			mv.addObject("errorMsg", "게시글을 조회할 수 없습니다.").setViewName("common/errorPage");
 		}
-		
 		return mv;
 	}
+	
+	
+	
+	/*
 	
 	//게시글 수정페이지로 포워딩
 	@RequestMapping("updateForm.ch")
@@ -174,6 +179,7 @@ public class TipBoardController {
 							 ,MultipartFile upfile
 							 ,HttpSession session
 							 ,ModelAndView mv) {
+							 
 		//새로운 첨부파일이 있다면
 		if(!upfile.getOriginalFilename().equals("")) {
 			//기존 첨부파일이 있는경우 삭제
@@ -197,6 +203,7 @@ public class TipBoardController {
 		
 		return mv;
 	}
+	
 	
 	//게시글 삭제
 	@RequestMapping("delete.tp")
@@ -223,6 +230,7 @@ public class TipBoardController {
 		return "redirect:/list.tp";
 	}
 	
+	
 	//댓글 등록
 	@ResponseBody
 	@RequestMapping(value="insertReply.ch",produces="text/html; charset=UTF-8")
@@ -232,6 +240,7 @@ public class TipBoardController {
 		
 		return (result != 0) ? "NNNNY" : "NNNNN";
 	}
+	
 	
 	//댓글 리스트 조회
 	@ResponseBody
@@ -243,6 +252,7 @@ public class TipBoardController {
 		return new Gson().toJson(list);
 	}
 	
+	
 	//댓글 수정
 	@ResponseBody
 	@RequestMapping(value="updateReply.ch",produces="text/html; charset=UTF-8")
@@ -252,6 +262,7 @@ public class TipBoardController {
 		
 		return (result != 0) ? "NNNNY" : "NNNNN";
 	}
+	
 	
 	//댓글 삭제
 	@ResponseBody

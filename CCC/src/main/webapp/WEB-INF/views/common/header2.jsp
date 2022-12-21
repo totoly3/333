@@ -12,7 +12,15 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	
+	<!-- 폰트 -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Dongle:wght@300;400;700&family=Jua&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Single+Day&family=Stylish&display=swap" rel="stylesheet">
+
     <style>
+	    @import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&family=Jua&family=Nanum+Myeongjo&family=Nanum+Pen+Script&display=swap');
+    
         div {box-sizing:border-box;}
         #header {
             width:80%;
@@ -24,8 +32,9 @@
         #header_1 {height:40%;}
         #header_2 {height:60%;}
         #header_2>ul {width:100%; height:100%; list-style-type:none; margin:auto; padding:0;}
-        #header_2>ul>li {float:left; width:8%; height:100%; line-height:55px; text-align:center;}
-        #header_2>ul>li a {text-decoration:none; color:rgb(255, 255, 255); font-size:12px; font-weight:600;}
+        #header_2>ul>li {float:left; width:9%; height:100%; line-height:55px; text-align:center;}
+        #header_2>ul>li a {text-decoration:none; color:rgb(255, 255, 255); font-size:25px; font-weight:400;}
+        
         /* 세부페이지마다 공통적으로 유지할 style */
         .content {
             background-color:rgb(247, 245, 245);
@@ -84,12 +93,12 @@
     <div id="header">
         <div id="header_2">     <!--여기가 리스트 -->
            <ul id="navi11111">
-               <li><a href="${ pageContext.request.contextPath }">HOME</a></li>
-               <li><a href="">NOTICE</a></li>
-               <li><a href="list.fr">FREE - BOARD</a></li>
-               <li><a href="list.tp">TIP - BOARD</a></li>
-               <li><a href="list.ch">CHARACTER</a></li>
-               <li><a href="list.wc">WORLD - CUP</a></li>
+               <li><a href="${ pageContext.request.contextPath }" style="font-family: 'Dongle', sans-serif;">HOME</a></li>
+               <li><a href="" style="font-family: 'Dongle', sans-serif;">NOTICE</a></li>
+               <li><a href="list.fr" style="font-family: 'Dongle', sans-serif;">FREE - BOARD</a></li>
+               <li><a href="list.tp" style="font-family: 'Dongle', sans-serif;">TIP - BOARD</a></li>
+               <li><a href="list.ch" style="font-family: 'Dongle', sans-serif;">CHARACTER</a></li>
+               <li><a href="list.wc" style="font-family: 'Dongle', sans-serif;">WORLD - CUP</a></li>
            </ul>
        </div>
    </div>

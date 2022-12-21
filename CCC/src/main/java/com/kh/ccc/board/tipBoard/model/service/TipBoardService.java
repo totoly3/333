@@ -15,15 +15,19 @@ public interface TipBoardService {
 	//2.게시글 리스트 조회
 	ArrayList<TipBoard> selectList(PageInfo pi);
 	
-	
-	//캐릭터 게시판 게시글 등록
-	int insertCharBoard(TipBoard cb,ArrayList<TipAttach> list);
-	
 	//게시글 상세조회 및 조회수 증가
 	//1.게시글 조회수 증가
 	int increseCount(int bno);
+	
 	//2.게시글 상세 조회
 	TipBoard selectBoard(int bno);
+	
+	
+	
+	//게시글 등록
+	int insertTipBoard(TipBoard cb,ArrayList<TipAttach> list);
+	
+
 	
 	//게시글 수정
 	int updateBoard(TipBoard cb);

@@ -32,35 +32,35 @@ public class TipBoardServiceImpl implements TipBoardService {
 	public ArrayList<TipBoard> selectList(PageInfo pi) {
 		return boardDao.selectList(sqlSession, pi);
 	}
+
 	
+	//조회수
+	@Override
+	public int increseCount(int bno) {
+		return boardDao.increaseCount(sqlSession, bno);
+	}
 	
-	
-	
+	//상세 조회
+	@Override
+	public TipBoard selectBoard(int bno) {
+		return boardDao.selectBoard(sqlSession, bno);
+	}
 	
 	
 	
 	
 	//게시글 등록 (게시글,첨부파일)
 	@Override
-	public int insertCharBoard(TipBoard cb,ArrayList<TipAttach> list) {
+	public int insertTipBoard(TipBoard tb,ArrayList<TipAttach> list) {
 		
-		int result = boardDao.insertBoard(sqlSession,cb);
+		int result = boardDao.insertBoard(sqlSession,tb);
 		int result2 = boardDao.insertAttach(sqlSession,list);
 		int finalResult = result * result2;
 		
 		return finalResult;
 	}
 	
-	//1.게시글 조회수 증가
-	@Override
-	public int increseCount(int bno) {
-		return boardDao.increaseCount(sqlSession, bno);
-	}
-	//2.게시글 상세 조회
-	@Override
-	public TipBoard selectBoard(int bno) {
-		return boardDao.selectBoard(sqlSession, bno);
-	}
+	
 	
 	//게시글 수정
 	@Override
