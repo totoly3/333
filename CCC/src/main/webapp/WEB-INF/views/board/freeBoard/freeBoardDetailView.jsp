@@ -84,12 +84,12 @@
  			<!-- 아래는 frba list가  1이면  -->
           <c:if test="${frba.size()==1}">
 		    	<c:choose>
-                	<c:when test="${!fb.get(0).fTitleimg.isEmpty()}">
+                	<c:when test="${!frba.get(0).faChangeName.isEmpty()}">
          	              <tr>
 			              	<td class="attitle">
 			            		  	<input type="checkbox" name="all" onclick='selectAll(this)'/>전체선택 <br>
 			               		<p style="height:150px;">
-			               			<input type="checkbox" name="all"><img src="${fb.get(0).fTitleimg }">
+			               			<input type="checkbox" name="all"><img src="${frba.get(0).faChangeName }">
 			               		</p>
 			              	</td>
 			              </tr>
@@ -99,23 +99,23 @@
    
         <c:if test="${frba.size()==2}">
 		    	<c:choose>
-                	<c:when test="${!fb.get(0).fTitleimg.isEmpty()}">
+                	<c:when test="${!frba.get(0).faChangeName.isEmpty()}">
          	              <tr>
 			              	<td class="attitle">
 			            		  	<input type="checkbox" name="all" onclick='selectAll(this)'/>전체선택 <br>
 			               		<p style="height:150px;">
-			               			<input type="checkbox" name="all"><img src="${fb.get(0).fTitleimg }">
+			               			<input type="checkbox" name="all"><img src="${frba.get(0).faChangeName }">
 			               		</p>
 			              	</td>
 			              </tr>
 	              	</c:when>
 	          	</c:choose>
 	          	
-         	<c:if test="${!fb.get(1).fTitleimg.isEmpty() }">
+         	<c:if test="${!frba.get(1).faChangeName.isEmpty() }">
 			               <tr>
 			                	<td class="attitle">
 			                		<p style="height:150px;">
-			                			<input type="checkbox" name="all"><img src="${fb.get(1).fTitleimg }">
+			                			<input type="checkbox" name="all"><img src="${frba.get(1).faChangeName }">
 			                		</p>
 			                	</td>
 			                </tr>

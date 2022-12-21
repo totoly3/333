@@ -236,10 +236,11 @@ public class FrBoardController {
 					frba.get(0).setFaChangeName("resources/board/freeBoard/"+changeName);
 					
 					int result =FrBoardService.updateFrboard(fb,frba);
-					
+						
 					if(result>0) {
 						mv.addObject("frba",frba);
-						mv.setViewName("redirect:/detail.fbo");
+							//여기 아래에서 fb.getfno 를 가져가는 이유는?
+						mv.setViewName("redirect:/detail.fbo?fno="+fb.get(0).getfNo());
 					}
 				}
 				//상세보기로 이동
