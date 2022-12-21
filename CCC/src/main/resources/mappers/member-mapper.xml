@@ -33,7 +33,7 @@
 
 
 
-	<!-- 관리자(회원리스트) -->
+	<!-- 회원리스트 조회 (관리자페이지) -->
 	<select id="memberList" resultMap="memberResultSet">
 
 			SELECT 

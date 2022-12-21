@@ -30,7 +30,7 @@ public class AdminController {
 		private AdminService adminService;
 	
 	
-		//전달
+		//회원관리로 전달
 		@RequestMapping("mainAdmin.ad")
 		public String mainAdmin() {
 		
@@ -129,5 +129,18 @@ public class AdminController {
     
 	
 	}
+		
+		
+		//특수관리자(관리자조회 페이지)
+		@RequestMapping("selectAdmin.ad")
+		public String selectAdmin() {
+			
+			
+		return "admin/selectAdmin";
+			
+			
+			
+		}
+		
 	
 }

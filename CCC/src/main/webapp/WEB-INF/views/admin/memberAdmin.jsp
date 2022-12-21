@@ -83,13 +83,13 @@
                             <div class="sb-sidenav-menu-heading">Interface</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Layouts
+                                	특수관리자
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                    <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                                    <a class="nav-link" href="selectAdmin.ad">관리자조회</a>
+                                    <a class="nav-link" href="layout-sidenav-light.html">관리자등록</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -124,13 +124,13 @@
                                 </nav>
                             </div>
                             <div class="sb-sidenav-menu-heading">Addons</div>
-                            <a class="nav-link" href="charts.html">
+                            <a class="nav-link" href="resources/memberAdmin/charts.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Charts
                             </a>
-                            <a class="nav-link" href="tables.html">
+                            <a class="nav-link" href="resources/memberAdmin/tables.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tables
+                                	Tables
                             </a>
                         </div>
                     </div>
@@ -283,32 +283,32 @@
 	          			   
 			          			   
 			          			<tbody>	
-				                   <c:forEach var="a" items="${mList}">
+				                   <c:forEach var="m" items="${mList}">
 										<tr>
 											<td><input type="checkbox" name="check" value="VCheck"></td> 
-											<td>${a.mNo }</td>
-											<td>${a.mId }</td>
-											<td>${a.mName }</td>
-											<td>${a.mGender }</td>	
+											<td>${m.mNo }</td>
+											<td>${m.mId }</td>
+											<td>${m.mName }</td>
+											<td>${m.mGender }</td>	
 											
 											<c:choose>
-												<c:when test="${a.mgNo eq 1}">
-													<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-danger'>V.I.P</span></td>
+												<c:when test="${m.mgNo eq 1}">
+													<td>${m.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-danger'>V.I.P</span></td>
 												</c:when>
 												
-												<c:when test="${a.mgNo eq 2}">
-													<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-warning'>Gold</span></td>
+												<c:when test="${m.mgNo eq 2}">
+													<td>${m.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-warning'>Gold</span></td>
 												</c:when>
 												
-												<c:when test="${a.mgNo eq 3}">
-													<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-info'>Silver</span></td>
+												<c:when test="${m.mgNo eq 3}">
+													<td>${m.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-info'>Silver</span></td>
 												</c:when>
 					                			<c:otherwise>
-					                   				<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-secondary'>Bronze</span></td>
+					                   				<td>${m.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-secondary'>Bronze</span></td>
 					                			</c:otherwise>
 											</c:choose>
 											
-											<td>${a.mPoint }</td> 
+											<td>${m.mPoint }</td> 
 										</tr>
 									</c:forEach>
 			         			</tbody>
