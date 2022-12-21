@@ -39,11 +39,11 @@
 
             <form id="updateForm" method="post" action="update.ch" enctype="multipart/form-data">
             	<!-- 글번호 히든으로 넘기기 -->
-            	<input type="hidden" name="boardNo" value="${ cb.boardNo }">
+            	<input type="hidden" name="boardNo" value="${ cbList.get(0).boardNo }">
                 <table algin="center">
                     <tr>
                         <th><label for="title">제목</label></th>
-                        <td><input type="text" id="title" class="form-control" value="${ cb.boardTitle }" name="boardTitle" required></td>
+                        <td><input type="text" id="title" class="form-control" value="${ cbList.get(0).boardTitle }" name="boardTitle" required></td>
                     </tr>
                     <tr>
                         <th><label for="writer">작성자</label></th>
@@ -54,10 +54,10 @@
                         <td>
                             <input type="file" id="upfile" class="form-control-file border" name="upfile">
                            	현재 업로드된 파일 : 
-                            <a href="${ cb.changeName }" download="${ cb.originName }">${ cb.originName }</a>
+                            <a href="${ cbList.get(0).changeName }" download="${ cbList.get(0).originName }">${ cbList.get(0).originName }</a>
                             <!-- 파일 이름과 경로 히든으로 넘기기 -->
-                            <input type="hidden" name="originName" value="${ cb.originName }">
-                            <input type="hidden" name="changeName" value="${ cb.changeName }">
+                            <input type="hidden" name="originName" value="${ cbList.get(0).originName }">
+                            <input type="hidden" name="changeName" value="${ cbList.get(0).changeName }">
                         </td>
                     </tr>
                     <tr>

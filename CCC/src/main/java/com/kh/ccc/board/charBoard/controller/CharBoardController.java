@@ -145,8 +145,9 @@ public class CharBoardController {
 		
 		//2.조회수 증가가 이루어지면 해당 게시글의 정보 조회
 		if(result != 0) {
-			CharBoard cb = boardService.selectBoard(bno);
-			mv.addObject("cb", cb).setViewName("board/charBoard/charBoardDetailView");
+			ArrayList<CharBoard> cbList = boardService.selectBoard(bno);
+			System.out.println(cbList);
+			mv.addObject("cbList", cbList).setViewName("board/charBoard/charBoardDetailView");
 		}else {
 			mv.addObject("errorMsg", "게시글을 조회할 수 없습니다.").setViewName("common/errorPage");
 		}
@@ -159,9 +160,9 @@ public class CharBoardController {
 	public String updateForm(Model model
 							,int bno) {
 		
-		CharBoard cb = boardService.selectBoard(bno);
+		ArrayList<CharBoard> cbList = boardService.selectBoard(bno);
 		
-		model.addAttribute("cb", cb);
+		model.addAttribute("cbList", cbList);
 		
 		return "board/charBoard/charBoardUpdateForm";
 	}
@@ -261,8 +262,16 @@ public class CharBoardController {
 		
 		int reStep = 0, reLevel = 0; 		  //대댓글의 순서와 계층은 0으로 기본 세팅
 		int refBno = cr.getRefBno(); 		  //댓글을 단 게시글 번호 (ajax에서 넘어옴)
-		int reNo = cr.getReNo();	 	  	  //어떤 댓글에 댓글을 남긴건지 (ajax에서 넘어옴)
-		int reParentNo = cr.getReNo();  	  //부모댓글번호 (부모 자기 자신은 자신의 번호를 reParentNo로 갖는다)
+		
+		//어떤 댓글에 댓글을 남긴건지 (ajax에서 넘어옴)
+		//처음 작성하는 부모댓글은 이 시점에서는 댓글 번호가 담기지 않는다
+		int reNo = cr.getReNo();	 	  	  
+		
+		//부모댓글번호 -부모 자기 자신은 자신의 번호를 reParentNo로 갖는다
+		//위의 maxNum 메소드로 댓글의 번호를 생성하지만 아직 댓글 번호를 넣지 않은 시점이기 때문에
+		//댓글의 답글을 작성하는 경우에만 jsp에서 해당 부모 댓글번호를 가져와 reParentNo에 담긴다
+		int reParentNo = cr.getReNo();
+		
 		String reContent = cr.getReContent(); //대댓글의 내용 (ajax에서 넘어옴)
 		
 		if(reNo != 0) { //댓글의 번호가 있다면 (댓글에 댓글을 다는 경우)
@@ -298,7 +307,7 @@ public class CharBoardController {
 		}
 		
 		cr.setReContent(reContent); 	//댓글 내용 담기
-		cr.setReNo(number);				//새로 생성한 댓글의 번호 담기 (시퀀스 어쩔..?)
+		cr.setReNo(number);				//새로 생성한 댓글의 번호 담기
 		cr.setRefBno(refBno); 			//댓글이 작성된 게시글 번호 담기
 		//cr.setReWriter(reWriter); 	//댓글 작성자 (아직 안넣음)
 		
