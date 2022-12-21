@@ -1,6 +1,9 @@
 package com.kh.ccc.board.freeboard.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.ccc.board.freeboard.model.vo.FrBoard;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
@@ -44,7 +47,9 @@ public interface FrBoardService {
 		int insertFrReply(FrBoardReply refb);
 
 		//아래는 수정하기 
-		int updateFrboard(ArrayList<FrBoard> fb, ArrayList<FrBoardAttach> frba);
+		int updateFrboard(FrBoard fb, ArrayList<FrBoardAttach> frba);
+
+
 
 
 

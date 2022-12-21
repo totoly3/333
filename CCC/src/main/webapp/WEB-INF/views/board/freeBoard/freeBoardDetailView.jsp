@@ -47,7 +47,7 @@
     <div class="content">
         <br><br>
         <div class="innerOuter">
-            <h2>게시글 상세보기</h2>
+            <h2>자유게시글 상세보기</h2>
             <br>
 
             <a class="btn btn-secondary" style="float:right;" href="">목록으로</a>
@@ -227,10 +227,10 @@
 // 										}
      
 	     function postFormSubmit(num){
-
+				console.log(num);
 			//action에 속성값을 넣고 submit을 진행하면 된다.
 	 		if(num ==1){ //수정하기 버튼 클릭시 1이 넘어온다
-	     		$("#postForm").attr("action","updatefm.fbo").submit();
+	     		$("#postForm").attr("action","update.frbo").submit();
 	 		}else{ //삭제하기 버튼 클릭시 
 	 			$("#postForm").attr("action","delete.frbo").submit();
 	 		}

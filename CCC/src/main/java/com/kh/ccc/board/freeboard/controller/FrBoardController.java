@@ -3,6 +3,7 @@ package com.kh.ccc.board.freeboard.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -99,16 +100,23 @@ public class FrBoardController {
 		
 		
 		//아래는 게시글 등록 (사진포함)
+				@ResponseBody
 				@RequestMapping("insert.frbo")
-				public ModelAndView insertFrBoard(ModelAndView mv,FrBoard fb,
+				/*public ModelAndView insertFrBoard(ModelAndView mv,FrBoard fb,
 						ArrayList<MultipartFile> upfile
+						,HttpSession session) {*/
+				
+				
+				public ModelAndView insertFrBoard(ModelAndView mv,FrBoard fb,
+						@RequestParam(value="upfile", required=false) List<MultipartFile> upfile
 						,HttpSession session) {
-					System.out.println(fb);
-					System.out.println(upfile);
+					
+					System.out.println("글쓰기 등록 fb은?:"+fb);
+					System.out.println("글쓰기 등록 upfile은?:"+upfile);
 					
 					ArrayList<FrBoardAttach> falist = new ArrayList<>();
 					
-					for(int i=0; i<=1; i++) {
+					for(int i=0; i<upfile.size(); i++) {
 						if (!upfile.get(i).getOriginalFilename().equals("")) {
 						
 							String changeName = saveFile(upfile.get(i),session);
@@ -122,6 +130,8 @@ public class FrBoardController {
 							System.out.println("falist:"+falist);
 						}
 					}
+					
+					
 					
 				if(falist.isEmpty()) { //글만 작성할때
 					int result1=FrBoardService.insertFrBoardOnlyWrite(fb);
@@ -149,9 +159,9 @@ public class FrBoardController {
 		
 		// 현재 넘어온 첨부파일 그 자체를 서버의 폴더에 저장시키는 메소드 (모듈)
 
-			public String saveFile(MultipartFile upfile, HttpSession session) {
+			public String saveFile(MultipartFile multipartFile, HttpSession session) {
 				// 1. 원본파일명 뽑기
-				String originName = upfile.getOriginalFilename();
+				String originName = ((MultipartFile) multipartFile).getOriginalFilename();
 				// 2. 시간형식을 문자열로 뽑기
 				String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 				// 3. 뒤에 붙일 랜덤값 뽑기
@@ -164,7 +174,7 @@ public class FrBoardController {
 				String savePath = session.getServletContext().getRealPath("/resources/freeBoardImg/");
 				// 7. 경로와 수정파일명 합쳐서 파일을 업로드해주기
 				try {
-					upfile.transferTo(new File(savePath + changeName));
+					((MultipartFile) multipartFile).transferTo(new File(savePath + changeName));
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -173,8 +183,6 @@ public class FrBoardController {
 				return changeName;
 			}
 		
-			//아래는 주말동안한거 
-			
 			
 			//아래는 지유게시판 글 삭제하기 
 			@RequestMapping("delete.frbo")
@@ -204,7 +212,8 @@ public class FrBoardController {
 			}
 			
 			//아래는 수정하기 누르면 폼으로 가는거
-			@RequestMapping("updatefm.fbo")
+		
+			@RequestMapping(value="update.frbo")
 			public ModelAndView updateFrboardForm(int fno,ModelAndView mv) {
 			
 				//아래는 글번호로 가져온 fb들 
@@ -212,41 +221,62 @@ public class FrBoardController {
 				
 				//아래는 글번호로 가져온 frba
 				ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
+				System.out.println("수정 폼컨트롤러 에서 fb:"+fb);
+				System.out.println("수정 폼컨트롤러 에서 frba:"+frba);
+				
 				
 				mv.addObject("fb",fb);
 				mv.addObject("frba",frba);
-				mv.setViewName("board/freeBoard/frBoardEnrollForm");
-			
+				mv.setViewName("board/freeBoard/freeBoardUpdateForm");
+				
 				return mv;
+			
 			}
 			
 			//아래는 수정 폼에서 등록하기 누르면~
-			@RequestMapping("update.frbo")
-			public ModelAndView updateFrboard(MultipartFile upfile,ArrayList<FrBoard> fb,ModelAndView mv,ArrayList<FrBoardAttach> frba,HttpSession session) {
-					//새로운첨부파일이 있는지 없는지 확인 
-				if(!upfile.getOriginalFilename().equals("")) {
-					if(frba.get(0).getFaOrginName() != null) {//기존 첨부파일의 이름이 담겨있는 경우
-						new File(session.getServletContext().getRealPath(frba.get(0).getFaChangeName())).delete();
+			@RequestMapping("update.frboen")
+//			public ModelAndView updateFrboard(ArrayList<MultipartFile> upfile,FrBoard fb,ModelAndView mv
+//												,HttpSession session)
+			public ModelAndView updateFrboard(ModelAndView mv,FrBoard fb,
+					@RequestParam(value="upfile", required=false) List<MultipartFile> upfile
+					,HttpSession session) {
+				
+				//새로운첨부파일이 있는지 없는지 확인 
+				System.out.println("수정 버튼 누르면 fb는 ? :"+fb);
+				System.out.println("수정 버튼 누르면 upfile는 ? :"+upfile);
+				
+				//아래는 파일이 하나일수도 두개일수도 있음..사이즈 만큼 돌려
+			for(int i=0; i<=1; i++) {
+				if(!upfile.get(i).getOriginalFilename().equals("")) {
+					if(upfile.get(i).getOriginalFilename() != null) {//기존 첨부파일의 이름이 담겨있는 경우
+						new File(session.getServletContext().getRealPath(upfile.get(i).getOriginalFilename())).delete();
 					}
+					
 					//새로운 첨부파일 업로드 
-					String changeName = saveFile(upfile,session);//아래에서 작업한 saveFile메소드 사용 
+					String changeName = saveFile(upfile.get(i),session);//아래에서 작업한 saveFile메소드 사용 
+					
+					//attach 빈거 하나 만들고 ! 
+					ArrayList<FrBoardAttach> frba = new ArrayList<>();
 					
 					//새 데이터 DB에 등록
-					frba.get(0).setFaOrginName(upfile.getOriginalFilename());
-					frba.get(0).setFaChangeName("resources/board/freeBoard/"+changeName);
+					(frba.get(i)).setFaOrginName(upfile.get(i).getOriginalFilename());
+					(frba.get(i)).setFaChangeName("resources/board/freeBoard/"+changeName);
 					
+					System.out.println("업데이트 직전의 frba:"+frba);
+					System.out.println("업데이트 직전의 fb:"+fb);
+
 					int result =FrBoardService.updateFrboard(fb,frba);
 						
 					if(result>0) {
 						mv.addObject("frba",frba);
 							//여기 아래에서 fb.getfno 를 가져가는 이유는?
-						mv.setViewName("redirect:/detail.fbo?fno="+fb.get(0).getfNo());
+						mv.setViewName("redirect:/detail.fbo?fno="+fb.getfNo());
 					}
-				}
-				//상세보기로 이동
-				return mv;
-			}	
-			
+				}	
+			}
+			//상세보기로 이동
+			return mv;
+		}	
 //			아래는 게시판 detail 뷰 댓글 전체조회 
 			@ResponseBody
 			@RequestMapping(value="frlist.fbo",produces="application/json; charset=UTF-8")

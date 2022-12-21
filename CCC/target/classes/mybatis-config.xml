@@ -7,11 +7,11 @@
 	</settings>
 
 	<typeAliases>
-		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoard" alias="FrBoard"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharBoard" alias="charBoard"/>
 		<typeAlias type="com.kh.ccc.member.model.vo.Member" alias="member"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharAttach" alias="charAttach"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharReply" alias="charReply"/>
+		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoard" alias="FrBoard"/>
 		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoardAttach" alias="frAttBoard"/>
 		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoardReply" alias="FrBoardReply"/>
 		
