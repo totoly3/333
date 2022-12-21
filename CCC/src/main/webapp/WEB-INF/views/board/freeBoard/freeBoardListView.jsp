@@ -46,7 +46,7 @@
     <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
-            <h2>게시판</h2>
+            <h1>자유게시판</h1>
             <br>
    
             <a class="btn btn-secondary" style="float:right;" href="insert.fpom">글쓰기</a>
