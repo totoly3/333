@@ -56,7 +56,7 @@ public class AdminController {
 		
 		return "admin/memberAdmin";
 		
-	}
+		}
 	
 	
 		//엑셀
@@ -129,11 +129,11 @@ public class AdminController {
 		}
     
 	
-	}
+		}
 		
 		
 		//관리자리스트 조회 (특수관리자페이지)
-		@RequestMapping("adminList.ad.ad")
+		@RequestMapping("adminList.ad")
 		public String selectAdmin(Model model) {
 			
 		ArrayList<Admin> aList = adminService.adminList();
@@ -141,10 +141,25 @@ public class AdminController {
 		model.addAttribute("aList",aList);	
 			
 		return "admin/selectAdmin";
+
+		}
+		
+	
+		//관리자리스트 조회 (특수관리자페이지)
+		@RequestMapping("adminDetail.ad")
+		public String detailAdmin(int ano,Model model) {
+			
+			System.out.println("번호는:"+ano);
+			
+			return null;
+			
+		
+			
 			
 			
 			
 		}
 		
-	
+		
+		
 }

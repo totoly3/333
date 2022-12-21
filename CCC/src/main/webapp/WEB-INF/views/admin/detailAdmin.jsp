@@ -12,7 +12,6 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>특수관리자 HOME</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="resources/memberAdmin/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -151,18 +150,8 @@
                                         </tr>
                                     </thead>
                                   <tbody>	
-				                   <c:forEach var="a" items="${aList}">
-										<tr>
-											<td><input type="checkbox" name="check" value="VCheck"></td> 
-											<td>${a.aNo }</td>
-											<td>${a.aId }</td>
-											<td>${a.aName }</td>
-											<td>${a.aEmail }</td>	
-											<td>${a.aPhone }</td> 
-											<td>${a.aHireDate }</td> 
-											<td><button type="button" id="detailBtn" class="btn btn-success btn-sm">상세보기</button></td> 
-										</tr>
-									</c:forEach>
+
+
 			         			</tbody>
 			         			
                                 </table>
@@ -188,20 +177,5 @@
         <script src="resources/memberAdmin/js/scripts.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
         <script src="resources/memberAdmin/js/datatables-simple-demo.js"></script>
-        
-    
-    	<script>
-		$(function(){
-			$("#detailBtn").click(function(){
-			console.log($(this).parents().eq(1).children().eq(1).text());
-			location.href="adminDetail.ad?ano="+$(this).parents().eq(1).children().eq(1).text();
-			})
-		})
-	
-	
-	</script>
-        
-        
-        
     </body>
 </html>
