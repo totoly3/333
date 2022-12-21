@@ -107,21 +107,21 @@ public class FrBoardServiceImpl implements FrBoardService{
 		
 	}
 	
-	//아래는  자유게시판 수정 
+	//아래는 자유게시판 글만 수정하기 
 	@Override
-	public int updateFrboard (FrBoard fb,ArrayList<FrBoardAttach> frba) {
-		//글만 바꾸는경우 
-				int result1 = FrBoardDao.updateFrboard1(sqlSession,fb);
-				System.out.println("글은 수정되었나?"+result1);
-				
-				//파일도 있는경우
-				if(!frba.isEmpty()) {
-					int result2 = FrBoardDao.updateFrboard2(sqlSession,frba);
-					System.out.println("파일은 수정되었나"+result2);
-				}
-				return result1;
+	public int updateFrboard1(FrBoard fb) {
+		int result1 = FrBoardDao.updateFrboard1(sqlSession,fb);
+		return result1;
+	}
+	
+	//아래는 자유게시판 파일수정
+	@Override
+	public int updateFrboard2(ArrayList<FrBoardAttach> frba) {
+		int result2 = FrBoardDao.updateFrboard2(sqlSession,frba);
+		return result2;
 	}
 
+	
 
 
 

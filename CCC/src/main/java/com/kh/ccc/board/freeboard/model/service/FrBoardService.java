@@ -46,20 +46,14 @@ public interface FrBoardService {
 		//댓글등록
 		int insertFrReply(FrBoardReply refb);
 
-		//아래는 수정하기 
-		int updateFrboard(FrBoard fb, ArrayList<FrBoardAttach> frba);
+//		//아래는 수정하기 
+//		int updateFrboard(FrBoard fb, ArrayList<FrBoardAttach> frba);
+
+		//아래는 자유게시판 수정하기(글만)
+		int updateFrboard1(FrBoard fb);
+
+		//아래는 자유게시판 수정하기(파일)
+		int updateFrboard2(ArrayList<FrBoardAttach> frba);
 
 
-
-
-
-//		//게시글 리뷰작성 
-//		ArrayList<Reply> detailBoardReviewSelect(int bno);
-//
-//		//댓글 등록
-//		int insertReply(Reply r);
-
-		//조회수 top5 메인에 게시글 조회
-
-//		ArrayList<FrBoard> topBoard();
 }
