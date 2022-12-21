@@ -59,7 +59,7 @@
                         <th>작성자</th>
                         <th>조회수</th>
                         <th>작성일</th>
-                        <th>첨부파일</th>
+                        <!-- <th>첨부파일</th> -->
                     </tr>
                 </thead>
                 <tbody>               	
@@ -69,12 +69,12 @@
 	                        <td>${B.tNo }</td>
 	                        <td>${B.tTitle } </td>
 	                        <td>${B.tWriter } </td>
-	                        <td>${B.tCount }</td>
+	                        <td>${B.count }</td>
 	                        <td>${B.tCreateDate }</td>
-	                        <td>
+	                        <%-- <td>
 	                        <c:if test="${not empty B.tTitleimg}">★
 	                        </c:if>
-	                        </td>
+	                        </td> --%>
 	                    </tr>
                 	</c:forEach>
            	

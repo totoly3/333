@@ -9,7 +9,7 @@
 	<select id="selectListCount" resultType="_int">
 	SELECT COUNT(*)
  	 	FROM TB_TIP
-  	WHERE F_STATUS='Y'
+  	WHERE T_STATUS='Y'
 	</select>
   
   
