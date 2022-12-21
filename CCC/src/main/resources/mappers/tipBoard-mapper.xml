@@ -18,6 +18,7 @@
 	    <result column="T_STATUS" property="status"/>
   	</resultMap>
   	
+  	
   	<!-- attach  -->
   	<resultMap type="tipAttBoard" id="tipAttBoardResultSet">
 	  	<result column="TA_NO" property="taNo"/>
@@ -27,6 +28,7 @@
 	   	<result column="TA_FILE_PATH" property="taFilePath"/>
 	   	<result column="TA_STATUS" property="status"/>
    	</resultMap>
+   	
    	
    	<!-- reply -->
    	<resultMap type="tipReply" id="tipReplyResultSet">
@@ -76,26 +78,24 @@
 	</update>
 	
 	
-	<!-- 아래는 게시판 상세보기 -->
+	<!-- 게시판 상세보기 -->
 	<select id="selectBoard" resultMap="tipBoardResultSet">
-		SELECT 		 FRB.T_NO
-					,FRB.T_TITLE
-					,FRB.T_CONTENT
-					,FRB.T_WRITER		
-					,TRBA.TA_ORIGIN_NAME	
-					,FRB.T_COUNT	
-					,FRB.T_CREATE_DATE
-					,TRBA.TA_FILE_PATH || TRBA.TA_CHANGE_NAME "tTitleimg"
-					
-		FROM TB_TIP FRB , TB_TIP_ATTACH TRBA
+		SELECT TRB.T_NO
+			  ,TRB.T_TITLE
+			  ,TRB.T_CONTENT
+			  ,TRB.T_WRITER
+			  ,TRBA.TA_ORIGIN_NAME	
+			  ,TRB.T_COUNT	
+			  ,TRB.T_CREATE_DATE
+			  ,TRBA.TA_FILE_PATH || TRBA.TA_CHANGE_NAME "tTitleimg"
+		FROM TB_TIP TRB , TB_TIP_ATTACH TRBA
 		WHERE T_STATUS='Y'
-			AND FRB.T_NO = TRBA.T_NO
-			AND  FRB.T_NO = #{fNo}
-		ORDER BY FRB.T_NO DESC
+		AND TRB.T_NO = TRBA.T_NO
+		AND  TRB.T_NO = #{tNo}
+		ORDER BY TRB.T_NO DESC
 	</select>
-	
-	
-	
+
+
 	<!-- 아래는 게시글 상세보기 파일 -->
 	<select id="tipboardAttDetailView" resultMap="tipAttBoardResultSet">
 		SELECT 	TA_NO
@@ -109,11 +109,6 @@
 			AND  T_NO = #{tNo}
 		ORDER BY T_NO DESC
 	</select>
-	
-	
-	
-	
-	
 	
 	
 	

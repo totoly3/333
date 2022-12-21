@@ -102,7 +102,6 @@ public class TipBoardController {
 
 
 	
-	
 	//글 등록시 넘어온 첨부파일 자체를 서버의 폴더에 저장시키는 메소드 (모듈)
 	public String saveFile(MultipartFile upfile, HttpSession session) {
 		
@@ -140,16 +139,16 @@ public class TipBoardController {
 	
 	 
 	//게시글 상세보기
-	@RequestMapping("detail.tpom")
-	public ModelAndView detailBoard(@RequestParam(value="bno") int bno,
+	@RequestMapping("detail.tbo")
+	public ModelAndView detailBoard(@RequestParam(value="tno") int tno,
 									ModelAndView mv) {
 		
 		//1.게시글 조회수 증가
-		int result = boardService.increseCount(bno);
+		int result = boardService.increseCount(tno);
 		
 		//2.조회수 증가가 이루어지면 해당 게시글의 정보 조회
 		if(result != 0) {
-			TipBoard tb = boardService.selectBoard(bno);
+			TipBoard tb = boardService.selectBoard(tno);
 			mv.addObject("tb", tb).setViewName("board/tipBoard/tipBoardDetailView");
 		}else {
 			mv.addObject("errorMsg", "게시글을 조회할 수 없습니다.").setViewName("common/errorPage");

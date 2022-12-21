@@ -86,7 +86,6 @@
     </style>
 </head>
 <body>
-
     <div id="jini1">
     	<img src="./resources/header2Img/navi2.jpg" alt="navi2">
     </div>

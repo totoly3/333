@@ -19,6 +19,7 @@ public class TipBoardDao {
 		return sqlSession.selectOne("tipBoardMapper.selectListCount");
 	}
 	
+	
 	//게시글 리스트 조회
 	public ArrayList<TipBoard> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		
