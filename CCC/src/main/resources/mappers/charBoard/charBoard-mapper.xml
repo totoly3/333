@@ -32,6 +32,7 @@
 		<result column="CR_CONTENT" property="reContent"/>
 		<result column="CR_WRITER" property="reWriter"/>
 		<result column="CR_GROUP_NO" property="reGroupNo"/>
+		<result column="CR_PARENT_NO" property="reParentNo"/>
 		<result column="CR_STEP" property="reStep"/>
 		<result column="CR_LEVEL" property="reLevel"/>
 		<result column="CR_CREATE_DATE" property="reCreateDate"/>
@@ -115,12 +116,13 @@
 	</insert>
 	
 	<!-- 게시글 수정 -->
-	<update id="updateBoard" parameterType="charBoard">
-		UPDATE TB_CHARACTER_BOARD
-		SET CB_TITLE = #{ boardTitle },
-			CB_CONTENT = #{ boardContent }
-		WHERE CB_STATUS = 'Y'
-	</update>
+<!-- 	<update id="updateBoard" parameterType="charBoard"> -->
+<!-- 		UPDATE TB_CHARACTER_BOARD -->
+<!-- 		SET CB_TITLE = #{ boardTitle }, -->
+<!-- 			CB_CONTENT = #{ boardContent } -->
+<!-- 		WHERE CB_STATUS = 'Y' -->
+<!-- 		AND CB_NO = #{  } -->
+<!-- 	</update> -->
 	
 	<!-- 첨부파일 수정 -->
 	<update id="updateAttach" parameterType="charBoard">
@@ -147,15 +149,18 @@
 	<!-- 댓글 리스트 조회 -->
 	<select id="selectReplyList" resultMap="charReplyResultSet" parameterType="_int">
 		SELECT CR_NO
-			  ,CB_NO
-			  ,CR_CONTENT
-			  ,CR_WRITER
-			  ,CR_GROUP_NO
-			  ,CR_LEVEL
-			  ,CR_CREATE_DATE
+		      ,CB_NO
+		      ,CR_WRITER
+		      ,CR_GROUP_NO
+		      ,CR_PARENT_NO
+		      ,CR_STEP
+		      ,CR_LEVEL
+		      ,CR_CREATE_DATE
+		      ,LPAD('@@@@@@@@@@@@', 5*(CR_LEVEL)) || CR_CONTENT AS CR_CONTENT
 		FROM TB_CHARACTER_REPLY
 		WHERE CR_STATUS = 'Y'
-		AND CB_NO = #{ boardNo }
+		AND CB_NO = #{ refBno }
+		ORDER BY CR_GROUP_NO ASC, CR_STEP ASC
 	</select>
 		
 	<!-- 댓글 등록 -->
@@ -166,6 +171,7 @@
 									  ,CR_CONTENT
 									  ,CR_WRITER
 									  ,CR_GROUP_NO
+									  ,CR_PARENT_NO
 									  ,CR_STEP
 									  ,CR_LEVEL
 									  )
@@ -175,6 +181,7 @@
 							    	  ,#{ reContent }
 							    	  ,1
 							    	  ,#{ reGroupNo }
+							    	  ,#{ reParentNo }
 							    	  ,#{ reStep }
 							    	  ,#{ reLevel }
 							  		  )
@@ -208,6 +215,7 @@
 		SELECT CR_NO
 			  ,CB_NO
 			  ,CR_GROUP_NO
+			  ,CR_PARENT_NO
 			  ,CR_STEP
 			  ,CR_LEVEL
 		FROM TB_CHARACTER_REPLY
