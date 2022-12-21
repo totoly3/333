@@ -49,7 +49,7 @@ public class CharBoardServiceImpl implements CharBoardService {
 	}
 	//2.게시글 상세 조회
 	@Override
-	public CharBoard selectBoard(int bno) {
+	public ArrayList<CharBoard> selectBoard(int bno) {
 		return boardDao.selectBoard(sqlSession, bno);
 	}
 	
@@ -103,7 +103,7 @@ public class CharBoardServiceImpl implements CharBoardService {
 		return boardDao.deleteReply(sqlSession, cr);
 	}
 	
-	//대댓글 번호 생성?
+	//댓글 번호 생성
 	@Override
 	public int maxNum() {
 		return boardDao.maxNum(sqlSession);
@@ -126,13 +126,6 @@ public class CharBoardServiceImpl implements CharBoardService {
 	public void updateStep(CharReply cr) {
 		boardDao.updateStep(sqlSession, cr);
 	}
-	//댓글/대댓글 등록 (새롭게 만든 메소드)
-	@Override
-	public int insertCharReply(CharReply cr) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
 	
-
 }

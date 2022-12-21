@@ -43,27 +43,58 @@
             <table id="contentArea" algin="center" class="table">
                 <tr>
                     <th width="100">제목</th>
-                    <td colspan="3">${ cb.boardTitle }</td>
+                    <td colspan="3">${ cbList.get(0).boardTitle }</td>
                 </tr>
                 <tr>
                     <th>작성자</th>
                     <td>admin</td>
                     <th>작성일</th>
-                    <td>${ cb.createDate }</td>
+                    <td>${ cbList.get(0).createDate }</td>
                 </tr>
                 <tr>
                     <th>첨부파일</th>
-                    <td colspan="3">
-                        <a href="${ cb.changeName }" download="${ cb.originName }">${ cb.originName }</a>
-                    </td>
+                    <c:choose>
+                    	<c:when test="${ not empty cbList }">
+			                    <td colspan="3">
+                    				<c:forEach var="c" items="${ cbList }">
+			                       		<a href="${ c.changeName }" download="${ c.originName }">${ c.originName }</a>
+                    				</c:forEach>
+			                    </td>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<td colspan="3">
+	                    		조회된 첨부파일이 없습니다.
+	                    	</td>
+	                    </c:otherwise>
+                    </c:choose>
+                    
                 </tr>
                 <tr>
                     <th>내용</th>
                     <td colspan="3"></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><p style="height:150px;">${ cb.boardContent }</p></td>
+                    <td colspan="4"><p style="height:150px;">${ cbList.get(0).boardContent }</p></td>
                 </tr>
+                <tr>
+                	<th>이미지</th>
+                	<td colspan="3"></td>
+                </tr>
+                <c:choose>
+                	<c:when test="${ not empty cbList }">
+                		<td colspan="3">
+                			<c:forEach var="c" items="${ cbList }">
+                				<img style="margin: auto;" alt="" src="${ c.changeName }" width="400px" height="300px">
+                			</c:forEach>
+                		</td>
+                	</c:when>
+                	<c:otherwise>
+                		<td colspan="3">
+                			조회된 첨부파일이 없습니다.
+	                    </td>
+                	</c:otherwise>
+                </c:choose>
+                
             </table>
             <br>
 
@@ -78,8 +109,8 @@
             <script>
             	function postFormSubmit(num){
             		let form = $("<form>");
-            		let subBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${ cb.boardNo }");
-        			let subFilePath = $("<input>").prop("type","hidden").prop("name","filePath").prop("value","${ cb.changeName }");
+            		let subBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${ cbList.get(0).boardNo }");
+        			let subFilePath = $("<input>").prop("type","hidden").prop("name","filePath").prop("value","${ cbList.get(0).changeName }");
         			
         			form.append(subBno).append(subFilePath);
          			
@@ -107,22 +138,8 @@
                         <td colspan="5">댓글(<span id="rcount">0</span>)</td>
                     </tr>
                 </thead>
+                
                 <tbody>
-<!--                     <tr> -->
-<!--                         <th>user02</th> -->
-<!--                         <td>ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ꿀잼</td> -->
-<!--                         <td>2020-03-12</td> -->
-<!--                     </tr> -->
-<!--                     <tr> -->
-<!--                         <th>user01</th> -->
-<!--                         <td>재밌어요</td> -->
-<!--                         <td>2020-03-11</td> -->
-<!--                     </tr> -->
-<!--                     <tr> -->
-<!--                         <th>admin</th> -->
-<!--                         <td>댓글입니다!!</td> -->
-<!--                         <td>2020-03-10</td> -->
-<!--                     </tr> -->
                 </tbody>
             </table>
         </div>
@@ -195,7 +212,7 @@
 	        		$.ajax({
 	        			url : "replyAnswer.ch",
 	        			data : {
-	        				refBno : ${ cb.boardNo },
+	        				refBno : ${ cbList.get(0).boardNo },
 	        				reContent : reContent
 	        			},
 	        			success : function(result){
@@ -229,7 +246,7 @@
         	function selectReplyList(){
         		$.ajax({
         			url : "selectRlist.ch",
-        			data : { boardNo : ${ cb.boardNo } },
+        			data : { boardNo : ${ cbList.get(0).boardNo } },
         			success : function(reList){
         				let resultStr = "";
         				
@@ -253,7 +270,7 @@
         			error : function(){
         				console.log("통신실패!");
         			}
-        		});
+        		})
         	}
         	
         	//댓글 수정
@@ -261,7 +278,7 @@
         		$.ajax({
         			url : "updateReply.ch",
         			data : {
-        				refBno : ${ cb.boardNo },
+        				refBno : ${ cbList.get(0).boardNo },
         				reNo : reUpdateNo,
         				reContent : $("#updateContent").val()
         			},
@@ -280,7 +297,7 @@
         			error : function(){
         				console.log("통신실패!");
         			}
-        		});
+        		})
         	}
         	
         	//대댓글 등록
@@ -288,7 +305,7 @@
         		$.ajax({
         			url : "replyAnswer.ch",
         			data : {
-        				refBno : ${ cb.boardNo },
+        				refBno : ${ cbList.get(0).boardNo },
         				reNo : reUpdateNo,
         				reContent : $("#reAnswerContent").val()
         			},
@@ -307,7 +324,7 @@
         			error : function(){
         				console.log("통신실패!");
         			}
-        		});
+        		})
         	}
         	
         	//댓글 삭제
@@ -315,7 +332,7 @@
         		$.ajax({
         			url : "deleteReply.ch",
         			data : {
-        				refBno : ${ cb.boardNo },
+        				refBno : ${ cbList.get(0).boardNo },
         				reNo : reNo
         			},
         			success : function(result){
@@ -330,7 +347,7 @@
         			error : function(){
         				console.log("통신실패!");
         			}
-        		});
+        		})
         	}
         	
         	//댓글 수정 글자 수 제한
@@ -341,7 +358,7 @@
 					$(this).val($(this).val().substring(0, 50));
 					$('#reply_cnt').html("(50 / 50)");
 				}
-			});
+			})
         	
 			//대댓글 수정 글자 수 제한
 			$('#reAnswerContent').on('keyup',function(){

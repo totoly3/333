@@ -41,8 +41,8 @@ public class CharBoardDao {
 		return sqlSession.update("charBoardMapper.increaseCount", bno);	
 	}
 	//게시글 상세정보 조회 (게시글 1개)
-	public CharBoard selectBoard(SqlSessionTemplate sqlSession, int bno) {
-		return sqlSession.selectOne("charBoardMapper.selectBoard", bno);
+	public ArrayList<CharBoard> selectBoard(SqlSessionTemplate sqlSession, int bno) {
+		return (ArrayList)sqlSession.selectList("charBoardMapper.selectBoard", bno);
 	}
 	//게시글 수정
 	public int updateBoard(SqlSessionTemplate sqlSession, CharBoard cb) {

@@ -145,8 +145,9 @@ public class CharBoardController {
 		
 		//2.조회수 증가가 이루어지면 해당 게시글의 정보 조회
 		if(result != 0) {
-			CharBoard cb = boardService.selectBoard(bno);
-			mv.addObject("cb", cb).setViewName("board/charBoard/charBoardDetailView");
+			ArrayList<CharBoard> cbList = boardService.selectBoard(bno);
+			System.out.println(cbList);
+			mv.addObject("cbList", cbList).setViewName("board/charBoard/charBoardDetailView");
 		}else {
 			mv.addObject("errorMsg", "게시글을 조회할 수 없습니다.").setViewName("common/errorPage");
 		}
@@ -159,9 +160,9 @@ public class CharBoardController {
 	public String updateForm(Model model
 							,int bno) {
 		
-		CharBoard cb = boardService.selectBoard(bno);
+		ArrayList<CharBoard> cbList = boardService.selectBoard(bno);
 		
-		model.addAttribute("cb", cb);
+		model.addAttribute("cbList", cbList);
 		
 		return "board/charBoard/charBoardUpdateForm";
 	}
@@ -256,26 +257,38 @@ public class CharBoardController {
 	@RequestMapping(value="replyAnswer.ch",produces="text/html; charset=UTF-8")
 	public String insertReplyAnswer(CharReply cr, HttpSession session) {
 			
-		//int reWriter = session.getAttribute("회원번호");
-		int number = boardService.maxNum(); // 새 댓글 번호 생성, 참조댓글번호(reGroupNo)는 부모댓글번호(reNo)와 같다 (시퀀스가 필요없나?)
+		//int reWriter = session.getAttribute("회원번호"); //(ajax에서 넘어옴)
+		int number = boardService.maxNum();   //새 댓글 번호 생성, 참조댓글번호(reGroupNo)는 부모댓글번호(reNo)와 같다 (시퀀스가 필요없다)
 		
-		int reStep = 0, reLevel = 0; 		  //첫번째 댓글은 0으로 기본 세팅
-		int refBno = cr.getRefBno(); 		  //댓글을 단 게시글 번호
-		int reGroupNo = cr.getReNo();	 	  //대댓글을 단 부모 댓글의 번호
-		String reContent = cr.getReContent(); //대댓글의 내용
+		int reStep = 0, reLevel = 0; 		  //대댓글의 순서와 계층은 0으로 기본 세팅
+		int refBno = cr.getRefBno(); 		  //댓글을 단 게시글 번호 (ajax에서 넘어옴)
 		
-		if(reGroupNo != 0) { //댓글에 댓글을 작성할 때
+		//어떤 댓글에 댓글을 남긴건지 (ajax에서 넘어옴)
+		//처음 작성하는 부모댓글은 이 시점에서는 댓글 번호가 담기지 않는다
+		int reNo = cr.getReNo();	 	  	  
+		
+		//부모댓글번호 -부모 자기 자신은 자신의 번호를 reParentNo로 갖는다
+		//위의 maxNum 메소드로 댓글의 번호를 생성하지만 아직 댓글 번호를 넣지 않은 시점이기 때문에
+		//댓글의 답글을 작성하는 경우에만 jsp에서 해당 부모 댓글번호를 가져와 reParentNo에 담긴다
+		int reParentNo = cr.getReNo();
+		
+		String reContent = cr.getReContent(); //대댓글의 내용 (ajax에서 넘어옴)
+		
+		if(reNo != 0) { //댓글의 번호가 있다면 (댓글에 댓글을 다는 경우)
 			
-			CharReply cr1 = boardService.replySelect(reGroupNo); //읽어온 댓글의 reStep과 re_level을 알기 위해서
-			
+			CharReply cr1 = boardService.replySelect(reNo); //읽어온 댓글의 reStep과 re_level을 알기 위해서
+		
+			//대댓글의 첫 댓글일 때
 			if(cr1.getReStep() == 0 && cr1.getReLevel() == 0) {
-				cr.setReGroupNo(reGroupNo); // 대댓글끼리 그룹핑하기 위해 부모댓글의 번호로 참조댓글번호 세팅
+				cr.setReGroupNo(reNo); 	//대댓글끼리 그룹핑하기 위해 부모댓글의 번호로 참조댓글번호 세팅
+				cr.setReParentNo(reNo);	//대댓글의 부모 번호를 세팅
 				int maxStep = boardService.maxStep(cr1.getReGroupNo()); //새로운 대댓글을 작성하면 아래로 가도록 하기위해
 				cr.setReStep(maxStep);
 				cr.setReLevel(cr1.getReLevel() + 1);
 			}
-			else { //댓글의 대댓글을 작성할 때
+			else { //대댓글의 두번째 댓글 부터
 				cr.setReGroupNo(cr1.getReGroupNo()); //대댓글끼리 뭉치기위해,부모댓글의 댓글번호로 reGroupNo세팅
+				cr.setReParentNo(reNo);	//대댓글의 부모 번호를 세팅
 				cr.setReStep(cr1.getReStep()); 		
 				//새로운 댓글은 댓글 사이에 끼어야하기 때문에
 				//새로 작성된 대댓글의 그룹번호(부모번호)가 같고 reStep(대댓의 순서)이 해당 댓글의 순서보다 크면 그 댓글보다 reStep + 1을 해준다
@@ -286,16 +299,17 @@ public class CharBoardController {
 				cr.setReLevel(cr1.getReLevel() + 1); //부모댓글의 level보다 +1 증가
 			}
 
-		}else {
+		}else { //댓글의 번호가 없다면 (부모댓글의 경우)
 			cr.setReGroupNo(number);
+			cr.setReParentNo(number);//첫 댓글에는 자기 자신의 번호로 부모 번호를 세팅
 			cr.setReStep(reStep); 	 //기본 댓글에는 0으로 세팅
-			cr.setReLevel(reLevel);  //기본 댓글에는 계층 0으로 세팅
+			cr.setReLevel(reLevel);  //기본 댓글에는 0으로 세팅
 		}
 		
-		cr.setReContent(reContent); //댓글 내용 담기
-		cr.setReNo(number); 		//새로 생성한 댓글의 번호 담기 (시퀀스 어쩔..?)
-		cr.setRefBno(refBno); 		//댓글이 작성된 게시글 번호 담기
-		//cr.setReWriter(reWriter); //댓글 작성자 (아직 안넣음)
+		cr.setReContent(reContent); 	//댓글 내용 담기
+		cr.setReNo(number);				//새로 생성한 댓글의 번호 담기
+		cr.setRefBno(refBno); 			//댓글이 작성된 게시글 번호 담기
+		//cr.setReWriter(reWriter); 	//댓글 작성자 (아직 안넣음)
 		
 		int result = boardService.insertReply(cr);
 		
