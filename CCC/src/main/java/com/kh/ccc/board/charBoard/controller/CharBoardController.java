@@ -79,11 +79,12 @@ public class CharBoardController {
 				//(아래에 이어)8.원본명,서버에 업로드한 경로를 Board객체에 담아주기
 				ca.setOriginName(upfile.get(i).getOriginalFilename());
 				ca.setChangeName("resources/charBoardImg/" + changeName);
+				//level 1번 : 캐릭터 게시판 썸네일 / 이후 카운트되는 level은 sql에서 해당 게시글의 첨부파일 번호를 나타낸다 (파일번호와 다름)
 				ca.setLevel(i+1);
 							
 				list.add(ca);
 			}else {
-				//파일이 없다면
+				//파일이 없는 경우에는 NULL처리한다 (첨부파일 수정시에 사용할 공간 확보)
 				ca.setOriginName(null);
 				ca.setChangeName(null);
 				ca.setLevel(i+1);
@@ -181,35 +182,34 @@ public class CharBoardController {
 							 ,ModelAndView mv) {
 		
 		int boardNo = cb.getBoardNo();
-		
 		//게시글 번호를 이용해 해당 게시글의 파일 정보를 가져온다
 		ArrayList<CharAttach> caList = boardService.selectAttach(boardNo);
-		
+		//수정된 파일 내용을 담기 위한 리스트 생성
 		ArrayList<CharAttach> newCaList = new ArrayList<>();
  		
-		//만약 새로운 첨부파일이 하나라도 있다면
+		//만약 새로운 첨부파일이 하나라도 있다면 (캐릭터 게시판은 썸네일때문에 없을 수 없지만..)
 		if(!upfile.get(0).getOriginalFilename().equals("")) {
-			//기존 첨부파일 다 지우기
+			//기존 첨부파일 다 지우기 (기존 첨부파일 수만큼 반복) 
 			for(int i=0; i<caList.size(); i++) {
 				if(caList.get(i).getOriginName() != null) {
 					new File(session.getServletContext().getRealPath(caList.get(i).getChangeName())).delete();
 				}
 			}
-			
+			//첨부파일 최대 개수가 4개이기 때문에 4번 반복
 			for(int i=0; i<upfile.size(); i++) {
-
 				CharAttach ca = new CharAttach();
-				//첨부파일 등록 가능 개수 총 4개를 모두 넣지 않을 수 있기 때문에 조건 처리
+				//첨부파일 등록 가능 개수 총 4개를 모두 넣지 않을 수 있기 때문에 조건 처리 (파일이 없으면 새로 생성해서 넣기)
 				if(!upfile.get(i).getOriginalFilename().equals("")) {
 					String changeName = saveFile(upfile.get(i),session);
 					ca.setRefBno(boardNo);
 					ca.setOriginName(upfile.get(i).getOriginalFilename());
 					ca.setChangeName("resources/charBoardImg/" + changeName);
+					//level 1번 : 캐릭터 게시판 썸네일 / 이후 카운트되는 level(2~4)은 sql에서 해당 게시글의 첨부파일 번호를 나타낸다 (파일번호와 다름)
 					ca.setLevel(i+1);
 					
 					newCaList.add(ca);
 				}
-				//파일이 없는 경우에는 NULL처리
+				//파일이 없는 경우에는 NULL처리한다 (첨부파일 수정시에 사용할 공간 확보)
 				else {
 					ca.setRefBno(boardNo);
 					ca.setOriginName(null);
@@ -218,48 +218,20 @@ public class CharBoardController {
 					ca.setStatus("N");
 					
 					newCaList.add(ca);
-				}
-				
-//				newCaList.add(ca);
-				
+				}	
 			}	
 		}
-		
-		System.out.println("여기는 controller! caList : "+caList);
-		System.out.println("여기는 controller! newCaList : "+newCaList);
-		
 		//수정할 게시글 내용과 첨부파일 목록을 보내자
 		int result = boardService.updateBoard(cb,newCaList);
 		
 		if(result != 0) {
 			session.setAttribute("alertMsg", "게시글 수정 성공!");
-			mv.setViewName("redirect:/detail.ch?bno=" + cb.getBoardNo());
+			mv.setViewName("redirect:/detail.ch?bno=" + boardNo);
 		}
 		else {
 			mv.addObject("errorMsg", "게시글 수정에 실패했습니다.").setViewName("common/errorPage");
 		}
 		
-//		//새로운 첨부파일이 있다면
-//		if(!upfile.getOriginalFilename().equals("")) {
-//			//기존 첨부파일이 있는경우 삭제
-//			if(cb.getOriginName() != null) {
-//				new File(session.getServletContext().getRealPath(cb.getChangeName())).delete();
-//			}
-//			//새로운 첨부파일 등록
-//			String changeName = saveFile(upfile,session);
-//			cb.setOriginName(upfile.getOriginalFilename());
-//			cb.setChangeName("resources/charBoardImg/" + changeName);
-//		}
-//		
-//		int result = boardService.updateBoard(cb);
-//		
-//		if(result != 0) {
-//			session.setAttribute("alertMsg", "게시글 수정 성공!");
-//			mv.setViewName("redirect:/detail.ch?bno=" + cb.getBoardNo());
-//		}else {
-//			mv.addObject("errorMsg", "게시글 수정에 실패했습니다.").setViewName("common/errorPage");
-//		}
-//		
 		return mv;
 	}
 	
