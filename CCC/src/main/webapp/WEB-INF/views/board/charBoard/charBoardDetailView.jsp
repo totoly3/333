@@ -85,6 +85,7 @@
                 		<td colspan="3">
                 			<c:forEach var="c" items="${ caList }">
                 				<c:choose>
+                					<!-- 만약 첨부파일 변경 이름이 없다면 -->
                 					<c:when test="${ empty c.changeName }">
                 						<!-- 파일이 없으면 빈공간으로 처리 -->
                 					</c:when>
