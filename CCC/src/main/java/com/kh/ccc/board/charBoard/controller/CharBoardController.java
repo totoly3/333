@@ -71,16 +71,24 @@ public class CharBoardController {
 		ArrayList<CharAttach> list = new ArrayList<>();
 		
 		for(int i=0; i<upfile.size(); i++) {	
+			CharAttach ca = new CharAttach();
 			//만약 첨부파일이 있다면 (파일명이 빈 문자열이 아니라면)
 			if(!upfile.get(i).getOriginalFilename().equals("")) {
 				//아래의 saveFile메서드 활용
 				String changeName = saveFile(upfile.get(i),session);
 				//(아래에 이어)8.원본명,서버에 업로드한 경로를 Board객체에 담아주기
-				CharAttach ca = new CharAttach();
 				ca.setOriginName(upfile.get(i).getOriginalFilename());
 				ca.setChangeName("resources/charBoardImg/" + changeName);
 				ca.setLevel(i+1);
 							
+				list.add(ca);
+			}else {
+				//파일이 없다면
+				ca.setOriginName(null);
+				ca.setChangeName(null);
+				ca.setLevel(i+1);
+				ca.setStatus("N");
+				
 				list.add(ca);
 			}
 		}
@@ -172,9 +180,13 @@ public class CharBoardController {
 							 ,HttpSession session
 							 ,ModelAndView mv) {
 		
-		//게시글 번호를 이용해 해당 게시글의 파일 정보를 가져온다
-		ArrayList<CharAttach> caList = boardService.selectAttach(cb.getBoardNo());
+		int boardNo = cb.getBoardNo();
 		
+		//게시글 번호를 이용해 해당 게시글의 파일 정보를 가져온다
+		ArrayList<CharAttach> caList = boardService.selectAttach(boardNo);
+		
+		ArrayList<CharAttach> newCaList = new ArrayList<>();
+ 		
 		//만약 새로운 첨부파일이 하나라도 있다면
 		if(!upfile.get(0).getOriginalFilename().equals("")) {
 			//기존 첨부파일 다 지우기
@@ -185,24 +197,45 @@ public class CharBoardController {
 			}
 			
 			for(int i=0; i<upfile.size(); i++) {
+
+				CharAttach ca = new CharAttach();
+				//첨부파일 등록 가능 개수 총 4개를 모두 넣지 않을 수 있기 때문에 조건 처리
 				if(!upfile.get(i).getOriginalFilename().equals("")) {
 					String changeName = saveFile(upfile.get(i),session);
-					caList.get(i).setOriginName(upfile.get(i).getOriginalFilename());
-					caList.get(i).setChangeName("resources/charBoardImg/" + changeName);
-					caList.get(i).setLevel(i+1);
+					ca.setRefBno(boardNo);
+					ca.setOriginName(upfile.get(i).getOriginalFilename());
+					ca.setChangeName("resources/charBoardImg/" + changeName);
+					ca.setLevel(i+1);
+					
+					newCaList.add(ca);
 				}
+				//파일이 없는 경우에는 NULL처리
+				else {
+					ca.setRefBno(boardNo);
+					ca.setOriginName(null);
+					ca.setChangeName(null);
+					ca.setLevel(i+1);
+					ca.setStatus("N");
+					
+					newCaList.add(ca);
+				}
+				
+//				newCaList.add(ca);
+				
 			}	
 		}
 		
 		System.out.println("여기는 controller! caList : "+caList);
+		System.out.println("여기는 controller! newCaList : "+newCaList);
 		
 		//수정할 게시글 내용과 첨부파일 목록을 보내자
-		int result = boardService.updateBoard(cb,caList);
+		int result = boardService.updateBoard(cb,newCaList);
 		
 		if(result != 0) {
 			session.setAttribute("alertMsg", "게시글 수정 성공!");
 			mv.setViewName("redirect:/detail.ch?bno=" + cb.getBoardNo());
-		}else {
+		}
+		else {
 			mv.addObject("errorMsg", "게시글 수정에 실패했습니다.").setViewName("common/errorPage");
 		}
 		
@@ -240,14 +273,13 @@ public class CharBoardController {
 		int result = boardService.deleteBoard(bno);
 		
 		if(result != 0) {
-			
 			if(!filePath.equals("")) {
 				String realPath = session.getServletContext().getRealPath(filePath);
 				new File(realPath).delete();
 			}
 			session.setAttribute("alertMsg", "게시글 삭제 성공!");
-			
-		}else {
+		}
+		else {
 			model.addAttribute("errorMsg", "게시글 삭제에 실패했습니다.");
 			return "common/errorPage";
 		}

@@ -37,7 +37,7 @@
             <h2>게시글 상세보기</h2>
             <br>
 
-            <a class="btn btn-secondary" style="float:right;" href="">목록으로</a>
+            <a class="btn btn-secondary" style="float:right;" href="list.ch">목록으로</a>
             <br><br>
 
             <table id="contentArea" algin="center" class="table">
@@ -84,9 +84,16 @@
                 	<c:when test="${ not empty caList }">
                 		<td colspan="3">
                 			<c:forEach var="c" items="${ caList }">
-                				<img style="margin: auto;" alt="" src="${ c.changeName }" width="400px" height="300px">
+                				<c:choose>
+                					<c:when test="${ empty c.changeName }">
+                						<!-- 파일이 없으면 빈공간으로 처리 -->
+                					</c:when>
+	                				<c:otherwise>
+	                					<img style="margin: auto;" alt="" src="${ c.changeName }" width="400px" height="300px">
+	                				</c:otherwise>
+                				</c:choose>
                 			</c:forEach>
-                		</td>
+                		</td>      		
                 	</c:when>
                 	<c:otherwise>
                 		<td colspan="3">
@@ -284,7 +291,6 @@
         			},
         			type : "post",
         			success : function(result){
-        				
         				if(result == "NNNNY"){
 	        				$("#updateContent").val("");
 	        				$("#reply_cnt").html("(0 / 50)");
@@ -292,7 +298,6 @@
         				}else{
         					alert("댓글 수정에 실패했습니다.");
         				}
-        				
         			},
         			error : function(){
         				console.log("통신실패!");
@@ -319,7 +324,6 @@
         				}else{
         					alert("댓글 등록에 실패했습니다.");
         				}
-        				
         			},
         			error : function(){
         				console.log("통신실패!");

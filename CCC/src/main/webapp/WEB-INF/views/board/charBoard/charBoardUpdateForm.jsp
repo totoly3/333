@@ -69,10 +69,6 @@
                            			업로드된 파일이 없습니다.
                            		</c:otherwise>
                            	</c:choose>
-                           	
-                            <!-- 파일 이름과 경로 히든으로 넘기기 -->
-<%--                             <input type="hidden" name="originName" value="${ cbList.get(0).originName }"> --%>
-<%--                             <input type="hidden" name="changeName" value="${ cbList.get(0).changeName }"> --%>
                         </td>
                     </tr>
                     <tr>

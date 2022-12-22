@@ -53,8 +53,8 @@ public class CharBoardDao {
 		return sqlSession.update("charBoardMapper.updateBoard", cb);
 	}
 	//2.게시글 수정 (첨부파일)
-	public int updateAttach(SqlSessionTemplate sqlSession, ArrayList<CharAttach> caList) {
-		return sqlSession.update("charBoardMapper.updateAttach", caList);
+	public int updateAttach(SqlSessionTemplate sqlSession, ArrayList<CharAttach> newCaList) {
+		return sqlSession.update("charBoardMapper.updateAttach", newCaList);
 	}
 	//게시글 삭제
 	public int deleteBoard(SqlSessionTemplate sqlSession, int bno) {

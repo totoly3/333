@@ -57,13 +57,13 @@ public class CharBoardServiceImpl implements CharBoardService {
 		return boardDao.selectAttach(sqlSession, bno);
 	}
 	
-	//게시글 수정 (글)
+	//게시글 수정
 	@Override
-	public int updateBoard(CharBoard cb, ArrayList<CharAttach> caList) {
-		
+	public int updateBoard(CharBoard cb, ArrayList<CharAttach> newCaList) {
+		//게시글 수정 (글)
 		int result = boardDao.updateBoard(sqlSession, cb);
-		
-		int result2 = boardDao.updateAttach(sqlSession, caList);
+		//게시글 수정 (첨부파일)
+		int result2 = boardDao.updateAttach(sqlSession, newCaList);
 		
 		int finalResult = result * result2;
 		
