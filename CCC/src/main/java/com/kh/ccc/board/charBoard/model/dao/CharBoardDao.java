@@ -56,13 +56,13 @@ public class CharBoardDao {
 	public int updateAttach(SqlSessionTemplate sqlSession, ArrayList<CharAttach> newCaList) {
 		return sqlSession.update("charBoardMapper.updateAttach", newCaList);
 	}
-	//게시글 삭제
+	//1.게시글 삭제 (글)
 	public int deleteBoard(SqlSessionTemplate sqlSession, int bno) {
 		return sqlSession.update("charBoardMapper.deleteBoard", bno);
 	}
-	//게시글 첨부파일 삭제
+	//2.게시글 삭제 (첨부파일)
 	public int deleteAttach(SqlSessionTemplate sqlSession, int bno) {
-		return sqlSession.update("charBoardMapper.deleteAttach", bno);
+		return sqlSession.delete("charBoardMapper.deleteAttach", bno);
 	}
 	//댓글 리스트 조회
 	public ArrayList<CharReply> selectReplyList(SqlSessionTemplate sqlSession, int boardNo) {

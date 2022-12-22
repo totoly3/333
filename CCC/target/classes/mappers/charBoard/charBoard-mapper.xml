@@ -8,6 +8,7 @@
 		<result column="CB_WRITER" property="boardWriter"/>
 		<result column="CB_TITLE" property="boardTitle"/>
 		<result column="CB_CONTENT" property="boardContent"/>
+		<result column="CA_CHANGE_NAME" property="changeName"/>
 		<result column="CB_VIEWS" property="views"/>
 		<result column="CB_LIKE" property="like"/>
 		<result column="CB_CREATE_DATE" property="createDate"/>
@@ -111,13 +112,15 @@
 									   ,CB_NO
 									   ,CA_ORIGIN_NAME
 									   ,CA_CHANGE_NAME
-									   ,CA_LEVEL)
+									   ,CA_LEVEL
+									   ,CA_STATUS)
 		SELECT SEQ_CANO.NEXTVAL,SEQ_CBNO.CURRVAL, A.*
 		FROM(
 			 <foreach collection="list" item="item" index="index" separator="union all">
 			 		SELECT #{ item.originName }
 			 			  ,#{ item.changeName }
 			 			  ,#{ item.level }
+			 			  ,#{ item.status }
 			 		FROM SYS.DUAL
 			 </foreach>
 			 )A
@@ -140,8 +143,8 @@
 				CA_CHANGE_NAME = #{ item.changeName }
 			WHERE CA_STATUS = 'Y'
 			AND CB_NO = #{ item.refBno }
-			AND CA_LEVEL = #{ item.level
-			 }
+			AND CA_LEVEL = #{ item.level }
+			AND CA_STATUS = #{ item.status }
 		</foreach>
 	</update>
 	
@@ -153,11 +156,10 @@
 	</update>
 	
 	<!-- 2.게시글 삭제 (첨부파일) -->
-	<update id="deleteAttach" parameterType="_int">
-		UPDATE TB_CHARACTER_ATTACH
-		SET CA_STATUS = 'N'
-		WHERE CB_NO = #{ bno }
-	</update>
+	<delete id="deleteAttach" parameterType="_int">
+			DELETE FROM TB_CHARACTER_ATTACH
+			WHERE CB_NO = #{ bno }
+	</delete>
 	
 	<!-- 댓글 리스트 조회 -->
 	<select id="selectReplyList" resultMap="charReplyResultSet" parameterType="_int">
