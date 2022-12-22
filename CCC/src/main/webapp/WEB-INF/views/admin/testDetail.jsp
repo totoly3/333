@@ -8,6 +8,8 @@
 <head>
  <meta charset="UTF-8">
     <title>Document</title>
+    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -20,12 +22,17 @@
     
     <style>
     .outer {
-	    margin-top: 200px; /*위로부터 50px만큼 여백*/
+	    margin-top: 200px; /*위로부터 50px만큼 여백*/	
     }
     
     #table_id {
 	    margin: auto; /*가운데 정렬*/
     }
+    
+
+
+    
+    
     </style>
     
 </head>
@@ -60,7 +67,15 @@
 							
 			         	</tbody>
 				</table>
+
+				
 	</div>
+	
+	
+	
+
+
+	
 	
 </body>
 </html>

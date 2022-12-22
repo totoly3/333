@@ -149,7 +149,7 @@ public class AdminController {
 		@RequestMapping("adminDetail.ad")
 		public String detailAdmin(int ano,Model model) {
 			
-			System.out.println("번호는:"+ano);
+			//System.out.println("번호는:"+ano);
 			
 			Admin a = adminService.detailAdmin(ano);
 			

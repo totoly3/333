@@ -45,7 +45,7 @@ public class AdminDao {
 	//관리자 상세조회 (특수관리자페이지)
 	public Admin detailAdmin(SqlSessionTemplate sqlSession, int ano) {
 
-		return (Admin)sqlSession.selectOne("adminMapper.detailAdmin", ano);
+		return sqlSession.selectOne("adminMapper.detailAdmin", ano);
 		
 	
 	}

@@ -22,7 +22,7 @@
 	</resultMap>
 	
 	
-	<!-- 회원리스트 조회 (관리자페이지) -->
+	<!-- 일반관리자리스트 조회 (특수관리자페이지) -->
 	<select id="adminList" resultMap="adminResultSet">
 	
 		SELECT *
@@ -34,7 +34,7 @@
 	
 	
 	
-	<!-- 회원 상세조회 (관리자페이지) -->
+	<!-- 일반관리자 상세 조회 (특수관리자페이지) -->
 	<select id="detailAdmin" resultMap="adminResultSet">
 	
 		SELECT *
