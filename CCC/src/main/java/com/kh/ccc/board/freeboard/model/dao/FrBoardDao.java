@@ -1,10 +1,12 @@
 package com.kh.ccc.board.freeboard.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.ccc.board.freeboard.model.vo.FrBoard;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
@@ -73,19 +75,7 @@ public class FrBoardDao {
 			System.out.println("삭제성공 이면 1"+delete);
 			return delete;
 		}
-		
-		//아래는 자유게시판 수정 (글만 수정)
-		public int updateFrboard1(SqlSessionTemplate sqlSession, ArrayList<FrBoard> fb) {
-			int result1=sqlSession.update("frBoardMapper.updateFrboard1");
-			return result1;
-		}
-		
-		//아래는 자유게시판 수정 (파일까지 수정 )
-		public int updateFrboard2(SqlSessionTemplate sqlSession, ArrayList<FrBoardAttach> frba) {
-			int result2=sqlSession.update("frBoardMapper.updateFrboard2");
-			return result2;
-		}
-		
+			
 	//아래는 댓글 조회 	
 		public ArrayList<FrBoardReply> detailFrBoardReviewSelect(SqlSessionTemplate sqlSession, int fno) {
 			 ArrayList<FrBoardReply> flist = (ArrayList)sqlSession.selectList("frBoardMapper.detailFrBoardReviewSelect",fno);
@@ -96,6 +86,18 @@ public class FrBoardDao {
 			int reFrResult = sqlSession.insert("frBoardMapper.insertFrReply",refb);
 			System.out.println("댓글등록되었으면1"+reFrResult);
 			return reFrResult;
+		}
+		
+		//아래는 자유게시판 수정 (글만 수정)
+		public int updateFrboard1(SqlSessionTemplate sqlSession, FrBoard fb) {
+			int result1=sqlSession.update("frBoardMapper.updateFrboard1",fb);
+			return result1;
+		}
+
+		//아래는 자유게시판 수정 (파일까지 수정 )
+		public int updateFrboard2(SqlSessionTemplate sqlSession, ArrayList<FrBoardAttach> frba) {
+			int result2=sqlSession.update("frBoardMapper.updateFrboard2",frba);
+			return result2;
 		}
 
 }
