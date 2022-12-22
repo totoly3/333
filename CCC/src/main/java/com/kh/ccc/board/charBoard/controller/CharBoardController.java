@@ -47,7 +47,7 @@ public class CharBoardController {
 		
 		//게시글 리스트 조회
 		ArrayList<CharBoard> list = boardService.selectList(pi);
-
+		
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
 		
@@ -81,6 +81,7 @@ public class CharBoardController {
 				ca.setChangeName("resources/charBoardImg/" + changeName);
 				//level 1번 : 캐릭터 게시판 썸네일 / 이후 카운트되는 level은 sql에서 해당 게시글의 첨부파일 번호를 나타낸다 (파일번호와 다름)
 				ca.setLevel(i+1);
+				ca.setStatus("Y");
 							
 				list.add(ca);
 			}else {
@@ -93,7 +94,6 @@ public class CharBoardController {
 				list.add(ca);
 			}
 		}
-		
 		int result = boardService.insertCharBoard(cb,list);
 		
 		if(result > 0) {
@@ -206,6 +206,7 @@ public class CharBoardController {
 					ca.setChangeName("resources/charBoardImg/" + changeName);
 					//level 1번 : 캐릭터 게시판 썸네일 / 이후 카운트되는 level(2~4)은 sql에서 해당 게시글의 첨부파일 번호를 나타낸다 (파일번호와 다름)
 					ca.setLevel(i+1);
+					ca.setStatus("Y");
 					
 					newCaList.add(ca);
 				}
@@ -238,18 +239,20 @@ public class CharBoardController {
 	//게시글 삭제
 	@RequestMapping("delete.ch")
 	public String deleteBoard(int bno
-							 ,String filePath
 							 ,HttpSession session
 							 ,Model model) {
 		
+		ArrayList<CharAttach> caList = boardService.selectAttach(bno);
 		int result = boardService.deleteBoard(bno);
 		
 		if(result != 0) {
-			if(!filePath.equals("")) {
-				String realPath = session.getServletContext().getRealPath(filePath);
-				new File(realPath).delete();
+			for(int i=0; i<caList.size(); i++) {
+				if(!caList.get(i).equals("")) {
+					String realPath = session.getServletContext().getRealPath(caList.get(i).getChangeName());
+					new File(realPath).delete();
+				}
 			}
-			session.setAttribute("alertMsg", "게시글 삭제 성공!");
+			session.setAttribute("alertMsg", "게시글 삭제에 성공했습니다!");
 		}
 		else {
 			model.addAttribute("errorMsg", "게시글 삭제에 실패했습니다.");
