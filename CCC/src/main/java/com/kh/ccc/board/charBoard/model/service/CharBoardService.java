@@ -27,7 +27,7 @@ public interface CharBoardService {
 	ArrayList<CharAttach> selectAttach(int bno);
 	
 	//1.게시글 수정 (글)
-	int updateBoard(CharBoard cb);
+	int updateBoard(CharBoard cb, ArrayList<CharAttach> caList);
 	//2.게시글 수정 (첨부파일)
 	int updateAttach(ArrayList<CharAttach> caList);
 	

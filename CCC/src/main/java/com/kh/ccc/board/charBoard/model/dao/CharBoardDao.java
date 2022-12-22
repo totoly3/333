@@ -48,13 +48,13 @@ public class CharBoardDao {
 	public ArrayList<CharAttach> selectAttach(SqlSessionTemplate sqlSession, int bno) {
 		return (ArrayList)sqlSession.selectList("charBoardMapper.selectAttach", bno);
 	}	
-	//게시글 수정
+	//1.게시글 수정 (글)
 	public int updateBoard(SqlSessionTemplate sqlSession, CharBoard cb) {
 		return sqlSession.update("charBoardMapper.updateBoard", cb);
 	}
-	//게시글 첨부파일 수정
-	public int updateAttach(SqlSessionTemplate sqlSession, CharBoard cb) {
-		return sqlSession.update("charBoardMapper.updateAttach", cb);
+	//2.게시글 수정 (첨부파일)
+	public int updateAttach(SqlSessionTemplate sqlSession, ArrayList<CharAttach> caList) {
+		return sqlSession.update("charBoardMapper.updateAttach", caList);
 	}
 	//게시글 삭제
 	public int deleteBoard(SqlSessionTemplate sqlSession, int bno) {
@@ -80,7 +80,7 @@ public class CharBoardDao {
 	public int deleteReply(SqlSessionTemplate sqlSession, CharReply cr) {
 		return sqlSession.update("charBoardMapper.deleteReply", cr);
 	}
-	//대댓글 번호 생성?
+	//댓글 번호 생성
 	public int maxNum(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("charBoardMapper.maxNum");
 	}

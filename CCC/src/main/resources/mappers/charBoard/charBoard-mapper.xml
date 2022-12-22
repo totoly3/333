@@ -135,12 +135,25 @@
 	</update>
 	
 	<!-- 첨부파일 수정 -->
-	<update id="updateAttach" parameterType="charBoard">
-		UPDATE TB_CHARACTER_ATTACH
-		SET CA_ORIGIN_NAME = #{ originName },
-			CA_CHANGE_NAME = #{ changeName }
-		WHERE CA_STATUS = 'Y'
+	<update id="updateAttach" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" separator=";" open="DECLARE BEGIN" close="; END;">
+			UPDATE TB_CHARACTER_ATTACH
+			SET CA_ORIGIN_NAME = #{ item.originName },
+				CA_CHANGE_NAME = #{ item.changeName }
+			WHERE CA_STATUS = 'Y'
+			AND CB_NO = #{ item.refBno }
+			AND CA_LEVEL = #{ item.level }
+		</foreach>
 	</update>
+	
+<!-- 	<update id="updateAttach" parameterType="charAttach"> -->
+<!-- 			UPDATE TB_CHARACTER_ATTACH -->
+<!-- 			SET CA_ORIGIN_NAME = #{ originName }, -->
+<!-- 				CA_CHANGE_NAME = #{ changeName } -->
+<!-- 			WHERE CA_STATUS = 'Y' -->
+<!-- 			AND CB_NO = #{ refBno } -->
+<!-- 			AND CA_LEVEL = #{ level } -->
+<!-- 	</update> -->
 	
 	<!-- 게시글 삭제 -->
 	<update id="deleteBoard" parameterType="_int">

@@ -79,13 +79,8 @@ public class CharBoardController {
 				CharAttach ca = new CharAttach();
 				ca.setOriginName(upfile.get(i).getOriginalFilename());
 				ca.setChangeName("resources/charBoardImg/" + changeName);
-				
-				if(i==0) {
-					ca.setLevel(1);
-				}else {
-					ca.setLevel(2);
-				}
-				
+				ca.setLevel(i+1);
+							
 				list.add(ca);
 			}
 		}
@@ -180,8 +175,6 @@ public class CharBoardController {
 		//게시글 번호를 이용해 해당 게시글의 파일 정보를 가져온다
 		ArrayList<CharAttach> caList = boardService.selectAttach(cb.getBoardNo());
 		
-		System.out.println(caList.size());
-		
 		//만약 새로운 첨부파일이 하나라도 있다면
 		if(!upfile.get(0).getOriginalFilename().equals("")) {
 			//기존 첨부파일 다 지우기
@@ -192,25 +185,21 @@ public class CharBoardController {
 			}
 			
 			for(int i=0; i<upfile.size(); i++) {
-				String changeName = saveFile(upfile.get(i),session);
-				caList.get(i).setOriginName(upfile.get(i).getOriginalFilename());
-				caList.get(i).setChangeName("resources/charBoardImg/" + changeName);
-				
-				if(i==0) {
-					caList.get(i).setLevel(1);
-				}else {
-					caList.get(i).setLevel(2);
+				if(!upfile.get(i).getOriginalFilename().equals("")) {
+					String changeName = saveFile(upfile.get(i),session);
+					caList.get(i).setOriginName(upfile.get(i).getOriginalFilename());
+					caList.get(i).setChangeName("resources/charBoardImg/" + changeName);
+					caList.get(i).setLevel(i+1);
 				}
-			}
-			
+			}	
 		}
 		
-		int result = boardService.updateBoard(cb);
-		int result2 = boardService.updateAttach(caList);
+		System.out.println("여기는 controller! caList : "+caList);
 		
-		int finalResult = result * result2;
+		//수정할 게시글 내용과 첨부파일 목록을 보내자
+		int result = boardService.updateBoard(cb,caList);
 		
-		if(finalResult != 0) {
+		if(result != 0) {
 			session.setAttribute("alertMsg", "게시글 수정 성공!");
 			mv.setViewName("redirect:/detail.ch?bno=" + cb.getBoardNo());
 		}else {

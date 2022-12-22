@@ -59,8 +59,15 @@ public class CharBoardServiceImpl implements CharBoardService {
 	
 	//게시글 수정 (글)
 	@Override
-	public int updateBoard(CharBoard cb) {
-		return boardDao.updateBoard(sqlSession, cb);
+	public int updateBoard(CharBoard cb, ArrayList<CharAttach> caList) {
+		
+		int result = boardDao.updateBoard(sqlSession, cb);
+		
+		int result2 = boardDao.updateAttach(sqlSession, caList);
+		
+		int finalResult = result * result2;
+		
+		return finalResult;
 	}
 	
 	//게시글 수정 (첨부파일)
