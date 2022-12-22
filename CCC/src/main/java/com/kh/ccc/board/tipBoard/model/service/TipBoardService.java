@@ -20,7 +20,7 @@ public interface TipBoardService {
 	int increseCount(int bno);
 	
 	//2.게시글 상세 조회
-	TipBoard selectBoard(int bno);
+	TipBoard selectBoard(int tno);
 	
 	
 	

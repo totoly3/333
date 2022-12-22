@@ -149,6 +149,9 @@ public class TipBoardController {
 		//2.조회수 증가가 이루어지면 해당 게시글의 정보 조회
 		if(result != 0) {
 			TipBoard tb = boardService.selectBoard(tno);
+			
+			System.out.println("tb:"+tb);
+			
 			mv.addObject("tb", tb).setViewName("board/tipBoard/tipBoardDetailView");
 		}else {
 			mv.addObject("errorMsg", "게시글을 조회할 수 없습니다.").setViewName("common/errorPage");

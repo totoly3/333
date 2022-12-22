@@ -33,16 +33,21 @@ public class TipBoardDao {
 	
 	
 	//게시글 조회수 증가
-	public int increaseCount(SqlSessionTemplate sqlSession, int bno) {
-		return sqlSession.update("tipBoardMapper.increaseCount", bno);	
+	public int increaseCount(SqlSessionTemplate sqlSession, int tno) {
+		return sqlSession.update("tipBoardMapper.increaseCount", tno);	
 	}
 	
 	
 	//게시글 상세정보 조회 (게시글 1개)
-	public TipBoard selectBoard(SqlSessionTemplate sqlSession, int bno) {
-		return sqlSession.selectOne("tipBoardMapper.selectBoard", bno);
+	public TipBoard selectBoard(SqlSessionTemplate sqlSession, int tno) {
+		return sqlSession.selectOne("tipBoardMapper.selectBoard", tno);
 	}
 		
+	
+	
+	
+	
+	
 		
 		
 	//게시글 등록 (글)

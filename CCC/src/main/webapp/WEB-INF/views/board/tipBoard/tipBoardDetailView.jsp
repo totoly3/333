@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,18 +45,18 @@
             <table id="contentArea" algin="center" class="table">
                 <tr>
                     <th width="100">제목</th>
-                    <td colspan="3">${ cb.boardTitle }</td>
+                    <td colspan="3">${ tb.tTitle }</td>
                 </tr>
                 <tr>
                     <th>작성자</th>
                     <td>admin</td>
                     <th>작성일</th>
-                    <td>${ cb.createDate }</td>
+                    <td>${ tb.tCreateDate }</td>
                 </tr>
                 <tr>
                     <th>첨부파일</th>
                     <td colspan="3">
-                        <a href="${ cb.changeName }" download="${ cb.originName }">${ cb.originName }</a>
+                        <a href="${ tb.tChangeName }" download="${ tb.originName }">${ tb.originName }</a>
                     </td>
                 </tr>
                 <tr>
@@ -62,7 +64,7 @@
                     <td colspan="3"></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><p style="height:150px;">${ cb.boardContent }</p></td>
+                    <td colspan="4"><p style="height:150px;">${ tb.boardContent }</p></td>
                 </tr>
             </table>
             <br>
@@ -78,8 +80,8 @@
             <script>
             	function postFormSubmit(num){
             		let form = $("<form>");
-            		let subBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${ cb.boardNo }");
-        			let subFilePath = $("<input>").prop("type","hidden").prop("name","filePath").prop("value","${ cb.changeName }");
+            		let subBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${ tb.boardNo }");
+        			let subFilePath = $("<input>").prop("type","hidden").prop("name","filePath").prop("value","${ tb.changeName }");
         			
         			form.append(subBno).append(subFilePath);
          			
@@ -195,7 +197,7 @@
 	        		$.ajax({
 	        			url : "insertReply.ch",
 	        			data : {
-	        				refBno : ${ cb.boardNo },
+	        				refBno : ${ tb.boardNo },
 	        				reContent : reContent
 	        			},
 	        			success : function(result){
@@ -229,7 +231,7 @@
         	function selectReplyList(){
         		$.ajax({
         			url : "selectRlist.ch",
-        			data : { boardNo : ${ cb.boardNo } },
+        			data : { boardNo : ${ tb.boardNo } },
         			success : function(reList){
         				let resultStr = "";
         				
@@ -261,7 +263,7 @@
         		$.ajax({
         			url : "updateReply.ch",
         			data : {
-        				refBno : ${ cb.boardNo },
+        				refBno : ${ tb.boardNo },
         				reNo : reUpdateNo,
         				reContent : $("#updateContent").val()
         			},
@@ -288,7 +290,7 @@
         		$.ajax({
         			url : "deleteReply.ch",
         			data : {
-        				refBno : ${ cb.boardNo },
+        				refBno : ${ tb.boardNo },
         				reNo : reNo
         			},
         			success : function(result){

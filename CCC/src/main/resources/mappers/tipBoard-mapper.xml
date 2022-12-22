@@ -80,30 +80,29 @@
 	
 	<!-- 게시판 상세보기 -->
 	<select id="selectBoard" resultMap="tipBoardResultSet">
-		SELECT TRB.T_NO
-			  ,TRB.T_TITLE
-			  ,TRB.T_CONTENT
-			  ,TRB.T_WRITER
-			  ,TRBA.TA_ORIGIN_NAME	
-			  ,TRB.T_COUNT	
-			  ,TRB.T_CREATE_DATE
-			  ,TRBA.TA_FILE_PATH || TRBA.TA_CHANGE_NAME "tTitleimg"
-		FROM TB_TIP TRB , TB_TIP_ATTACH TRBA
-		WHERE T_STATUS='Y'
-		AND TRB.T_NO = TRBA.T_NO
-		AND  TRB.T_NO = #{tNo}
-		ORDER BY TRB.T_NO DESC
+		SELECT T_NO
+			  ,T_TITLE
+			  ,T_CONTENT
+			  ,T_WRITER
+			  ,T_CREATE_DATE
+			  ,TA_ORIGIN_NAME
+			  ,TA_CHANGE_NAME
+		FROM TB_TIP 
+		JOIN TB_TIP_ATTACH USING(T_NO)
+		WHERE T_STATUS = 'Y'
+		AND  T_NO = #{tNo}
+		ORDER BY T_NO DESC
 	</select>
 
 
 	<!-- 아래는 게시글 상세보기 파일 -->
 	<select id="tipboardAttDetailView" resultMap="tipAttBoardResultSet">
 		SELECT 	TA_NO
-					,T_NO
-					,TA_ORIGIN_NAME
-					,TA_CHANGE_NAME
-					,TA_FILE_PATH
-					,TA_STATUS
+				,T_NO
+				,TA_ORIGIN_NAME
+				,TA_CHANGE_NAME
+				,TA_FILE_PATH
+				,TA_STATUS
 		FROM TB_TIP_ATTACH
 		WHERE TA_STATUS='Y'
 			AND  T_NO = #{tNo}
