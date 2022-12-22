@@ -41,8 +41,8 @@ public class CharBoardDao {
 		return sqlSession.update("charBoardMapper.increaseCount", bno);	
 	}
 	//게시글 상세정보 조회 (게시글 1개)
-	public CharBoard selectBoard(SqlSessionTemplate sqlSession, int bno) {
-		return sqlSession.selectOne("charBoardMapper.selectBoard", bno);
+	public ArrayList<CharBoard> selectBoard(SqlSessionTemplate sqlSession, int bno) {
+		return (ArrayList)sqlSession.selectList("charBoardMapper.selectBoard", bno);
 	}
 	//게시글 수정
 	public int updateBoard(SqlSessionTemplate sqlSession, CharBoard cb) {
@@ -75,5 +75,21 @@ public class CharBoardDao {
 	//댓글 삭제
 	public int deleteReply(SqlSessionTemplate sqlSession, CharReply cr) {
 		return sqlSession.update("charBoardMapper.deleteReply", cr);
+	}
+	//대댓글 번호 생성?
+	public int maxNum(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("charBoardMapper.maxNum");
+	}
+	//대댓글 (부모댓글의 그룹번호와 계층 알아오기)
+	public CharReply replySelect(SqlSessionTemplate sqlSession, int reNo) {
+		return sqlSession.selectOne("charBoardMapper.replySelect", reNo);
+	}
+	//대댓글 (댓글중에서 새로운 댓글을 달때 맨 아래로 가기 위한 로직)
+	public int maxStep(SqlSessionTemplate sqlSession, int reGroupNo) {
+		return sqlSession.selectOne("charBoardMapper.maxStep", reGroupNo);
+	}
+	//대댓글 (댓글의 계층을 업데이트하기 위한 로직)
+	public void updateStep(SqlSessionTemplate sqlSession, CharReply cr) {
+		sqlSession.update("charBoardMapper.updateStep", cr);
 	}
 }

@@ -1,13 +1,16 @@
 package com.kh.ccc.board.freeboard.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.ccc.board.freeboard.model.vo.FrBoard;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
+import com.kh.ccc.board.freeboard.model.vo.FrBoardReply;
 import com.kh.ccc.common.model.vo.PageInfo;
 
 @Repository
@@ -37,14 +40,16 @@ public class FrBoardDao {
 	public ArrayList<FrBoard> frboardDetailView(SqlSessionTemplate sqlSession, int fno) {
 
 		ArrayList<FrBoard> frbalist=(ArrayList)sqlSession.selectList("frBoardMapper.frboardDetailView",fno);
-		System.out.println("frbalist :"+frbalist);
+		System.out.println("상세보기 Dao frbalist :"+frbalist);
 		return frbalist;
 		
 	}
 	//아래는 게시글 상세보기 첨부파일 가져오려고
-	public FrBoardAttach frboardAttDetailView(SqlSessionTemplate sqlSession, int fno) {
+	public ArrayList<FrBoardAttach> frboardAttDetailView(SqlSessionTemplate sqlSession, int fno) {
 		
-		return sqlSession.selectOne("frBoardMapper.frboardAttDetailView");
+		ArrayList<FrBoardAttach> result= (ArrayList)sqlSession.selectList("frBoardMapper.frboardAttDetailView",fno);
+		System.out.println("result : "+result);
+		return result;
 	}
 	
 	//아래는 게시글 등록(글만)
@@ -66,8 +71,33 @@ public class FrBoardDao {
 		
 	//아래는 자유게시판 글 삭제 
 		public int frboardDelete(SqlSessionTemplate sqlSession, int fno) {
-			// TODO Auto-generated method stub
-			return 0;
+			int delete =sqlSession.update("frBoardMapper.frboardDelete",fno);
+			System.out.println("삭제성공 이면 1"+delete);
+			return delete;
+		}
+			
+	//아래는 댓글 조회 	
+		public ArrayList<FrBoardReply> detailFrBoardReviewSelect(SqlSessionTemplate sqlSession, int fno) {
+			 ArrayList<FrBoardReply> flist = (ArrayList)sqlSession.selectList("frBoardMapper.detailFrBoardReviewSelect",fno);
+			return flist;
+		}
+	//아래는 댓글 등록 
+		public int insertFrReply(SqlSessionTemplate sqlSession, FrBoardReply refb) {
+			int reFrResult = sqlSession.insert("frBoardMapper.insertFrReply",refb);
+			System.out.println("댓글등록되었으면1"+reFrResult);
+			return reFrResult;
+		}
+		
+		//아래는 자유게시판 수정 (글만 수정)
+		public int updateFrboard1(SqlSessionTemplate sqlSession, FrBoard fb) {
+			int result1=sqlSession.update("frBoardMapper.updateFrboard1",fb);
+			return result1;
+		}
+
+		//아래는 자유게시판 수정 (파일까지 수정 )
+		public int updateFrboard2(SqlSessionTemplate sqlSession, ArrayList<FrBoardAttach> frba) {
+			int result2=sqlSession.update("frBoardMapper.updateFrboard2",frba);
+			return result2;
 		}
 
 }

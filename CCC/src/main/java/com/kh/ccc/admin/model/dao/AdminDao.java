@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kh.ccc.admin.model.vo.Member;
+import com.kh.ccc.member.model.vo.Member;
+
 
 @Repository
 public class AdminDao {
@@ -15,7 +16,7 @@ public class AdminDao {
 	public ArrayList<Member> memberList(SqlSessionTemplate sqlSession) {
 
 		
-		ArrayList<Member> mList =(ArrayList)sqlSession.selectList("adminMapper.memberList");
+		ArrayList<Member> mList =(ArrayList)sqlSession.selectList("memberMapper.memberList");
 		
 		return mList;
 		
@@ -24,7 +25,7 @@ public class AdminDao {
 	//회원수
 	public int selectListCount(SqlSessionTemplate sqlSession) {
 		
-		int listCount =sqlSession.selectOne("adminMapper.selectListCount");
+		int listCount =sqlSession.selectOne("memberMapper.selectListCount");
 		
 		return listCount;
 	}

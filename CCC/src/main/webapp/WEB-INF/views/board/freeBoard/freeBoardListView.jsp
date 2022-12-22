@@ -46,7 +46,7 @@
     <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
-            <h2>게시판</h2>
+            <h1>자유게시판</h1>
             <br>
    
             <a class="btn btn-secondary" style="float:right;" href="insert.fpom">글쓰기</a>
@@ -89,23 +89,23 @@
                 	<!-- currentPage가 1이면 숨기기 -->
                 	<c:choose>
 	                	<c:when test="${ pi.currentPage ne 1 }">
-	                    	<li class="page-item"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage - 1 }">Previous</a></li>
+	                    	<li class="page-item"><a class="page-link" href="list.fr?currentPage=${ pi.currentPage - 1 }">Previous</a></li>
 	                    </c:when>
 	                    <c:otherwise><!-- currentPage가 1일경우 (1페이지) -->
-	                    	<li class="page-item disabled"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage - 1 }">Previous</a></li>	                   
+	                    	<li class="page-item disabled"><a class="page-link" href="list.fr?currentPage=${ pi.currentPage - 1 }">Previous</a></li>	                   
 	                    </c:otherwise>
                 	</c:choose>
                     	
                     	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-	                    	<li class="page-item"><a class="page-link" href="list.bo?currentPage=${ p }">${ p }</a></li>
+	                    	<li class="page-item"><a class="page-link" href="list.fr?currentPage=${ p }">${ p }</a></li>
                     	</c:forEach>
                     <!-- currentPage가 maxPage와 일치하면 숨기기 -->
                     <c:choose>
 	                    <c:when test="${ pi.currentPage eq pi.maxPage }">
-	                    	<li class="page-item disabled"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage + 1 }">Next</a></li>
+	                    	<li class="page-item disabled"><a class="page-link" href="list.fr?currentPage=${ pi.currentPage + 1 }">Next</a></li>
 	                    </c:when>
 	                    <c:otherwise>
-	                    	<li class="page-item"><a class="page-link" href="list.bo?currentPage=${ pi.currentPage + 1 }">Next</a></li>
+	                    	<li class="page-item"><a class="page-link" href="list.fr?currentPage=${ pi.currentPage + 1 }">Next</a></li>
 	                    </c:otherwise>
                     </c:choose>
                 </ul>

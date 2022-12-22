@@ -1,25 +1,17 @@
 package com.kh.ccc.admin.controller;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.mybatis.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,28 +19,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.ccc.admin.model.service.AdminService;
-import com.kh.ccc.admin.model.vo.Member;
+import com.kh.ccc.member.model.vo.Member;
+
 
 
 @Controller
 public class AdminController {
 	
-	@Autowired
-	private AdminService adminService;
+		@Autowired
+		private AdminService adminService;
 	
 	
-	
-	@RequestMapping("mainAdmin.ad")
-	public String mainAdmin() {
+		//전달
+		@RequestMapping("mainAdmin.ad")
+		public String mainAdmin() {
 		
 		return "admin/mainAdmin";
 		
-	}
+		}
 	
 	
-	
-	@RequestMapping("member.ad")
-	public String memberList(Model model) {
+		//리스트 조회 + 회원수
+		@RequestMapping("member.ad")
+		public String memberList(Model model) {
 		
 		//회원수
 		int listCount = adminService.selectListCount();
@@ -65,9 +58,9 @@ public class AdminController {
 	}
 	
 	
-	//엑셀
-	@PostMapping("excelDownload.ad")
-	public void textExcel(HttpServletResponse response) throws IOException {
+		//엑셀
+		@PostMapping("excelDownload.ad")
+		public void textExcel(HttpServletResponse response) throws IOException {
 
 		Workbook workbook= new SXSSFWorkbook();
 		Sheet sheet = workbook.createSheet("회원리스트");
@@ -114,13 +107,12 @@ public class AdminController {
 	    Cell bodyCell5 = bodyRow.createCell(4);
 	    bodyCell5.setCellValue(m.getMgNo());
 	    Cell bodyCell6 = bodyRow.createCell(5);
-	    bodyCell6.setCellValue(m.getmPointNumber());
+	    bodyCell6.setCellValue(m.getmPoint());
 		
 		}
-		
-		
+
 	 	response.setContentType("ms-vnd/excel");
-        response.setHeader("Content-Disposition", "attachment;filename=CCC_memberList.xls");
+        response.setHeader("Content-Disposition", "attachment;filename=CCC_memberList.xlsx");
  
         try {
 			workbook.write(response.getOutputStream());
@@ -137,7 +129,5 @@ public class AdminController {
     
 	
 	}
-		
-
 	
 }
