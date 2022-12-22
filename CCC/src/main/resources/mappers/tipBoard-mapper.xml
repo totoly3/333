@@ -79,66 +79,73 @@
 	
 	
 	<!-- 게시판 상세보기 -->
-	<select id="selectBoard" resultMap="tipBoardResultSet">
+	<!-- <select id="selectBoard" resultMap="tipBoardResultSet">
 		SELECT T_NO
 			  ,T_TITLE
-			  ,T_CONTENT
 			  ,T_WRITER
+			  ,M_NAME T_WRITER
+			  ,T_CONTENT
 			  ,T_CREATE_DATE
-			  ,TA_ORIGIN_NAME
-			  ,TA_CHANGE_NAME
-		FROM TB_TIP 
-		JOIN TB_TIP_ATTACH USING(T_NO)
+		FROM TB_TIP
+		JOIN TB_MEMBER ()
 		WHERE T_STATUS = 'Y'
 		AND  T_NO = #{tNo}
 		ORDER BY T_NO DESC
-	</select>
+	</select> -->
+	
+	
+	<!-- 게시판 상세보기 -->
+	<!-- <select id="selectBoard" resultMap="tipBoardResultSet">
+		SELECT T_NO
+			  ,T_TITLE
+			  ,M_NAME
+			  ,T_CONTENT
+			  ,T_CREATE_DATE
+		FROM TB_TIP
+		JOIN TB_MEMBER ON(T_WRITER = M_NO)
+		WHERE T_STATUS = 'Y'
+		AND T_NO = #{tNo}
+		ORDER BY T_NO DESC
+	</select> -->
+	
 
-
-	<!-- 아래는 게시글 상세보기 파일 -->
-	<select id="tipboardAttDetailView" resultMap="tipAttBoardResultSet">
-		SELECT 	TA_NO
-				,T_NO
-				,TA_ORIGIN_NAME
-				,TA_CHANGE_NAME
-				,TA_FILE_PATH
-				,TA_STATUS
-		FROM TB_TIP_ATTACH
-		WHERE TA_STATUS='Y'
-			AND  T_NO = #{tNo}
+	<!-- 게시판 상세보기 -->
+	<select id="selectBoard" resultMap="tipBoardResultSet">
+		SELECT T_NO
+			  ,T_TITLE
+		      ,T_CONTENT
+		      ,T_CREATE_DATE
+		      ,TA_ORIGIN_NAME
+		      ,TA_CHANGE_NAME
+		FROM TB_TIP
+		JOIN TB_TIP_ATTACH USING(T_NO)
+		WHERE TA_STATUS = 'Y'
+		AND T_NO = #{ tNo }
 		ORDER BY T_NO DESC
 	</select>
 	
+		
 	
 	
-	
-	
-	<!--  게시글등록 1 (사진 미포함) -->
+	<!--  게시글등록 (사진 미포함) -->
 	<insert id="insertTipBoard1">
-	INSERT INTO TB_TIP(
-						 T_NO
+	INSERT INTO TB_TIP( T_NO
 						,T_TITLE			
 						,T_CONTENT	
-						,T_TYPE	
-				)VALUES(
-						SEQ_TNO.NEXTVAL
+				)VALUES(SEQ_TNO.NEXTVAL
 						,#{tTitle}		
-						,#{content}
-						,2
-						)	
+						,#{tContent})	
 	</insert>
 	
 	
-	<!--  게시글등록 2 (사진 포함) -->
+	<!--  게시글등록 (사진 포함) -->
 	<insert id="insertAttTipBoard2" parameterType="java.util.List">
-	INSERT INTO TB_TIP_ATTACH(
-				 TA_NO
-				,T_NO
-				,TA_ORIGIN_NAME
-				,TA_CHANGE_NAME			
-				
-	)SELECT SEQ_TANO.NEXTVAL,SEQ_TNO.CURRVAL, A.*
-		FROM (
+	INSERT INTO TB_TIP_ATTACH( TA_NO
+							  ,T_NO
+							  ,TA_ORIGIN_NAME
+							  ,TA_CHANGE_NAME
+				)SELECT SEQ_TANO.NEXTVAL,SEQ_TNO.CURRVAL, A.*
+				FROM (
 				<foreach collection="list" item="item" index="index" separator="union all">
 					SELECT #{ item.taOrginName }
 						  ,#{ item.taChangeName }

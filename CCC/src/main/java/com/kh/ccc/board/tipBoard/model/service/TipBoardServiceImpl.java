@@ -42,8 +42,8 @@ public class TipBoardServiceImpl implements TipBoardService {
 	
 	//상세 조회
 	@Override
-	public TipBoard selectBoard(int tno) {
-		return boardDao.selectBoard(sqlSession, tno);
+	public TipBoard selectBoard(int bno) {
+		return boardDao.selectBoard(sqlSession, bno);
 	}
 	
 	

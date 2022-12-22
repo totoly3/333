@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -24,10 +23,10 @@
             padding:5% 10%;
             background-color:white;
         }
-
         table * {margin:5px;}
         table {width:100%;}
     </style>
+    
 </head>
 <body>
         
@@ -49,22 +48,22 @@
                 </tr>
                 <tr>
                     <th>작성자</th>
-                    <td>admin</td>
+                    <td>${ tb.tWriter }</td>
                     <th>작성일</th>
                     <td>${ tb.tCreateDate }</td>
                 </tr>
                 <tr>
-                    <th>첨부파일</th>
+                    <%-- <th>첨부파일</th>
                     <td colspan="3">
                         <a href="${ tb.tChangeName }" download="${ tb.originName }">${ tb.originName }</a>
-                    </td>
+                    </td> --%>
                 </tr>
                 <tr>
                     <th>내용</th>
                     <td colspan="3"></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><p style="height:150px;">${ tb.boardContent }</p></td>
+                    <td colspan="4"><p style="height:150px;">${ tb.tContent }</p></td>
                 </tr>
             </table>
             <br>
@@ -76,11 +75,11 @@
             </div>
             <br><br>
             
-            <!-- 동적으로 DOM요소  만들어 글 번호와 파일 경로를 Controller로 submit하기 -->
+           <!--  <!-- 동적으로 DOM요소  만들어 글 번호와 파일 경로를 Controller로 submit하기 -->
             <script>
             	function postFormSubmit(num){
             		let form = $("<form>");
-            		let subBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${ tb.boardNo }");
+            		let subBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${ tb.tNo }");
         			let subFilePath = $("<input>").prop("type","hidden").prop("name","filePath").prop("value","${ tb.changeName }");
         			
         			form.append(subBno).append(subFilePath);
@@ -95,7 +94,7 @@
         			
         			form.prop("method","POST").submit();
             	}
-            </script>
+            </script> -->
 
             <table id="replyArea" class="table" align="center">
                 <thead>

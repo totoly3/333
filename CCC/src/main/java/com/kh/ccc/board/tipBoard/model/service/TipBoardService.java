@@ -20,14 +20,13 @@ public interface TipBoardService {
 	int increseCount(int bno);
 	
 	//2.게시글 상세 조회
-	TipBoard selectBoard(int tno);
-	
-	
-	
+	TipBoard selectBoard(int bno);
+
 	//게시글 등록
-	int insertTipBoard(TipBoard cb,ArrayList<TipAttach> list);
+	int insertTipBoard(TipBoard tb,ArrayList<TipAttach> list);
 	
 
+	
 	
 	//게시글 수정
 	int updateBoard(TipBoard cb);

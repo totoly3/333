@@ -47,7 +47,7 @@
             <h2>팁 게시판</h2>
             <br>
    
-            <a class="btn btn-danger" style="float:right;" href="insert.tpom">글쓰기</a>
+            <a class="btn btn-danger" style="float:right;" href="insert.tp">글쓰기</a>
         
             <br>
             <br>
@@ -131,7 +131,7 @@
  	 <script>
  	$(function(){
  		 $("#boardList>tbody>tr").click(function(){
- 			 location.href="detail.tbo?tno="+$(this).children().eq(0).text();
+ 			 location.href="detail.tbo?bno="+$(this).children().eq(0).text();
  			 console.log(this);
  		 })
  	

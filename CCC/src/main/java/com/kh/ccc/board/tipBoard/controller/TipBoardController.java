@@ -33,6 +33,43 @@ public class TipBoardController {
 	@Autowired
 	private TipBoardService boardService;
 	
+	
+	//글 등록시 넘어온 첨부파일 자체를 서버의 폴더에 저장시키는 메소드 (모듈)
+		public String saveFile(MultipartFile upfile, HttpSession session) {
+			
+			//1.원본파일명 반환
+			String originName = upfile.getOriginalFilename();
+			
+			//2.시간형식 문자열로 반환
+			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			
+			//3.뒤에 붙일 랜덤값 반환
+			int ranNum = (int)(Math.random() * 90000 + 10000); //5자리의 랜덤숫자
+			
+			//4.원본 파일명으로부터 확장자명 반환
+			String ext = originName.substring(originName.lastIndexOf("."));
+			
+			//5.위에 반환받은 데이터 모두 붙여 파일명 만들기
+			String changeName = currentTime + ranNum + ext;
+			
+			//6.업로드 하고자 하는 실제 위치 경로 지정해주기 (실제 경로)
+			String savePath = session.getServletContext().getRealPath("/resources/charBoardImg/");
+			
+			//7.경로와 수정파일명 합쳐서 파일을 업로드해주기
+			try {
+				upfile.transferTo(new File(savePath + changeName));
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return changeName;
+		}
+		
+		
+	
 	//리스트 조회
 	@RequestMapping("list.tp")
 	public String selectList(@RequestParam(value="currentPage"
@@ -57,31 +94,37 @@ public class TipBoardController {
 	}
 	
 	
-	//글 등록 view
-	@GetMapping("insert.tpom")
+	//글 작성 페이지로 이동시키는 메소드 (포워딩)
+	@GetMapping("insert.tp")
 	public String insertBoard() {
 		return "board/tipBoard/tipBoardEnrollForm";
 	}
 	
 	
-	//글 등록
-	@PostMapping("insert.tpom")
-	public ModelAndView insertTipBoard(TipBoard tb,
-										ArrayList<MultipartFile> upfile,
-										ModelAndView mv,
-										HttpSession session) {
-	
+	//글 등록시키는 메소드
+	@PostMapping("insert.tp")
+	public ModelAndView insertTipBoard(TipBoard tb
+									  ,ArrayList<MultipartFile> upfile
+									  ,ModelAndView mv
+									  ,HttpSession session) {
+		
+		//System.out.println("tb : "+tb);
+		//System.out.println("upfile : "+upfile);
+		
 		ArrayList<TipAttach> list = new ArrayList<>();
 		
 		for(int i=0; i<=4; i++) {	
 			//만약 첨부파일이 있다면 (파일명이 빈 문자열이 아니라면)
 			if(!upfile.get(i).getOriginalFilename().equals("")) {
-				//아래의 saveFile메서드 활용
+
 				String changeName = saveFile(upfile.get(i),session);
-				//(아래에 이어)8.원본명,서버에 업로드한 경로를 Board객체에 담아주기
+				
+				//원본명, 업로드 경로를 Board 객체에 담아주기
 				TipAttach ta = new TipAttach();
 				ta.setTaOriginName(upfile.get(i).getOriginalFilename());
 				ta.setTaChangeName("resources/tipBoardImg/" + changeName);
+				
+				System.out.println("ta:"+ta);
 				
 				list.add(ta);
 			}
@@ -89,11 +132,11 @@ public class TipBoardController {
 		
 		int result = boardService.insertTipBoard(tb,list);
 		
-		System.out.println(result);
+		System.out.println("result:"+result);
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "게시글 등록 성공!");
-			mv.setViewName("redirect:/list.tpom");
+			mv.setViewName("redirect:/list.tp");
 		}else {
 			mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
 		}
@@ -101,54 +144,19 @@ public class TipBoardController {
 	}
 
 
-	
-	//글 등록시 넘어온 첨부파일 자체를 서버의 폴더에 저장시키는 메소드 (모듈)
-	public String saveFile(MultipartFile upfile, HttpSession session) {
-		
-		//1.원본파일명 반환
-		String originName = upfile.getOriginalFilename();
-		
-		//2.시간형식 문자열로 반환
-		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-		
-		//3.뒤에 붙일 랜덤값 반환
-		int ranNum = (int)(Math.random() * 90000 + 10000); //5자리의 랜덤숫자
-		
-		//4.원본 파일명으로부터 확장자명 반환
-		String ext = originName.substring(originName.lastIndexOf("."));
-		
-		//5.위에 반환받은 데이터 모두 붙여 파일명 만들기
-		String changeName = currentTime + ranNum + ext;
-		
-		//6.업로드 하고자 하는 실제 위치 경로 지정해주기 (실제 경로)
-		String savePath = session.getServletContext().getRealPath("/resources/charBoardImg/");
-		
-		//7.경로와 수정파일명 합쳐서 파일을 업로드해주기
-		try {
-			upfile.transferTo(new File(savePath + changeName));
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return changeName;
-	}
-	
-	
+
 	 
 	//게시글 상세보기
 	@RequestMapping("detail.tbo")
-	public ModelAndView detailBoard(@RequestParam(value="tno") int tno,
+	public ModelAndView detailBoard(@RequestParam(value="bno") int bno,
 									ModelAndView mv) {
 		
 		//1.게시글 조회수 증가
-		int result = boardService.increseCount(tno);
+		int result = boardService.increseCount(bno);
 		
 		//2.조회수 증가가 이루어지면 해당 게시글의 정보 조회
 		if(result != 0) {
-			TipBoard tb = boardService.selectBoard(tno);
+			TipBoard tb = boardService.selectBoard(bno);
 			
 			System.out.println("tb:"+tb);
 			
