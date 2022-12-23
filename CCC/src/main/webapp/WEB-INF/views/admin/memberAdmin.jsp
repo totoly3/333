@@ -7,6 +7,10 @@
 <html lang="en">
     <head>
     
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
        <!-- Custom fonts for this template-->
   	  <link href="resources/memberAdmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
       <link
@@ -263,12 +267,21 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>회원리스트
+                               
+                               	<!-- 삭제버튼 구현 --> 
+                               	<div id="deleteKey" style="float:right">
+	                            <a class="btn btn-outline-secondary"  onclick="deleteClick()">삭제</a>
+                 				<a class="btn btn-outline-secondary"  id="checkAll">전체선택</a>
+                 				<a class="btn btn-outline-secondary"  id="unCheckAll">전체해제</a>
+                 				</div>
+                               
                                 <form action="excelDownload.ad" method="post">
-                                	<input type="submit" value="EXCEL 다운로드" style="float:right">
+                                	<input type="submit" value="EXCEL 다운로드">	
 								</form>
                               </div>
 	                            <div class="card-body">
 	                                <table id="datatablesSimple">
+	                                
 	                                    <thead>
 	                                        <tr>
 	                                            <th>No.</th>
@@ -285,7 +298,7 @@
 			          			<tbody>	
 				                   <c:forEach var="m" items="${mList}">
 										<tr>
-											<td><input type="checkbox" name="check" value="VCheck"></td> 
+											<td><input type="checkbox" name="check" value="${m.mName }"></td> 
 											<td>${m.mNo }</td>
 											<td>${m.mId }</td>
 											<td>${m.mName }</td>
@@ -312,7 +325,7 @@
 										</tr>
 									</c:forEach>
 			         			</tbody>
-                 
+
                                 </table>
                             </div>
                         </div>
@@ -347,7 +360,45 @@
         <script src="resources/memberAdmin/js/datatables-simple-demo.js"></script>
         
         
+        <script>
         
+     // 체크박스 선택 후 삭제 버튼 클릭시 이벤트 
+        function deleteClick(){
+			var checkBoxArr = []; 
+			$("input:checkbox[name='check']:checked").each(function() {
+				checkBoxArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
+          		console.log(checkBoxArr);
+			});
+			//여기에 작성. 다 추가된 배열로 checkBoxArr
+
+	          $.ajax({
+	              url: "deleteClickMember.ad",
+	              data: {checkBoxArr : checkBoxArr},   // check seq 값을 가지고 있음.
+	              success: function(result){
+	              	console.log(result);
+	              },
+	              error: function() {
+	            	  console.log("통신실패");
+	              }  
+	           });
+        
+     
+     }
+     
+     
+        $(document).ready(function(){ //체크박스 전체선택,전체해제
+        
+            $("#checkAll").click(function() {
+                $("input[name=check]:checkbox").prop("checked",true); // name이 chkbox인 input 타입들의 checked값을 "true"로 바꿈
+            });
+           
+            $("#unCheckAll").click(function() {
+                $("input[name=check]:checkbox").prop("checked",false); // name이 chkbox인 input 타입들의 checked값을 "false"로 바꿈
+            });
+        });
+     
+        
+        </script>
         
         
     </body>

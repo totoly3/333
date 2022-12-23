@@ -3,6 +3,7 @@ package com.kh.ccc.admin.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -15,8 +16,10 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.ccc.admin.model.service.AdminService;
 import com.kh.ccc.admin.model.vo.Admin;
@@ -160,6 +163,20 @@ public class AdminController {
 			
 		}
 		
+		
+		//일반회원 check회원들 삭제
+		@ResponseBody
+		@RequestMapping(value="deleteClickMember.ad", produces="application/json;charset=UTF-8")
+		public String deleteClick(HttpServletRequest request,ModelMap model) throws Exception {
+			
+			String[] checkBoxArr = request.getParameterValues("checkBoxArr");
+			System.out.println(checkBoxArr);
+			
+
+			
+			return null;
+	
+		}
 		
 		
 }
