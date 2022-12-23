@@ -3,6 +3,7 @@ package com.kh.ccc.admin.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -15,10 +16,13 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.ccc.admin.model.service.AdminService;
+import com.kh.ccc.admin.model.vo.Admin;
 import com.kh.ccc.member.model.vo.Member;
 
 
@@ -30,7 +34,7 @@ public class AdminController {
 		private AdminService adminService;
 	
 	
-		//전달
+		//회원관리로 전달
 		@RequestMapping("mainAdmin.ad")
 		public String mainAdmin() {
 		
@@ -55,7 +59,7 @@ public class AdminController {
 		
 		return "admin/memberAdmin";
 		
-	}
+		}
 	
 	
 		//엑셀
@@ -128,6 +132,51 @@ public class AdminController {
 		}
     
 	
-	}
+		}
+		
+		
+		//관리자리스트 조회 (특수관리자페이지)
+		@RequestMapping("adminList.ad")
+		public String selectAdmin(Model model) {
+			
+		ArrayList<Admin> aList = adminService.adminList();
+			
+		model.addAttribute("aList",aList);	
+			
+		return "admin/selectAdmin";
+
+		}
+		
 	
+		//관리자 상세조회 (특수관리자페이지)
+		@RequestMapping("adminDetail.ad")
+		public String detailAdmin(int ano,Model model) {
+			
+			//System.out.println("번호는:"+ano);
+			
+			Admin a = adminService.detailAdmin(ano);
+			
+			model.addAttribute("a",a);	
+			
+			return "admin/testDetail";
+
+			
+		}
+		
+		
+		//일반회원 check회원들 삭제
+		@ResponseBody
+		@RequestMapping(value="deleteClickMember.ad", produces="application/json;charset=UTF-8")
+		public String deleteClick(HttpServletRequest request,ModelMap model) throws Exception {
+			
+			String[] checkBoxArr = request.getParameterValues("checkBoxArr");
+			System.out.println(checkBoxArr);
+			
+
+			
+			return null;
+	
+		}
+		
+		
 }
