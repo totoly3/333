@@ -89,16 +89,18 @@
   
   <form action="update.frboen" method="post"  enctype="multipart/form-data" >
     <div class="form-group">
+     
       <label for="usr">수정할제목 </label>
-      <input type="text" class="form-control" id="fTitle" name="fTitle">
+      <input type="text" class="form-control" id="fTitle" name="fTitle" value=" ${fb.get(0).fTitle}">
     </div>
     <!-- 글번호 히든으로 넘기기 -->
-    <input type="hidden" name="fNo" value="${fb.get(0).fNo}">
+    <input type="hidden" name="fno" value="${fb.get(0).fNo}">
     
     
     <div class="form-group">
-      <label for="content">수정할내용</label>
-      <input type="text" class="form-control" id="frcontent" name="fContent">
+    	
+      <label for="content">수정할 내용을 입력하세요  </label>
+      <input type="text" class="form-control" id="frcontent" name="fContent" value="${fb.get(0).fContent }">
     </div>
 
 <%--   		<input type="hidden" name="originName" value="${frba.faOrginName}"> --%>

@@ -90,6 +90,13 @@ public class FrBoardServiceImpl implements FrBoardService{
 		return result;
 	}
 	
+	//아래는 db데이터 삭제 
+	@Override
+	public int frboardDbDelete(int fno) {
+		int deResult=FrBoardDao.frboardDbDelete(sqlSession,fno);
+		System.out.println("deResult 삭제되었으면1"+deResult);
+		return deResult;
+	}
 	
 	//댓글조회
 	@Override
@@ -120,6 +127,16 @@ public class FrBoardServiceImpl implements FrBoardService{
 		int result2 = FrBoardDao.updateFrboard2(sqlSession,frba);
 		return result2;
 	}
+
+//
+//	//아래는 자유게시판 수정 할때 파일 삭제 
+//	@Override
+//	public int dbDeleteUpdateFrboard(ArrayList<FrBoardAttach> frba) {
+//		int updeResult=FrBoardDao.dbDeleteUpdateFrboard(sqlSession,frba);
+//		System.out.println(updeResult);
+//		return updeResult;
+//	}
+	
 
 	
 

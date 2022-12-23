@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-	<jsp:include page="header.jsp"/>
+	<jsp:include page="header2.jsp"/>
 	
     <br>
     <div align="center">

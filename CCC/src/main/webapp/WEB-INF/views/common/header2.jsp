@@ -97,6 +97,8 @@
                <li><a href="list.fr">F R E E - B O A R D</a></li>
                <li><a href="list.ch">C H A R A C T E R</a></li>
                <li><a href="list.ch">W O R L D - C U P</a></li>
+               <li><a href="playground.fr">P L A Y - G R O U N D</a></li>
+           
            </ul>
        </div>
    </div>
