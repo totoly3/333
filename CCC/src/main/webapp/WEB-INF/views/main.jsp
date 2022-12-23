@@ -12,12 +12,11 @@
 	<jsp:include page="common/mainViewPage.jsp"/>
 
 	<div style="text-align : center;">
-		
-	
 
 	</div>
 	
 	<br><br><br>
+
 	
 </body>
 </html>
