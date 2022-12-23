@@ -8,11 +8,10 @@
 		<result column="CB_WRITER" property="boardWriter"/>
 		<result column="CB_TITLE" property="boardTitle"/>
 		<result column="CB_CONTENT" property="boardContent"/>
+		<result column="CA_CHANGE_NAME" property="changeName"/>
 		<result column="CB_VIEWS" property="views"/>
 		<result column="CB_LIKE" property="like"/>
 		<result column="CB_CREATE_DATE" property="createDate"/>
-		<result column="CA_ORIGIN_NAME" property="originName"/>
-		<result column="CA_CHANGE_NAME" property="changeName"/>
 		<result column="CB_STATUS" property="status"/>
 	</resultMap>
 	
@@ -32,13 +31,14 @@
 		<result column="CR_CONTENT" property="reContent"/>
 		<result column="CR_WRITER" property="reWriter"/>
 		<result column="CR_GROUP_NO" property="reGroupNo"/>
+		<result column="CR_PARENT_NO" property="reParentNo"/>
 		<result column="CR_STEP" property="reStep"/>
 		<result column="CR_LEVEL" property="reLevel"/>
 		<result column="CR_CREATE_DATE" property="reCreateDate"/>
 		<result column="CR_STATUS" property="reStatus"/>		
 	</resultMap>
 	
-	<!-- 게시글 조회수 증가 -->
+	<!-- 1.게시글 조회수 증가 -->
 	<update id="increaseCount" parameterType="_int">
 		UPDATE TB_CHARACTER_BOARD
 		SET CB_VIEWS = CB_VIEWS +1
@@ -46,16 +46,25 @@
 		AND CB_STATUS = 'Y'
 	</update>
 	
-	<!-- 게시글 상세 조회 -->
+	<!-- 2.게시글 상세 조회 (글) -->
 	<select id="selectBoard" resultMap="charBoardResultSet" parameterType="_int">
 		SELECT CB_NO
 			  ,CB_TITLE
 		      ,CB_CONTENT
 		      ,CB_CREATE_DATE
-		      ,CA_ORIGIN_NAME
-		      ,CA_CHANGE_NAME
 		FROM TB_CHARACTER_BOARD
-		JOIN TB_CHARACTER_ATTACH USING(CB_NO)
+		WHERE CB_STATUS = 'Y'
+		AND CB_NO = #{ bno }
+	</select>
+	
+	<!-- 3.게시글 상세 조회 (첨부파일) -->
+	<select id="selectAttach" resultMap="charAttachResultSet" parameterType="_int">
+		SELECT CA_NO
+			  ,CB_NO
+			  ,CA_ORIGIN_NAME
+			  ,CA_CHANGE_NAME
+			  ,CA_LEVEL
+		FROM TB_CHARACTER_ATTACH
 		WHERE CA_STATUS = 'Y'
 		AND CB_NO = #{ bno }
 	</select>
@@ -73,6 +82,7 @@
 		      ,CB_TITLE
 		      ,CB_CONTENT
 		      ,CA_CHANGE_NAME
+		      ,CA_LEVEL
 		      ,CB_VIEWS
 		      ,CB_LIKE
 		      ,CB_CREATE_DATE
@@ -102,13 +112,15 @@
 									   ,CB_NO
 									   ,CA_ORIGIN_NAME
 									   ,CA_CHANGE_NAME
-									   ,CA_LEVEL)
+									   ,CA_LEVEL
+									   ,CA_STATUS)
 		SELECT SEQ_CANO.NEXTVAL,SEQ_CBNO.CURRVAL, A.*
 		FROM(
 			 <foreach collection="list" item="item" index="index" separator="union all">
 			 		SELECT #{ item.originName }
 			 			  ,#{ item.changeName }
 			 			  ,#{ item.level }
+			 			  ,#{ item.status }
 			 		FROM SYS.DUAL
 			 </foreach>
 			 )A
@@ -120,42 +132,50 @@
 		SET CB_TITLE = #{ boardTitle },
 			CB_CONTENT = #{ boardContent }
 		WHERE CB_STATUS = 'Y'
+		AND CB_NO = #{ boardNo }
 	</update>
 	
 	<!-- 첨부파일 수정 -->
-	<update id="updateAttach" parameterType="charBoard">
-		UPDATE TB_CHARACTER_ATTACH
-		SET CA_ORIGIN_NAME = #{ originName },
-			CA_CHANGE_NAME = #{ changeName }
-		WHERE CA_STATUS = 'Y'
+	<update id="updateAttach" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" separator=";" open="DECLARE BEGIN" close="; END;">
+			UPDATE TB_CHARACTER_ATTACH
+			SET CA_ORIGIN_NAME = #{ item.originName },
+				CA_CHANGE_NAME = #{ item.changeName }
+			WHERE CA_STATUS = 'Y'
+			AND CB_NO = #{ item.refBno }
+			AND CA_LEVEL = #{ item.level }
+			AND CA_STATUS = #{ item.status }
+		</foreach>
 	</update>
 	
-	<!-- 게시글 삭제 -->
+	<!-- 1.게시글 삭제 (글) -->
 	<update id="deleteBoard" parameterType="_int">
 		UPDATE TB_CHARACTER_BOARD
 		SET CB_STATUS = 'N'
 		WHERE CB_NO = #{ bno }
 	</update>
 	
-	<!-- 게시글 첨부파일 삭제 -->
-	<update id="deleteAttach" parameterType="_int">
-		UPDATE TB_CHARACTER_ATTACH
-		SET CA_STATUS = 'N'
-		WHERE CB_NO = #{ bno }
-	</update>
+	<!-- 2.게시글 삭제 (첨부파일) -->
+	<delete id="deleteAttach" parameterType="_int">
+			DELETE FROM TB_CHARACTER_ATTACH
+			WHERE CB_NO = #{ bno }
+	</delete>
 	
 	<!-- 댓글 리스트 조회 -->
 	<select id="selectReplyList" resultMap="charReplyResultSet" parameterType="_int">
 		SELECT CR_NO
-			  ,CB_NO
-			  ,CR_CONTENT
-			  ,CR_WRITER
-			  ,CR_GROUP_NO
-			  ,CR_LEVEL
-			  ,CR_CREATE_DATE
+		      ,CB_NO
+		      ,CR_WRITER
+		      ,CR_GROUP_NO
+		      ,CR_PARENT_NO
+		      ,CR_STEP
+		      ,CR_LEVEL
+		      ,CR_CREATE_DATE
+		      ,LPAD('@@@@@@@@@@@@@@@@@@@@', 5*(CR_LEVEL)) || CR_CONTENT AS CR_CONTENT
 		FROM TB_CHARACTER_REPLY
 		WHERE CR_STATUS = 'Y'
-		AND CB_NO = #{ boardNo }
+		AND CB_NO = #{ refBno }
+		ORDER BY CR_GROUP_NO ASC, CR_STEP ASC
 	</select>
 		
 	<!-- 댓글 등록 -->
@@ -163,14 +183,22 @@
 		INSERT INTO TB_CHARACTER_REPLY(
 									   CR_NO
 									  ,CB_NO
-									  ,CR_WRITER
 									  ,CR_CONTENT
+									  ,CR_WRITER
+									  ,CR_GROUP_NO
+									  ,CR_PARENT_NO
+									  ,CR_STEP
+									  ,CR_LEVEL
 									  )
 							    VALUES(
-							    	   SEQ_CRNO.NEXTVAL
+							    	   #{ reNo }
 							    	  ,#{ refBno }
-							    	  ,1
 							    	  ,#{ reContent }
+							    	  ,1
+							    	  ,#{ reGroupNo }
+							    	  ,#{ reParentNo }
+							    	  ,#{ reStep }
+							    	  ,#{ reLevel }
 							  		  )
 	</insert>
 	
@@ -191,11 +219,10 @@
 		AND CB_NO = #{ refBno }
 	</update>
 	
-	<!-- 대댓글 번호 생성? -->
+	<!-- 댓글의 번호 생성 -->
 	<select id="maxNum" resultType="_int">
 		SELECT NVL(MAX(CR_NO), 0) + 1
 		FROM TB_CHARACTER_REPLY
-		WHERE CR_STATUS = 'Y'
 	</select>
 	
 	<!-- 대댓글 (부모댓글의 그룹번호와 계층 알아오기) -->
@@ -203,6 +230,7 @@
 		SELECT CR_NO
 			  ,CB_NO
 			  ,CR_GROUP_NO
+			  ,CR_PARENT_NO
 			  ,CR_STEP
 			  ,CR_LEVEL
 		FROM TB_CHARACTER_REPLY

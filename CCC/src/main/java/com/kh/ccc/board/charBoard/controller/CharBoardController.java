@@ -47,7 +47,7 @@ public class CharBoardController {
 		
 		//게시글 리스트 조회
 		ArrayList<CharBoard> list = boardService.selectList(pi);
-
+		
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
 		
@@ -70,26 +70,30 @@ public class CharBoardController {
 		//첨부파일이 여러개 넘어올 수 있기 때문에 ArrayList에 담아주자
 		ArrayList<CharAttach> list = new ArrayList<>();
 		
-		for(int i=0; i<=3; i++) {	
+		for(int i=0; i<upfile.size(); i++) {	
+			CharAttach ca = new CharAttach();
 			//만약 첨부파일이 있다면 (파일명이 빈 문자열이 아니라면)
 			if(!upfile.get(i).getOriginalFilename().equals("")) {
 				//아래의 saveFile메서드 활용
 				String changeName = saveFile(upfile.get(i),session);
 				//(아래에 이어)8.원본명,서버에 업로드한 경로를 Board객체에 담아주기
-				CharAttach ca = new CharAttach();
 				ca.setOriginName(upfile.get(i).getOriginalFilename());
 				ca.setChangeName("resources/charBoardImg/" + changeName);
-				
-				if(i==0) {
-					ca.setLevel(1);
-				}else {
-					ca.setLevel(2);
-				}
+				//level 1번 : 캐릭터 게시판 썸네일 / 이후 카운트되는 level은 sql에서 해당 게시글의 첨부파일 번호를 나타낸다 (파일번호와 다름)
+				ca.setLevel(i+1);
+				ca.setStatus("Y");
+							
+				list.add(ca);
+			}else {
+				//파일이 없는 경우에는 NULL처리한다 (첨부파일 수정시에 사용할 공간 확보)
+				ca.setOriginName(null);
+				ca.setChangeName(null);
+				ca.setLevel(i+1);
+				ca.setStatus("N");
 				
 				list.add(ca);
 			}
 		}
-		
 		int result = boardService.insertCharBoard(cb,list);
 		
 		if(result > 0) {
@@ -146,7 +150,9 @@ public class CharBoardController {
 		//2.조회수 증가가 이루어지면 해당 게시글의 정보 조회
 		if(result != 0) {
 			CharBoard cb = boardService.selectBoard(bno);
-			mv.addObject("cb", cb).setViewName("board/charBoard/charBoardDetailView");
+			ArrayList<CharAttach> caList = boardService.selectAttach(bno);
+			
+			mv.addObject("cb", cb).addObject("caList", caList).setViewName("board/charBoard/charBoardDetailView");
 		}else {
 			mv.addObject("errorMsg", "게시글을 조회할 수 없습니다.").setViewName("common/errorPage");
 		}
@@ -160,8 +166,10 @@ public class CharBoardController {
 							,int bno) {
 		
 		CharBoard cb = boardService.selectBoard(bno);
+		ArrayList<CharAttach> caList = boardService.selectAttach(bno);
 		
 		model.addAttribute("cb", cb);
+		model.addAttribute("caList", caList);
 		
 		return "board/charBoard/charBoardUpdateForm";
 	}
@@ -169,27 +177,59 @@ public class CharBoardController {
 	//게시글 수정
 	@RequestMapping("update.ch")
 	public ModelAndView updateBoard(CharBoard cb
-							 ,MultipartFile upfile
+							 ,ArrayList<MultipartFile> upfile
 							 ,HttpSession session
 							 ,ModelAndView mv) {
-		//새로운 첨부파일이 있다면
-		if(!upfile.getOriginalFilename().equals("")) {
-			//기존 첨부파일이 있는경우 삭제
-			if(cb.getOriginName() != null) {
-				new File(session.getServletContext().getRealPath(cb.getChangeName())).delete();
-			}
-			//새로운 첨부파일 등록
-			String changeName = saveFile(upfile,session);
-			cb.setOriginName(upfile.getOriginalFilename());
-			cb.setChangeName("resources/charBoardImg/" + changeName);
-		}
 		
-		int result = boardService.updateBoard(cb);
+		int boardNo = cb.getBoardNo();
+		//게시글 번호를 이용해 해당 게시글의 파일 정보를 가져온다
+		ArrayList<CharAttach> caList = boardService.selectAttach(boardNo);
+		//수정된 파일 내용을 담기 위한 리스트 생성
+		ArrayList<CharAttach> newCaList = new ArrayList<>();
+ 		
+		//만약 새로운 첨부파일이 하나라도 있다면 (캐릭터 게시판은 썸네일때문에 없을 수 없지만..)
+		if(!upfile.get(0).getOriginalFilename().equals("")) {
+			//기존 첨부파일 다 지우기 (기존 첨부파일 수만큼 반복) 
+			for(int i=0; i<caList.size(); i++) {
+				if(caList.get(i).getOriginName() != null) {
+					new File(session.getServletContext().getRealPath(caList.get(i).getChangeName())).delete();
+				}
+			}
+			//첨부파일 최대 개수가 4개이기 때문에 4번 반복
+			for(int i=0; i<upfile.size(); i++) {
+				CharAttach ca = new CharAttach();
+				//첨부파일 등록 가능 개수 총 4개를 모두 넣지 않을 수 있기 때문에 조건 처리 (파일이 없으면 새로 생성해서 넣기)
+				if(!upfile.get(i).getOriginalFilename().equals("")) {
+					String changeName = saveFile(upfile.get(i),session);
+					ca.setRefBno(boardNo);
+					ca.setOriginName(upfile.get(i).getOriginalFilename());
+					ca.setChangeName("resources/charBoardImg/" + changeName);
+					//level 1번 : 캐릭터 게시판 썸네일 / 이후 카운트되는 level(2~4)은 sql에서 해당 게시글의 첨부파일 번호를 나타낸다 (파일번호와 다름)
+					ca.setLevel(i+1);
+					ca.setStatus("Y");
+					
+					newCaList.add(ca);
+				}
+				//파일이 없는 경우에는 NULL처리한다 (첨부파일 수정시에 사용할 공간 확보)
+				else {
+					ca.setRefBno(boardNo);
+					ca.setOriginName(null);
+					ca.setChangeName(null);
+					ca.setLevel(i+1);
+					ca.setStatus("N");
+					
+					newCaList.add(ca);
+				}	
+			}	
+		}
+		//수정할 게시글 내용과 첨부파일 목록을 보내자
+		int result = boardService.updateBoard(cb,newCaList);
 		
 		if(result != 0) {
 			session.setAttribute("alertMsg", "게시글 수정 성공!");
-			mv.setViewName("redirect:/detail.ch?bno=" + cb.getBoardNo());
-		}else {
+			mv.setViewName("redirect:/detail.ch?bno=" + boardNo);
+		}
+		else {
 			mv.addObject("errorMsg", "게시글 수정에 실패했습니다.").setViewName("common/errorPage");
 		}
 		
@@ -199,21 +239,22 @@ public class CharBoardController {
 	//게시글 삭제
 	@RequestMapping("delete.ch")
 	public String deleteBoard(int bno
-							 ,String filePath
 							 ,HttpSession session
 							 ,Model model) {
 		
+		ArrayList<CharAttach> caList = boardService.selectAttach(bno);
 		int result = boardService.deleteBoard(bno);
 		
 		if(result != 0) {
-			
-			if(!filePath.equals("")) {
-				String realPath = session.getServletContext().getRealPath(filePath);
-				new File(realPath).delete();
+			for(int i=0; i<caList.size(); i++) {
+				if(!caList.get(i).equals("")) {
+					String realPath = session.getServletContext().getRealPath(caList.get(i).getChangeName());
+					new File(realPath).delete();
+				}
 			}
-			session.setAttribute("alertMsg", "게시글 삭제 성공!");
-			
-		}else {
+			session.setAttribute("alertMsg", "게시글 삭제에 성공했습니다!");
+		}
+		else {
 			model.addAttribute("errorMsg", "게시글 삭제에 실패했습니다.");
 			return "common/errorPage";
 		}
@@ -251,30 +292,43 @@ public class CharBoardController {
 		return (result != 0) ? "NNNNY" : "NNNNN";
 	}
 	
-	//대댓글 등록
+	//댓글 등록
 	@ResponseBody
 	@RequestMapping(value="replyAnswer.ch",produces="text/html; charset=UTF-8")
 	public String insertReplyAnswer(CharReply cr, HttpSession session) {
-		
-		//int reWriter = session.getAttribute("회원번호");
-		int number = boardService.maxNum(); // 새 댓글 번호 생성, 참조댓글번호(reGroupNo)는 부모댓글번호(reNo)와 같다
-		
-		int reStep = 0, reLevel = 0; 		  //첫번째 댓글은 0으로 기본 세팅
-		int refBno = cr.getRefBno(); 		  //댓글을 단 게시글 번호
-		int reNo = cr.getReNo();	 		  //대댓글을 단 부모 댓글의 번호
-		String reContent = cr.getReContent(); //대댓글의 내용
-		
-		if(reNo != 0) { //부모 댓글번호가 있다면
-			CharReply cr1 = boardService.replySelect(reNo);
 			
+		//int reWriter = session.getAttribute("회원번호"); //(ajax에서 넘어옴)
+		int number = boardService.maxNum();   //새 댓글 번호 생성, 참조댓글번호(reGroupNo)는 부모댓글번호(reNo)와 같다 (시퀀스가 필요없다)
+		
+		int reStep = 0, reLevel = 0; 		  //대댓글의 순서와 계층은 0으로 기본 세팅
+		int refBno = cr.getRefBno(); 		  //댓글을 단 게시글 번호 (ajax에서 넘어옴)
+		
+		//어떤 댓글에 댓글을 남긴건지 (ajax에서 넘어옴)
+		//처음 작성하는 부모댓글은 이 시점에서는 댓글 번호가 담기지 않는다
+		int reNo = cr.getReNo();	 	  	  
+		
+		//부모댓글번호 -부모 자기 자신은 자신의 번호를 reParentNo로 갖는다
+		//위의 maxNum 메소드로 댓글의 번호를 생성하지만 아직 댓글 번호를 넣지 않은 시점이기 때문에
+		//댓글의 답글을 작성하는 경우에만 jsp에서 해당 부모 댓글번호를 가져와 reParentNo에 담긴다
+		int reParentNo = cr.getReNo();
+		
+		String reContent = cr.getReContent(); //대댓글의 내용 (ajax에서 넘어옴)
+		
+		if(reNo != 0) { //댓글의 번호가 있다면 (댓글에 댓글을 다는 경우)
+			
+			CharReply cr1 = boardService.replySelect(reNo); //읽어온 댓글의 reStep과 re_level을 알기 위해서
+		
+			//대댓글의 첫 댓글일 때
 			if(cr1.getReStep() == 0 && cr1.getReLevel() == 0) {
-				cr.setReGroupNo(reNo); // 대댓글끼리 그룹핑하기 위해 부모댓글의 번호로 참조댓글번호 세팅
+				cr.setReGroupNo(reNo); 	//대댓글끼리 그룹핑하기 위해 부모댓글의 번호로 참조댓글번호 세팅
+				cr.setReParentNo(reNo);	//대댓글의 부모 번호를 세팅
 				int maxStep = boardService.maxStep(cr1.getReGroupNo()); //새로운 대댓글을 작성하면 아래로 가도록 하기위해
 				cr.setReStep(maxStep);
 				cr.setReLevel(cr1.getReLevel() + 1);
 			}
-			else { //댓글의 대댓글을 작성할 때
+			else { //대댓글의 두번째 댓글 부터
 				cr.setReGroupNo(cr1.getReGroupNo()); //대댓글끼리 뭉치기위해,부모댓글의 댓글번호로 reGroupNo세팅
+				cr.setReParentNo(reNo);	//대댓글의 부모 번호를 세팅
 				cr.setReStep(cr1.getReStep()); 		
 				//새로운 댓글은 댓글 사이에 끼어야하기 때문에
 				//새로 작성된 대댓글의 그룹번호(부모번호)가 같고 reStep(대댓의 순서)이 해당 댓글의 순서보다 크면 그 댓글보다 reStep + 1을 해준다
@@ -284,23 +338,23 @@ public class CharBoardController {
 				cr.setReStep(cr1.getReStep() + 1); 	 //부모댓글의 step보다 +1 증가
 				cr.setReLevel(cr1.getReLevel() + 1); //부모댓글의 level보다 +1 증가
 			}
-		}else {
+
+		}else { //댓글의 번호가 없다면 (부모댓글의 경우)
 			cr.setReGroupNo(number);
+			cr.setReParentNo(number);//첫 댓글에는 자기 자신의 번호로 부모 번호를 세팅
 			cr.setReStep(reStep); 	 //기본 댓글에는 0으로 세팅
-			cr.setReLevel(reLevel);  //기본 댓글에는 계층 0으로 세팅
+			cr.setReLevel(reLevel);  //기본 댓글에는 0으로 세팅
 		}
 		
-		cr.setReContent(reContent); //댓글 내용 담기
-		cr.setReNo(reNo); 			//댓글의 번호 생성? (시퀀스 어쩔..?)
-		cr.setRefBno(refBno); 		//댓글이 작성된 게시글 번호 담기
-		//cr.setReWriter(reWriter); //댓글 작성자 (아직 안넣음)
+		cr.setReContent(reContent); 	//댓글 내용 담기
+		cr.setReNo(number);				//새로 생성한 댓글의 번호 담기
+		cr.setRefBno(refBno); 			//댓글이 작성된 게시글 번호 담기
+		//cr.setReWriter(reWriter); 	//댓글 작성자 (아직 안넣음)
 		
-		int result = boardService.insertCharReply(cr);
+		int result = boardService.insertReply(cr);
 		
-		return "redirect:/detail.ch?bno=" + cr.getRefBno();
+		return (result != 0) ? "NNNNY" : "NNNNN";
 	}
-	
-	
 	
 	//댓글 삭제
 	@ResponseBody

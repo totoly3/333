@@ -37,7 +37,7 @@
             <h2>게시글 상세보기</h2>
             <br>
 
-            <a class="btn btn-secondary" style="float:right;" href="">목록으로</a>
+            <a class="btn btn-secondary" style="float:right;" href="list.ch">목록으로</a>
             <br><br>
 
             <table id="contentArea" algin="center" class="table">
@@ -53,9 +53,21 @@
                 </tr>
                 <tr>
                     <th>첨부파일</th>
-                    <td colspan="3">
-                        <a href="${ cb.changeName }" download="${ cb.originName }">${ cb.originName }</a>
-                    </td>
+                    <c:choose>
+                    	<c:when test="${ not empty caList }">
+			                    <td colspan="3">
+                    				<c:forEach var="c" items="${ caList }">
+			                       		<a href="${ c.changeName }" download="${ c.originName }">${ c.originName }</a>
+                    				</c:forEach>
+			                    </td>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<td colspan="3">
+	                    		조회된 첨부파일이 없습니다.
+	                    	</td>
+	                    </c:otherwise>
+                    </c:choose>
+                    
                 </tr>
                 <tr>
                     <th>내용</th>
@@ -64,34 +76,57 @@
                 <tr>
                     <td colspan="4"><p style="height:150px;">${ cb.boardContent }</p></td>
                 </tr>
+                <tr>
+                	<th>이미지</th>
+                	<td colspan="3"></td>
+                </tr>
+                <c:choose>
+                	<c:when test="${ not empty caList }">
+                		<td colspan="3">
+                			<c:forEach var="c" items="${ caList }">
+	                			<img style="margin: auto;" alt="" src="${ c.changeName }" width="400px" height="300px">
+                			</c:forEach>
+                		</td>      		
+                	</c:when>
+                	<c:otherwise>
+                		<td colspan="3">
+                			조회된 첨부파일이 없습니다.
+	                    </td>
+                	</c:otherwise>
+                </c:choose>
+                
             </table>
             <br>
 
             <div align="center">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
                 <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
-                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
+                <a class="btn btn-danger" onclick="return postFormSubmit(2);">삭제하기</a>
             </div>
             <br><br>
             
             <!-- 동적으로 DOM요소  만들어 글 번호와 파일 경로를 Controller로 submit하기 -->
             <script>
             	function postFormSubmit(num){
-            		let form = $("<form>");
-            		let subBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${ cb.boardNo }");
-        			let subFilePath = $("<input>").prop("type","hidden").prop("name","filePath").prop("value","${ cb.changeName }");
-        			
-        			form.append(subBno).append(subFilePath);
-         			
-        			if(num == 1){
-        				form.prop("action","updateForm.ch");
-        			}else{
-        				form.prop("action","delete.ch");
-        			}
-        			
-        			$("body").append(form);
-        			
-        			form.prop("method","POST").submit();
+            		var result = confirm("정말로 삭제하시겠습니까?");
+            		
+            		if(result){
+	            		let form = $("<form>");
+	            		let subBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${ cb.boardNo }");
+	        			
+	        			form.append(subBno);
+	         			
+	        			if(num == 1){
+	        				form.prop("action","updateForm.ch");
+	        			}else{
+	        				form.prop("action","delete.ch");
+	        			}
+	        			
+	        			$("body").append(form);
+	        			
+	        			form.prop("method","POST").submit();
+            		}
+            		return false;
             	}
             </script>
 
@@ -107,22 +142,8 @@
                         <td colspan="5">댓글(<span id="rcount">0</span>)</td>
                     </tr>
                 </thead>
+                
                 <tbody>
-<!--                     <tr> -->
-<!--                         <th>user02</th> -->
-<!--                         <td>ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ꿀잼</td> -->
-<!--                         <td>2020-03-12</td> -->
-<!--                     </tr> -->
-<!--                     <tr> -->
-<!--                         <th>user01</th> -->
-<!--                         <td>재밌어요</td> -->
-<!--                         <td>2020-03-11</td> -->
-<!--                     </tr> -->
-<!--                     <tr> -->
-<!--                         <th>admin</th> -->
-<!--                         <td>댓글입니다!!</td> -->
-<!--                         <td>2020-03-10</td> -->
-<!--                     </tr> -->
                 </tbody>
             </table>
         </div>
@@ -193,7 +214,7 @@
         		if(reContent.trim().length != 0){
         			
 	        		$.ajax({
-	        			url : "insertReply.ch",
+	        			url : "replyAnswer.ch",
 	        			data : {
 	        				refBno : ${ cb.boardNo },
 	        				reContent : reContent
@@ -253,7 +274,7 @@
         			error : function(){
         				console.log("통신실패!");
         			}
-        		});
+        		})
         	}
         	
         	//댓글 수정
@@ -267,7 +288,6 @@
         			},
         			type : "post",
         			success : function(result){
-        				
         				if(result == "NNNNY"){
 	        				$("#updateContent").val("");
 	        				$("#reply_cnt").html("(0 / 50)");
@@ -275,12 +295,11 @@
         				}else{
         					alert("댓글 수정에 실패했습니다.");
         				}
-        				
         			},
         			error : function(){
         				console.log("통신실패!");
         			}
-        		});
+        		})
         	}
         	
         	//대댓글 등록
@@ -294,12 +313,19 @@
         			},
         			type : "post",
         			success : function(result){
-        				console.log("통신성공!");
+        				
+        				if(result == "NNNNY"){
+        					alert("댓글이 등록되었습니다!");
+        					$("#reAnswerContent").val("");
+        					selectReplyList();
+        				}else{
+        					alert("댓글 등록에 실패했습니다.");
+        				}
         			},
         			error : function(){
         				console.log("통신실패!");
         			}
-        		});
+        		})
         	}
         	
         	//댓글 삭제
@@ -322,7 +348,7 @@
         			error : function(){
         				console.log("통신실패!");
         			}
-        		});
+        		})
         	}
         	
         	//댓글 수정 글자 수 제한
@@ -333,7 +359,7 @@
 					$(this).val($(this).val().substring(0, 50));
 					$('#reply_cnt').html("(50 / 50)");
 				}
-			});
+			})
         	
 			//대댓글 수정 글자 수 제한
 			$('#reAnswerContent').on('keyup',function(){

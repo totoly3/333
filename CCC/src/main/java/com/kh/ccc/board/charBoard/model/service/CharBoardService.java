@@ -21,11 +21,15 @@ public interface CharBoardService {
 	//게시글 상세조회 및 조회수 증가
 	//1.게시글 조회수 증가
 	int increseCount(int bno);
-	//2.게시글 상세 조회
+	//2.게시글 상세 조회 (글)
 	CharBoard selectBoard(int bno);
+	//3.게시글 상세 조회 (첨부파일)
+	ArrayList<CharAttach> selectAttach(int bno);
 	
-	//게시글 수정
-	int updateBoard(CharBoard cb);
+	//1.게시글 수정 (글)
+	int updateBoard(CharBoard cb, ArrayList<CharAttach> caList);
+	//2.게시글 수정 (첨부파일)
+	int updateAttach(ArrayList<CharAttach> caList);
 	
 	//게시글 삭제
 	int deleteBoard(int bno);
@@ -41,12 +45,14 @@ public interface CharBoardService {
 	
 	//댓글 삭제
 	int deleteReply(CharReply cr);
-	
-	//대댓글 등록
+
+	//댓글 번호 생성
 	int maxNum();
+	//대댓글 (부모댓글의 정보를 가져오는 메서드)
 	CharReply replySelect(int reNo);
+	//대댓글 (대댓글의 갯수와 순서를 정해주는 메서드)
 	int maxStep(int reGroupNo);
+	//대댓글 (대댓글의 계층을 나눠주는 메서드)
 	void updateStep(CharReply cr);
-	int insertCharReply(CharReply cr);
 	
 }

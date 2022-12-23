@@ -52,12 +52,23 @@
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
                         <td>
-                            <input type="file" id="upfile" class="form-control-file border" name="upfile">
+                            <div id="file-area" align="center">
+								<input type="file" id="file1" name="upfile" onchange="loadImg(this,1);" required\> <!--대표이미지라서 필수!-->
+								<input type="file" id="file2" name="upfile" onchange="loadImg(this,2);">
+								<input type="file" id="file3" name="upfile" onchange="loadImg(this,3);">
+								<input type="file" id="file4" name="upfile" onchange="loadImg(this,4);">
+							</div>
                            	현재 업로드된 파일 : 
-                            <a href="${ cb.changeName }" download="${ cb.originName }">${ cb.originName }</a>
-                            <!-- 파일 이름과 경로 히든으로 넘기기 -->
-                            <input type="hidden" name="originName" value="${ cb.originName }">
-                            <input type="hidden" name="changeName" value="${ cb.changeName }">
+                           	<c:choose>
+                           		<c:when test="${ not empty caList }">
+                           			<c:forEach var="c" items="${ caList }">	
+				                    	<a href="${ c.changeName }" download="${ c.originName }">${ c.originName }</a>                       												
+                           			</c:forEach>
+                           		</c:when>
+                           		<c:otherwise>
+                           			업로드된 파일이 없습니다.
+                           		</c:otherwise>
+                           	</c:choose>
                         </td>
                     </tr>
                     <tr>
@@ -74,7 +85,7 @@
             </form>
         </div>
         <br><br>
-
+        
     </div>
     
     <br><br><br>

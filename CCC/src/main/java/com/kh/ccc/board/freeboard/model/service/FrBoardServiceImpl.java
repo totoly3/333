@@ -1,10 +1,12 @@
 package com.kh.ccc.board.freeboard.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.ccc.board.freeboard.model.dao.FrBoardDao;
 import com.kh.ccc.board.freeboard.model.vo.FrBoard;
@@ -87,21 +89,7 @@ public class FrBoardServiceImpl implements FrBoardService{
 		System.out.println("삭제 성공했으면 1"+result);
 		return result;
 	}
-	//아래는  자유게시판 수정 
-	@Override
-	public int updateFrboard(ArrayList<FrBoard> fb, ArrayList<FrBoardAttach> frba) {
-		
-		//글만 바꾸는경우 
-		int result1 = FrBoardDao.updateFrboard1(sqlSession,fb);
-		System.out.println("글은 수정되었나?"+result1);
-		
-		//파일도 있는경우
-		if(!frba.isEmpty()) {
-			int result2 = FrBoardDao.updateFrboard2(sqlSession,frba);
-			System.out.println("파일은 수정되었나"+result2);
-		}
-		return result1;
-	}
+	
 	
 	//댓글조회
 	@Override
@@ -119,13 +107,22 @@ public class FrBoardServiceImpl implements FrBoardService{
 		
 	}
 	
+	//아래는 자유게시판 글만 수정하기 
+	@Override
+	public int updateFrboard1(FrBoard fb) {
+		int result1 = FrBoardDao.updateFrboard1(sqlSession,fb);
+		return result1;
+	}
+	
+	//아래는 자유게시판 파일수정
+	@Override
+	public int updateFrboard2(ArrayList<FrBoardAttach> frba) {
+		int result2 = FrBoardDao.updateFrboard2(sqlSession,frba);
+		return result2;
+	}
 
-//	
-//	//게시글 수정
-//	@Override
-//	public int updateBoard(FrBoard fb) {
-//		// TODO Auto-generated method stub
-//		return 0;
-//	}
+	
+
+
 
 }
