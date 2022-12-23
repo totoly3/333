@@ -110,7 +110,7 @@
 			              </tr>
 	              	</c:when>
 	          	</c:choose>
-	          	
+	          
          	<c:if test="${!frba.get(1).faChangeName.isEmpty() }">
 			               <tr>
 			                	<td class="attitle">

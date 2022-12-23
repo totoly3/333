@@ -94,7 +94,7 @@
       <input type="text" class="form-control" id="fTitle" name="fTitle" value=" ${fb.get(0).fTitle}">
     </div>
     <!-- 글번호 히든으로 넘기기 -->
-    <input type="hidden" name="fno" value="${fb.get(0).fNo}">
+    <input type="hidden" name="fNo" value="${fb.get(0).fNo}">
     
     
     <div class="form-group">

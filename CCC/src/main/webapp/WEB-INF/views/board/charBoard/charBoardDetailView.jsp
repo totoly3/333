@@ -37,26 +37,26 @@
             <h2>게시글 상세보기</h2>
             <br>
 
-            <a class="btn btn-secondary" style="float:right;" href="">목록으로</a>
+            <a class="btn btn-secondary" style="float:right;" href="list.ch">목록으로</a>
             <br><br>
 
             <table id="contentArea" algin="center" class="table">
                 <tr>
                     <th width="100">제목</th>
-                    <td colspan="3">${ cbList.get(0).boardTitle }</td>
+                    <td colspan="3">${ cb.boardTitle }</td>
                 </tr>
                 <tr>
                     <th>작성자</th>
                     <td>admin</td>
                     <th>작성일</th>
-                    <td>${ cbList.get(0).createDate }</td>
+                    <td>${ cb.createDate }</td>
                 </tr>
                 <tr>
                     <th>첨부파일</th>
                     <c:choose>
-                    	<c:when test="${ not empty cbList }">
+                    	<c:when test="${ not empty caList }">
 			                    <td colspan="3">
-                    				<c:forEach var="c" items="${ cbList }">
+                    				<c:forEach var="c" items="${ caList }">
 			                       		<a href="${ c.changeName }" download="${ c.originName }">${ c.originName }</a>
                     				</c:forEach>
 			                    </td>
@@ -74,19 +74,19 @@
                     <td colspan="3"></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><p style="height:150px;">${ cbList.get(0).boardContent }</p></td>
+                    <td colspan="4"><p style="height:150px;">${ cb.boardContent }</p></td>
                 </tr>
                 <tr>
                 	<th>이미지</th>
                 	<td colspan="3"></td>
                 </tr>
                 <c:choose>
-                	<c:when test="${ not empty cbList }">
+                	<c:when test="${ not empty caList }">
                 		<td colspan="3">
-                			<c:forEach var="c" items="${ cbList }">
-                				<img style="margin: auto;" alt="" src="${ c.changeName }" width="400px" height="300px">
+                			<c:forEach var="c" items="${ caList }">
+	                			<img style="margin: auto;" alt="" src="${ c.changeName }" width="400px" height="300px">
                 			</c:forEach>
-                		</td>
+                		</td>      		
                 	</c:when>
                 	<c:otherwise>
                 		<td colspan="3">
@@ -101,28 +101,32 @@
             <div align="center">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
                 <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
-                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
+                <a class="btn btn-danger" onclick="return postFormSubmit(2);">삭제하기</a>
             </div>
             <br><br>
             
             <!-- 동적으로 DOM요소  만들어 글 번호와 파일 경로를 Controller로 submit하기 -->
             <script>
             	function postFormSubmit(num){
-            		let form = $("<form>");
-            		let subBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${ cbList.get(0).boardNo }");
-        			let subFilePath = $("<input>").prop("type","hidden").prop("name","filePath").prop("value","${ cbList.get(0).changeName }");
-        			
-        			form.append(subBno).append(subFilePath);
-         			
-        			if(num == 1){
-        				form.prop("action","updateForm.ch");
-        			}else{
-        				form.prop("action","delete.ch");
-        			}
-        			
-        			$("body").append(form);
-        			
-        			form.prop("method","POST").submit();
+            		var result = confirm("정말로 삭제하시겠습니까?");
+            		
+            		if(result){
+	            		let form = $("<form>");
+	            		let subBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${ cb.boardNo }");
+	        			
+	        			form.append(subBno);
+	         			
+	        			if(num == 1){
+	        				form.prop("action","updateForm.ch");
+	        			}else{
+	        				form.prop("action","delete.ch");
+	        			}
+	        			
+	        			$("body").append(form);
+	        			
+	        			form.prop("method","POST").submit();
+            		}
+            		return false;
             	}
             </script>
 
@@ -212,7 +216,7 @@
 	        		$.ajax({
 	        			url : "replyAnswer.ch",
 	        			data : {
-	        				refBno : ${ cbList.get(0).boardNo },
+	        				refBno : ${ cb.boardNo },
 	        				reContent : reContent
 	        			},
 	        			success : function(result){
@@ -246,7 +250,7 @@
         	function selectReplyList(){
         		$.ajax({
         			url : "selectRlist.ch",
-        			data : { boardNo : ${ cbList.get(0).boardNo } },
+        			data : { boardNo : ${ cb.boardNo } },
         			success : function(reList){
         				let resultStr = "";
         				
@@ -278,13 +282,12 @@
         		$.ajax({
         			url : "updateReply.ch",
         			data : {
-        				refBno : ${ cbList.get(0).boardNo },
+        				refBno : ${ cb.boardNo },
         				reNo : reUpdateNo,
         				reContent : $("#updateContent").val()
         			},
         			type : "post",
         			success : function(result){
-        				
         				if(result == "NNNNY"){
 	        				$("#updateContent").val("");
 	        				$("#reply_cnt").html("(0 / 50)");
@@ -292,7 +295,6 @@
         				}else{
         					alert("댓글 수정에 실패했습니다.");
         				}
-        				
         			},
         			error : function(){
         				console.log("통신실패!");
@@ -305,7 +307,7 @@
         		$.ajax({
         			url : "replyAnswer.ch",
         			data : {
-        				refBno : ${ cbList.get(0).boardNo },
+        				refBno : ${ cb.boardNo },
         				reNo : reUpdateNo,
         				reContent : $("#reAnswerContent").val()
         			},
@@ -319,7 +321,6 @@
         				}else{
         					alert("댓글 등록에 실패했습니다.");
         				}
-        				
         			},
         			error : function(){
         				console.log("통신실패!");
@@ -332,7 +333,7 @@
         		$.ajax({
         			url : "deleteReply.ch",
         			data : {
-        				refBno : ${ cbList.get(0).boardNo },
+        				refBno : ${ cb.boardNo },
         				reNo : reNo
         			},
         			success : function(result){

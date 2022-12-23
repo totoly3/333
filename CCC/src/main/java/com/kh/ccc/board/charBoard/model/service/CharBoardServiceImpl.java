@@ -47,23 +47,34 @@ public class CharBoardServiceImpl implements CharBoardService {
 	public int increseCount(int bno) {
 		return boardDao.increaseCount(sqlSession, bno);
 	}
-	//2.게시글 상세 조회
+	//2.게시글 상세 조회 (글)
 	@Override
-	public ArrayList<CharBoard> selectBoard(int bno) {
+	public CharBoard selectBoard(int bno) {		
 		return boardDao.selectBoard(sqlSession, bno);
+	}
+	//3.게시글 상세조회 (첨부파일)
+	public ArrayList<CharAttach> selectAttach(int bno){
+		return boardDao.selectAttach(sqlSession, bno);
 	}
 	
 	//게시글 수정
 	@Override
-	public int updateBoard(CharBoard cb) {
-		//게시글 내용 수정
+	public int updateBoard(CharBoard cb, ArrayList<CharAttach> newCaList) {
+		//게시글 수정 (글)
 		int result = boardDao.updateBoard(sqlSession, cb);
-		//게시글 첨부파일 수정
-		int result2 = boardDao.updateAttach(sqlSession, cb);
+		//게시글 수정 (첨부파일)
+		int result2 = boardDao.updateAttach(sqlSession, newCaList);
 		
 		int finalResult = result * result2;
 		
 		return finalResult;
+	}
+	
+	//게시글 수정 (첨부파일)
+	@Override
+	public int updateAttach(ArrayList<CharAttach> caList) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	//게시글 삭제
@@ -126,6 +137,5 @@ public class CharBoardServiceImpl implements CharBoardService {
 	public void updateStep(CharReply cr) {
 		boardDao.updateStep(sqlSession, cr);
 	}
-	
-	
+
 }

@@ -123,8 +123,8 @@ public class FrBoardServiceImpl implements FrBoardService{
 	
 	//아래는 자유게시판 파일수정
 	@Override
-	public int updateFrboard2(ArrayList<FrBoardAttach> frba) {
-		int result2 = FrBoardDao.updateFrboard2(sqlSession,frba);
+	public int updateFrboard2(ArrayList<FrBoardAttach> newfrba) {
+		int result2 = FrBoardDao.updateFrboard2(sqlSession,newfrba);
 		return result2;
 	}
 

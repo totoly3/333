@@ -102,26 +102,19 @@ public class FrBoardDao {
 		}
 
 		//아래는 자유게시판 수정 (파일까지 수정 )
-		public int updateFrboard2(SqlSessionTemplate sqlSession, ArrayList<FrBoardAttach> frba) {
-			System.out.println("여기는 dao 에 파일 수정 frba:"+frba);
+		public int updateFrboard2(SqlSessionTemplate sqlSession, ArrayList<FrBoardAttach> newfrba) {
+			System.out.println("여기는 dao 에 파일 수정 newfrba:"+newfrba);
 			int result2=1;
 			
-			for(int i=0; i<frba.size(); i++) {
-				result2*=sqlSession.update("frBoardMapper.updateFrboard2",frba.get(i));
+			for(int i=0; i<newfrba.size(); i++) {
+				result2*=sqlSession.update("frBoardMapper.updateFrboard2",newfrba.get(i));
 			}
 			
+//			result2*=sqlSession.update("frBoardMapper.updateFrboard2",frba.get(i));
 			
 			System.out.println("여기는 dao 에 파일 수정 result2:"+result2);
 			return result2;
 		}
-	
-		
-//		//아래는 자유게시판 수정 할때 파일 삭제 
-//		public int dbDeleteUpdateFrboard(SqlSessionTemplate sqlSession, ArrayList<FrBoardAttach> frba) {
-//			int updeResult=sqlSession.delete("frBoardMapper.dbDeleteUpdateFrboard",frba);
-//			System.out.println("dao 에서 파일수정할때 updeResult 는? "+updeResult);
-//
-//			return updeResult;
-//		}
+
 
 }

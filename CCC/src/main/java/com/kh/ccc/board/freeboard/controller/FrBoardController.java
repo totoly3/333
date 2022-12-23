@@ -167,9 +167,9 @@ public class FrBoardController {
 				// 4. 아래는 원본 파일명으로부터 확장자명 뽑아오기
 				String ext=null; //StringIndexOutOfBoundsException 가 뜨기 때문에 아래는 파일이 있는지 없는지 확인해준다 
 				
-//				if(originName != null) {
-//				}
+				if(originName != null) {
 				ext = originName.substring(originName.lastIndexOf("."));
+				}
 				
 				// 5. 뽑아놓은 값 전부 붙여서 파일명 만들기				
 				String changeName = currentTime + ranNum + ext;
@@ -234,16 +234,12 @@ public class FrBoardController {
 				
 				//아래는 글번호로 가져온 frba
 				ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
-				System.out.println("수정 폼컨트롤러 에서 fb:"+fb);
-				System.out.println("수정 폼컨트롤러 에서 frba:"+frba);
-				
 				
 				mv.addObject("fb",fb);
 				mv.addObject("frba",frba);
 				mv.setViewName("board/freeBoard/freeBoardUpdateForm");
 				
 				return mv;
-			
 			}
 			
 			//아래는 수정 폼에서 등록하기 누르면~
@@ -256,64 +252,57 @@ public class FrBoardController {
 											 ,@RequestParam(value="upfile"
 											 ,required=false) List<MultipartFile> upfile
 											 ,HttpSession session) {
-				
-				System.out.println("오리진오냐0 ::::"+upfile.get(0).getOriginalFilename());
-				System.out.println("오리진오냐1 :::"+upfile.get(1).getOriginalFilename());
-				
-				//새로운첨부파일이 있는지 없는지 확인 
-				System.out.println("upfile사이즈"+upfile.size());
-				
-				//아래는 파일이 하나일수도 두개일수도 있음..사이즈 만큼 돌려
-			for(int i=0; i<upfile.size(); i++) {
-				System.out.println("==== i ====  :"+ i);
-				if(!upfile.get(i).getOriginalFilename().equals("")) {
-					
-					System.out.println("오리진 아랫거"+upfile.get(i).getOriginalFilename());
-					//기존 첨부파일의 이름이 담겨있는 경우
-					new File(session.getServletContext().getRealPath(upfile.get(i).getOriginalFilename())).delete();
-				
-				}
-			}	
-				System.out.println("여긴 왔을텐데?");
+				int fno = fb.getfNo();
+				//아래는 게시판 글번호를 이용해서 게시글의 파일 정보를 가져온다 . 
+				ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
+			     
+				ArrayList<FrBoardAttach> newfrba = new ArrayList<>();
+				//아래는 파일이 하나일수도 두개일수도 있음..사이즈 만큼 돌려 두개면 두번 돌려
+				for(int i=0; i<upfile.size(); i++) {
+					//아래는 내가 올린 오리진 파일이 있으면(비어있지않으면)
+					if(!upfile.get(i).getOriginalFilename().equals("")) {
+						//내가올린 파일이있으면 반복문 돌려  내가 올린 파일 사이즈만큼!
+						for(int k=0; k<frba.size(); k++) {
+							//아래는 만약 올린파일이 있으면 삭제 
+							if(frba.get(k).getFaOrginName()!=null) {
+								new File(session.getServletContext().getRealPath(frba.get(i).getFaChangeName())).delete();
+							}
+						}
+					}
+				}	
 			
-				ArrayList<FrBoardAttach> frba = new ArrayList<>();
-				System.out.println("여긴 왔을텐데2?");
-				for(int j=0; j<frba.size(); j++) {
+				//아래는 이제 새로운 첨부파일 업로드 할껀데  업로드 파일 몇개야 ?
+				for(int j=0; j<upfile.size(); j++) {
 					//새로운 첨부파일 업로드 
 					String changeName = saveFile(upfile.get(j),session);//아래에서 작업한 saveFile메소드 사용 
-					System.out.println("changeName:"+changeName);
-					//attach 빈거 하나 만들고 ! 
-					
+					System.out.println("changeName은?:"+changeName);
+				
+					//아래는 attach 빈거 하나 만들고 ! 
 					FrBoardAttach fat = new FrBoardAttach();
-					
-					fat.setFaChangeName("resources/board/freeBoard/"+changeName);
+					//빈 attach 에  경로 붙여진+changename
+					System.out.println("구분선 fno*/*/*/*/*/*/*/*"+fno);
+					fat.setfNo(fno);
+					fat.setFaNo(frba.get(j).getFaNo());
+					fat.setFaChangeName("resources/freeBoardImg/"+changeName);
 					fat.setFaOrginName(upfile.get(j).getOriginalFilename());
-					System.out.println("fatfat:"+fat);
 					
-					frba.add(fat);
-					//아래는 수정 DB에서 삭제 
-					//int dbDeResult=FrBoardService.dbDeleteUpdateFrboard(frba);
-					
-					System.out.println("frba.get(i): 파일갯수"+frba.get(j)); 
-					
-					System.out.println("업데이트 직전에:"+fat);
-					System.out.println("업데이트 직전의 frba:"+frba);
-					System.out.println("업데이트 직전의 fb:"+fb);
-					System.out.println("frba 사이즈"+frba.size());
+					newfrba.add(fat);
+					System.out.println("newfrb는?????? :"+newfrba);
 				}
-				System.out.println("frba는 ?: "+frba);
 				
 					//파일이 있으면
 						if(!frba.isEmpty()) {
+							System.out.println("★★★★★★★★★★★★★★★★★★★★★");
 							//아래는 글만 변경 (첨부파일은 없고) 
 							int result1 =FrBoardService.updateFrboard1(fb);
 							//아래는 첨부파일만 변경
-							int result2 = FrBoardService.updateFrboard2(frba);
+							int result2 = FrBoardService.updateFrboard2(newfrba);
 							int result3=result1+result2;
 							
 							if(result3>0) {
+								System.out.println("newfrba 아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ"+newfrba);
 								mv.addObject("fb",fb);
-								mv.addObject("frba",frba);
+								mv.addObject("frba",newfrba);
 								
 								//여기 아래에서 fb.getfno 를 가져가는 이유가 뭘까 ..
 								mv.setViewName("redirect:/detail.fbo?fno="+fb.getfNo());
@@ -323,6 +312,7 @@ public class FrBoardController {
 							
 						}else {
 							//글만변경
+							System.out.println("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆");
 							int result1 =FrBoardService.updateFrboard1(fb);
 							if(result1>0) {
 								mv.addObject("fb",fb);
