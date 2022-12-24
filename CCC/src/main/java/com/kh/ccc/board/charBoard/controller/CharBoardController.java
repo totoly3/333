@@ -66,6 +66,8 @@ public class CharBoardController {
 										ArrayList<MultipartFile> upfile,
 										ModelAndView mv,
 										HttpSession session) {
+		
+		System.out.println(upfile);
 	
 		//첨부파일이 여러개 넘어올 수 있기 때문에 ArrayList에 담아주자
 		ArrayList<CharAttach> list = new ArrayList<>();
@@ -242,7 +244,9 @@ public class CharBoardController {
 							 ,HttpSession session
 							 ,Model model) {
 		
+		//JSP에서 넘긴 글번호의 첨부파일 리스트를 받아오자
 		ArrayList<CharAttach> caList = boardService.selectAttach(bno);
+		//게시글 번호의 글과 첨부파일 삭제하는 메소드
 		int result = boardService.deleteBoard(bno);
 		
 		if(result != 0) {

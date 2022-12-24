@@ -70,13 +70,6 @@ public class CharBoardServiceImpl implements CharBoardService {
 		return finalResult;
 	}
 	
-	//게시글 수정 (첨부파일)
-	@Override
-	public int updateAttach(ArrayList<CharAttach> caList) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
 	//게시글 삭제
 	@Override
 	public int deleteBoard(int bno) {
