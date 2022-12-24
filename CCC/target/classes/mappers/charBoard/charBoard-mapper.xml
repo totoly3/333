@@ -116,11 +116,11 @@
 									   ,CA_STATUS)
 		SELECT SEQ_CANO.NEXTVAL,SEQ_CBNO.CURRVAL, A.*
 		FROM(
-			 <foreach collection="list" item="item" index="index" separator="union all">
-			 		SELECT #{ item.originName }
-			 			  ,#{ item.changeName }
-			 			  ,#{ item.level }
-			 			  ,#{ item.status }
+			 <foreach collection="list" item="list" index="index" separator="union all">
+			 		SELECT #{ list.originName }
+			 			  ,#{ list.changeName }
+			 			  ,#{ list.level }
+			 			  ,#{ list.status }
 			 		FROM SYS.DUAL
 			 </foreach>
 			 )A
