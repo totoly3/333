@@ -49,6 +49,10 @@
 					<td colspan="3"><input type="text" name="boardTitle" required></td>
 				</tr>
 				<tr>
+					<th width="100">캐릭터 이름</th>
+					<td colspan="3"><input type="text" name="charName" required></td>
+				</tr>
+				<tr>
 					<th>내용</th>
 					<td colspan="3"><textarea name="boardContent" style="resize: none;" cols="30" rows="10" required></textarea></td>
 				</tr>

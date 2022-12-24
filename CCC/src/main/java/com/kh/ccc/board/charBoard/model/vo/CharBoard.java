@@ -13,7 +13,8 @@ public class CharBoard {
 	
 	private int 	boardNo;		//캐릭터 게시판 글번호
 	private int 	charNo;			//캐릭터 번호
-	private String 	boardWriter;	//작성자
+	private String	charName;		//캐릭터 이름
+	private int 	boardWriter;	//작성자
 	private String 	boardTitle;		//글 제목
 	private String 	boardContent;	//글 내용
 	private int 	views;			//조회수
