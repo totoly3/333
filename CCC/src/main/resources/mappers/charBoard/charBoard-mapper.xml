@@ -5,6 +5,7 @@
 	<resultMap type="charBoard" id="charBoardResultSet">
 		<result column="CB_NO" property="boardNo"/>
 		<result column="C_NO" property="charNo"/>
+		<result column="C_NAME" property="charName"/>
 		<result column="CB_WRITER" property="boardWriter"/>
 		<result column="CB_TITLE" property="boardTitle"/>
 		<result column="CB_CONTENT" property="boardContent"/>
@@ -49,6 +50,7 @@
 	<!-- 2.게시글 상세 조회 (글) -->
 	<select id="selectBoard" resultMap="charBoardResultSet" parameterType="_int">
 		SELECT CB_NO
+			  ,C_NAME
 			  ,CB_TITLE
 		      ,CB_CONTENT
 		      ,CB_CREATE_DATE
@@ -79,6 +81,7 @@
 	<select id="selectList" resultMap="charBoardResultSet">
 		SELECT CB_NO
 		      ,CB_WRITER
+		      ,C_NAME
 		      ,CB_TITLE
 		      ,CB_CONTENT
 		      ,CA_CHANGE_NAME
@@ -98,9 +101,13 @@
 	<insert id="insertBoard" parameterType="charBoard">
 		INSERT INTO TB_CHARACTER_BOARD(
 									   CB_NO
+									  ,C_NO
+									  ,C_NAME
 									  ,CB_TITLE
 									  ,CB_CONTENT)
 					VALUES(SEQ_CBNO.NEXTVAL
+						  ,SEQ_CNO.NEXTVAL
+						  ,#{ charName }
 						  ,#{ boardTitle }
 						  ,#{ boardContent })
 	</insert>
@@ -129,7 +136,8 @@
 	<!-- 게시글 수정 -->
 	<update id="updateBoard" parameterType="charBoard">
 		UPDATE TB_CHARACTER_BOARD
-		SET CB_TITLE = #{ boardTitle },
+		SET C_NAME = #{ charName },
+			CB_TITLE = #{ boardTitle },
 			CB_CONTENT = #{ boardContent }
 		WHERE CB_STATUS = 'Y'
 		AND CB_NO = #{ boardNo }

@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.kh.ccc.board.charBoard.model.service.CharBoardService;
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
+import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.common.template.Pagenation;
@@ -67,33 +68,52 @@ public class CharBoardController {
 										ModelAndView mv,
 										HttpSession session) {
 		
-		System.out.println(upfile);
-	
+		System.out.println(cb);
 		//첨부파일이 여러개 넘어올 수 있기 때문에 ArrayList에 담아주자
 		ArrayList<CharAttach> list = new ArrayList<>();
+		ArrayList<Character> clist = new ArrayList<>();
 		
 		for(int i=0; i<upfile.size(); i++) {	
 			CharAttach ca = new CharAttach();
+			Character c = new Character();
 			//만약 첨부파일이 있다면 (파일명이 빈 문자열이 아니라면)
 			if(!upfile.get(i).getOriginalFilename().equals("")) {
 				//아래의 saveFile메서드 활용
 				String changeName = saveFile(upfile.get(i),session);
 				//(아래에 이어)8.원본명,서버에 업로드한 경로를 Board객체에 담아주기
 				ca.setOriginName(upfile.get(i).getOriginalFilename());
-				ca.setChangeName("resources/charBoardImg/" + changeName);
+				ca.setChangeName("resources/character/charBoardImg/" + changeName);
 				//level 1번 : 캐릭터 게시판 썸네일 / 이후 카운트되는 level은 sql에서 해당 게시글의 첨부파일 번호를 나타낸다 (파일번호와 다름)
 				ca.setLevel(i+1);
 				ca.setStatus("Y");
-							
+				//게시글 첨부파일 리스트에 담기
 				list.add(ca);
+				
+				//캐릭터 등록
+				c.setMemberNo(cb.getBoardWriter());
+				c.setOriginName(upfile.get(i).getOriginalFilename());
+				c.setChangeName("resources/character/characterImg/" + changeName);
+				c.setLevel(i+1);
+				c.setStatus("Y");
+				
+				clist.add(c);
 			}else {
 				//파일이 없는 경우에는 NULL처리한다 (첨부파일 수정시에 사용할 공간 확보)
 				ca.setOriginName(null);
 				ca.setChangeName(null);
 				ca.setLevel(i+1);
 				ca.setStatus("N");
-				
+				//게시글 첨부파일 리스트에 담기
 				list.add(ca);
+				
+				//캐릭터 등록
+				c.setOriginName(null);
+				c.setChangeName(null);
+				c.setLevel(i+1);
+				c.setStatus("N");
+				
+				clist.add(c);
+	
 			}
 		}
 		int result = boardService.insertCharBoard(cb,list);
