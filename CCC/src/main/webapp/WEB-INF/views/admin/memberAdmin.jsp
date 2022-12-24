@@ -7,6 +7,10 @@
 <html lang="en">
     <head>
     
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
        <!-- Custom fonts for this template-->
   	  <link href="resources/memberAdmin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
       <link
@@ -23,7 +27,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Dashboard - SB Admin</title>
+        <title>일반관리자 HOME</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="resources/memberAdmin/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -76,20 +80,20 @@
                             
                             
                             
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link" href="member.ad">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                Dashboard
+                               	관리자 HOME
                             </a>
                             <div class="sb-sidenav-menu-heading">Interface</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                Layouts
+                                	특수관리자
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                    <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                                    <a class="nav-link" href="adminList.ad">관리자조회</a>
+                                    <a class="nav-link" href="layout-sidenav-light.html">관리자등록</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -124,13 +128,13 @@
                                 </nav>
                             </div>
                             <div class="sb-sidenav-menu-heading">Addons</div>
-                            <a class="nav-link" href="charts.html">
+                            <a class="nav-link" href="resources/memberAdmin/charts.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Charts
                             </a>
-                            <a class="nav-link" href="tables.html">
+                            <a class="nav-link" href="resources/memberAdmin/tables.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                Tables
+                                	Tables
                             </a>
                         </div>
                     </div>
@@ -263,12 +267,21 @@
                         <div class="card mb-4">
                             <div class="card-header">
                                 <i class="fas fa-table me-1"></i>회원리스트
+                               
+                               	<!-- 삭제버튼 구현 --> 
+                               	<div id="deleteKey" style="float:right">
+	                            <a class="btn btn-outline-secondary"  onclick="deleteClick()">삭제</a>
+                 				<a class="btn btn-outline-secondary"  id="checkAll">전체선택</a>
+                 				<a class="btn btn-outline-secondary"  id="unCheckAll">전체해제</a>
+                 				</div>
+                               
                                 <form action="excelDownload.ad" method="post">
-                                	<input type="submit" value="EXCEL 다운로드" style="float:right">
+                                	<input type="submit" value="EXCEL 다운로드">	
 								</form>
                               </div>
 	                            <div class="card-body">
 	                                <table id="datatablesSimple">
+	                                
 	                                    <thead>
 	                                        <tr>
 	                                            <th>No.</th>
@@ -283,36 +296,36 @@
 	          			   
 			          			   
 			          			<tbody>	
-				                   <c:forEach var="a" items="${mList}">
+				                   <c:forEach var="m" items="${mList}">
 										<tr>
-											<td><input type="checkbox" name="check" value="VCheck"></td> 
-											<td>${a.mNo }</td>
-											<td>${a.mId }</td>
-											<td>${a.mName }</td>
-											<td>${a.mGender }</td>	
+											<td><input type="checkbox" name="check" value="${m.mName }"></td> 
+											<td>${m.mNo }</td>
+											<td>${m.mId }</td>
+											<td>${m.mName }</td>
+											<td>${m.mGender }</td>	
 											
 											<c:choose>
-												<c:when test="${a.mgNo eq 1}">
-													<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-danger'>V.I.P</span></td>
+												<c:when test="${m.mgNo eq 1}">
+													<td>${m.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-danger'>V.I.P</span></td>
 												</c:when>
 												
-												<c:when test="${a.mgNo eq 2}">
-													<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-warning'>Gold</span></td>
+												<c:when test="${m.mgNo eq 2}">
+													<td>${m.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-warning'>Gold</span></td>
 												</c:when>
 												
-												<c:when test="${a.mgNo eq 3}">
-													<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-info'>Silver</span></td>
+												<c:when test="${m.mgNo eq 3}">
+													<td>${m.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-info'>Silver</span></td>
 												</c:when>
 					                			<c:otherwise>
-					                   				<td>${a.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-secondary'>Bronze</span></td>
+					                   				<td>${m.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-secondary'>Bronze</span></td>
 					                			</c:otherwise>
 											</c:choose>
 											
-											<td>${a.mPoint }</td> 
+											<td>${m.mPoint }</td> 
 										</tr>
 									</c:forEach>
 			         			</tbody>
-                 
+
                                 </table>
                             </div>
                         </div>
@@ -347,7 +360,45 @@
         <script src="resources/memberAdmin/js/datatables-simple-demo.js"></script>
         
         
+        <script>
         
+     // 체크박스 선택 후 삭제 버튼 클릭시 이벤트 
+        function deleteClick(){
+			var checkBoxArr = []; 
+			$("input:checkbox[name='check']:checked").each(function() {
+				checkBoxArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
+          		console.log(checkBoxArr);
+			});
+			//여기에 작성. 다 추가된 배열로 checkBoxArr
+
+	          $.ajax({
+	              url: "deleteClickMember.ad",
+	              data: {checkBoxArr : checkBoxArr},   // check seq 값을 가지고 있음.
+	              success: function(result){
+	              	console.log(result);
+	              },
+	              error: function() {
+	            	  console.log("통신실패");
+	              }  
+	           });
+        
+     
+     }
+     
+     
+        $(document).ready(function(){ //체크박스 전체선택,전체해제
+        
+            $("#checkAll").click(function() {
+                $("input[name=check]:checkbox").prop("checked",true); // name이 chkbox인 input 타입들의 checked값을 "true"로 바꿈
+            });
+           
+            $("#unCheckAll").click(function() {
+                $("input[name=check]:checkbox").prop("checked",false); // name이 chkbox인 input 타입들의 checked값을 "false"로 바꿈
+            });
+        });
+     
+        
+        </script>
         
         
     </body>
