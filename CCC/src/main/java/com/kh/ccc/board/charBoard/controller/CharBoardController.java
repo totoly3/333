@@ -68,8 +68,6 @@ public class CharBoardController {
 										ModelAndView mv,
 										HttpSession session) {
 		
-		System.out.println(cb);
-		
 		//첨부파일이 여러개 넘어올 수 있기 때문에 ArrayList에 담아주자
 		ArrayList<CharAttach> list = new ArrayList<>();
 		ArrayList<Character> cList = new ArrayList<>();
@@ -115,15 +113,11 @@ public class CharBoardController {
 				c.setChangeName(null);
 				c.setLevel(i+1);
 				c.setStatus("N");
-				
+			
 				cList.add(c);
-	
 			}
 		}
 		
-		System.out.println("게시글 내용 및 캐릭터 이름 : "+cb);
-		System.out.println("게시글 첨부파일 : "+list);
-		System.out.println("캐릭터 정보 : "+cList);
 		int result = boardService.insertCharBoard(cb,list,cList);
 		
 		if(result > 0) {

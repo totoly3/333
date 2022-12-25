@@ -32,21 +32,18 @@ public class CharBoardServiceImpl implements CharBoardService {
 		return boardDao.selectList(sqlSession, pi);
 	}
 	
-	//게시글 등록 (게시글,첨부파일)
+	//게시글 등록 (게시글,첨부파일,캐릭터)
 	@Override
 	public int insertCharBoard(CharBoard cb, ArrayList<CharAttach> list, ArrayList<Character> cList) {
 		
+		//캐릭터 등록
 		int characterResult = boardDao.insertCharacter(sqlSession,cList);
+		//게시글 글 정보 등록
 		int boardResult = boardDao.insertBoard(sqlSession,cb);
+		//게시글 첨부파일 등록
 		int attachResult = boardDao.insertAttach(sqlSession,list);
-		
-		System.out.println(characterResult);
-		System.out.println(boardResult);
-		System.out.println(attachResult);
-		
+				
 		int finalReult = (characterResult + boardResult + attachResult) > 8 ? 1 : 0;
-		
-		System.out.println(finalReult);
 		
 		return finalReult;
 	}
