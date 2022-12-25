@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ccc.board.charBoard.model.dao.CharBoardDao;
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
+import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.common.model.vo.PageInfo;
@@ -33,13 +34,21 @@ public class CharBoardServiceImpl implements CharBoardService {
 	
 	//게시글 등록 (게시글,첨부파일)
 	@Override
-	public int insertCharBoard(CharBoard cb,ArrayList<CharAttach> list) {
+	public int insertCharBoard(CharBoard cb, ArrayList<CharAttach> list, ArrayList<Character> cList) {
 		
-		int result = boardDao.insertBoard(sqlSession,cb);
-		int result2 = boardDao.insertAttach(sqlSession,list);
-		int finalResult = result * result2;
+		int characterResult = boardDao.insertCharacter(sqlSession,cList);
+		int boardResult = boardDao.insertBoard(sqlSession,cb);
+		int attachResult = boardDao.insertAttach(sqlSession,list);
 		
-		return finalResult;
+		System.out.println(characterResult);
+		System.out.println(boardResult);
+		System.out.println(attachResult);
+		
+		int finalReult = (characterResult + boardResult + attachResult) > 8 ? 1 : 0;
+		
+		System.out.println(finalReult);
+		
+		return finalReult;
 	}
 	
 	//1.게시글 조회수 증가

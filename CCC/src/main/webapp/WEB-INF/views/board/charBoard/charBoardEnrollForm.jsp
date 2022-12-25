@@ -42,7 +42,7 @@
             <br>
 
         <form action="insert.ch" id="enroll-form" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="" value="게시글작성자번호">
+			<input type="hidden" name="boardWriter" value="6">
 			<table align="center">
 				<tr>
 					<th width="100">제목</th>
