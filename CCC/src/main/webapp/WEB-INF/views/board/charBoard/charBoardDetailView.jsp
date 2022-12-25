@@ -47,9 +47,9 @@
                 </tr>
                 <tr>
                     <th>작성자</th>
-                    <td>admin</td>
+                    <td colspan="1">admin</td>
                     <th>작성일</th>
-                    <td>${ cb.createDate }</td>
+                    <td width="120">${ cb.createDate }</td>
                 </tr>
                 <tr>
                     <th>첨부파일</th>
@@ -77,16 +77,22 @@
                     <td colspan="4"><p style="height:150px;">${ cb.boardContent }</p></td>
                 </tr>
                 <tr>
-                	<th>이미지</th>
-                	<td colspan="3"></td>
+                    <th width="120">캐릭터 이름</th>
+                    <td colspan="3">${ cb.charName }</td>
+                </tr>
+                <tr>
+                	<th width="130">캐릭터 이미지</th>
+                	<td colspan="1"></td>
+                	<th style="text-align:center;"></th>
+                	<td width="150"><button onclick="likeGo();" class="btn btn-success">좋아요</button></td>
                 </tr>
                 <c:choose>
                 	<c:when test="${ not empty caList }">
-                		<td colspan="3">
-                			<c:forEach var="c" items="${ caList }">
-	                			<img style="margin: auto;" alt="" src="${ c.changeName }" width="400px" height="300px">
-                			</c:forEach>
-                		</td>      		
+	               		<td colspan="3">
+	               			<c:forEach var="c" items="${ caList }">
+	                				<img style="margin: auto;" alt="" src="${ c.changeName }" width="400px" height="300px">
+	               			</c:forEach>
+	               		</td>      		                			
                 	</c:when>
                 	<c:otherwise>
                 		<td colspan="3">
@@ -225,6 +231,17 @@
         	$(function(){
         		selectReplyList();
         	});
+        	
+//         	function likeGo(){
+//         		$.ajax({
+//         			url : "insertLike.ch",
+//         			data : {
+//        				게시글번호 : ${ cb.boardNo },
+//         				좋아요 누른 회원번호 : ${ loginUser.memberNo },
+// 						캐릭터 번호
+//         			}
+//         		})
+//         	}
         	
         	//댓글 등록
         	function insertReply(){

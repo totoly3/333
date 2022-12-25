@@ -5,6 +5,7 @@
 	<resultMap type="character" id="characterResultSet">
 		<result column="C_NO" property="charNo"/>
 		<result column="M_NO" property="memberNo"/>
+		<result column="CB_NO" property="refBno"/>
 		<result column="C_NAME" property="charName"/>
 		<result column="C_LIKE" property="like"/>
 		<result column="C_ORIGIN_NAME" property="originName"/>
@@ -78,6 +79,7 @@
 			  ,CA_ORIGIN_NAME
 			  ,CA_CHANGE_NAME
 			  ,CA_LEVEL
+			  ,CA_STATUS
 		FROM TB_CHARACTER_ATTACH
 		WHERE CA_STATUS = 'Y'
 		AND CB_NO = #{ bno }
@@ -125,7 +127,7 @@
 						  ,#{ boardTitle }
 						  ,#{ boardContent })
 	</insert>
-	
+
 	<!-- 캐릭터 등록  -->
 	<insert id="insertCharacter" parameterType="java.util.List">
 		INSERT INTO TB_CHARACTER(
@@ -186,11 +188,10 @@
 		<foreach collection="list" item="item" index="index" separator=";" open="DECLARE BEGIN" close="; END;">
 			UPDATE TB_CHARACTER_ATTACH
 			SET CA_ORIGIN_NAME = #{ item.originName },
-				CA_CHANGE_NAME = #{ item.changeName }
-			WHERE CA_STATUS = 'Y'
-			AND CB_NO = #{ item.refBno }
+				CA_CHANGE_NAME = #{ item.changeName },
+				CA_STATUS = #{ item.status }
+			WHERE CB_NO = #{ item.refBno }
 			AND CA_LEVEL = #{ item.level }
-			AND CA_STATUS = #{ item.status }
 		</foreach>
 	</update>
 	
@@ -266,7 +267,7 @@
 	</update>
 	
 	<!-- 댓글의 번호 생성 -->
-	<select id="maxNum" resultType="_int">
+	<select id="replyMaxNum" resultType="_int">
 		SELECT NVL(MAX(CR_NO), 0) + 1
 		FROM TB_CHARACTER_REPLY
 	</select>

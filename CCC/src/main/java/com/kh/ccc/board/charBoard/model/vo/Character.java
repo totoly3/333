@@ -13,6 +13,7 @@ public class Character {
 	
 	private int 	charNo;		//캐릭터 번호
 	private int 	memberNo;	//창작자 번호
+	private int 	refBno;		//참조게시글 번호
 	private String 	charName;	//캐릭터 이름
 	private int 	like;		//좋아요
 	private String	originName; //캐릭터 파일 원본명

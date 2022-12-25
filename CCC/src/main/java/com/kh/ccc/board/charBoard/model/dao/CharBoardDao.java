@@ -37,7 +37,11 @@ public class CharBoardDao {
 	public int insertAttach(SqlSessionTemplate sqlSession, ArrayList<CharAttach> list) {
 		return sqlSession.insert("charBoardMapper.insertAttach", list);
 	}
-	//3.게시글 등록 (캐릭터)
+	//3.캐릭터 번호 생성
+	public int characterMaxNum(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("charBoardMapper.characterMaxNum");
+	}
+	//4.게시글 등록 (캐릭터)
 	public int insertCharacter(SqlSessionTemplate sqlSession, ArrayList<Character> cList) {
 		return sqlSession.insert("charBoardMapper.insertCharacter", cList);
 	}
@@ -86,8 +90,8 @@ public class CharBoardDao {
 		return sqlSession.update("charBoardMapper.deleteReply", cr);
 	}
 	//댓글 번호 생성
-	public int maxNum(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("charBoardMapper.maxNum");
+	public int replyMaxNum(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("charBoardMapper.replyMaxNum");
 	}
 	//대댓글 (부모댓글의 그룹번호와 계층 알아오기)
 	public CharReply replySelect(SqlSessionTemplate sqlSession, int reNo) {

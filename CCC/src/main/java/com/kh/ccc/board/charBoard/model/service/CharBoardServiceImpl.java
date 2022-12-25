@@ -47,6 +47,11 @@ public class CharBoardServiceImpl implements CharBoardService {
 		
 		return finalReult;
 	}
+	//캐릭터 번호 생성
+	@Override
+	public int characterMaxNum() {
+		return boardDao.characterMaxNum(sqlSession);
+	}
 	
 	//1.게시글 조회수 증가
 	@Override
@@ -85,7 +90,7 @@ public class CharBoardServiceImpl implements CharBoardService {
 		int result2 = boardDao.deleteAttach(sqlSession, bno);
 		
 		int finalResult = result * result2;
-		
+	
 		return finalResult;
 	}
 	
@@ -115,8 +120,8 @@ public class CharBoardServiceImpl implements CharBoardService {
 	
 	//댓글 번호 생성
 	@Override
-	public int maxNum() {
-		return boardDao.maxNum(sqlSession);
+	public int replyMaxNum() {
+		return boardDao.replyMaxNum(sqlSession);
 	}
 
 	//대댓글 (부모댓글의 그룹번호와 계층 알아오기)

@@ -19,6 +19,9 @@ public interface CharBoardService {
 	//캐릭터 게시판 게시글 등록
 	int insertCharBoard(CharBoard cb, ArrayList<CharAttach> list, ArrayList<Character> cList);
 	
+	//캐릭터 번호 생성
+	int characterMaxNum();
+	
 	//게시글 상세조회 및 조회수 증가
 	//1.게시글 조회수 증가
 	int increseCount(int bno);
@@ -46,7 +49,7 @@ public interface CharBoardService {
 	int deleteReply(CharReply cr);
 
 	//댓글 번호 생성
-	int maxNum();
+	int replyMaxNum();
 	//대댓글 (부모댓글의 정보를 가져오는 메서드)
 	CharReply replySelect(int reNo);
 	//대댓글 (대댓글의 갯수와 순서를 정해주는 메서드)
