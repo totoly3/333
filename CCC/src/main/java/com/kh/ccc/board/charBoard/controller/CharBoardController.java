@@ -68,10 +68,9 @@ public class CharBoardController {
 										ModelAndView mv,
 										HttpSession session) {
 		
-		System.out.println(cb);
 		//첨부파일이 여러개 넘어올 수 있기 때문에 ArrayList에 담아주자
 		ArrayList<CharAttach> list = new ArrayList<>();
-		ArrayList<Character> clist = new ArrayList<>();
+		ArrayList<Character> cList = new ArrayList<>();
 		
 		for(int i=0; i<upfile.size(); i++) {	
 			CharAttach ca = new CharAttach();
@@ -91,12 +90,13 @@ public class CharBoardController {
 				
 				//캐릭터 등록
 				c.setMemberNo(cb.getBoardWriter());
+				c.setCharName(cb.getCharName());
 				c.setOriginName(upfile.get(i).getOriginalFilename());
-				c.setChangeName("resources/character/characterImg/" + changeName);
+				c.setChangeName("resources/character/charBoardImg/" + changeName);
 				c.setLevel(i+1);
 				c.setStatus("Y");
 				
-				clist.add(c);
+				cList.add(c);
 			}else {
 				//파일이 없는 경우에는 NULL처리한다 (첨부파일 수정시에 사용할 공간 확보)
 				ca.setOriginName(null);
@@ -107,16 +107,18 @@ public class CharBoardController {
 				list.add(ca);
 				
 				//캐릭터 등록
+				c.setMemberNo(cb.getBoardWriter());
+				c.setCharName(cb.getCharName());
 				c.setOriginName(null);
 				c.setChangeName(null);
 				c.setLevel(i+1);
 				c.setStatus("N");
-				
-				clist.add(c);
-	
+			
+				cList.add(c);
 			}
 		}
-		int result = boardService.insertCharBoard(cb,list);
+		
+		int result = boardService.insertCharBoard(cb,list,cList);
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "게시글 등록 성공!");
@@ -146,7 +148,7 @@ public class CharBoardController {
 		String changeName = currentTime + ranNum + ext;
 		
 		//6.업로드 하고자 하는 실제 위치 경로 지정해주기 (실제 경로)
-		String savePath = session.getServletContext().getRealPath("/resources/charBoardImg/");
+		String savePath = session.getServletContext().getRealPath("/resources/character/charBoardImg/");
 		
 		//7.경로와 수정파일명 합쳐서 파일을 업로드해주기
 		try {
