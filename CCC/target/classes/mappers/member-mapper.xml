@@ -36,13 +36,7 @@
 	<!-- 회원리스트 조회 (관리자페이지) -->
 	<select id="memberList" resultMap="memberResultSet">
 
-			SELECT 
-			M_NO,
-			M_ID,
-		    M_NAME,
-		    MG_NO,
-		    M_GENDER,
-		    M_POINT
+	SELECT * 
 	FROM TB_MEMBER 
 	WHERE M_STATUS = 'Y'
 	ORDER BY M_NO ASC
