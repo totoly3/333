@@ -40,6 +40,9 @@ public interface FrBoardService {
 		//아래는 자유게시판 글 삭제 
 		int frboardDelete(int fno);
 
+		//아래는 db데이터 삭제 
+		int frboardDbDelete(int fno);
+		
 		//댓글 조회 
 		ArrayList<FrBoardReply> detailFrBoardReviewSelect(int fno);
 
@@ -55,5 +58,9 @@ public interface FrBoardService {
 		//아래는 자유게시판 수정하기(파일)
 		int updateFrboard2(ArrayList<FrBoardAttach> frba);
 
+//		//아래는 자유게시판 수정하기에서  db데이터 수정에서 삭제 
+//		int dbDeleteUpdateFrboard(ArrayList<FrBoardAttach> frba);
 
-}
+		
+		
+	}
