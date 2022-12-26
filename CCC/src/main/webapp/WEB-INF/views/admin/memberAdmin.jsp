@@ -274,7 +274,7 @@
                  				</div>
                                
                                 <form action="excelDownload.ad" method="post">
-                                	<input type="submit" class="btn btn-outline-success" value="EXCEL 다운로드">	
+                                	<input type="submit" class="btn btn-success" value="EXCEL 다운로드">	
 								</form>
                               </div>
 	                            <div class="card-body">
@@ -296,7 +296,7 @@
 			          			<tbody>	
 				                   <c:forEach var="m" items="${mList}">
 										<tr>
-											<td><input type="checkbox" name="check" value="${m.mName }"></td> 
+											<td><input type="checkbox" name="check" id="multiCheck" value="${m.mName }"></td> 
 											<td>${m.mNo }</td>
 											<td>${m.mId }</td>
 											<td>${m.mName }</td>
@@ -362,25 +362,35 @@
         
      // 체크박스 선택 후 삭제 버튼 클릭시 이벤트 
         function deleteClick(){
+    	 
 			var checkBoxArr = []; 
 			$("input:checkbox[name='check']:checked").each(function() {
 				checkBoxArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
           		console.log(checkBoxArr);
 			});
-			//여기에 작성. 다 추가된 배열로 checkBoxArr
+			
+			//ajax 이용
+			
+			var delConfirm=confirm("선택한 회원을 차단 하시겠습니까?");
 
+					if(delConfirm==true){
+			
+			
 	          $.ajax({
-	              url: "deleteClickMember.ad",
-	              data: {checkBoxArr : checkBoxArr},   // check seq 값을 가지고 있음.
-	              success: function(result){
-	              	console.log(result);
-	              },
-	              error: function() {
-	            	  console.log("통신실패");
-	              }  
+		              url: "deleteClickMember.ad",
+		              data: {checkBoxArr : checkBoxArr},   // check seq 값을 가지고 있음.
+		              success: function(result){
+		              	console.log(result);
+		              	
+		              	$("#memberListBody").show();
+		              	
+		              },
+		              error: function() {
+		            	  console.log("통신실패");
+		              }  
 	           });
         
-     
+			}
      }
      
       //체크박스 전체선택,전체해제

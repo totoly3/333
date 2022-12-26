@@ -181,7 +181,7 @@ public class AdminController {
 			//ArrayList<Member> mList = adminService.memberList();
 			//System.out.println("삭제후 list: "+mList);
 			
-			return "admin/memberAdmin";
+			return "redirect:/admin/memberAdmin";
 	
 		}
 		
