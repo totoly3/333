@@ -46,8 +46,12 @@
                         <td><input type="text" id="title" class="form-control" value="${ cb.boardTitle }" name="boardTitle" required></td>
                     </tr>
                     <tr>
+                        <th><label for="title">수정할 캐릭터 이름</label></th>
+                        <td><input type="text" id="title" class="form-control" value="${ cb.charName }" name="charName" required></td>
+                    </tr>
+                    <tr>
                         <th><label for="writer">작성자</label></th>
-                        <td><input type="text" id="writer" class="form-control" value="user01" name="boardWriter" readonly></td>
+                        <td><input type="text" id="writer" class="form-control" value="6" name="boardWriter" readonly></td>
                     </tr>
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
