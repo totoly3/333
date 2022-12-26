@@ -150,12 +150,28 @@
 			  )A
 	</insert>
 	  <!-- 아래는 게시글 삭제   -->
-		<update id="frboardDelete">
+		<update id="frboardDelete"  >
 			 UPDATE TB_FREE 
 			 SET F_STATUS = 'N' 
 			 WHERE F_NO = #{fNo} 
 			 AND F_STATUS = 'Y'
 	   </update>
+	   
+	   <!-- 아래는 게시글 데이터 삭제 -->
+	   <update id="frboardDbDelete">
+	    UPDATE TB_FREE_ATTACH 
+			 SET FA_STATUS = 'N' 
+			 WHERE F_NO = #{fNo} 
+			 AND FA_STATUS = 'Y'
+	   </update>
+	   
+	   
+	    <!-- 아래는 첨부파일 수정하기전에 파일삭제 null로 업데이트   -->
+		<delete id="dbDeleteUpdateFrboard">
+			DELETE FROM TB_FREE_ATTACH
+			WHERE F_NO = #{fNo} 
+			AND FA_STATUS = 'Y'
+	   </delete>
 	   
 	    <!-- 아래는 게시글 수정 (글만)  -->
 		<update id="updateFrboard1" parameterType="java.util.List">
@@ -167,12 +183,12 @@
 	   </update>
 	   
 	    <!-- 아래는 게시글 수정(첨부파일)  -->
-		<update id="updateFrboard2" parameterType="java.util.List">
-			 UPDATE TB_FREE_ATTACH 
+		<update id="updateFrboard2" parameterType="frAttBoard">
+			 UPDATE TB_FREE_ATTACH
 			 SET FA_ORIGIN_NAME = #{faOrginName} 
-				,FA_CHANGE_NAME=#{faChangeName}
-			 WHERE F_STATUS = 'Y'
-			 AND F_NO=#{fNo}
+				,FA_CHANGE_NAME = #{faChangeName}
+			 WHERE FA_STATUS = 'Y'
+			 AND FA_NO = #{faNo}
 	   </update>
 		
 	  <!-- 아래는 게시글 댓글 리뷰  -->  
@@ -198,6 +214,6 @@
 					,#{fNo}
 					,1
 					)
-					
 	</insert>
+	
 </mapper>
