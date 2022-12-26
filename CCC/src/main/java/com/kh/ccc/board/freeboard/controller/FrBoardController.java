@@ -270,7 +270,7 @@ public class FrBoardController {
 						}
 					}
 				}	
-				//
+				////
 				//아래는 이제 새로운 첨부파일 업로드 할껀데  업로드 파일 몇개야 ?
 				for(int j=0; j<upfile.size(); j++) {
 					//새로운 첨부파일 업로드 
