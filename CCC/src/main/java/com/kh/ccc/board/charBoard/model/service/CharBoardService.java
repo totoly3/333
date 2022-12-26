@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
+import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.common.model.vo.PageInfo;
 
 public interface CharBoardService {
@@ -16,7 +17,7 @@ public interface CharBoardService {
 	ArrayList<CharBoard> selectList(PageInfo pi);
 	
 	//캐릭터 게시판 게시글 등록
-	int insertCharBoard(CharBoard cb,ArrayList<CharAttach> list);
+	int insertCharBoard(CharBoard cb, ArrayList<CharAttach> list, ArrayList<Character> cList);
 	
 	//게시글 상세조회 및 조회수 증가
 	//1.게시글 조회수 증가
@@ -26,10 +27,8 @@ public interface CharBoardService {
 	//3.게시글 상세 조회 (첨부파일)
 	ArrayList<CharAttach> selectAttach(int bno);
 	
-	//1.게시글 수정 (글)
+	//게시글 수정
 	int updateBoard(CharBoard cb, ArrayList<CharAttach> caList);
-	//2.게시글 수정 (첨부파일)
-	int updateAttach(ArrayList<CharAttach> caList);
 	
 	//게시글 삭제
 	int deleteBoard(int bno);

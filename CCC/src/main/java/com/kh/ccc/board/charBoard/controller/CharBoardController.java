@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 import com.kh.ccc.board.charBoard.model.service.CharBoardService;
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
+import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.common.template.Pagenation;
@@ -66,35 +67,58 @@ public class CharBoardController {
 										ArrayList<MultipartFile> upfile,
 										ModelAndView mv,
 										HttpSession session) {
-	
+		
 		//첨부파일이 여러개 넘어올 수 있기 때문에 ArrayList에 담아주자
 		ArrayList<CharAttach> list = new ArrayList<>();
+		ArrayList<Character> cList = new ArrayList<>();
 		
 		for(int i=0; i<upfile.size(); i++) {	
 			CharAttach ca = new CharAttach();
+			Character c = new Character();
 			//만약 첨부파일이 있다면 (파일명이 빈 문자열이 아니라면)
 			if(!upfile.get(i).getOriginalFilename().equals("")) {
 				//아래의 saveFile메서드 활용
 				String changeName = saveFile(upfile.get(i),session);
 				//(아래에 이어)8.원본명,서버에 업로드한 경로를 Board객체에 담아주기
 				ca.setOriginName(upfile.get(i).getOriginalFilename());
-				ca.setChangeName("resources/charBoardImg/" + changeName);
+				ca.setChangeName("resources/character/charBoardImg/" + changeName);
 				//level 1번 : 캐릭터 게시판 썸네일 / 이후 카운트되는 level은 sql에서 해당 게시글의 첨부파일 번호를 나타낸다 (파일번호와 다름)
 				ca.setLevel(i+1);
 				ca.setStatus("Y");
-							
+				//게시글 첨부파일 리스트에 담기
 				list.add(ca);
+				
+				//캐릭터 등록
+				c.setMemberNo(cb.getBoardWriter());
+				c.setCharName(cb.getCharName());
+				c.setOriginName(upfile.get(i).getOriginalFilename());
+				c.setChangeName("resources/character/charBoardImg/" + changeName);
+				c.setLevel(i+1);
+				c.setStatus("Y");
+				
+				cList.add(c);
 			}else {
 				//파일이 없는 경우에는 NULL처리한다 (첨부파일 수정시에 사용할 공간 확보)
 				ca.setOriginName(null);
 				ca.setChangeName(null);
 				ca.setLevel(i+1);
 				ca.setStatus("N");
-				
+				//게시글 첨부파일 리스트에 담기
 				list.add(ca);
+				
+				//캐릭터 등록
+				c.setMemberNo(cb.getBoardWriter());
+				c.setCharName(cb.getCharName());
+				c.setOriginName(null);
+				c.setChangeName(null);
+				c.setLevel(i+1);
+				c.setStatus("N");
+			
+				cList.add(c);
 			}
 		}
-		int result = boardService.insertCharBoard(cb,list);
+		
+		int result = boardService.insertCharBoard(cb,list,cList);
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "게시글 등록 성공!");
@@ -124,7 +148,7 @@ public class CharBoardController {
 		String changeName = currentTime + ranNum + ext;
 		
 		//6.업로드 하고자 하는 실제 위치 경로 지정해주기 (실제 경로)
-		String savePath = session.getServletContext().getRealPath("/resources/charBoardImg/");
+		String savePath = session.getServletContext().getRealPath("/resources/character/charBoardImg/");
 		
 		//7.경로와 수정파일명 합쳐서 파일을 업로드해주기
 		try {
@@ -242,7 +266,9 @@ public class CharBoardController {
 							 ,HttpSession session
 							 ,Model model) {
 		
+		//JSP에서 넘긴 글번호의 첨부파일 리스트를 받아오자
 		ArrayList<CharAttach> caList = boardService.selectAttach(bno);
+		//게시글 번호의 글과 첨부파일 삭제하는 메소드
 		int result = boardService.deleteBoard(bno);
 		
 		if(result != 0) {

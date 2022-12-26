@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
+import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.common.model.vo.PageInfo;
 
 @Repository
@@ -28,13 +29,17 @@ public class CharBoardDao {
 		//매개변수 3개짜리 selectList사용
 		return (ArrayList)sqlSession.selectList("charBoardMapper.selectList", null, rowBounds);
 	}
-	//게시글 등록 (글)
+	//1.게시글 등록 (글)
 	public int insertBoard(SqlSessionTemplate sqlSession, CharBoard cb) {
 		return sqlSession.insert("charBoardMapper.insertBoard", cb);
 	}
-	//게시글 첨부파일 등록
+	//2.게시글 등록 (첨부파일)
 	public int insertAttach(SqlSessionTemplate sqlSession, ArrayList<CharAttach> list) {
 		return sqlSession.insert("charBoardMapper.insertAttach", list);
+	}
+	//3.게시글 등록 (캐릭터)
+	public int insertCharacter(SqlSessionTemplate sqlSession, ArrayList<Character> cList) {
+		return sqlSession.insert("charBoardMapper.insertCharacter", cList);
 	}
 	//게시글 조회수 증가
 	public int increaseCount(SqlSessionTemplate sqlSession, int bno) {

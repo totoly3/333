@@ -108,10 +108,31 @@
             <!-- 동적으로 DOM요소  만들어 글 번호와 파일 경로를 Controller로 submit하기 -->
             <script>
             	function postFormSubmit(num){
-            		var result = confirm("정말로 삭제하시겠습니까?");
+            		//삭제하기 버튼을 눌렀을 경우
+            		if(num == 2){
+	            		var result = confirm("정말로 삭제하시겠습니까?");            			
+	            		
+	            		if(result){
+		            		let form = $("<form>");
+		            		let subBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${ cb.boardNo }");
+		        			
+		        			form.append(subBno);
+		         			
+		        			if(num == 1){
+		        				form.prop("action","updateForm.ch");
+		        			}else{
+		        				form.prop("action","delete.ch");
+		        			}
+		        			
+		        			$("body").append(form);
+		        			
+		        			form.prop("method","POST").submit();
+	            		}
+	            		return false;
             		
-            		if(result){
-	            		let form = $("<form>");
+            		}
+            		else{ //수정하기 버튼을 눌렀을 경우
+            			let form = $("<form>");
 	            		let subBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${ cb.boardNo }");
 	        			
 	        			form.append(subBno);
@@ -126,7 +147,6 @@
 	        			
 	        			form.prop("method","POST").submit();
             		}
-            		return false;
             	}
             </script>
 

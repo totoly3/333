@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ccc.board.charBoard.model.dao.CharBoardDao;
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
+import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.common.model.vo.PageInfo;
@@ -31,15 +32,20 @@ public class CharBoardServiceImpl implements CharBoardService {
 		return boardDao.selectList(sqlSession, pi);
 	}
 	
-	//게시글 등록 (게시글,첨부파일)
+	//게시글 등록 (게시글,첨부파일,캐릭터)
 	@Override
-	public int insertCharBoard(CharBoard cb,ArrayList<CharAttach> list) {
+	public int insertCharBoard(CharBoard cb, ArrayList<CharAttach> list, ArrayList<Character> cList) {
 		
-		int result = boardDao.insertBoard(sqlSession,cb);
-		int result2 = boardDao.insertAttach(sqlSession,list);
-		int finalResult = result * result2;
+		//캐릭터 등록
+		int characterResult = boardDao.insertCharacter(sqlSession,cList);
+		//게시글 글 정보 등록
+		int boardResult = boardDao.insertBoard(sqlSession,cb);
+		//게시글 첨부파일 등록
+		int attachResult = boardDao.insertAttach(sqlSession,list);
+				
+		int finalReult = (characterResult + boardResult + attachResult) > 8 ? 1 : 0;
 		
-		return finalResult;
+		return finalReult;
 	}
 	
 	//1.게시글 조회수 증가
@@ -68,13 +74,6 @@ public class CharBoardServiceImpl implements CharBoardService {
 		int finalResult = result * result2;
 		
 		return finalResult;
-	}
-	
-	//게시글 수정 (첨부파일)
-	@Override
-	public int updateAttach(ArrayList<CharAttach> caList) {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 	
 	//게시글 삭제
