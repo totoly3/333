@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
+import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.common.model.vo.PageInfo;
@@ -17,7 +18,7 @@ public interface CharBoardService {
 	ArrayList<CharBoard> selectList(PageInfo pi);
 	
 	//캐릭터 게시판 게시글 등록
-	int insertCharBoard(CharBoard cb, ArrayList<CharAttach> list, ArrayList<Character> cList);
+	int insertCharBoard(CharBoard cb, ArrayList<CharAttach> list, Character c);
 	
 	//캐릭터 번호 생성
 	int characterMaxNum();
@@ -35,6 +36,13 @@ public interface CharBoardService {
 	
 	//게시글 삭제
 	int deleteBoard(int bno);
+	
+	//1.좋아요 조회
+	CharLike selectLike(CharLike cl);
+	//2.좋아요 등록 (TB_CHARACTER_LIKE, TB_CHARACTER)
+	int insertLike(CharLike cl);
+	//3.좋아요 삭제(TB_CHARACTER_LIKE, TB_CHARACTER)
+	int deleteLike(CharLike cl);
 	
 	//댓글 리스트 출력
 	ArrayList<CharReply> selectReplyList(int boardNo);

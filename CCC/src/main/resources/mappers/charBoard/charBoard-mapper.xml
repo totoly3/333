@@ -5,12 +5,9 @@
 	<resultMap type="character" id="characterResultSet">
 		<result column="C_NO" property="charNo"/>
 		<result column="M_NO" property="memberNo"/>
-		<result column="CB_NO" property="refBno"/>
 		<result column="C_NAME" property="charName"/>
+		<result column="C_CONTENT" property="charContent"/>
 		<result column="C_LIKE" property="like"/>
-		<result column="C_ORIGIN_NAME" property="originName"/>
-		<result column="C_CHANGE_NAME" property="changeName"/>
-		<result column="C_LEVEL" property="level"/>
 		<result column="C_CREATE_DATE" property="createDate"/>
 		<result column="C_STATUS" property="status"/>
 	</resultMap>
@@ -39,6 +36,12 @@
 		<result column="CA_STATUS" property="status"/>
 	</resultMap>
 	
+	<resultMap type="charLike" id="charLikeResultSet">
+		<result column="M_NO" property="memberNo"/>
+		<result column="C_NO" property="charNo"/>
+		<result column="C_LIKE" property="charLike"/>
+	</resultMap>
+	
 	<resultMap type="charReply" id="charReplyResultSet">
 		<result column="CR_NO" property="reNo"/>
 		<result column="CB_NO" property="refBno"/>
@@ -64,6 +67,7 @@
 	<select id="selectBoard" resultMap="charBoardResultSet" parameterType="_int">
 		SELECT CB_NO
 			  ,C_NAME
+			  ,C_NO
 			  ,CB_TITLE
 		      ,CB_CONTENT
 		      ,CB_CREATE_DATE
@@ -129,27 +133,17 @@
 	</insert>
 
 	<!-- 캐릭터 등록  -->
-	<insert id="insertCharacter" parameterType="java.util.List">
+	<insert id="insertCharacter" parameterType="character">
 		INSERT INTO TB_CHARACTER(
 								 C_NO
 								,M_NO
 								,C_NAME
-								,C_ORIGIN_NAME
-								,C_CHANGE_NAME
-								,C_LEVEL
-								,C_STATUS)
-		SELECT SEQ_CNO.NEXTVAL, A.*
-		FROM(
-			 <foreach collection="list" item="cList" index="index" separator="union all">
-					SELECT #{ cList.memberNo },
-						   #{ cList.charName },
-						   #{ cList.originName },
-						   #{ cList.changeName },
-						   #{ cList.level },
-						   #{ cList.status }
-					FROM SYS.DUAL
-			 </foreach>
-			 )A
+								,C_CONTENT)
+		VALUES(
+			   SEQ_CNO.NEXTVAL,
+			   #{ memberNo },
+			   #{ charName },
+			   #{ charContent })
 	</insert>
 	
 	<!-- 게시글 등록 (첨부파일) -->
@@ -207,6 +201,61 @@
 			DELETE FROM TB_CHARACTER_ATTACH
 			WHERE CB_NO = #{ bno }
 	</delete>
+	
+	<!-- 좋아요 조회 (TB_CHARACTER_LIKE) -->
+	<select id="selectLike" resultMap="charLikeResultSet" parameterType="charLike">
+		SELECT COUNT(C_LIKE) AS C_LIKE
+		FROM TB_CHARACTER_LIKE
+		WHERE C_NO = #{ charNo }
+		AND M_NO = #{ memberNo }
+	</select>
+	
+	<!-- 좋아요 추가(TB_CHARACTER_LIKE) -->
+	<insert id="insertTbCharLike" parameterType="charLike">
+		INSERT INTO TB_CHARACTER_LIKE(
+									  M_NO
+									 ,C_NO
+									 ,C_LIKE)
+					VALUES(
+						   #{ memberNo },
+						   #{ charNo },
+						   1)
+	</insert>
+	
+	<!-- 좋아요 추가 (TB_CHARACTER) -->
+	<update id="insertTbChar" parameterType="charLike">
+		UPDATE TB_CHARACTER
+		SET C_LIKE = C_LIKE + 1
+		WHERE C_NO = #{ charNo }
+	</update>
+	
+	<!-- 좋아요 추가 (TB_CHARACTER) -->
+	<update id="insertTbCharBoard" parameterType="charLike">
+		UPDATE TB_CHARACTER_BOARD
+		SET CB_LIKE = CB_LIKE + 1
+		WHERE CB_NO = #{ refBno }
+	</update>
+
+	<!-- 좋아요 삭제 (TB_CHARACTER_LIKE) -->
+	<delete id="deleteTbCharLike" parameterType="charLike">
+		DELETE FROM TB_CHARACTER_LIKE
+		WHERE M_NO = #{ memberNo }
+		AND C_NO = #{ charNo }
+	</delete>
+	
+	<!-- 좋아요 삭제 (TB_CHARACTER) -->
+	<update id="deleteTbChar" parameterType="charLike">
+		UPDATE TB_CHARACTER
+		SET C_LIKE = C_LIKE - 1
+		WHERE C_NO = #{ charNo }
+	</update>
+	
+	<!-- 좋아요 삭제 (TB_CHARACTER_BOARD) -->
+	<update id="deleteTbCharBoard" parameterType="charLike">
+		UPDATE TB_CHARACTER_BOARD
+		SET CB_LIKE = CB_LIKE - 1
+		WHERE CB_NO = #{ refBno }
+	</update>
 	
 	<!-- 댓글 리스트 조회 -->
 	<select id="selectReplyList" resultMap="charReplyResultSet" parameterType="_int">

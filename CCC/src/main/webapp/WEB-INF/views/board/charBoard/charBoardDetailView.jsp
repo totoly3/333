@@ -67,24 +67,23 @@
 	                    	</td>
 	                    </c:otherwise>
                     </c:choose>
-                    
                 </tr>
                 <tr>
-                    <th>내용</th>
+                    <th width="120">캐릭터 이름</th>
+                    <td colspan="3">${ cb.charName }</td>
+                	<th style="text-align:center;"></th>
+                	<td width="150"><button id="likeBtn" onclick="likeGo();" class="btn btn-success">좋아요</button></td>
+                </tr>
+                <tr>
+                    <th>캐릭터 설명</th>
                     <td colspan="3"></td>
                 </tr>
                 <tr>
                     <td colspan="4"><p style="height:150px;">${ cb.boardContent }</p></td>
                 </tr>
                 <tr>
-                    <th width="120">캐릭터 이름</th>
-                    <td colspan="3">${ cb.charName }</td>
-                </tr>
-                <tr>
                 	<th width="130">캐릭터 이미지</th>
                 	<td colspan="1"></td>
-                	<th style="text-align:center;"></th>
-                	<td width="150"><button onclick="likeGo();" class="btn btn-success">좋아요</button></td>
                 </tr>
                 <c:choose>
                 	<c:when test="${ not empty caList }">
@@ -230,18 +229,54 @@
         
         	$(function(){
         		selectReplyList();
+        		selectLike();
         	});
-        	
-//         	function likeGo(){
-//         		$.ajax({
-//         			url : "insertLike.ch",
-//         			data : {
-//        				게시글번호 : ${ cb.boardNo },
-//         				좋아요 누른 회원번호 : ${ loginUser.memberNo },
-// 						캐릭터 번호
-//         			}
-//         		})
-//         	}
+        	//좋아요 조회
+     		function selectLike(){
+     			$.ajax({
+     				url : "selectLike.ch",
+     				data : {
+     					refBno : ${ cb.boardNo },
+     					memberNo : 6,
+     					charNo : ${ cb.charNo }
+     				},
+     				success : function(result){
+     					
+     					if(result == "NNNNY"){
+     						$("#likeBtn").attr("class","btn btn-danger");
+     					}else{
+     						$("#likeBtn").attr("class","btn btn-success");     						
+     					}
+     					
+     				},
+     				error : function(){
+     					console.log("통신실패!");
+     				}
+     			})
+     		}
+        	//좋아요 등록 및 취소
+        	function likeGo(){
+        		$.ajax({
+        			url : "insertLike.ch",
+        			data : {
+	       				refBno : ${ cb.boardNo },
+	        			memberNo : 6,
+						charNo : ${ cb.charNo }
+        			},
+        			success : function(result){
+        				console.log("통신성공!");
+        				
+        				if(result == "NNNNY"){
+        					$("#likeBtn").attr("class","btn btn-danger");
+        				}else{
+        					$("#likeBtn").attr("class","btn btn-success");        					
+        				}
+        			},
+        			error : function(){
+        				console.log("통신실패...");
+        			}
+        		})
+        	}
         	
         	//댓글 등록
         	function insertReply(){

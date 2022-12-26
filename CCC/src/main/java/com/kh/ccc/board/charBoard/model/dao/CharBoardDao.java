@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
+import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.common.model.vo.PageInfo;
@@ -42,8 +43,8 @@ public class CharBoardDao {
 		return sqlSession.selectOne("charBoardMapper.characterMaxNum");
 	}
 	//4.게시글 등록 (캐릭터)
-	public int insertCharacter(SqlSessionTemplate sqlSession, ArrayList<Character> cList) {
-		return sqlSession.insert("charBoardMapper.insertCharacter", cList);
+	public int insertCharacter(SqlSessionTemplate sqlSession, Character c) {
+		return sqlSession.insert("charBoardMapper.insertCharacter", c);
 	}
 	//게시글 조회수 증가
 	public int increaseCount(SqlSessionTemplate sqlSession, int bno) {
@@ -104,5 +105,33 @@ public class CharBoardDao {
 	//대댓글 (댓글의 계층을 업데이트하기 위한 로직)
 	public void updateStep(SqlSessionTemplate sqlSession, CharReply cr) {
 		sqlSession.update("charBoardMapper.updateStep", cr);
+	}
+	//1.좋아요 조회(TB_CHARACTER_LIKE)
+	public CharLike selectLike(SqlSessionTemplate sqlSession, CharLike cl) {	
+		return sqlSession.selectOne("charBoardMapper.selectLike", cl);
+	}
+	//2.좋아요 추가(CHARACTER_LIKE)
+	public int insertTbCharLike(SqlSessionTemplate sqlSession, CharLike cl) {
+		return sqlSession.insert("charBoardMapper.insertTbCharLike", cl);
+	}
+	//3.좋아요 추가 (CHARACTER)
+	public int insertTbChar(SqlSessionTemplate sqlSession, CharLike cl) {
+		return sqlSession.update("charBoardMapper.insertTbChar", cl);
+	}
+	//4.좋아요 추가 (CHARACTER_BOARD)
+	public int insertTbCharBoard(SqlSessionTemplate sqlSession, CharLike cl) {
+		return sqlSession.update("charBoardMapper.insertTbCharBoard", cl);
+	}
+	//1.좋아요 삭제 (CHARACTER_LIKE)
+	public int deleteTbCharLike(SqlSessionTemplate sqlSession, CharLike cl) {
+		return sqlSession.delete("charBoardMapper.deleteTbCharLike", cl);
+	}
+	//2.좋아요 삭제 (CHARACTER)
+	public int deleteTbChar(SqlSessionTemplate sqlSession, CharLike cl) {
+		return sqlSession.update("charBoardMapper.deleteTbChar", cl);
+	}
+	//3.좋아요 삭제 (CHARACTER_BOARD)
+	public int deleteTbCharBoard(SqlSessionTemplate sqlSession, CharLike cl) {
+		return sqlSession.update("charBoardMapper.deleteTbCharBoard", cl);
 	}
 }

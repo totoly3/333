@@ -23,8 +23,9 @@ import com.google.gson.Gson;
 import com.kh.ccc.board.charBoard.model.service.CharBoardService;
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
-import com.kh.ccc.board.charBoard.model.vo.Character;
+import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
+import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.common.template.Pagenation;
 //악성 글 지우기 
@@ -68,16 +69,20 @@ public class CharBoardController {
 										ModelAndView mv,
 										HttpSession session) {
 		
+		//캐릭터 등록
+		Character c = new Character();
+		c.setMemberNo(cb.getBoardWriter());
+		c.setCharName(cb.getCharName());
+		c.setCharContent(cb.getBoardContent());
+		
 		//첨부파일이 여러개 넘어올 수 있기 때문에 ArrayList에 담아주자
 		ArrayList<CharAttach> list = new ArrayList<>();
-		ArrayList<Character> cList = new ArrayList<>();
 	
 		//게시판 첨부파일 이미지 경로
 		String charBoardFilePath = "resources/character/charBoardImg/";
 		
 		for(int i=0; i<upfile.size(); i++) {	
 			CharAttach ca = new CharAttach();
-			Character c = new Character();
 			//만약 첨부파일이 있다면 (파일명이 빈 문자열이 아니라면)
 			if(!upfile.get(i).getOriginalFilename().equals("")) {
 				//아래의 saveFile메서드 활용
@@ -91,15 +96,6 @@ public class CharBoardController {
 				//게시글 첨부파일 리스트에 담기
 				list.add(ca);
 				
-				//캐릭터 등록
-				c.setMemberNo(cb.getBoardWriter());
-				c.setCharName(cb.getCharName());
-				c.setOriginName(upfile.get(i).getOriginalFilename());
-				c.setChangeName(charBoardFilePath + boardFileChangeName);
-				c.setLevel(i+1);
-				c.setStatus("Y");
-				
-				cList.add(c);
 			}else {
 				//파일이 없는 경우에는 NULL처리한다 (첨부파일 수정시에 사용할 공간 확보)
 				ca.setOriginName(null);
@@ -108,20 +104,10 @@ public class CharBoardController {
 				ca.setStatus("N");
 				//게시글 첨부파일 리스트에 담기
 				list.add(ca);
-				
-				//캐릭터 등록
-				c.setMemberNo(cb.getBoardWriter());
-				c.setCharName(cb.getCharName());
-				c.setOriginName(null);
-				c.setChangeName(null);
-				c.setLevel(i+1);
-				c.setStatus("N");
-				//캐릭터 정보 리스트에 담기
-				cList.add(c);
 			}
 		}
 		
-		int result = boardService.insertCharBoard(cb,list,cList);
+		int result = boardService.insertCharBoard(cb,list,c);
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "게시글 등록 성공!");
@@ -261,7 +247,6 @@ public class CharBoardController {
 		else {
 			mv.addObject("errorMsg", "게시글 수정에 실패했습니다.").setViewName("common/errorPage");
 		}
-		
 		return mv;
 	}
 	
@@ -289,8 +274,41 @@ public class CharBoardController {
 			model.addAttribute("errorMsg", "게시글 삭제에 실패했습니다.");
 			return "common/errorPage";
 		}
-		
 		return "redirect:/list.ch";
+	}
+	
+	//좋아요 조회
+	@ResponseBody
+	@RequestMapping(value="selectLike.ch",produces="text/html; charset=UTF-8")
+	public String selectLike(CharLike cl) {
+		
+		CharLike clResult = boardService.selectLike(cl);
+		
+		return clResult.getCharLike()==0 ? "NNNNN" : "NNNNY";
+		
+	}
+	
+	//좋아요/좋아요 취소 (캐릭터)
+	@ResponseBody
+	@RequestMapping(value="insertLike.ch",produces="text/html; charset=UTF-8")
+	public String insertLike(CharLike cl) {
+		
+		//좋아요 데이터가 있는지 조회
+		CharLike clSelect = boardService.selectLike(cl);
+		
+		//좋아요가 없다면 좋아요 등록
+		if((clSelect.getCharLike() == 0)) {
+			//TB_CHARACTER_LIKE / TB_CHARACTER 테이블에 좋아요 추가
+			int insertResult = boardService.insertLike(cl);
+			
+			return insertResult != 0 ? "NNNNY" : "NNNNN";
+		}
+		else {//좋아요가 있다면 좋아요 취소
+			//TB_CHARACTER_LIKE / TB_CHARACTER 테이블에 좋아요 삭제
+			int deleteResult = boardService.deleteLike(cl);
+			
+			return deleteResult != 0 ? "NNNNN" : "NNNNY";
+		}
 	}
 	
 	//댓글 등록
