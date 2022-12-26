@@ -61,6 +61,17 @@
 	</select>
 	
 	
+	<!-- 일반회원 check회원들 차단삭제 -->
+	<update id="deleteMemberList" parameterType="java.util.List">
+	
+		UPDATE TB_MEMBER
+		SET M_STATUS = 'N'
+		WHERE M_NAME IN 
+		<foreach collection="list" item="checkBoxArr" open="(" close=")" separator=",">
+ 		#{checkBoxArr}
+		</foreach>
+	
+	</update>
 
 </mapper>	
 	

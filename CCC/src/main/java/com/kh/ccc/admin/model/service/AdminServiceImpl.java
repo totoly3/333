@@ -1,6 +1,7 @@
 package com.kh.ccc.admin.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,17 @@ public class AdminServiceImpl implements AdminService{
 		
 		return a;
 	}
+
+
+	//일반회원 check회원들 차단삭제
+	@Override
+	public int deleteMemberList(List<String> checkBoxArr) {
+
+		int result = adminDao.deleteMemberList(sqlSession,checkBoxArr);
+
+		return result;
+	}
+
 
 
 	

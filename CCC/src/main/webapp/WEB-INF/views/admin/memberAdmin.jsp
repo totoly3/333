@@ -266,17 +266,15 @@
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">
-                                <i class="fas fa-table me-1"></i>회원리스트
-                               
                                	<!-- 삭제버튼 구현 --> 
                                	<div id="deleteKey" style="float:right">
-	                            <a class="btn btn-outline-secondary"  onclick="deleteClick()">삭제</a>
-                 				<a class="btn btn-outline-secondary"  id="checkAll">전체선택</a>
-                 				<a class="btn btn-outline-secondary"  id="unCheckAll">전체해제</a>
+                 				<a class="btn btn-outline-dark"  id="checkAll">전체선택</a>
+                 				<a class="btn btn-outline-dark"  id="unCheckAll">전체해제</a>
+                 				<a class="btn btn-secondary"  onclick="deleteClick()">회원차단</a>
                  				</div>
                                
                                 <form action="excelDownload.ad" method="post">
-                                	<input type="submit" value="EXCEL 다운로드">	
+                                	<input type="submit" class="btn btn-outline-success" value="EXCEL 다운로드">	
 								</form>
                               </div>
 	                            <div class="card-body">
@@ -385,8 +383,8 @@
      
      }
      
-     
-        $(document).ready(function(){ //체크박스 전체선택,전체해제
+      //체크박스 전체선택,전체해제
+        $(document).ready(function(){
         
             $("#checkAll").click(function() {
                 $("input[name=check]:checkbox").prop("checked",true); // name이 chkbox인 input 타입들의 checked값을 "true"로 바꿈
