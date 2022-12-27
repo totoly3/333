@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -17,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.member.model.vo.Member;
 import com.kh.ccc.mypage.model.service.MyPageService;
 import com.kh.ccc.mypage.model.vo.MyCharacter;
 import com.kh.ccc.mypage.model.vo.MyCharacterAttach;
+import com.kh.ccc.order.model.vo.Order;
 
 @Controller
 public class MyPageController{
@@ -48,22 +47,22 @@ public class MyPageController{
 		//내 캐릭터 영역
 		//사용자번호를 가지고 내캐릭터 목록조회
 		@RequestMapping("list.mychar")
-		public String selectMychaList(HttpSession session,Model model) {
+		public ModelAndView selectMychaList(HttpSession session,ModelAndView mv) {
 			
 		 //>>사용자번호
 		 Member loginUser=(Member)session.getAttribute("loginUser");
 		 int mNo=loginUser.getmNo();
-		 System.out.println("목록조회컨트롤러 사용자번호 넘?"+mNo); 
+		 //System.out.println("목록조회컨트롤러 사용자번호 넘?"+mNo); 
 		
 	     //~조회
 		 ArrayList<MyCharacter> mchalist=mypageService.selectchaList(mNo);
 		 
-		 System.out.println("목록조회 컨트롤러 리스트 돌?"+mchalist);
+		 //System.out.println("목록조회 컨트롤러 리스트 돌?"+mchalist);
 		 
 		 //<<리스트
-		 model.addAttribute("mchalist",mchalist);
+		 mv.addObject("mchalist",mchalist).setViewName("mypage/myCharList");
 			
-		 return "mypage/myCharList";
+		 return mv;
 			
 		}
 		
@@ -80,7 +79,10 @@ public class MyPageController{
 		public ModelAndView mycharInsert(MyCharacter cha,ModelAndView mv, @RequestParam(value="multifile", required=false) List<MultipartFile> upfileList,HttpSession session) {
 	    
 			Member loginUser = (Member) session.getAttribute("loginUser");
-				
+			
+			System.out.println("2시39분업로드파일 출력"+upfileList);
+			
+			
 			ArrayList<MyCharacterAttach> mcalist = new ArrayList<>(); //파일 ArrayList
 			
 				//>>가져가야할 것?
@@ -90,18 +92,25 @@ public class MyPageController{
 				for (int i = 0; i<upfileList.size(); i++) {
 					if (!upfileList.get(i).getOriginalFilename().equals("")) { //만약 올라오는 파일이 있다면
 						
-						System.out.println("파일리스트 원본명 출력"+upfileList.get(i).getOriginalFilename());
+							System.out.println("파일리스트 원본명 출력"+upfileList.get(i).getOriginalFilename());
+							
+							String changeName=saveFile(upfileList.get(i), session);  //수정명 모듈화 메소드로 구해줌
+							//System.out.println("3시 changeName~~~!!!"+changeName);
 						
-						String changeName=saveFile(upfileList.get(i), session);  //수정명 모듈화 메소드로 구해줌
-						//System.out.println("3시 changeName~~~!!!"+changeName);
+							//파일객체 생성(원본명,수정명,파일레벨 설정해준다.)
+							MyCharacterAttach mca=new MyCharacterAttach();
 						
-						//파일객체
-						MyCharacterAttach mca=new MyCharacterAttach();
-					
-						mca.setOriginName(upfileList.get(i).getOriginalFilename()); //원본명
-						mca.setChangeName("resources/myPage/myChar/"+changeName); //파일경로=실제경로+수정
+							mca.setOriginName(upfileList.get(i).getOriginalFilename()); //원본명
+							mca.setChangeName("resources/myPage/myChar/"+changeName); //파일경로=실제경로+수정
+							
+							//썸네일여부 파일레벨 설정
+							if (i==0) {
+								mca.setmCaLevel(1);
+							} else {
+								mca.setmCaLevel(2);
+							}
 						
-						mcalist.add(mca); //리스트에 담아서 가져가준다.
+							mcalist.add(mca); //리스트에 담아서 가져가준다.
 				      }
 				  }
 			
@@ -118,7 +127,7 @@ public class MyPageController{
 				if (result>0) {
 					
 					session.setAttribute("alsertMsg", "내 캐릭터 등록완료");
-					mv.setViewName("mypage/myCharDetail"); //내캐릭터 페이지로 보내줌
+					mv.setViewName("mypage/myCharList"); //내캐릭터 페이지로 보내줌
 					
 				} else {
 					mv.addObject("errorMsg","문의글 등록실패").setViewName("common/errorPage");
@@ -135,7 +144,7 @@ public class MyPageController{
 		@RequestMapping("chardetail.my")
 		public ModelAndView detailMyChar(@RequestParam(value="cNo") int cNo,ModelAndView mv){
 			
-				//System.out.println("캐릭터 번호 넘???"+cNo);
+				System.out.println("캐릭터 번호 넘???"+cNo);
 				//int count=mypageService.increaseCount(cNo);
 			
 				//게시글조회
@@ -240,7 +249,6 @@ public class MyPageController{
 				   
 					newmchalist.add(mca);
 				}
-			
 			}
 			
 			//~요청처리
@@ -321,6 +329,49 @@ public class MyPageController{
 			}
 			return changeName;
 		}
+		
+		
+		//임시로 1넣음
+		//상세 주문내역 조회
+		@RequestMapping("orderDetail.my")
+		public ModelAndView orderDetail(int oNo,HttpSession session,ModelAndView mv) {
+
+	    //로그인유저
+		Member loginUser=(Member)session.getAttribute("loginUser");	
+		
+		System.out.println("주문번호"+oNo); 
+		//주문번호1을 가지고 selectArrayList >>
+
+		//주문가져옴(SELECT)
+		Order o=mypageService.orderDetail(oNo);
+		
+		//로그인이 되어있다면
+		if (loginUser!=null) {
+          
+		  mv.addObject("o", o).setViewName("mypage/orderDetail");	
+			
+		} else {
+		
+		 session.setAttribute("alertMsg","로그인후 사용할 수 있습니다.");
+
+		}
+		
+		  return mv;	
+	}
+	
+		
+		
+		//기간별주문내역 조회(좀더 고민)
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 	
     

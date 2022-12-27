@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.ccc.mypage.model.vo.MyCharacter;
 import com.kh.ccc.mypage.model.vo.MyCharacterAttach;
+import com.kh.ccc.order.model.vo.Order;
 
 public interface MyPageService {
 
@@ -29,10 +30,7 @@ public interface MyPageService {
 	//마이캐릭터 삭제
 	int delteMyChar(int cNo);
 
-	
-
-	
-	
-
+	//주문 상세페이지 조회
+	Order orderDetail(int oNo);
 	
 }

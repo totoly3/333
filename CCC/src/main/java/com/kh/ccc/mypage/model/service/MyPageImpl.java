@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.ccc.mypage.model.dao.MyPageDao;
 import com.kh.ccc.mypage.model.vo.MyCharacter;
 import com.kh.ccc.mypage.model.vo.MyCharacterAttach;
+import com.kh.ccc.order.model.vo.Order;
 
 @Service
 public class MyPageImpl implements MyPageService{
@@ -101,6 +102,16 @@ public class MyPageImpl implements MyPageService{
 			
 			return finalResult;
 			
+		}
+
+
+		//상세보기
+		@Override
+		public Order orderDetail(int oNo) {
+			
+			Order o=myPageDao.orderDetail(sqlSession,oNo);
+			
+			return o;
 		}
 
 

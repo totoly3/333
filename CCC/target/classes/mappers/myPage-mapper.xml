@@ -15,8 +15,14 @@
 	<result  property="cChangeName" column="C_CHANGE_NAME" />
 	<result  property="cCreateDate" column="C_CREATE_DATE" />
 	<result  property="cStatus" column="C_STATUS" />
-	</resultMap>
 	
+	<result property="mCaNo" column="MCA_NO"/>
+	<result property="originName" column="MCA_ORIGIN_NAME"/>
+	<result property="changeName" column="MCA_CHANGE_NAME"/>
+	<result property="mCaLevel" column="MCA_CA_LEVEL"/>
+	<result property="mCaCreateDate" column=""/>
+	<result property="mCaStatus" column="MCA_CREATE_DATE"/>
+	</resultMap>
 	
 	<!--마이캐릭터 파일조회 -->
 	<resultMap type="myCharacterAttach" id="myCharacterAttachResultSet" >
@@ -28,15 +34,23 @@
 	<result  property="mCaCreateDate" column="MCA_CREATE_DATE" />
 	<result  property="mCaStatus" column="MCA_STATUS" />
 	</resultMap>
+	
+	<!--상세 주문조회 -->
+	<resultMap type="" id="">
+	<result  property="" column="" />
+	
+	
+	</resultMap>
 
 
 	<!--마이캐릭터 글목록 조회 -->
 	<select id="selectchaList" resultMap="myCharacterResultSet">
-		SELECT C_NAME,C_CREATE_DATE,MCA_CHANGE_NAME,MCA_ORIGIN_NAME
+		SELECT C_NO,C_NAME,C_CREATE_DATE,MCA_CHANGE_NAME,MCA_ORIGIN_NAME
 		FROM TB_CHARACTER
 		JOIN TB_MYCHARACTER_ATTACH USING(C_NO)
 		WHERE M_NO=#{mNo}
 		AND MCA_CA_LEVEL=1
+		AND MCA_STATUS='Y'
 	</select>
 
      <!--입력 1. 마이캐릭터 게시글 -->
@@ -125,6 +139,11 @@
     DELETE FROM TB_MYCHARACTER_ATTACH   
     WHERE  C_NO=#{cNo}
    </delete>
+   
+   <select id="orderDetail" parameterType="_int" resultMap="or">
+    SELECT * FROM 
+    WHERE O_NO=#{oNo}
+   </select>
    
 	
 

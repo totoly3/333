@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!--
 =========================================================
 * Paper Dashboard 2 - v2.0.1
@@ -17,7 +18,7 @@ Coded by www.creative-tim.com
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
+<head> 
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="resources/paper-dashboard-master/assets/img/favicon.png">
@@ -38,6 +39,9 @@ Coded by www.creative-tim.com
 </head>
 
 <body class="">
+   <!--제이쿼리 라이브러리-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>  
+  <jsp:include page="/WEB-INF/views/common/header2.jsp"/>  
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
       <div class="logo">
@@ -215,7 +219,7 @@ Coded by www.creative-tim.com
                   <div class="col-7 col-md-8" onclick="location.href='mychar3.my'">
                     <div class="numbers">
                       <p class="card-category">내 캐릭터</p>
-                      <a href="chardetail.my?cNo=20"  style="font-size:medium;" >특정캐릭터 상세보기</a>
+                      <a href="chardetail.my?cNo=21"  style="font-size:medium;" >특정캐릭터 상세보기</a>
                       <p class="card-title">$ 1,345
                       <p>
                     </div>
@@ -288,49 +292,60 @@ Coded by www.creative-tim.com
         </div>
         <div class="row">
           <div class="col-md-12">
+
+			<!--상품상세페이지로 -->
+			<script>
+				$(function() {
+                 $("#orderList>tbody tr").click(function(){
+//                      alert('클릭됨?');
+//                      console.log(this);
+//                      var a=$(this).childeren().eq(1).text()
+//                      ㄴconsole.log(a);
+//                      location.href="orderDetail.my?oNo="+$(this).childeren().eq(0).text();
+						location.href="orderDetail.my?oNo=1";
+                  })
+                })
+	        </script>
             
             <div class="card ">
-            
              <br>
-             <h3 style="color:green;">주문내역</h3>
-              
-                <table class="table">
+             <h3 style="color:green;">임시 주문내역</h3>
+                <table class="table" id="orderList">
 				  <thead>
 				    <tr>
 				      <th scope="col">#</th>
 				      <th scope="col">주문번호</th>
 				      <th scope="col">주문상품</th>
-				      <th scope="col">Handle</th>
-				      <th>하하</th>
+				      <th scope="col">주문상품 수량</th>
+				      <th>우와</th>
 				    </tr>
 				  </thead>
 				  <tbody>
 				    <tr>
 				      <th scope="row">1</th>
-				      <td>Mark</td>
-				      <td>Otto</td>
-				      <td>@mdo</td>
-				      <td>하하</td>
+				      <td>1</td>
+				      <td>가가굿즈</td>
+				      <td>3개</td>
+				      <td>우와</td>
 				    </tr>
 				    <tr>
 				      <th scope="row">2</th>
-				      <td>Jacob</td>
-				      <td>Thornton</td>
-				      <td>@fat</td>
-				      <td>하하</td>
+				      <td>2</td>
+				      <td>나나굿즈</td>
+				      <td>4개</td>
+				      <td>우와</td>
 				    </tr>
 				    <tr>
 				      <th scope="row">3</th>
-				      <td>Larry</td>
-				      <td>the Bird</td>
-				      <td>@twitter</td>
-				      <td>하하</td>
+				      <td>3</td>
+				      <td>다다굿즈</td>
+				      <td>5개</td>
+				      <td>우와</td>
 				    </tr>
 				  </tbody>
 				</table>
             </div>
             
-          
             
              <div class="card ">
              <h3 style="color:green;">영역1-1</h3>

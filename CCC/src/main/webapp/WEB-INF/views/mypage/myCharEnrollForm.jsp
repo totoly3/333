@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+<!-- jQuery 라이브러리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
@@ -49,11 +51,15 @@
 						required></textarea></td>
 				</tr>
 				<tr>
-                   <th>첨부파일</th>
-                   <td><input type="button" id="addCharAtta" value="파일추가">첨부파일 최대10개</td>
+				<th>썸네일 첨부</th>	
+				<td><input type="button" value="파일추가"></td>			
+				</tr>
+				<tr>
+				<th>일반첨부</th>
+                <td><input type="button" id="addCharAtta" value="파일추가">첨부파일 최대4개</td>
                 </tr>
 			</table>
-			
+			<br><br>
 			<div align="center">
 				<button type="submit">등록하기</button>
 			</div>
@@ -61,6 +67,8 @@
 		    <table id="addCharAttaArea"></table>
 
 			<script>
+			
+			//썸네일 버튼클릭시
 			 var catta=1; 
 			 //첨부파일 개수 올려줌
 			 //첨부파일 추가버튼 누르면 생성되는 버튼
@@ -69,7 +77,7 @@
 			 //삭제버튼 추가
 			 $("#addCharAtta").click(function() {
 				 
-				if($("#addCharAttaArea tr").length<=10) {
+				if($("#addCharAttaArea tr").length<=4) {
 				 var addresult="<tr>"
 				 			  +"<th><label for='upfile'"+catta+"'></label></th>"	
 				 			  +"<td><input type='file' id='upfile"+catta+"'class='form-control-file border' name='multifile'></td>"

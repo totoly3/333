@@ -20,18 +20,15 @@
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharAttach" alias="charAttach"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharLike" alias="charLike"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharReply" alias="charReply"/>
-		
+		<typeAlias type="com.kh.ccc.order.model.vo.OrderDetail" alias="orderDetail"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/frBoard-mapper.xml"/>
 		<mapper resource="/mappers/charBoard/charBoard-mapper.xml"/>
-
 		<mapper resource="/mappers/member-mapper.xml"/>
 		<mapper resource="/mappers/myPage-mapper.xml"/>
-
 		<mapper resource="/mappers/admin-mapper.xml"/>
-
 	</mappers>
 	
 </configuration>

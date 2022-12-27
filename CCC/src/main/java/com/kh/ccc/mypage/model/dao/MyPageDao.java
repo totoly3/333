@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ccc.mypage.model.vo.MyCharacter;
 import com.kh.ccc.mypage.model.vo.MyCharacterAttach;
+import com.kh.ccc.order.model.vo.Order;
 
 @Repository
 public class MyPageDao {
@@ -85,9 +86,14 @@ public class MyPageDao {
 	}
 
 
-	//
+	//첨부파일 삭제
 	public int deleteMyCharAttach(SqlSessionTemplate sqlSession, int cNo) {
 		return sqlSession.update("myPageMapper.deleteMyCharAttach",cNo);
+	}
+
+	//상세보기
+	public Order orderDetail(SqlSessionTemplate sqlSession, int oNo) {
+		return sqlSession.selectOne("myPageMapper.orderDetail",oNo);
 	}
 
 
