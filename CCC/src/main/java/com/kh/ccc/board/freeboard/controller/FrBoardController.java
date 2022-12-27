@@ -132,7 +132,7 @@ public class FrBoardController {
 						}
 					}
 		
-				if(falist.isEmpty()) { //글만 작성할때
+				if(falist.isEmpty()) { //글만 작성할때//
 					int result1=FrBoardService.insertFrBoardOnlyWrite(fb);
 					
 						if(result1>0) {
