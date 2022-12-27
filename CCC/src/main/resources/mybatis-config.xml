@@ -11,20 +11,31 @@
 		<typeAlias type="com.kh.ccc.member.model.vo.Member" alias="member"/>
 		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoard" alias="FrBoard"/>
 		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoardAttach" alias="frAttBoard"/>
+
+		<typeAlias type="com.kh.ccc.mypage.model.vo.MyCharacter" alias="myCharacter"/>
+		<typeAlias type="com.kh.ccc.mypage.model.vo.MyCharacterAttach" alias="myCharacterAttach"/>
 		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoardReply" alias="FrBoardReply"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharBoard" alias="charBoard"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.Character" alias="character"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharAttach" alias="charAttach"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharLike" alias="charLike"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharReply" alias="charReply"/>
+
 		
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="/mappers/frBoard-mapper.xml"/>
 		<mapper resource="/mappers/charBoard/charBoard-mapper.xml"/>
-		<mapper resource="/mappers/admin-mapper.xml"/>
+
 		<mapper resource="/mappers/member-mapper.xml"/>
+		<mapper resource="/mappers/myPage-mapper.xml"/>
+
+		<mapper resource="/mappers/admin-mapper.xml"/>
+
+
+		<mapper resource="/mappers/alltimeboard-mapper.xml"/>
+
 	</mappers>
 	
 </configuration>

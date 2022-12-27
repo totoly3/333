@@ -29,10 +29,10 @@ public class MemberController {
 			
 			Member loginUser=memberService.loginMember(m);
 			
-			System.out.println("넘?"+m.getmNo());
-			System.out.println("넘???"+m.getmPwd());
+//			System.out.println("넘?"+m.getmNo());
+//			System.out.println("넘???"+m.getmPwd());
 			
-			System.out.println(loginUser);
+			//System.out.println(loginUser);
 			
 			if (loginUser!=null) { //로그인 성공시
 				session.setAttribute("loginUser", loginUser);

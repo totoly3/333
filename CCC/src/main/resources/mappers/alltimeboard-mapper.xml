@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+   <mapper namespace="allTimeBoardMapper">
+   
+   <resultMap type="character" id="characterResultSet">
+		<result column="C_NO" property="charNo"/>
+		<result column="M_NO" property="memberNo"/>
+		<result column="C_NAME" property="charName"/>
+		<result column="C_LIKE" property="like"/>
+		<result column="C_ORIGIN_NAME" property="originName"/>
+		<result column="C_CHANGE_NAME" property="changeName"/>
+		<result column="C_LEVEL" property="level"/>
+		<result column="C_CREATE_DATE" property="createDate"/>
+		<result column="C_STATUS" property="status"/>
+	</resultMap>
+	
+	<!-- 아래는 역대수상작 리스트 (1~3위 까지 월 별 조회  -->
+	<select id="allTimeSelectList" resultMap="characterResultSet" parameterType="character">
+		SELECT *
+		FROM
+    		(SELECT ROWNUM RNUM, A.*
+     		 FROM
+        		 (SELECT C.C_NO
+				,C.M_NO
+				,C.C_NAME
+				,C.C_LIKE
+				,CA.CA_ORIGIN_NAME
+				,CA.CA_CHANGE_NAME
+				,CA.CA_LEVEL
+				,C.C_CREATE_DATE
+				,C.C_STATUS
+			  FROM TB_CHARACTER  C , TB_CHARACTER_ATTACH CA
+			  WHERE C_STATUS = 'Y'
+				 AND  C.C_NO = CB_NO
+				 AND TO_CHAR(SYSDATE, 'YY/MM') = TO_CHAR(C_CREATE_DATE, 'YY/MM')
+			     ORDER BY C_LIKE DESC)A)
+		WHERE RNUM BETWEEN 1 AND 3
+	
+		</select>
+	</mapper>
