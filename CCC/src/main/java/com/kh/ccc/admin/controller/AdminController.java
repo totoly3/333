@@ -2,9 +2,11 @@ package com.kh.ccc.admin.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -16,10 +18,11 @@ import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ccc.admin.model.service.AdminService;
 import com.kh.ccc.admin.model.vo.Admin;
@@ -164,19 +167,38 @@ public class AdminController {
 		}
 		
 		
-		//일반회원 check회원들 삭제
+		//일반회원 check회원들 차단삭제
 		@ResponseBody
-		@RequestMapping(value="deleteClickMember.ad", produces="application/json;charset=UTF-8")
-		public String deleteClick(HttpServletRequest request,ModelMap model) throws Exception {
+		@RequestMapping("deleteClickMember.ad")
+		public String deleteClick(HttpServletRequest request,@RequestParam(value="checkBoxArr[]") List<String> checkBoxArr) throws Exception {
 			
-			String[] checkBoxArr = request.getParameterValues("checkBoxArr");
 			System.out.println(checkBoxArr);
 			
-
+			//String.join사용 안함 -> String names = String.join(",", checkBoxArr);
 			
-			return null;
-	
+			//차단삭제
+			int result = adminService.deleteMemberList(checkBoxArr);
+			
+			//ArrayList<Member> mList = adminService.memberList();
+			//System.out.println("삭제후 list: "+mList);
+			
+			
+			return result>0? "yes" : "no";
+		
 		}
 		
 		
+		
+		//일반회원 한번에 정보변경
+		@ResponseBody
+		@RequestMapping("updateClickMember.ad")
+		public String updateClick(HttpServletRequest request,@RequestParam(value="checkBoxArr[]") List<String> checkBoxArr) throws Exception {
+			
+			System.out.println(checkBoxArr);
+			
+			return null;
+			
+		}
+
+
 }
