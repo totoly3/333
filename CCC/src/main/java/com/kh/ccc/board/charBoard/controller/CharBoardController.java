@@ -23,7 +23,9 @@ import com.google.gson.Gson;
 import com.kh.ccc.board.charBoard.model.service.CharBoardService;
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
+import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
+import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.common.template.Pagenation;
 //악성 글 지우기 
@@ -66,35 +68,46 @@ public class CharBoardController {
 										ArrayList<MultipartFile> upfile,
 										ModelAndView mv,
 										HttpSession session) {
-	
+		
+		//캐릭터 등록
+		Character c = new Character();
+		c.setMemberNo(cb.getBoardWriter());
+		c.setCharName(cb.getCharName());
+		c.setCharContent(cb.getBoardContent());
+		
 		//첨부파일이 여러개 넘어올 수 있기 때문에 ArrayList에 담아주자
 		ArrayList<CharAttach> list = new ArrayList<>();
+	
+		//게시판 첨부파일 이미지 경로
+		String charBoardFilePath = "resources/character/charBoardImg/";
 		
 		for(int i=0; i<upfile.size(); i++) {	
 			CharAttach ca = new CharAttach();
 			//만약 첨부파일이 있다면 (파일명이 빈 문자열이 아니라면)
 			if(!upfile.get(i).getOriginalFilename().equals("")) {
 				//아래의 saveFile메서드 활용
-				String changeName = saveFile(upfile.get(i),session);
+				String boardFileChangeName = saveFile(upfile.get(i), session, charBoardFilePath);
 				//(아래에 이어)8.원본명,서버에 업로드한 경로를 Board객체에 담아주기
 				ca.setOriginName(upfile.get(i).getOriginalFilename());
-				ca.setChangeName("resources/charBoardImg/" + changeName);
+				ca.setChangeName(charBoardFilePath + boardFileChangeName);
 				//level 1번 : 캐릭터 게시판 썸네일 / 이후 카운트되는 level은 sql에서 해당 게시글의 첨부파일 번호를 나타낸다 (파일번호와 다름)
 				ca.setLevel(i+1);
 				ca.setStatus("Y");
-							
+				//게시글 첨부파일 리스트에 담기
 				list.add(ca);
+				
 			}else {
 				//파일이 없는 경우에는 NULL처리한다 (첨부파일 수정시에 사용할 공간 확보)
 				ca.setOriginName(null);
 				ca.setChangeName(null);
 				ca.setLevel(i+1);
 				ca.setStatus("N");
-				
+				//게시글 첨부파일 리스트에 담기
 				list.add(ca);
 			}
 		}
-		int result = boardService.insertCharBoard(cb,list);
+		
+		int result = boardService.insertCharBoard(cb,list,c);
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "게시글 등록 성공!");
@@ -106,7 +119,7 @@ public class CharBoardController {
 	}
 
 	//글 등록시 넘어온 첨부파일 자체를 서버의 폴더에 저장시키는 메소드 (모듈)
-	public String saveFile(MultipartFile upfile, HttpSession session) {
+	public String saveFile(MultipartFile upfile, HttpSession session, String filePath) {
 		
 		//1.원본파일명 반환
 		String originName = upfile.getOriginalFilename();
@@ -124,7 +137,7 @@ public class CharBoardController {
 		String changeName = currentTime + ranNum + ext;
 		
 		//6.업로드 하고자 하는 실제 위치 경로 지정해주기 (실제 경로)
-		String savePath = session.getServletContext().getRealPath("/resources/charBoardImg/");
+		String savePath = session.getServletContext().getRealPath(filePath);
 		
 		//7.경로와 수정파일명 합쳐서 파일을 업로드해주기
 		try {
@@ -151,7 +164,7 @@ public class CharBoardController {
 		if(result != 0) {
 			CharBoard cb = boardService.selectBoard(bno);
 			ArrayList<CharAttach> caList = boardService.selectAttach(bno);
-			
+		
 			mv.addObject("cb", cb).addObject("caList", caList).setViewName("board/charBoard/charBoardDetailView");
 		}else {
 			mv.addObject("errorMsg", "게시글을 조회할 수 없습니다.").setViewName("common/errorPage");
@@ -186,6 +199,8 @@ public class CharBoardController {
 		ArrayList<CharAttach> caList = boardService.selectAttach(boardNo);
 		//수정된 파일 내용을 담기 위한 리스트 생성
 		ArrayList<CharAttach> newCaList = new ArrayList<>();
+		//게시판 첨부파일 이미지 경로
+		String charBoardFilePath = "resources/character/charBoardImg/";
  		
 		//만약 새로운 첨부파일이 하나라도 있다면 (캐릭터 게시판은 썸네일때문에 없을 수 없지만..)
 		if(!upfile.get(0).getOriginalFilename().equals("")) {
@@ -200,10 +215,10 @@ public class CharBoardController {
 				CharAttach ca = new CharAttach();
 				//첨부파일 등록 가능 개수 총 4개를 모두 넣지 않을 수 있기 때문에 조건 처리 (파일이 없으면 새로 생성해서 넣기)
 				if(!upfile.get(i).getOriginalFilename().equals("")) {
-					String changeName = saveFile(upfile.get(i),session);
+					String changeName = saveFile(upfile.get(i), session, charBoardFilePath);
 					ca.setRefBno(boardNo);
 					ca.setOriginName(upfile.get(i).getOriginalFilename());
-					ca.setChangeName("resources/charBoardImg/" + changeName);
+					ca.setChangeName(charBoardFilePath + changeName);
 					//level 1번 : 캐릭터 게시판 썸네일 / 이후 카운트되는 level(2~4)은 sql에서 해당 게시글의 첨부파일 번호를 나타낸다 (파일번호와 다름)
 					ca.setLevel(i+1);
 					ca.setStatus("Y");
@@ -232,7 +247,6 @@ public class CharBoardController {
 		else {
 			mv.addObject("errorMsg", "게시글 수정에 실패했습니다.").setViewName("common/errorPage");
 		}
-		
 		return mv;
 	}
 	
@@ -242,7 +256,9 @@ public class CharBoardController {
 							 ,HttpSession session
 							 ,Model model) {
 		
+		//JSP에서 넘긴 글번호의 첨부파일 리스트를 받아오자
 		ArrayList<CharAttach> caList = boardService.selectAttach(bno);
+		//게시글 번호의 글과 첨부파일 삭제하는 메소드
 		int result = boardService.deleteBoard(bno);
 		
 		if(result != 0) {
@@ -258,8 +274,41 @@ public class CharBoardController {
 			model.addAttribute("errorMsg", "게시글 삭제에 실패했습니다.");
 			return "common/errorPage";
 		}
-		
 		return "redirect:/list.ch";
+	}
+	
+	//좋아요 조회
+	@ResponseBody
+	@RequestMapping(value="selectLike.ch",produces="text/html; charset=UTF-8")
+	public String selectLike(CharLike cl) {
+		
+		CharLike clResult = boardService.selectLike(cl);
+		
+		return clResult.getCharLike()==0 ? "NNNNN" : "NNNNY";
+		
+	}
+	
+	//좋아요/좋아요 취소 (캐릭터)
+	@ResponseBody
+	@RequestMapping(value="insertLike.ch",produces="text/html; charset=UTF-8")
+	public String insertLike(CharLike cl) {
+		
+		//좋아요 데이터가 있는지 조회
+		CharLike clSelect = boardService.selectLike(cl);
+		
+		//좋아요가 없다면 좋아요 등록
+		if((clSelect.getCharLike() == 0)) {
+			//TB_CHARACTER_LIKE / TB_CHARACTER 테이블에 좋아요 추가
+			int insertResult = boardService.insertLike(cl);
+			
+			return insertResult != 0 ? "NNNNY" : "NNNNN";
+		}
+		else {//좋아요가 있다면 좋아요 취소
+			//TB_CHARACTER_LIKE / TB_CHARACTER 테이블에 좋아요 삭제
+			int deleteResult = boardService.deleteLike(cl);
+			
+			return deleteResult != 0 ? "NNNNN" : "NNNNY";
+		}
 	}
 	
 	//댓글 등록
@@ -298,7 +347,7 @@ public class CharBoardController {
 	public String insertReplyAnswer(CharReply cr, HttpSession session) {
 			
 		//int reWriter = session.getAttribute("회원번호"); //(ajax에서 넘어옴)
-		int number = boardService.maxNum();   //새 댓글 번호 생성, 참조댓글번호(reGroupNo)는 부모댓글번호(reNo)와 같다 (시퀀스가 필요없다)
+		int number = boardService.replyMaxNum();   //새 댓글 번호 생성, 참조댓글번호(reGroupNo)는 부모댓글번호(reNo)와 같다 (시퀀스가 필요없다)
 		
 		int reStep = 0, reLevel = 0; 		  //대댓글의 순서와 계층은 0으로 기본 세팅
 		int refBno = cr.getRefBno(); 		  //댓글을 단 게시글 번호 (ajax에서 넘어옴)

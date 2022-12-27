@@ -8,7 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
+import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
+import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.common.model.vo.PageInfo;
 
 @Repository
@@ -28,13 +30,21 @@ public class CharBoardDao {
 		//매개변수 3개짜리 selectList사용
 		return (ArrayList)sqlSession.selectList("charBoardMapper.selectList", null, rowBounds);
 	}
-	//게시글 등록 (글)
+	//1.게시글 등록 (글)
 	public int insertBoard(SqlSessionTemplate sqlSession, CharBoard cb) {
 		return sqlSession.insert("charBoardMapper.insertBoard", cb);
 	}
-	//게시글 첨부파일 등록
+	//2.게시글 등록 (첨부파일)
 	public int insertAttach(SqlSessionTemplate sqlSession, ArrayList<CharAttach> list) {
 		return sqlSession.insert("charBoardMapper.insertAttach", list);
+	}
+	//3.캐릭터 번호 생성
+	public int characterMaxNum(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("charBoardMapper.characterMaxNum");
+	}
+	//4.게시글 등록 (캐릭터)
+	public int insertCharacter(SqlSessionTemplate sqlSession, Character c) {
+		return sqlSession.insert("charBoardMapper.insertCharacter", c);
 	}
 	//게시글 조회수 증가
 	public int increaseCount(SqlSessionTemplate sqlSession, int bno) {
@@ -81,8 +91,8 @@ public class CharBoardDao {
 		return sqlSession.update("charBoardMapper.deleteReply", cr);
 	}
 	//댓글 번호 생성
-	public int maxNum(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("charBoardMapper.maxNum");
+	public int replyMaxNum(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("charBoardMapper.replyMaxNum");
 	}
 	//대댓글 (부모댓글의 그룹번호와 계층 알아오기)
 	public CharReply replySelect(SqlSessionTemplate sqlSession, int reNo) {
@@ -95,5 +105,33 @@ public class CharBoardDao {
 	//대댓글 (댓글의 계층을 업데이트하기 위한 로직)
 	public void updateStep(SqlSessionTemplate sqlSession, CharReply cr) {
 		sqlSession.update("charBoardMapper.updateStep", cr);
+	}
+	//1.좋아요 조회(TB_CHARACTER_LIKE)
+	public CharLike selectLike(SqlSessionTemplate sqlSession, CharLike cl) {	
+		return sqlSession.selectOne("charBoardMapper.selectLike", cl);
+	}
+	//2.좋아요 추가(CHARACTER_LIKE)
+	public int insertTbCharLike(SqlSessionTemplate sqlSession, CharLike cl) {
+		return sqlSession.insert("charBoardMapper.insertTbCharLike", cl);
+	}
+	//3.좋아요 추가 (CHARACTER)
+	public int insertTbChar(SqlSessionTemplate sqlSession, CharLike cl) {
+		return sqlSession.update("charBoardMapper.insertTbChar", cl);
+	}
+	//4.좋아요 추가 (CHARACTER_BOARD)
+	public int insertTbCharBoard(SqlSessionTemplate sqlSession, CharLike cl) {
+		return sqlSession.update("charBoardMapper.insertTbCharBoard", cl);
+	}
+	//1.좋아요 삭제 (CHARACTER_LIKE)
+	public int deleteTbCharLike(SqlSessionTemplate sqlSession, CharLike cl) {
+		return sqlSession.delete("charBoardMapper.deleteTbCharLike", cl);
+	}
+	//2.좋아요 삭제 (CHARACTER)
+	public int deleteTbChar(SqlSessionTemplate sqlSession, CharLike cl) {
+		return sqlSession.update("charBoardMapper.deleteTbChar", cl);
+	}
+	//3.좋아요 삭제 (CHARACTER_BOARD)
+	public int deleteTbCharBoard(SqlSessionTemplate sqlSession, CharLike cl) {
+		return sqlSession.update("charBoardMapper.deleteTbCharBoard", cl);
 	}
 }
