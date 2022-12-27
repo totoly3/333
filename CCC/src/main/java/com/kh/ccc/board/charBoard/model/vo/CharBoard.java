@@ -16,7 +16,7 @@ public class CharBoard {
 	private String	charName;		//캐릭터 이름
 	private int 	boardWriter;	//작성자
 	private String 	boardTitle;		//글 제목
-	private String 	boardContent;	//글 내용
+	private String 	boardContent;	//캐릭터 설명
 	private int 	views;			//조회수
 	private int 	like;			//좋아요
 	private Date	createDate;		//작성날짜

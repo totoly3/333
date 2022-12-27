@@ -53,7 +53,7 @@
 					<td colspan="3"><input type="text" name="charName" required></td>
 				</tr>
 				<tr>
-					<th>내용</th>
+					<th>캐릭터 설명</th>
 					<td colspan="3"><textarea name="boardContent" style="resize: none;" cols="30" rows="10" required></textarea></td>
 				</tr>
 				<tr>
