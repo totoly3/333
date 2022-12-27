@@ -16,9 +16,9 @@
 
         #jini2{
             width:100%;
-            z-index: 8;
             position: relative;
             top: -205px;
+            position:relative;z-index:1
         }
 
 

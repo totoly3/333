@@ -169,8 +169,6 @@
             		</c:if>
             </form>
       </div>
-   </div>
-   
 		<!--아래는 댓글 -->
             <table id="replyArea" class="table" align="center">
                 <thead>
@@ -191,9 +189,9 @@
        						
                 </tbody>
             </table>
-   
+            
    <!-- 댓글 수정 모달 -->
-		<div class="modal fade" id="updateReply" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="updateReply1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -203,7 +201,7 @@
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		      	<textarea id="updateContent" rows="2" cols="49.8"
+		      	<textarea id="frUpDateContent" rows="2" cols="49.8"
 									style="resize: none;"></textarea>
 					<div id="reply_cnt">(0 / 50)</div>
 		      </div>
@@ -214,17 +212,20 @@
 		    </div>
 		  </div>
 		</div>
+   </div>
+   
+   
    
    
    
      <script >
 //  	     아래는 체크박스 (전체선택)
-// 	      function selectAll(selectAll)  {
-// 		  const checkboxes = document.getElementsByName('all');
+	      function selectAll(selectAll)  {
+		  const checkboxes = document.getElementsByName('all');
 		  
-// 				  checkboxes.forEach((checkbox) => {checkbox.checked = selectAll.checked;}
-// 				  							)
-// 										}
+				  checkboxes.forEach((checkbox) => {checkbox.checked = selectAll.checked;}
+				  							)
+										}
      
 	     function postFormSubmit(num){
 				console.log(num);
@@ -255,6 +256,10 @@
 									+"<th>"+result[i].frWriter+"</th>"
 									+"<td>"+result[i].frContent+"</td>"
 									+"<td>"+result[i].frCreateDate+"</td>"	
+									+"<td>"
+									+ "<button class='btn btn-outline-primary' data-toggle='modal' data-target='#updateReply'" //data-target을 사용하면 뒤에오는 값을 사용한
+      							    + "id='fNo' value=+"+result[i].fNo+">수정</button>"
+      							 	+ "<button onclick='return deleteReply("+result[i].fNo+")' class='btn btn-outline-danger'>삭제</button></td>"     							   
 									+"</tr>";
 							}	
 					
@@ -297,8 +302,16 @@
    				 	$vali.val("");
    	    		}
     		}
+    	//아래는 댓글 수정
+    		function UpdateReply(){
+    			$.ajax({
+    				url : "updateFrReply.fr",
+    				data : frUpDateContent : $("#frUpDateContent"),
+    					   frNo : 
+    					   
+    			})
+    		} 	
     
-     
     </script>
 </body>
 </html>
