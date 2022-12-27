@@ -27,7 +27,6 @@
 	
 	
 	<select id="memberList" resultMap="memberResultSet">
-	
 				SELECT 
 				M_NO,
 				M_ID,
@@ -38,7 +37,6 @@
 		FROM TB_MEMBER 
 		WHERE M_STATUS = 'Y'
 		ORDER BY M_NO ASC
-	
 	</select>
   
   

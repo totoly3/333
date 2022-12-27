@@ -14,6 +14,9 @@
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharAttach" alias="charAttach"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharReply" alias="charReply"/>
 		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoardAttach" alias="frAttBoard"/>
+		<!-- 마이페이지-->
+		<typeAlias type="com.kh.ccc.mypage.model.vo.MyCharacter" alias="myCharacter"/>
+		<typeAlias type="com.kh.ccc.mypage.model.vo.MyCharacterAttach" alias="myCharacterAttach"/>
 	</typeAliases>
 	
 	<mappers>
@@ -21,6 +24,7 @@
 		<mapper resource="/mappers/admin-mapper.xml"/>
 		<mapper resource="/mappers/charBoard/charBoard-mapper.xml"/>
 		<mapper resource="/mappers/member-mapper.xml"/>
+		<mapper resource="/mappers/myPage-mapper.xml"/>
 	</mappers>
 	
 </configuration>

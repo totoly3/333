@@ -13,7 +13,7 @@
 	</select>
   
   
-  		<!--//게시글 조회 메소드  게시글 전체 조회1 -->
+    <!--//게시글 조회 메소드  게시글 전체 조회1 -->
   	<resultMap type="frBoard" id="frBoardResultSet">
   	<result column="F_NO" property="fNo"/>
    	<result column="F_WRITER" property="fWriter"/>
