@@ -33,7 +33,7 @@
     </style>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+	<jsp:include page="/WEB-INF/views/common/header2.jsp"/>
 	
 	<div class="content">
         <br><br>
@@ -42,14 +42,18 @@
             <br>
 
         <form action="insert.ch" id="enroll-form" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="" value="게시글작성자번호">
+			<input type="hidden" name="boardWriter" value="6">
 			<table align="center">
 				<tr>
 					<th width="100">제목</th>
 					<td colspan="3"><input type="text" name="boardTitle" required></td>
 				</tr>
 				<tr>
-					<th>내용</th>
+					<th width="100">캐릭터 이름</th>
+					<td colspan="3"><input type="text" name="charName" required></td>
+				</tr>
+				<tr>
+					<th>캐릭터 설명</th>
 					<td colspan="3"><textarea name="boardContent" style="resize: none;" cols="30" rows="10" required></textarea></td>
 				</tr>
 				<tr>
@@ -68,7 +72,7 @@
 
 			<!-- 파일 첨부 영역 -->
 			<div id="file-area" align="center">
-				<input type="file" id="file1" name="upfile" onchange="loadImg(this,1);" required> <!--대표이미지라서 필수!-->
+				<input type="file" id="file1" name="upfile" onchange="loadImg(this,1);" required\> <!--대표이미지라서 필수!-->
 				<input type="file" id="file2" name="upfile" onchange="loadImg(this,2);">
 				<input type="file" id="file3" name="upfile" onchange="loadImg(this,3);">
 				<input type="file" id="file4" name="upfile" onchange="loadImg(this,4);">

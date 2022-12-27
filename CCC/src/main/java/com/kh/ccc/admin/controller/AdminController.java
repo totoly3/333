@@ -1,54 +1,51 @@
 package com.kh.ccc.admin.controller;
 
-import java.awt.Color;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Logger;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.hssf.util.HSSFColor.HSSFColorPredefined;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.mybatis.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.ccc.admin.model.service.AdminService;
-import com.kh.ccc.admin.model.vo.Member;
+import com.kh.ccc.admin.model.vo.Admin;
+import com.kh.ccc.member.model.vo.Member;
+
 
 
 @Controller
 public class AdminController {
 	
-	@Autowired
-	private AdminService adminService;
+		@Autowired
+		private AdminService adminService;
 	
 	
-	
-	@RequestMapping("mainAdmin.ad")
-	public String mainAdmin() {
+		//회원관리로 전달
+		@RequestMapping("mainAdmin.ad")
+		public String mainAdmin() {
 		
 		return "admin/mainAdmin";
 		
-	}
+		}
 	
 	
-	
-	@RequestMapping("member.ad")
-	public String memberList(Model model) {
+		//리스트 조회 + 회원수
+		@RequestMapping("member.ad")
+		public String memberList(Model model) {
 		
 		//회원수
 		int listCount = adminService.selectListCount();
@@ -62,12 +59,12 @@ public class AdminController {
 		
 		return "admin/memberAdmin";
 		
-	}
+		}
 	
 	
-	//엑셀
-	@PostMapping("excelDownload.ad")
-	public void textExcel(HttpServletResponse response) throws IOException {
+		//엑셀
+		@PostMapping("excelDownload.ad")
+		public void textExcel(HttpServletResponse response) throws IOException {
 
 		Workbook workbook= new SXSSFWorkbook();
 		Sheet sheet = workbook.createSheet("회원리스트");
@@ -114,13 +111,12 @@ public class AdminController {
 	    Cell bodyCell5 = bodyRow.createCell(4);
 	    bodyCell5.setCellValue(m.getMgNo());
 	    Cell bodyCell6 = bodyRow.createCell(5);
-	    bodyCell6.setCellValue(m.getmPointNumber());
+	    bodyCell6.setCellValue(m.getmPoint());
 		
 		}
-		
-		
+
 	 	response.setContentType("ms-vnd/excel");
-        response.setHeader("Content-Disposition", "attachment;filename=CCC_memberList.xls");
+        response.setHeader("Content-Disposition", "attachment;filename=CCC_memberList.xlsx");
  
         try {
 			workbook.write(response.getOutputStream());
@@ -136,8 +132,51 @@ public class AdminController {
 		}
     
 	
-	}
+		}
 		
+		
+		//관리자리스트 조회 (특수관리자페이지)
+		@RequestMapping("adminList.ad")
+		public String selectAdmin(Model model) {
+			
+		ArrayList<Admin> aList = adminService.adminList();
+			
+		model.addAttribute("aList",aList);	
+			
+		return "admin/selectAdmin";
 
+		}
+		
 	
+		//관리자 상세조회 (특수관리자페이지)
+		@RequestMapping("adminDetail.ad")
+		public String detailAdmin(int ano,Model model) {
+			
+			//System.out.println("번호는:"+ano);
+			
+			Admin a = adminService.detailAdmin(ano);
+			
+			model.addAttribute("a",a);	
+			
+			return "admin/testDetail";
+
+			
+		}
+		
+		
+		//일반회원 check회원들 삭제
+		@ResponseBody
+		@RequestMapping(value="deleteClickMember.ad", produces="application/json;charset=UTF-8")
+		public String deleteClick(HttpServletRequest request,ModelMap model) throws Exception {
+			
+			String[] checkBoxArr = request.getParameterValues("checkBoxArr");
+			System.out.println(checkBoxArr);
+			
+
+			
+			return null;
+	
+		}
+		
+		
 }

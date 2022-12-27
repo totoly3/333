@@ -2,55 +2,44 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
   <mapper namespace="adminMapper">
-  
-  
-  	<resultMap type="adminMember" id="memberResultSet">
-		<result column="M_NO" property="mNo" />
-		<result column="M_ID" property="mId" />
-		<result column="M_PWD" property="mPwd" />
-		<result column="M_NAME" property="mName" />
-		<result column="MG_NO" property="mgNo" />
-		<result column="M_EMAIL" property="mEmail" />
-		<result column="M_PHONE" property="mPhone" />
-		<result column="M_ADDRESS" property="mAddress" />
-		<result column="M_GENDER" property="mGender" />
-		<result column="M_AGE" property="mAge" />
-		<result column="M_CREATE_DATE" property="mCreateDate" />
-		<result column="M_UPDATE_DATE" property="mUpdateDate" />
-		<result column="M_DELETE_DATE" property="mDeleteDate" />
-		<result column="M_POINT" property="mPointNumber" />
-		<result column="M_STATUS" property="mStatus" />
+  	<resultMap type="admin" id="adminResultSet">
+		<result column="A_NO" property="aNo" />
+		<result column="AG_NO" property="aGno" />
+		<result column="A_ID" property="aId" />
+		<result column="A_PWD" property="aPwd" />
+		<result column="A_NAME" property="aName" />
+		<result column="A_RESIDENT_NO" property="aResidentNo" />
+		<result column="A_EMAIL" property="aEmail" />
+		<result column="A_PHONE" property="aPhone" />
+		<result column="A_HIRE_DATE" property="aHireDate" />
+		<result column="A_MODIFY_DATE" property="aModifyDate" />
+		<result column="A_QUIT_DATE" property="aQuitDate" />
+		<result column="A_STATUS" property="aStatus" />
 	</resultMap>
 	
 	
+	<!-- 일반관리자리스트 조회 (특수관리자페이지) -->
+	<select id="adminList" resultMap="adminResultSet">
 	
-	<select id="memberList" resultMap="memberResultSet">
-				SELECT 
-				M_NO,
-				M_ID,
-			    M_NAME,
-			    MG_NO,
-			    M_GENDER,
-			    M_POINT
-		FROM TB_MEMBER 
-		WHERE M_STATUS = 'Y'
-		ORDER BY M_NO ASC
-	</select>
-  
-  
-  
-  	
-	<select id="selectListCount" resultType="_int">
-	
-		SELECT COUNT(*)
-		FROM TB_MEMBER
-		WHERE M_STATUS = 'Y'
+		SELECT *
+		FROM TB_ADMIN
+		WHERE A_STATUS = 'Y'
+		ORDER BY A_NO ASC
 	
 	</select>
 	
 	
-  
-  
+	
+	<!-- 일반관리자 상세 조회 (특수관리자페이지) -->
+	<select id="detailAdmin" resultMap="adminResultSet">
+	
+		SELECT *
+		FROM TB_ADMIN
+		WHERE A_NO=#{aNo}
+		AND A_STATUS='Y'
+	
+	</select>
+	
+	
   </mapper>

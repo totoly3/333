@@ -1,20 +1,14 @@
 package com.kh.ccc.admin.model.service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.ccc.admin.model.dao.AdminDao;
-import com.kh.ccc.admin.model.vo.Member;
+import com.kh.ccc.admin.model.vo.Admin;
+import com.kh.ccc.member.model.vo.Member;
 
 
 @Service
@@ -49,6 +43,29 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 
+	
+	//관리자리스트 조회 (특수관리자페이지)
+	@Override
+	public ArrayList<Admin> adminList() {
+		
+		ArrayList<Admin> aList = adminDao.adminList(sqlSession);
+		
+		return aList;
+	}
+
+
+
+	//관리자 상세조회 (특수관리자페이지)
+	@Override
+	public Admin detailAdmin(int ano) {
+		
+		Admin a =adminDao.detailAdmin(sqlSession,ano);
+		
+		return a;
+	}
+
+
+	
 
 
 }
