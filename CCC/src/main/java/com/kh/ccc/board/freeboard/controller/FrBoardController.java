@@ -61,7 +61,7 @@ public class FrBoardController {
 //	
 			return mv;
 		}
-		/////////////////
+		/////////////////상세보기 
 		//아래는 게시물 상세보기 
 		@RequestMapping("detail.fbo")
 		public ModelAndView boardDetailView(int fno,ModelAndView mv,HttpSession session) {
