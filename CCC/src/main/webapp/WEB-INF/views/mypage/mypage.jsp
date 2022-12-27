@@ -212,9 +212,10 @@ Coded by www.creative-tim.com
                       <i class="nc-icon nc-money-coins text-success"></i>
                     </div>
                   </div>
-                  <div class="col-7 col-md-8" onclick="location.href='mychar.me'">
+                  <div class="col-7 col-md-8" onclick="location.href='mychar3.my'">
                     <div class="numbers">
-                      <p class="card-category" >내 캐릭터</p>
+                      <p class="card-category">내 캐릭터</p>
+                      <a href="chardetail.my?cNo=20"  style="font-size:medium;" >특정캐릭터 상세보기</a>
                       <p class="card-title">$ 1,345
                       <p>
                     </div>
@@ -239,9 +240,9 @@ Coded by www.creative-tim.com
                       <i class="nc-icon nc-vector text-danger"></i>
                     </div>
                   </div>
-                  <div class="col-7 col-md-8">
+                  <div class="col-7 col-md-8" onclick="location.href='list.mychar'">
                     <div class="numbers">
-                      <p class="card-category">투표내역</p>
+                      <p class="card-category">캐릭터 목록보기</p>
                       <p class="card-title">23
                       <p>
                     </div>
@@ -287,43 +288,137 @@ Coded by www.creative-tim.com
         </div>
         <div class="row">
           <div class="col-md-12">
+            
             <div class="card ">
+            
+             <br>
+             <h3 style="color:green;">주문내역</h3>
+              
+                <table class="table">
+				  <thead>
+				    <tr>
+				      <th scope="col">#</th>
+				      <th scope="col">주문번호</th>
+				      <th scope="col">주문상품</th>
+				      <th scope="col">Handle</th>
+				      <th>하하</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				    <tr>
+				      <th scope="row">1</th>
+				      <td>Mark</td>
+				      <td>Otto</td>
+				      <td>@mdo</td>
+				      <td>하하</td>
+				    </tr>
+				    <tr>
+				      <th scope="row">2</th>
+				      <td>Jacob</td>
+				      <td>Thornton</td>
+				      <td>@fat</td>
+				      <td>하하</td>
+				    </tr>
+				    <tr>
+				      <th scope="row">3</th>
+				      <td>Larry</td>
+				      <td>the Bird</td>
+				      <td>@twitter</td>
+				      <td>하하</td>
+				    </tr>
+				  </tbody>
+				</table>
+            </div>
+            
+          
+            
+             <div class="card ">
+             <h3 style="color:green;">영역1-1</h3>
+			 <table class="table">
+			  <thead class="thead-dark">
+			    <tr>
+			      <th scope="col">#</th>
+			      <th scope="col">주문번호</th>
+			      <th scope="col">주문 상품 이미지</th>
+			      <th scope="col">주문상품</th>
+			      <th scope="col">주문일자</th>
+			      <th scope="col">총가격</th>
+			      <th scope="col">상태</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			    <tr>
+			      <!-- 향상된for문으로 주문리스트 출력--> 
+			      <th scope="row">1</th>
+			      <td>Mark</td>
+                  <%--style="background-image:url(${changeName}); " 주문리스트의 사진경로 /이미지 임의로 넣어줌--%>
+			      <td><div class="img" style="background-image:url('/resources/myPage/myChar/2022122619310041802.jpg');">이미지</div></td>
+			      <td>Otto</td>
+			      <td>@mdo</td>
+			      <td>@mdo</td>
+			      <td>@mdo</td>
+			    </tr>
+			    <tr>
+			      <th scope="row">2</th>
+			      <td>Jacob</td>
+			       <td>ㅇ</td>
+			      <td>Thornton</td>
+			      <td>@fat</td>
+			      <td>@mdo</td>
+			      <td>@mdo</td>
+			    </tr>
+			    <tr>
+			      <th scope="row">3</th>
+			      <td>Larry</td>
+			      <td>ㅇ</td>
+			      <td>the Bird</td>
+			      <td>@twitter</td>
+			      <td>@mdo</td>
+			      <td>@mdo</td>
+			    </tr>
+			  </tbody>
+			</table>
+			
+            </div>
+            
+              <div class="card ">
+             <br>
+             <h3 style="color:green;">영역1-2</h3>
               <div class="card-header ">
-                <h5 class="card-title">Users Behavior</h5>
-                <p class="card-category">24 Hours performance</p>
+                
+                
+                <br>
+                <br>
+                <br>
               </div>
               <div class="card-body ">
-                <canvas id=chartHours width="400" height="100"></canvas>
+               
               </div>
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-history"></i> Updated 3 minutes ago
                 </div>
               </div>
             </div>
+            
+            
+            
           </div>
         </div>
         <div class="row">
           <div class="col-md-4">
             <div class="card ">
               <div class="card-header ">
-                <h5 class="card-title">Email Statistics</h5>
-                <p class="card-category">Last Campaign Performance</p>
+                <h5 class="card-title" style="color:blue" >영역2</h5>
               </div>
               <div class="card-body ">
                 <canvas id="chartEmail"></canvas>
               </div>
               <div class="card-footer ">
                 <div class="legend">
-                  <i class="fa fa-circle text-primary"></i> Opened
-                  <i class="fa fa-circle text-warning"></i> Read
-                  <i class="fa fa-circle text-danger"></i> Deleted
-                  <i class="fa fa-circle text-gray"></i> Unopened
                 </div>
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-calendar"></i> Number of emails sent
                 </div>
               </div>
             </div>
@@ -331,20 +426,19 @@ Coded by www.creative-tim.com
           <div class="col-md-8">
             <div class="card card-chart">
               <div class="card-header">
-                <h5 class="card-title">NASDAQ: AAPL</h5>
-                <p class="card-category">Line Chart with Points</p>
+               
+               
               </div>
               <div class="card-body">
-                <canvas id="speedChart" width="400" height="100"></canvas>
+               
               </div>
               <div class="card-footer">
                 <div class="chart-legend">
-                  <i class="fa fa-circle text-info"></i> Tesla Model S
-                  <i class="fa fa-circle text-warning"></i> BMW 5 Series
+                 
                 </div>
                 <hr />
                 <div class="card-stats">
-                  <i class="fa fa-check"></i> Data information certified
+                  <h3 style="color:red">영역3</h3>
                 </div>
               </div>
             </div>
@@ -363,7 +457,6 @@ Coded by www.creative-tim.com
             </nav>
             <div class="credits ml-auto">
               <span class="copyright">
-                ©
                 <script>
                   document.write(new Date().getFullYear())
                 </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
