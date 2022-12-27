@@ -249,7 +249,7 @@
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-area me-1"></i>
-                                        Area Chart Example
+                                        	월별 가입자수
                                     </div>
                                     <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                                 </div>
@@ -258,7 +258,7 @@
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-bar me-1"></i>
-                                    	   월별 방문자수
+                                    	   월별 캐릭터수 or 굿즈판매량
                                     </div>
                                     <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                                 </div>
@@ -266,17 +266,15 @@
                         </div>
                         <div class="card mb-4">
                             <div class="card-header">
-                                <i class="fas fa-table me-1"></i>회원리스트
-                               
                                	<!-- 삭제버튼 구현 --> 
                                	<div id="deleteKey" style="float:right">
-	                            <a class="btn btn-outline-secondary"  onclick="deleteClick()">삭제</a>
-                 				<a class="btn btn-outline-secondary"  id="checkAll">전체선택</a>
-                 				<a class="btn btn-outline-secondary"  id="unCheckAll">전체해제</a>
+                 				<a class="btn btn-outline-dark"  id="checkAll">전체선택</a>
+                 				<a class="btn btn-outline-dark"  id="unCheckAll">전체해제</a>
+                 				<a class="btn btn-secondary"  onclick="deleteClick()">선택회원 차단</a>
                  				</div>
                                
                                 <form action="excelDownload.ad" method="post">
-                                	<input type="submit" value="EXCEL 다운로드">	
+                                	<input type="submit" class="btn btn-success" value="EXCEL 다운로드">	
 								</form>
                               </div>
 	                            <div class="card-body">
@@ -284,13 +282,16 @@
 	                                
 	                                    <thead>
 	                                        <tr>
-	                                            <th>No.</th>
+	                                            <th><input type="checkbox"></th>
 	                                            <th>회원번호</th>
 	                                            <th>회원아이디</th>
 	                                            <th>회원이름</th>
 	                                            <th>성별</th>
+	                                            <th>나이</th>
+	                                            <th>이메일</th>
 	                                            <th>회원등급</th>
 	                                            <th>회원점수</th>
+	                                            <th>가입일</th>
 	                                        </tr>
 	                                    </thead>
 	          			   
@@ -298,11 +299,13 @@
 			          			<tbody>	
 				                   <c:forEach var="m" items="${mList}">
 										<tr>
-											<td><input type="checkbox" name="check" value="${m.mName }"></td> 
+											<td><input type="checkbox" name="check" id="multiCheck" value="${m.mName }"></td> 
 											<td>${m.mNo }</td>
 											<td>${m.mId }</td>
 											<td>${m.mName }</td>
-											<td>${m.mGender }</td>	
+											<td>${m.mGender }</td>
+											<td>${m.mAge }</td>	
+											<td>${m.mEmail }</td>
 											
 											<c:choose>
 												<c:when test="${m.mgNo eq 1}">
@@ -321,7 +324,8 @@
 					                			</c:otherwise>
 											</c:choose>
 											
-											<td>${m.mPoint }</td> 
+											<td>${m.mPoint }</td>
+											<td>${m.mCreateDate }</td>
 										</tr>
 									</c:forEach>
 			         			</tbody>
@@ -362,41 +366,106 @@
         
         <script>
         
-     // 체크박스 선택 후 삭제 버튼 클릭시 이벤트 
+     	//체크박스 선택 후 삭제 버튼 클릭시 이벤트 (회원차단기능)
         function deleteClick(){
+    	 
 			var checkBoxArr = []; 
 			$("input:checkbox[name='check']:checked").each(function() {
 				checkBoxArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
           		console.log(checkBoxArr);
 			});
-			//여기에 작성. 다 추가된 배열로 checkBoxArr
+			
+			//ajax 이용
+			var delConfirm=confirm("선택한 회원을 차단 하시겠습니까?");
 
+					if(delConfirm==true){
+			
+			
 	          $.ajax({
-	              url: "deleteClickMember.ad",
-	              data: {checkBoxArr : checkBoxArr},   // check seq 값을 가지고 있음.
-	              success: function(result){
-	              	console.log(result);
-	              },
-	              error: function() {
-	            	  console.log("통신실패");
-	              }  
+		              url: "deleteClickMember.ad",
+		              data: {checkBoxArr : checkBoxArr},   // check seq 값을 가지고 있음.
+		              success: function(result){
+		              	console.log(result);
+		          
+		              	if(result == "yes"){
+	    					alert("회원이 차단되었습니다");
+	    					$("#multiCheck").val("");
+		    				location.href="member.ad";
+	    					
+	    				}else{
+	    					alert("회원 차단 실패하였습니다");
+	    				}
+		              	
+		              },
+		              error: function() {
+		            	  console.log("통신실패");
+		              }  
 	           });
         
-     
+			}
      }
      
-     
-        $(document).ready(function(){ //체크박스 전체선택,전체해제
+      //체크박스 전체선택,전체해제
+        $(document).ready(function(){
         
             $("#checkAll").click(function() {
                 $("input[name=check]:checkbox").prop("checked",true); // name이 chkbox인 input 타입들의 checked값을 "true"로 바꿈
             });
-           
+            
             $("#unCheckAll").click(function() {
                 $("input[name=check]:checkbox").prop("checked",false); // name이 chkbox인 input 타입들의 checked값을 "false"로 바꿈
             });
         });
      
+      
+      
+      
+      
+      
+      
+      	//체크박스 선택 후 정보변경(포인트변경)
+        function updateClick(){
+       	 
+			var checkBoxArr = []; 
+			$("input:checkbox[name='check']:checked").each(function() {
+				checkBoxArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
+          		console.log(checkBoxArr);
+          		console.log(checkBoxArr.push($(this).parent().parent().children().eq(7).text()));
+			});
+			
+			//ajax 이용
+			var updateConfirm=confirm("선택한 회원의 정보를 변경하시겠습니까?");
+
+					if(updateConfirm==true){
+			
+			
+	          $.ajax({
+		              url: "updateClickMember.ad",
+		              data: {checkBoxArr : checkBoxArr}, 
+		              success: function(result){
+		              	console.log(result);
+		          
+		              	if(result == "yes"){
+	    					alert("회원 정보가 변경되었습니다");
+	    					$("#multiCheck").val("");
+		    				location.href="member.ad";
+	    					
+	    				}else{
+	    					alert("회원 정보 변경 실패하였습니다");
+	    				}
+		              	
+		              },
+		              error: function() {
+		            	  console.log("통신실패");
+		              }  
+	           });
+        
+			}
+     }
+      
+      
+      
+      
         
         </script>
         

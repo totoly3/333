@@ -1,6 +1,7 @@
 package com.kh.ccc.admin.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
@@ -49,6 +50,14 @@ public class AdminDao {
 		
 	
 	}
+
+	//일반회원 check회원들 차단삭제
+	public int deleteMemberList(SqlSessionTemplate sqlSession, List<String> checkBoxArr) {
+		
+		
+		return sqlSession.update("memberMapper.deleteMemberList", checkBoxArr);
+	}
+
 
 	
 }
