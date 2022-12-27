@@ -415,6 +415,28 @@ public class CharBoardController {
 		return (result != 0) ? "NNNNY" : "NNNNN";
 	}
 	
+	//비속어 필터링
+	@ResponseBody
+	@RequestMapping(value="badLanguage.ch",produces="text/html; charset=UTF-8")
+	public String badLanguage(CharBoard cb) {
+		
+		String[] badLanguage = {"씨발","저발"};
+		
+		System.out.println(badLanguage[0]);
+		System.out.println(cb.getBoardTitle());
+		
+		for(int i=0; i<badLanguage.length; i++) {
+			if( cb.getBoardTitle().equals(badLanguage[i]) ){
+				return "NNNNY"; 
+			}else if( cb.getCharName().equals(badLanguage[i]) ) {
+				return "NNNNY";
+			}else if( cb.getBoardContent().equals(badLanguage[i]) ) {
+				return "NNNNY";
+			}
+		}
+		
+		return "NNNNN";
+	}
 	
 	
 	
