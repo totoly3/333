@@ -82,7 +82,7 @@ public class FrBoardController {
 		
 		return mv;
 		}
-		////
+		//////.//글쓰기 글쓰기 ///
 		//아래는 글쓰기 누르면 글작성 폼으로 이동 
 		@GetMapping("insert.fpom")
 		public String insertFrPomBoard() {
@@ -110,6 +110,7 @@ public class FrBoardController {
 							fab.setFaOrginName(upfile.get(i).getOriginalFilename());
 							fab.setFaChangeName("resources/freeBoardImg/"+changeName);
 							falist.add(fab);
+							
 							System.out.println("falist:"+falist);
 						}
 					}
