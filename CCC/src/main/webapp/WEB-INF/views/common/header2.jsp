@@ -6,13 +6,60 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
+
+   
     <!-- jQuery 라이브러리 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- 부트스트랩에서 제공하고 있는 스타일 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ 
+ 
     <style>
+    
+    <!--아래 부분은 드롭다운추가한거 -->
+	   .dropbtn {
+	  background-color: #04AA6D;
+	  color: black;
+	  padding: 16px;
+	  font-size: 16px;
+	  border: none;
+	  position:relative;z-index:1
+	}
+	 
+	.dropdown {
+	  position: relative;
+	  display: inline-block;
+	  
+	}
+	 
+	.dropdown-content {
+	  display: none;
+	  position: absolute;
+	  background-color: skyblue;
+	  min-width: 160px;
+	  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	  z-index: 1;
+	  
+	}
+	 
+	.dropdown-content a {
+	  color: black;
+	  padding: 12px 16px;
+	  text-decoration: none;
+	  display: block;
+	  
+	}
+	 
+	.dropdown-content a:hover {background-color: #dddddd;}
+	 
+	.dropdown:hover .dropdown-content {display: block;}
+	 
+	.dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+		<!-- 윗부분은 드롭다운 추가 -->
+
         div {box-sizing:border-box;}
         #header {
             width:80%;
@@ -51,12 +98,14 @@
             position: relative;
             top: -75px;
             left: 30px;
+            
         }
         #navi22222{
             z-index: 6;
             position: relative;
             top: -100px;
             left: 900px;
+            
         }
         #header_4>ul {width:100%; height:100%; list-style-type:none; margin:auto; padding:0;}
         #header_4>ul>li {float:left; width:4%; height:100%; line-height:55px; text-align:center;}
@@ -66,12 +115,14 @@
             position: relative;
             top: -58px;
             left: 30px;
+            
         }
         #navi44444{
             z-index: 6;
             position: relative;
             top: -100px;
             left: 1300px;
+            
         }
 
     </style>
@@ -95,10 +146,19 @@
                <li><a href="${ pageContext.request.contextPath }">H O M E</a></li>
                <li><a href="">N O T I C E</a></li>
                <li><a href="list.fr">F R E E - B O A R D</a></li>
-               <li><a href="list.ch">C H A R A C T E R</a></li>
+			   <li>
+				    <div class="dropdown">
+					  <button class="dropbtn">C H A R A C T E R</button>
+					  <div class="dropdown-content">
+					  	<a href="list.ch">캐릭터 게시판</a>
+						<a href="list.alltimech">역대수상작</a>
+					  </div>
+					</div>
+				</li>
+               
+               
                <li><a href="list.ch">W O R L D - C U P</a></li>
                <li><a href="playground.fr">P L A Y - G R O U N D</a></li>
-           
            </ul>
        </div>
    </div>

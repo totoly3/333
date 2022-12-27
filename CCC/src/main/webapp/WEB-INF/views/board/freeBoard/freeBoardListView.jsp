@@ -136,9 +136,6 @@
  			 location.href="detail.fbo?fno="+$(this).children().eq(0).text();
  			 console.log(this);
  		 })
- 	
-
- 	
  	})
  	 
  	 </script>
