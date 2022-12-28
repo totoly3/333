@@ -47,7 +47,7 @@
                 </tr>
                 <tr>
                     <th>작성자</th>
-                    <td colspan="1">admin</td>
+                    <td colspan="1">${ cb.boardWriterName }</td>
                     <th>작성일</th>
                     <td width="120">${ cb.createDate }</td>
                 </tr>
@@ -237,7 +237,7 @@
      				url : "selectLike.ch",
      				data : {
      					refBno : ${ cb.boardNo },
-     					memberNo : 7,
+     					memberNo : ${ loginUser.mNo },
      					charNo : ${ cb.charNo }
      				},
      				success : function(result){
@@ -260,7 +260,7 @@
         			url : "insertLike.ch",
         			data : {
 	       				refBno : ${ cb.boardNo },
-	        			memberNo : 7,
+	        			memberNo : ${ loginUser.mNo },
 						charNo : ${ cb.charNo }
         			},
         			success : function(result){
@@ -289,6 +289,7 @@
 	        			url : "replyAnswer.ch",
 	        			data : {
 	        				refBno : ${ cb.boardNo },
+	        				reWriterNo : ${ loginUser.mNo },
 	        				reContent : reContent
 	        			},
 	        			success : function(result){
@@ -328,7 +329,7 @@
         				
         				for(var i=0; i<reList.length; i++){
         					resultStr += "<tr>"
-        							   + "<th>"+reList[i].reWriter+"</th>"
+        							   + "<th>"+reList[i].reWriterName+"</th>"
         							   + "<td>"+reList[i].reContent+"</td>"
         							   + "<td>"+reList[i].reCreateDate+"</td>"
         							   + "<td><button class='btn btn-outline-success' data-toggle='modal' data-target='#reReply'"
@@ -381,6 +382,7 @@
         			data : {
         				refBno : ${ cb.boardNo },
         				reNo : reUpdateNo,
+        				reWriterNo : ${ loginUser.mNo },
         				reContent : $("#reAnswerContent").val()
         			},
         			type : "post",
@@ -406,6 +408,7 @@
         			url : "deleteReply.ch",
         			data : {
         				refBno : ${ cb.boardNo },
+        				reWriterNo : ${ loginUser.mNo },
         				reNo : reNo
         			},
         			success : function(result){

@@ -13,6 +13,7 @@ import com.kh.ccc.board.charBoard.model.vo.CharBoard;
 import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.common.model.vo.PageInfo;
+import com.kh.ccc.common.model.vo.Ward;
 
 @Service
 public class CharBoardServiceImpl implements CharBoardService {
@@ -173,6 +174,12 @@ public class CharBoardServiceImpl implements CharBoardService {
 		int deleteTbCharBoard = boardDao.deleteTbCharBoard(sqlSession, cl);
 		
 		return deleteTbCharLike * deleteTbChar * deleteTbCharBoard > 0 ? 1 : 0;
+	}
+
+	//비속어 필터링
+	@Override
+	public ArrayList<Ward> badLanguage() {
+		return boardDao.badLanguage(sqlSession);
 	}
 
 }

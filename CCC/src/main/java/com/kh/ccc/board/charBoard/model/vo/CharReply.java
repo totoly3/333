@@ -14,7 +14,8 @@ public class CharReply {
 	private int 	reNo;			//댓글 번호
 	private int 	refBno;			//참조게시글 번호
 	private String 	reContent; 		//댓글 내용
-	private int 	reWriter;		//작성자 회원번호
+	private int 	reWriterNo;		//작성자 회원번호
+	private String	reWriterName;	//작성자 아이디
 	private int		reGroupNo;		//참조댓글번호
 	private int		reParentNo;		//부모댓글번호
 	private int		reStep;			//대댓글의 순서

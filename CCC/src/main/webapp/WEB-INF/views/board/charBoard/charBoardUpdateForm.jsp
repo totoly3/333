@@ -40,6 +40,7 @@
             <form id="updateForm" method="post" action="update.ch" enctype="multipart/form-data">
             	<!-- 글번호 히든으로 넘기기 -->
             	<input type="hidden" name="boardNo" value="${ cb.boardNo }">
+            	<input type="hidden" name="boardWriterNo" value="${ cb.boardWriterNo }">
                 <table algin="center">
                     <tr>
                         <th><label for="title">제목</label></th>
@@ -51,13 +52,13 @@
                     </tr>
                     <tr>
                         <th><label for="writer">작성자</label></th>
-                        <td><input type="text" id="writer" class="form-control" value="6" name="boardWriter" readonly></td>
+                        <td><input type="text" id="writer" class="form-control" value="${ cb.boardWriterName }" name="boardWriterName" readonly></td>
                     </tr>
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
                         <td>
                             <div id="file-area" align="center">
-								<input type="file" id="file1" name="upfile" onchange="loadImg(this,1);" required\> <!--대표이미지라서 필수!-->
+								<input type="file" id="file1" name="upfile" onchange="loadImg(this,1);" required> <!--대표이미지라서 필수!-->
 								<input type="file" id="file2" name="upfile" onchange="loadImg(this,2);">
 								<input type="file" id="file3" name="upfile" onchange="loadImg(this,3);">
 								<input type="file" id="file4" name="upfile" onchange="loadImg(this,4);">
