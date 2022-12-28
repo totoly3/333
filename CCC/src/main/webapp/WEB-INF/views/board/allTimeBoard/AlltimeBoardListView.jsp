@@ -56,16 +56,18 @@
 			  <p>좋아요 순</p>
 		  	
 		  	<c:forEach var="i" items="${altimelist}"  >
+		  	
 					  <div class="d-flex mb-3">
 						
-						    <div class="p-2 flex-fill bg-info" id="alltime2" ><p id="rk2">i.get(1).get</p>2등</div>
+						    <div class="p-2 flex-fill bg-info" id="alltime2" ><p id="rk2"><img src="${i.get(1).changeName}"></p>좋아요 2등 ${i.get(1).like}</div>
 						    
 						   	
-						    <div class="p-2 flex-fill bg-warning" id="alltime1" > <p id="rk1">i.get(0).</p>1등</div>
+						    <div class="p-2 flex-fill bg-warning" id="alltime1" > <p id="rk1"><img src="${i.get(0).changeName}"></p>좋아요1등 <p> ${i.get(0).like}</p></div>
 						    
 						   	
-						    <div class="p-2 flex-fill bg-primary" id="alltime3" > <p id="rk3">i.get(2).</p>3등</div>
+						    <div class="p-2 flex-fill bg-primary" id="alltime3" > <p id="rk3"><img src="${i.get(2).changeName}"></p>좋아요 3등${i.get(2).like}</div>
 					  </div>
+				
 		  	</c:forEach>
 		  	
 	</div>

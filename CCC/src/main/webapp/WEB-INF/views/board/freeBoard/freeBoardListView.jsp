@@ -70,7 +70,7 @@
 						<tr>
 	                        <td>${B.fNo }</td>
 	                        <td>${B.fTitle } </td>
-	                        <td>${B.fWriter } </td>
+	                        <td>${B.mId } </td>
 	                        <td>${B.fCount }</td>
 	                        <td>${B.fCreateDate }</td>
 	                        <td>

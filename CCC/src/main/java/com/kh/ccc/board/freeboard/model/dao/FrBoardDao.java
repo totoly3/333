@@ -12,6 +12,7 @@ import com.kh.ccc.board.freeboard.model.vo.FrBoard;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardReply;
 import com.kh.ccc.common.model.vo.PageInfo;
+import com.kh.ccc.member.model.vo.Member;
 
 @Repository
 public class FrBoardDao {
@@ -21,12 +22,12 @@ public class FrBoardDao {
 		return result ;
 	}
 	//아래는 게시글 리스트 조회 
-	public ArrayList<FrBoard> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<FrBoard> selectList(SqlSessionTemplate sqlSession, PageInfo pi,String fWriter) {
 		int limit = pi.getBoardLimit();
 		int offset =(pi.getCurrentPage()-1)* limit;	
 		
 		RowBounds rowBounds = new RowBounds(offset,limit);
-		ArrayList<FrBoard> flist=(ArrayList)sqlSession.selectList("frBoardMapper.selectList",null,rowBounds);
+		ArrayList<FrBoard> flist=(ArrayList)sqlSession.selectList("frBoardMapper.selectList",fWriter,rowBounds);
 		return flist;
 	}
 
@@ -114,6 +115,17 @@ public class FrBoardDao {
 			
 			System.out.println("여기는 dao 에 파일 수정 result2:"+result2);
 			return result2;
+		}
+		
+		//아래는 자유게시판 댓글 수정 
+		public int frReplyModify(SqlSessionTemplate sqlSession, FrBoardReply refb) {
+			
+			System.out.println("FrBoardReply refb은?"+refb);
+			
+			int result =sqlSession.update("frBoardMapper.frReplyModify",refb);
+		
+			System.out.println("댓글수정 result dao: "+result);
+			return result;
 		}
 
 

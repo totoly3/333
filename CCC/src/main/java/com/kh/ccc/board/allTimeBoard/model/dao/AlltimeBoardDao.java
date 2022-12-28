@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ccc.board.freeboard.model.vo.FrBoard;
 import com.kh.ccc.common.model.vo.PageInfo;
+import com.kh.ccc.mypage.model.vo.MyCharacterAttach;
 @Repository
 public class AlltimeBoardDao {
 	
@@ -21,6 +22,13 @@ public class AlltimeBoardDao {
 		ArrayList<Character> calist=(ArrayList)sqlSession.selectList("allTimeBoardMapper.allTimeSelectList",null,rowBounds);
 		System.out.println("calist Dao는?: "+calist);
 		return calist;
+	}
+	
+	//아래는 db에서 첨부파일 이미지 불러오려고 ! 
+	public ArrayList<MyCharacterAttach> myAllTimeBoard(SqlSessionTemplate sqlSession) {
+		ArrayList<MyCharacterAttach> myca=(ArrayList)sqlSession.selectList("allTimeBoardMapper.myAllTimeBoard");
+		System.out.println("myca dao는?"+myca);
+		return myca;
 	}
 
 }

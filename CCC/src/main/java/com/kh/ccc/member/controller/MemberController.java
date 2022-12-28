@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kh.ccc.member.model.service.MemberService;
@@ -29,15 +30,15 @@ public class MemberController {
 			
 			Member loginUser=memberService.loginMember(m);
 			
-//			System.out.println("넘?"+m.getmNo());
-//			System.out.println("넘???"+m.getmPwd());
+			System.out.println("넘?"+m.getmNo());
+			System.out.println("넘???"+m.getmPwd());
 			
-			//System.out.println(loginUser);
+			session.setAttribute("loginUser",loginUser);
+			System.out.println("로그인유저: "+loginUser);
 			
-			if (loginUser!=null) { //로그인 성공시
-				session.setAttribute("loginUser", loginUser);
-			}
-			
+//			if (loginUser!=null) { //로그인 성공시
+//				session.setAttribute("loginUser", loginUser);
+//			}
 			return "redirect:/";
 		}
 	

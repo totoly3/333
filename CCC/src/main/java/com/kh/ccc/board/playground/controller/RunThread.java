@@ -1,10 +1,10 @@
-package com.kh.ccc.board.playground;
+package com.kh.ccc.board.playground.controller;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class WorldCup {
+public class RunThread implements Runnable{
 	static JPanel panelNorth;
 	static JPanel panelCenter;
 	static JLabel labelMessage;
@@ -29,7 +29,7 @@ public class WorldCup {
 	static class MyFrame extends JFrame implements ActionListener{
 		public MyFrame(String title) {
 			super(title);
-			this.setSize(450,250);
+			this.setSize(450,450);
 			this.setVisible(true);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			
@@ -98,6 +98,7 @@ public class WorldCup {
 	}
 	
 	public static void main(String[] args) {
-		new MyFrame("Idol World Cup");
+		new MyFrame("CCC World Cup");
 	}
 }
+
