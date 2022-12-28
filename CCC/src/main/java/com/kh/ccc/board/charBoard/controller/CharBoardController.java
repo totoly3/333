@@ -27,6 +27,7 @@ import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.common.model.vo.PageInfo;
+import com.kh.ccc.common.model.vo.Ward;
 import com.kh.ccc.common.template.Pagenation;
 //악성 글 지우기 
 @Controller
@@ -71,10 +72,10 @@ public class CharBoardController {
 		
 		//캐릭터 등록
 		Character c = new Character();
-		c.setMemberNo(cb.getBoardWriter());
+		c.setMemberNo(cb.getBoardWriterNo());
 		c.setCharName(cb.getCharName());
 		c.setCharContent(cb.getBoardContent());
-		
+		System.out.println(c);
 		//첨부파일이 여러개 넘어올 수 있기 때문에 ArrayList에 담아주자
 		ArrayList<CharAttach> list = new ArrayList<>();
 	
@@ -193,6 +194,8 @@ public class CharBoardController {
 							 ,ArrayList<MultipartFile> upfile
 							 ,HttpSession session
 							 ,ModelAndView mv) {
+		
+		System.out.println("게시글 수정 : "+cb);
 		
 		int boardNo = cb.getBoardNo();
 		//게시글 번호를 이용해 해당 게시글의 파일 정보를 가져온다
@@ -345,8 +348,9 @@ public class CharBoardController {
 	@ResponseBody
 	@RequestMapping(value="replyAnswer.ch",produces="text/html; charset=UTF-8")
 	public String insertReplyAnswer(CharReply cr, HttpSession session) {
-			
-		//int reWriter = session.getAttribute("회원번호"); //(ajax에서 넘어옴)
+		
+		System.out.println("댓글 등록 내용 : "+cr);
+		//int reWriterNo = session.getAttribute("회원번호"); //(ajax에서 넘어옴)
 		int number = boardService.replyMaxNum();   //새 댓글 번호 생성, 참조댓글번호(reGroupNo)는 부모댓글번호(reNo)와 같다 (시퀀스가 필요없다)
 		
 		int reStep = 0, reLevel = 0; 		  //대댓글의 순서와 계층은 0으로 기본 세팅
@@ -420,38 +424,21 @@ public class CharBoardController {
 	@RequestMapping(value="badLanguage.ch",produces="text/html; charset=UTF-8")
 	public String badLanguage(CharBoard cb) {
 		
-		String[] badLanguage = {"씨발","저발"};
+		ArrayList<Ward> wList = boardService.badLanguage();
 		
-		System.out.println(badLanguage[0]);
-		System.out.println(cb.getBoardTitle());
-		
-		for(int i=0; i<badLanguage.length; i++) {
-			if( cb.getBoardTitle().equals(badLanguage[i]) ){
+		for(int i=0; i<wList.size(); i++) {
+			if( cb.getBoardTitle().contains(wList.get(i).getWardName()) ){
 				return "NNNNY"; 
-			}else if( cb.getCharName().equals(badLanguage[i]) ) {
+			}else if( cb.getCharName().contains(wList.get(i).getWardName()) ) {
 				return "NNNNY";
-			}else if( cb.getBoardContent().equals(badLanguage[i]) ) {
+			}else if( cb.getBoardContent().contains(wList.get(i).getWardName()) ) {
 				return "NNNNY";
 			}
 		}
-		
 		return "NNNNN";
 	}
+
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	
 }

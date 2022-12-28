@@ -20,6 +20,7 @@
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharAttach" alias="charAttach"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharLike" alias="charLike"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharReply" alias="charReply"/>
+		<typeAlias type="com.kh.ccc.common.model.vo.Ward" alias="ward"/>
 
 		
 	</typeAliases>

@@ -16,7 +16,8 @@
 		<result column="CB_NO" property="boardNo"/>
 		<result column="C_NO" property="charNo"/>
 		<result column="C_NAME" property="charName"/>
-		<result column="CB_WRITER" property="boardWriter"/>
+		<result column="CB_WRITER" property="boardWriterNo"/>
+		<result column="CB_WRITER_NAME" property="boardWriterName"/>
 		<result column="CB_TITLE" property="boardTitle"/>
 		<result column="CB_CONTENT" property="boardContent"/>
 		<result column="CA_CHANGE_NAME" property="changeName"/>
@@ -42,11 +43,17 @@
 		<result column="C_LIKE" property="charLike"/>
 	</resultMap>
 	
+	<resultMap type="ward" id="wardResultSet">
+		<result column="W_NO" property="wardNo"/>
+		<result column="W_NAME" property="wardName"/>
+	</resultMap>
+	
 	<resultMap type="charReply" id="charReplyResultSet">
 		<result column="CR_NO" property="reNo"/>
 		<result column="CB_NO" property="refBno"/>
 		<result column="CR_CONTENT" property="reContent"/>
-		<result column="CR_WRITER" property="reWriter"/>
+		<result column="CR_WRITER" property="reWriterNo"/>
+		<result column="CR_WRITER_NAME" property="reWriterName"/>		
 		<result column="CR_GROUP_NO" property="reGroupNo"/>
 		<result column="CR_PARENT_NO" property="reParentNo"/>
 		<result column="CR_STEP" property="reStep"/>
@@ -66,12 +73,15 @@
 	<!-- 2.게시글 상세 조회 (글) -->
 	<select id="selectBoard" resultMap="charBoardResultSet" parameterType="_int">
 		SELECT CB_NO
-			  ,C_NAME
-			  ,C_NO
-			  ,CB_TITLE
+		      ,C_NAME
+		      ,C_NO
+		      ,M_NAME AS CB_WRITER_NAME
+		      ,CB_WRITER
+		      ,CB_TITLE
 		      ,CB_CONTENT
 		      ,CB_CREATE_DATE
 		FROM TB_CHARACTER_BOARD
+		JOIN TB_MEMBER ON(M_NO = CB_WRITER)
 		WHERE CB_STATUS = 'Y'
 		AND CB_NO = #{ bno }
 	</select>
@@ -127,7 +137,7 @@
 					VALUES(SEQ_CBNO.NEXTVAL
 						  ,SEQ_CNO.CURRVAL
 						  ,#{ charName }
-						  ,#{ boardWriter }
+						  ,#{ boardWriterNo }
 						  ,#{ boardTitle }
 						  ,#{ boardContent })
 	</insert>
@@ -261,7 +271,7 @@
 	<select id="selectReplyList" resultMap="charReplyResultSet" parameterType="_int">
 		SELECT CR_NO
 		      ,CB_NO
-		      ,CR_WRITER
+		      ,M_NAME AS CR_WRITER_NAME
 		      ,CR_GROUP_NO
 		      ,CR_PARENT_NO
 		      ,CR_STEP
@@ -269,6 +279,7 @@
 		      ,CR_CREATE_DATE
 		      ,LPAD('@@@@@@@@@@@@@@@@@@@@', 5*(CR_LEVEL)) || CR_CONTENT AS CR_CONTENT
 		FROM TB_CHARACTER_REPLY
+		JOIN TB_MEMBER ON(M_NO=CR_WRITER)
 		WHERE CR_STATUS = 'Y'
 		AND CB_NO = #{ refBno }
 		ORDER BY CR_GROUP_NO ASC, CR_STEP ASC
@@ -290,7 +301,7 @@
 							    	   #{ reNo }
 							    	  ,#{ refBno }
 							    	  ,#{ reContent }
-							    	  ,1
+							    	  ,#{ reWriterNo }
 							    	  ,#{ reGroupNo }
 							    	  ,#{ reParentNo }
 							    	  ,#{ reStep }
@@ -348,5 +359,11 @@
 		WHERE CR_GROUP_NO = #{ reGroupNo }
 		AND CR_STEP > #{ reStep }
 	</update>
+	
+	<!-- 비속어 필터링 -->
+	<select id="badLanguage" resultMap="wardResultSet">
+		SELECT W_NO, W_NAME
+		FROM TB_WARD
+	</select>
 
 </mapper>

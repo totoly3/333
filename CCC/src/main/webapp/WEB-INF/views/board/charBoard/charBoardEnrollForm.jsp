@@ -42,7 +42,7 @@
             <br>
 
         <form action="insert.ch" id="enroll-form" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="boardWriter" value="6">
+			<input type="hidden" name="boardWriterNo" value="${ loginUser.mNo }">
 			<table align="center">
 				<tr>
 					<th width="100">제목</th>
@@ -72,7 +72,7 @@
 
 			<!-- 파일 첨부 영역 -->
 			<div id="file-area" align="center">
-				<input type="file" id="file1" name="upfile" onchange="loadImg(this,1);" required\> <!--대표이미지라서 필수!-->
+				<input type="file" id="file1" name="upfile" onchange="loadImg(this,1);" required> <!--대표이미지라서 필수!-->
 				<input type="file" id="file2" name="upfile" onchange="loadImg(this,2);">
 				<input type="file" id="file3" name="upfile" onchange="loadImg(this,3);">
 				<input type="file" id="file4" name="upfile" onchange="loadImg(this,4);">
@@ -102,10 +102,17 @@
 	    				$("#boardTitle").val("");
 	    				$("#charName").val("");
 	    				$("#boardContent").val("");
+	    				
 	    				return false;
     				}else{
-    					$("#gogo").attr("type","submit");
-    					return;
+    					var charConfirm = confirm("캐릭터를 등록하시겠습니까?");
+    					
+    					if(charConfirm){
+	    					$("#enroll-form").submit();
+	    					
+    					}else{
+    						return false;
+    					}
     				}
     			},
     			error : function(){
