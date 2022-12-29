@@ -19,5 +19,6 @@ public class Character {
 	private int 	like;		//좋아요
 	private Date 	createDate;	//캐릭터 등록일
 	private String 	status;		//캐릭터 상태
+	private String  changeName; //첨부파일명    
 	
 }

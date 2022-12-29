@@ -95,6 +95,12 @@
       <label for="content">내용</label>
       <input type="text" class="form-control" id="frcontent" name="fContent">
     </div>
+<!--      글번호 히든으로 넘기기 -->
+<%--     <input type="hidden" name="fNo" value="${fb.get(0).fNo}"> --%>
+    
+<!--      글번호 히든으로 넘기기 -->
+    <input type="hidden" name="fWriterNo" value="${loginUser.mNo}">
+    
    	<!--  아래는 드래그  --> 
 <!--   	 <main class="container"> -->
 <!--     <label class="label" id="label" for="input"> -->

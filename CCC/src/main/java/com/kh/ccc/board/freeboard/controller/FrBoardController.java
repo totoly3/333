@@ -26,6 +26,7 @@ import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardReply;
 import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.common.template.Pagenation;
+import com.kh.ccc.member.model.vo.Member;
 
 @Controller
 public class FrBoardController {
@@ -36,9 +37,14 @@ public class FrBoardController {
 	//view 페이지 포워딩 
 		@RequestMapping("list.fr")
 		public ModelAndView selectList(@RequestParam(value="currentPage",defaultValue="1")int currentPage,
-													ModelAndView  mv) {
+													ModelAndView  mv,HttpSession session) {
+
 			
-				
+//			Member loginUser = (Member)session.getAttribute("loginUser");
+//			int fWriterNo =loginUser.getmNo();
+	
+		
+			
 			int listCount = FrBoardService.selectListCount(); //총 게시글 개수  db에서 조회해오기 .
 			
 			int pageLimit = 10;	//하단에 페이징바 갯수
@@ -48,48 +54,45 @@ public class FrBoardController {
 			
 			//아래는 게시글 조회 
 			ArrayList<FrBoard> list = FrBoardService.selectList(pi);
-			
-//			if(flist.isEmpty()) {
-//			}else {
-//			}
-				System.out.println("list:"+list);
-				mv.addObject("list", list);
-				mv.addObject("pi",pi);  //페이징바 처리해줄 
 				
-				mv.setViewName("board/freeBoard/freeBoardListView");
-//				mv.addObject("alertMsg","비어있으").setViewName("common/errorPage");
-//	
+			System.out.println("게시글 조회 list:"+list);
+			mv.addObject("list", list);
+			mv.addObject("pi",pi);  //페이징바 처리해줄 
+			
+			mv.setViewName("board/freeBoard/freeBoardListView");
+
 			return mv;
 		}
-		/////////////////상세보기 
+	
 		//아래는 게시물 상세보기 
 		@RequestMapping("detail.fbo")
 		public ModelAndView boardDetailView(int fno,ModelAndView mv,HttpSession session) {
 			System.out.println("fno"+fno);
 			
 			//아래는 조회수 증가 
-		int result=FrBoardService.increaseCount(fno);
+			int result=FrBoardService.increaseCount(fno);
 			System.out.println("리저트"+result);
-		if(result>0) {
-			//아래는 조회 
-			ArrayList<FrBoard> fb=FrBoardService.frboardDetailView(fno);
+			if(result>0) {
+				//아래는 조회 
+				ArrayList<FrBoard> fb=FrBoardService.frboardDetailView(fno);
+				
+				System.out.println("상세보기 fb :"+fb);
+				
+				//아래는 파일만 가져오기 
+				
+				ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
+				System.out.println("상세보기 frba:"+frba);
+				
+//				mv.addObject("frba",frba).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능
+				mv.addObject("frba",frba);
+				mv.addObject("fb",fb).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능
+				
+			}else {
+				System.out.println("실패");
+				mv.addObject("errorMsg","쉴패").setViewName("common/errorPage");
+			}
 			
-			System.out.println("fb :"+fb);
-			
-			//아래는 파일만 가져오기 
-			
-			ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
-			System.out.println("frba:"+frba);
-			
-			mv.addObject("frba",frba).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능 
-			mv.addObject("fb",fb).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능 
-			
-		}else {
-			System.out.println("실패");
-			mv.addObject("errorMsg","쉴패").setViewName("common/errorPage");
-		}
-		
-		return mv;
+			return mv;
 		}
 		//////.//글쓰기
 		//아래는 글쓰기 누르면 글작성 폼으로 이동 
@@ -102,17 +105,12 @@ public class FrBoardController {
 		//아래는 게시글 등록 (사진포함)
 				@ResponseBody
 				@RequestMapping("insert.frbo")
-				/*public ModelAndView insertFrBoard(ModelAndView mv,FrBoard fb,
-						ArrayList<MultipartFile> upfile
-						,HttpSession session) {*/
-				
 				
 				public ModelAndView insertFrBoard(ModelAndView mv,FrBoard fb,
 						@RequestParam(value="upfile", required=false) List<MultipartFile> upfile
 						,HttpSession session) {
 					
 					System.out.println("글쓰기 등록 fb은?:"+fb);
-					System.out.println("글쓰기 등록 upfile은?:"+upfile);
 					
 					ArrayList<FrBoardAttach> falist = new ArrayList<>();
 					
@@ -337,7 +335,6 @@ public class FrBoardController {
 				return new Gson().toJson(rlist);
 			}
 			
-			
 			//아래는 댓글 등록 
 			@ResponseBody
 			@RequestMapping(value="frInsert.fbo",produces="text/html; charset=UTF-8")
@@ -350,4 +347,14 @@ public class FrBoardController {
 				return result>0 ? "yes" : "no";
 			}
 			
+			//아래는 댓글 수정 
+			@RequestMapping("updateFrReply.fr")
+			public String frReplyModify(ModelAndView mv,FrBoardReply refb) {
+				
+				int result=FrBoardService.frReplyModify(refb);
+				
+				//아래 결과가  0이면 N  , 1이면 Y 
+				return (result == 0) ? "NNNNN" : "NNNNY";
+				
+			}
 	}	

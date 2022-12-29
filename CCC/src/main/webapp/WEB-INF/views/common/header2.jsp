@@ -19,8 +19,7 @@
     <style>
     
     <!--아래 부분은 드롭다운추가한거 -->
-	   .dropbtn {
-	  background-color: #04AA6D;
+	   .dropbtn {	  
 	  color: black;
 	  padding: 16px;
 	  font-size: 16px;
@@ -31,7 +30,7 @@
 	.dropdown {
 	  position: relative;
 	  display: inline-block;
-	  
+	  background-color: #E42525;
 	}
 	 
 	.dropdown-content {
@@ -52,11 +51,11 @@
 	  
 	}
 	 
-	.dropdown-content a:hover {background-color: #dddddd;}
+	.dropdown-content a:hover {background-color: #2CA93D;}
 	 
 	.dropdown:hover .dropdown-content {display: block;}
 	 
-	.dropdown:hover .dropbtn {background-color: #3e8e41;}
+	.dropdown:hover .dropbtn {background-color: #E42525;}
 
 		<!-- 윗부분은 드롭다운 추가 -->
 
@@ -149,9 +148,9 @@
 			   <li>
 				    <div class="dropdown">
 					  <button class="dropbtn">C H A R A C T E R</button>
-					  <div class="dropdown-content">
-					  	<a href="list.ch">캐릭터 게시판</a>
-						<a href="list.alltimech">역대수상작</a>
+						  <div class="dropdown-content">
+					 	 	<a href="list.ch">캐릭터 게시판</a>
+							<a href="list.alltimech">역대수상작</a>
 					  </div>
 					</div>
 				</li>

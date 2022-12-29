@@ -54,16 +54,18 @@
             <br><br>
 
             <table id="contentArea" algin="center" class="table">
+       
+           	<c:forEach var="i" items="${fb}" >
                 <tr>
                     <th width="10">제목</th>
-                    <td colspan="3">${fb.get(0).fTitle}</td>
+                    <td colspan="3">${fb.get(i).fTitle}</td>
                 </tr>
 
                 <tr>
                     <th>작성자</th>
-                    <td>${fb.get(0).fWriter }</td>
+                    <td>${fb.get(i).mId }</td>
                     <th>작성일</th>
-                    <td>${fb.get(0).fCreateDate }</td>
+                    <td>${fb.get(i).fCreateDate }</td>
                 </tr>
                
                 <tr>
@@ -71,8 +73,10 @@
                     <td colspan="3"></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><p style="height:150px;">${fb.get(0).fContent }</p></td>
+                    <td colspan="4"><p style="height:150px;">${fb.get(i).fContent }</p></td>
                 </tr>
+           </c:forEach>
+      
                 <tr>
                 	<th>이미지</th>
                 	<td colspan="3"></td>
@@ -89,7 +93,7 @@
 			              	<td class="attitle">
 			            		  	<input type="checkbox" name="all" onclick='selectAll(this)'/>전체선택 <br>
 			               		<p style="height:150px;">
-			               			<input type="checkbox" name="all"><img src="${frba.get(0).faChangeName }">
+			               			<input type="checkbox" name="all"><img src="${frba.get(0).faChangeName }" >
 			               		</p>
 			              	</td>
 			              </tr>
@@ -169,6 +173,7 @@
             		</c:if>
             </form>
       </div>
+      <!-- 
 		<!--아래는 댓글 -->
             <table id="replyArea" class="table" align="center">
                 <thead>
@@ -191,7 +196,7 @@
             </table>
             
    <!-- 댓글 수정 모달 -->
-		<div class="modal fade" id="updateReply1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal fade" id="updateReply" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -201,7 +206,7 @@
 		        </button>
 		      </div>
 		      <div class="modal-body">
-		      	<textarea id="frUpDateContent" rows="2" cols="49.8"
+		      	<textarea id="frContent" rows="2" cols="49.8"
 									style="resize: none;"></textarea>
 					<div id="reply_cnt">(0 / 50)</div>
 		      </div>
@@ -220,12 +225,12 @@
    
      <script >
 //  	     아래는 체크박스 (전체선택)
-	      function selectAll(selectAll)  {
-		  const checkboxes = document.getElementsByName('all');
+// 	      function selectAll(selectAll)  {
+// 		  const checkboxes = document.getElementsByName('all');
 		  
-				  checkboxes.forEach((checkbox) => {checkbox.checked = selectAll.checked;}
-				  							)
-										}
+// 				  checkboxes.forEach((checkbox) => {checkbox.checked = selectAll.checked;}
+// 				  							)
+// 										}
      
 	     function postFormSubmit(num){
 				console.log(num);
@@ -238,9 +243,16 @@
 	 	}
 	    
 	     //아래는 댓글
+	   let frReUpdateNo;  
+	     
 	   $(function(){
     		selectReplyList(); //dom 요소 생성 후 맨처음에(페이지 구성될때 댓글리스트 조회해오기) 
     	})
+    	
+    	$(document).on("click","table #frReUpdateNo",function(){
+    		frReUpdateNo = $(this).val();
+    	})
+    	
     	
 		//댓글 조회 함수    	
     	function selectReplyList(){
@@ -258,7 +270,7 @@
 									+"<td>"+result[i].frCreateDate+"</td>"	
 									+"<td>"
 									+ "<button class='btn btn-outline-primary' data-toggle='modal' data-target='#updateReply'" //data-target을 사용하면 뒤에오는 값을 사용한
-      							    + "id='fNo' value=+"+result[i].fNo+">수정</button>"
+      							    + "id='frReUpdateNo' value=+"+result[i].fNo+">수정</button>"
       							 	+ "<button onclick='return deleteReply("+result[i].fNo+")' class='btn btn-outline-danger'>삭제</button></td>"     							   
 									+"</tr>";
 							}	
@@ -272,7 +284,8 @@
     		})
     	}
     	
-    //아래는 댓글 등록 
+   		//아래는 댓글 등록 
+    
     	function addFrReply(){
     		var $vali = $("#rcontent");
     		
@@ -302,16 +315,33 @@
    				 	$vali.val("");
    	    		}
     		}
+   		
     	//아래는 댓글 수정
-    		function UpdateReply(){
-    			$.ajax({
-    				url : "updateFrReply.fr",
-    				data : frUpDateContent : $("#frUpDateContent"),
-    					   frNo : 
-    					   
-    			})
-    		} 	
+		function UpdateReply(){
+			$.ajax({
+				url : "updateFrReply.fr",
+				data :{
+						frContent : $("#frContent").val(), //내용
+					    frNo : frReUpdateNo,   //자유게시판 댓글번호 
+					    fNo : ${fb.get(0).fNo} //글번호
+				},
+			    type : "post",
+			    success : function(result){
+			    	console.log("통신성공");
+			    	if(result =="NNNNY"){
+			    		$("#frContent").val("");
+			    		selectReplyList();
+			    	}else{
+			    		alert("댓글수정에 실패하였삼");
+			    	}
+			    },
+				error : function(){
+					console.log("통신실패");
+				}
+			})
+		} 	
     
     </script>
+  
 </body>
 </html>
