@@ -7,6 +7,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>놀이터</h1>
+   <jsp:include page="/WEB-INF/views/common/header2.jsp"/>
+		       <h1>놀이터</h1>		
+	<pre>	       <button class="btn btn-primary" onclick="location.href='worldCup.fr'">이상형월드컵 시작하기</button> </pre>
 </body>
+
 </html>

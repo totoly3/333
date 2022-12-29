@@ -80,7 +80,7 @@
 	<!-- 게시글 조회 -->
 	<select id="selectList" resultMap="frBoardResultSet">
 	 SELECT  	 FR.F_NO		
-                ,M.M_ID
+                ,M.M_ID as mId
                 ,FR.F_TYPE
                 ,FR.F_TITLE
                 ,FR.F_CONTENT
@@ -106,18 +106,18 @@
 	
 	<!-- 아래는 게시판 상세보기 -->
 	<select id="frboardDetailView" resultMap="frBoardResultSet">
-	SELECT 		 FRB.F_NO
+	SELECT 	 FRB.F_NO
 				,FRB.F_TITLE
 				,FRB.F_CONTENT
 				,FRB.F_WRITER		
-				,TRBA.FA_ORIGIN_NAME	
+                ,M.M_ID AS mId
+                ,FRB.F_TYPE
 				,FRB.F_COUNT	
 				,FRB.F_CREATE_DATE
-				,TRBA.FA_FILE_PATH || TRBA.FA_CHANGE_NAME "fTitleimg"
-				
-	FROM TB_FREE FRB , TB_FREE_ATTACH TRBA
+	FROM TB_FREE FRB , TB_MEMBER M
+	
 	WHERE F_STATUS='Y'
-		
+	AND M.M_NO = FRB.F_WRITER
 	AND  FRB.F_NO = #{fNo}
 	ORDER BY FRB.F_NO DESC
 	</select>
@@ -143,13 +143,13 @@
 						 F_NO
 						,F_TITLE			
 						,F_CONTENT	
-						,F_WRITER
+						,F_WRITER 
 						,F_TYPE	
 				)VALUES(
 						SEQ_FNO.NEXTVAL
 						,#{fTitle}		
 						,#{fContent}
-						,SEQ_FNO.CURRVAL
+						,#{fWriterNo} 
 						,2
 						)	
 	</insert>

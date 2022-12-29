@@ -1,8 +1,17 @@
 package com.kh.ccc.board.playground;
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class WorldCup {
 	static JPanel panelNorth;
@@ -16,20 +25,25 @@ public class WorldCup {
 		,"WC5.PNG","WC6.PNG","WC7.PNG","WC8.PNG"
 	 };
 	static int imageIndex = 2; //3번쨰 이미지에 index initalized 가르키도록
-	
+	static HttpServletRequest request;
 	//function : image 를 버튼 컨트롤
 	static ImageIcon changeImage(String filename) {
-		ImageIcon icon = new ImageIcon("./"+filename);
+		String path = "C:\\Users\\user1\\Desktop\\1229fi\\CCC\\src\\main\\webapp\\WEB-INF\\views\\worldCup\\";
+//		String path = System.getProperty("user.dir");
+//		path += "\\src\\main\\webapp\\WEB-INF\\views\\worldCup\\";
+		System.out.println("path : "+path);
+		ImageIcon icon = new ImageIcon(path+filename);
 		Image originImage = icon.getImage();
 		Image changeImage = originImage.getScaledInstance(450,450,Image.SCALE_SMOOTH);
 		ImageIcon icon_new = new ImageIcon(changeImage);
 		return icon_new;
 	}
 	
+	
 	static class MyFrame extends JFrame implements ActionListener{
 		public MyFrame(String title) {
 			super(title);
-			this.setSize(450,250);
+			this.setSize(450,450);
 			this.setVisible(true);
 			this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			
@@ -98,6 +112,7 @@ public class WorldCup {
 	}
 	
 	public static void main(String[] args) {
+		
 		new MyFrame("Idol World Cup");
 	}
 }

@@ -22,12 +22,12 @@ public class FrBoardDao {
 		return result ;
 	}
 	//아래는 게시글 리스트 조회 
-	public ArrayList<FrBoard> selectList(SqlSessionTemplate sqlSession, PageInfo pi,int fWriterNo) {
+	public ArrayList<FrBoard> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		int limit = pi.getBoardLimit();
 		int offset =(pi.getCurrentPage()-1)* limit;	
 		
 		RowBounds rowBounds = new RowBounds(offset,limit);
-		ArrayList<FrBoard> flist=(ArrayList)sqlSession.selectList("frBoardMapper.selectList",fWriterNo,rowBounds);
+		ArrayList<FrBoard> flist=(ArrayList)sqlSession.selectList("frBoardMapper.selectList",null,rowBounds);
 
 		return flist;
 	}

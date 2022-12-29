@@ -8,6 +8,7 @@ import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.common.model.vo.PageInfo;
+import com.kh.ccc.common.model.vo.Ward;
 
 public interface CharBoardService {
 	
@@ -43,6 +44,9 @@ public interface CharBoardService {
 	int insertLike(CharLike cl);
 	//3.좋아요 삭제(TB_CHARACTER_LIKE, TB_CHARACTER)
 	int deleteLike(CharLike cl);
+	
+	//금지어 조회
+	ArrayList<Ward> badLanguage();
 	
 	//댓글 리스트 출력
 	ArrayList<CharReply> selectReplyList(int boardNo);

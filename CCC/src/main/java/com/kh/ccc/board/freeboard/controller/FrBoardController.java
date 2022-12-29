@@ -40,11 +40,9 @@ public class FrBoardController {
 													ModelAndView  mv,HttpSession session) {
 
 			
-			Member loginUser = (Member)session.getAttribute("loginUser");
-			System.out.println("fr보드 controller 에서 loginUser:"+loginUser);
-			
-			int fWriterNo =loginUser.getmNo();
-			System.out.println("fWriter는?"+fWriterNo);
+//			Member loginUser = (Member)session.getAttribute("loginUser");
+//			int fWriterNo =loginUser.getmNo();
+	
 		
 			
 			int listCount = FrBoardService.selectListCount(); //총 게시글 개수  db에서 조회해오기 .
@@ -55,13 +53,13 @@ public class FrBoardController {
 			PageInfo pi=Pagenation.getPageinfo(listCount, currentPage, pageLimit, boardLimit);
 			
 			//아래는 게시글 조회 
-			ArrayList<FrBoard> list = FrBoardService.selectList(pi,fWriterNo);
-			
-				System.out.println("게시글 조회 list:"+list);
-				mv.addObject("list", list);
-				mv.addObject("pi",pi);  //페이징바 처리해줄 
+			ArrayList<FrBoard> list = FrBoardService.selectList(pi);
 				
-				mv.setViewName("board/freeBoard/freeBoardListView");
+			System.out.println("게시글 조회 list:"+list);
+			mv.addObject("list", list);
+			mv.addObject("pi",pi);  //페이징바 처리해줄 
+			
+			mv.setViewName("board/freeBoard/freeBoardListView");
 
 			return mv;
 		}
@@ -72,28 +70,29 @@ public class FrBoardController {
 			System.out.println("fno"+fno);
 			
 			//아래는 조회수 증가 
-		int result=FrBoardService.increaseCount(fno);
+			int result=FrBoardService.increaseCount(fno);
 			System.out.println("리저트"+result);
-		if(result>0) {
-			//아래는 조회 
-			ArrayList<FrBoard> fb=FrBoardService.frboardDetailView(fno);
+			if(result>0) {
+				//아래는 조회 
+				ArrayList<FrBoard> fb=FrBoardService.frboardDetailView(fno);
+				
+				System.out.println("상세보기 fb :"+fb);
+				
+				//아래는 파일만 가져오기 
+				
+				ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
+				System.out.println("상세보기 frba:"+frba);
+				
+//				mv.addObject("frba",frba).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능
+				mv.addObject("frba",frba);
+				mv.addObject("fb",fb).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능
+				
+			}else {
+				System.out.println("실패");
+				mv.addObject("errorMsg","쉴패").setViewName("common/errorPage");
+			}
 			
-			System.out.println("fb :"+fb);
-			
-			//아래는 파일만 가져오기 
-			
-			ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
-			System.out.println("frba:"+frba);
-			
-			mv.addObject("frba",frba).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능 
-			mv.addObject("fb",fb).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능 
-			
-		}else {
-			System.out.println("실패");
-			mv.addObject("errorMsg","쉴패").setViewName("common/errorPage");
-		}
-		
-		return mv;
+			return mv;
 		}
 		//////.//글쓰기
 		//아래는 글쓰기 누르면 글작성 폼으로 이동 
@@ -106,17 +105,12 @@ public class FrBoardController {
 		//아래는 게시글 등록 (사진포함)
 				@ResponseBody
 				@RequestMapping("insert.frbo")
-				/*public ModelAndView insertFrBoard(ModelAndView mv,FrBoard fb,
-						ArrayList<MultipartFile> upfile
-						,HttpSession session) {*/
-				
 				
 				public ModelAndView insertFrBoard(ModelAndView mv,FrBoard fb,
 						@RequestParam(value="upfile", required=false) List<MultipartFile> upfile
 						,HttpSession session) {
 					
 					System.out.println("글쓰기 등록 fb은?:"+fb);
-					System.out.println("글쓰기 등록 upfile은?:"+upfile);
 					
 					ArrayList<FrBoardAttach> falist = new ArrayList<>();
 					

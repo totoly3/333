@@ -63,7 +63,7 @@
 
                 <tr>
                     <th>작성자</th>
-                    <td>${fb.get(i).fWriter }</td>
+                    <td>${fb.get(i).mId }</td>
                     <th>작성일</th>
                     <td>${fb.get(i).fCreateDate }</td>
                 </tr>
@@ -173,6 +173,7 @@
             		</c:if>
             </form>
       </div>
+      <!-- 
 		<!--아래는 댓글 -->
             <table id="replyArea" class="table" align="center">
                 <thead>
@@ -341,5 +342,6 @@
 		} 	
     
     </script>
+  
 </body>
 </html>

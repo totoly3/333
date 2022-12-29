@@ -12,6 +12,7 @@ import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.common.model.vo.PageInfo;
+import com.kh.ccc.common.model.vo.Ward;
 
 @Repository
 public class CharBoardDao {
@@ -133,5 +134,9 @@ public class CharBoardDao {
 	//3.좋아요 삭제 (CHARACTER_BOARD)
 	public int deleteTbCharBoard(SqlSessionTemplate sqlSession, CharLike cl) {
 		return sqlSession.update("charBoardMapper.deleteTbCharBoard", cl);
+	}
+	//비속어 필터링
+	public ArrayList<Ward> badLanguage(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("charBoardMapper.badLanguage");
 	}
 }

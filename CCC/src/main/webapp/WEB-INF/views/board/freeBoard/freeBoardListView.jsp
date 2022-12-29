@@ -58,7 +58,7 @@
                     <tr class="ct">
                         <th>글번호</th>
                         <th>제목</th>
-                        <th>작성자</th>
+               		    <th>작성자</th>
                         <th>조회수</th>
                         <th>작성일</th>
                         <th>첨부파일</th>
@@ -70,7 +70,7 @@
 						<tr>
 	                        <td>${B.fNo }</td>
 	                        <td>${B.fTitle } </td>
-	                        <td>${B.fWriterNo } </td>
+	                    	<td>${B.mId } </td>
 	                        <td>${B.fCount }</td>
 	                        <td>${B.fCreateDate }</td>
 	                        <td>
@@ -83,6 +83,10 @@
                     
                 </tbody>
             </table>
+            
+            <!--      글번호 히든으로 넘기기 -->
+			<input type="hidden" name="fWriterNo" value="${loginUser.mNo}">
+			
             <br>
            <div id="pagingArea">
                 <ul class="pagination">
