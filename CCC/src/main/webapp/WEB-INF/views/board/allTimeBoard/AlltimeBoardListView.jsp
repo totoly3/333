@@ -15,17 +15,17 @@
   <style>
   
   #alltime2{
-  height : 150px;
+  height : 350px;
   float : bottom;
-  position: relative; top: 225px;
+  position: relative; top: 400px;
   }
     #alltime1{
-  height : 225px;
-  position: relative; top: 150px;
+  height : 450px;
+  position: relative; top: 300px;
   }
     #alltime3{
-  height : 125px;
-  position: relative; top: 250px;
+  height : 250px;
+  position: relative; top: 500px;
   }
      #rk1{
   background-color:red;
@@ -55,20 +55,20 @@
 			  <h2>역대 수상작</h2>
 			  <p>좋아요 순</p>
 		  	
-		  	<c:forEach var="i" items="${altimelist}"  >
 		  	
+		  		<c:if test="${!altimelist.isEmpty()}">
 					  <div class="d-flex mb-3">
 						
-						    <div class="p-2 flex-fill bg-info" id="alltime2" ><p id="rk2"><img src="${i.get(1).changeName}"></p>좋아요 2등 ${i.get(1).like}</div>
+						    <div class="p-2 flex-fill bg-info" id="alltime2" >이번달 좋아요 : ${altimelist.get(1).like}<p id="rk2"><img src="${altimelist.get(1).changeName}"></p>좋아요 2등 </div>
 						    
 						   	
-						    <div class="p-2 flex-fill bg-warning" id="alltime1" > <p id="rk1"><img src="${i.get(0).changeName}"></p>좋아요1등 <p> ${i.get(0).like}</p></div>
+						    <div class="p-2 flex-fill bg-warning" id="alltime1" >이번달 좋아요 : ${altimelist.get(0).like}<p id="rk1"><img src="${altimelist.get(0).changeName}"></p>좋아요1등 </div>
 						    
 						   	
-						    <div class="p-2 flex-fill bg-primary" id="alltime3" > <p id="rk3"><img src="${i.get(2).changeName}"></p>좋아요 3등${i.get(2).like}</div>
+						    <div class="p-2 flex-fill bg-primary" id="alltime3" >이번달 좋아요 : ${altimelist.get(2).like}<p id="rk3"><img src="${altimelist.get(2).changeName}"></p>좋아요 3등</div>
 					  </div>
-				
-		  	</c:forEach>
+				</c:if>
+		  	
 		  	
 	</div>
 

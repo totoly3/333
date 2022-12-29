@@ -237,7 +237,7 @@
      				url : "selectLike.ch",
      				data : {
      					refBno : ${ cb.boardNo },
-     					memberNo : 6,
+     					memberNo : 7,
      					charNo : ${ cb.charNo }
      				},
      				success : function(result){
@@ -260,7 +260,7 @@
         			url : "insertLike.ch",
         			data : {
 	       				refBno : ${ cb.boardNo },
-	        			memberNo : 6,
+	        			memberNo : 7,
 						charNo : ${ cb.charNo }
         			},
         			success : function(result){
@@ -431,7 +431,7 @@
 					$(this).val($(this).val().substring(0, 50));
 					$('#reply_cnt').html("(50 / 50)");
 				}
-			})
+			});
         	
 			//대댓글 수정 글자 수 제한
 			$('#reAnswerContent').on('keyup',function(){
@@ -441,9 +441,7 @@
 					$(this).val($(this).val().substring(0, 50));
 					$('#reReply_cnt').html("(50 / 50)");
 				}
-			});
-        	
-        	
+			});	
         </script>
 </body>
 </html>

@@ -95,6 +95,7 @@
       <label for="content">내용</label>
       <input type="text" class="form-control" id="frcontent" name="fContent">
     </div>
+<%--     <input type="hidden" name="fWriterNo" class="form-control" id="fWriterNo" value="${fWriterNo} }"> --%>
    	<!--  아래는 드래그  --> 
 <!--   	 <main class="container"> -->
 <!--     <label class="label" id="label" for="input"> -->

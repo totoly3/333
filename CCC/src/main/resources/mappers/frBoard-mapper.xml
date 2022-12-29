@@ -34,7 +34,7 @@
     <!--//게시글 조회 메소드  게시글 전체 -->
   	<resultMap type="frBoard" id="frBoardResultSet">
   	<result column="F_NO" property="fNo"/>
-   	<result column="F_WRITER" property="fWriter"/>
+   	<result column="F_WRITER" property="fWriterNo"/>
    	<result column="F_TYPE" property="fType"/>
    	<result column="F_TITLE" property="fTitle"/>
    	<result column="F_CONTENT" property="fContent"/>
@@ -65,7 +65,7 @@
   	
   	<result column="FR_NO" property="frNo"/>
   	<result column="F_NO" property="fNo"/>
-   	<result column="FR_WRITER" property="frWriter"/>
+   	<result column="FR_WRITER" property="fWriterNo"/>
    	<result column="FR_CONTENT" property="frContent"/>
    	<result column="FR_PARENT_NO" property="frParentNo"/>
    	<result column="FR_LEVEL" property="frLevel"/>
@@ -77,23 +77,23 @@
    	</resultMap>
    	
   	
-	<!-- 게시글 조회2 -->
-	<select id="selectList" resultMap="memberResultSet">
-	 SELECT  FR.F_NO
-			,FR.F_WRITER
-            ,M.M_ID AS mId
-			,FR.F_TYPE
-			,FR.F_TITLE
-			,FR.F_CONTENT
-			,FR.F_COUNT
-			,FR.F_CREATE_DATE
-			,FR.F_UPDATE_DATE
-			,FR.F_DELETE_DATE
-			,FR.F_STATUS
+	<!-- 게시글 조회 -->
+	<select id="selectList" resultMap="frBoardResultSet">
+	 SELECT  	 FR.F_NO		
+                ,M.M_ID
+                ,FR.F_TYPE
+                ,FR.F_TITLE
+                ,FR.F_CONTENT
+                ,FR.F_COUNT
+                ,FR.F_CREATE_DATE
+                ,FR.F_UPDATE_DATE
+                ,FR.F_DELETE_DATE
+                ,FR.F_STATUS
     FROM TB_FREE FR,TB_MEMBER M
-    WHERE F_STATUS='Y' 
+    WHERE FR.F_STATUS='Y' 
    	 AND M.M_NO = FR.F_WRITER
-  	 ORDER BY F_NO DESC
+  	 ORDER BY FR.F_NO DESC
+	
 	</select>
 	
 		<!-- 아래는 조회수증가  -->
@@ -143,11 +143,13 @@
 						 F_NO
 						,F_TITLE			
 						,F_CONTENT	
+						,F_WRITER
 						,F_TYPE	
 				)VALUES(
 						SEQ_FNO.NEXTVAL
 						,#{fTitle}		
 						,#{fContent}
+						,SEQ_FNO.CURRVAL
 						,2
 						)	
 	</insert>

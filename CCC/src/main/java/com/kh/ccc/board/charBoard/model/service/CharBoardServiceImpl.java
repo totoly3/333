@@ -43,11 +43,7 @@ public class CharBoardServiceImpl implements CharBoardService {
 		int boardResult = boardDao.insertBoard(sqlSession,cb);
 		//게시글 첨부파일 등록
 		int attachResult = boardDao.insertAttach(sqlSession,list);
-		
-		System.out.println("characterResult : "+characterResult);
-		System.out.println("boardResult : "+boardResult);
-		System.out.println("boardResult : "+boardResult);
-		
+				
 		int finalReult = (characterResult * boardResult * attachResult) > 0 ? 1 : 0;
 		
 		return finalReult;

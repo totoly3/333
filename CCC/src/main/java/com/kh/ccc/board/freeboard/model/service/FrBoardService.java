@@ -20,7 +20,7 @@ public interface FrBoardService {
 		
 		
 		//게시글 리스트 조회 
-		ArrayList<FrBoard> selectList(PageInfo pi, String fWriter);
+		ArrayList<FrBoard> selectList(PageInfo pi,int fWriterNo);
 
 
 		//아래는 게시글 조회수 증가 

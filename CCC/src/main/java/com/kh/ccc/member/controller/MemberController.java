@@ -33,12 +33,10 @@ public class MemberController {
 			System.out.println("넘?"+m.getmNo());
 			System.out.println("넘???"+m.getmPwd());
 			
-			session.setAttribute("loginUser",loginUser);
-			System.out.println("로그인유저: "+loginUser);
-			
-//			if (loginUser!=null) { //로그인 성공시
-//				session.setAttribute("loginUser", loginUser);
-//			}
+			if (loginUser!=null) { //로그인 성공시
+				System.out.println("memberController에서 loginUser"+loginUser);
+				session.setAttribute("loginUser", loginUser);
+			}
 			return "redirect:/";
 		}
 	

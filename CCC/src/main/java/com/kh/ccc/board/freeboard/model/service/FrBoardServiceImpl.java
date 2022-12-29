@@ -36,8 +36,8 @@ public class FrBoardServiceImpl implements FrBoardService{
 	
 	//아래는 게시글 리스트 조회 
 	@Override
-	public ArrayList<FrBoard> selectList(PageInfo pi, String fWriter) {
-		return FrBoardDao.selectList(sqlSession,pi,fWriter);
+	public ArrayList<FrBoard> selectList(PageInfo pi,int fWriterNo) {
+		return FrBoardDao.selectList(sqlSession,pi,fWriterNo);
 	}
 	
 //	//아래는 //게시글 상세 조회

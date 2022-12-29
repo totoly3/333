@@ -93,7 +93,7 @@
 			              	<td class="attitle">
 			            		  	<input type="checkbox" name="all" onclick='selectAll(this)'/>전체선택 <br>
 			               		<p style="height:150px;">
-			               			<input type="checkbox" name="all"><img src="${frba.get(0).faChangeName }">
+			               			<input type="checkbox" name="all"><img src="${frba.get(0).faChangeName }" >
 			               		</p>
 			              	</td>
 			              </tr>

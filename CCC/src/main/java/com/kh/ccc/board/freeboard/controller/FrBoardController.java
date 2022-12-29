@@ -41,10 +41,10 @@ public class FrBoardController {
 
 			
 			Member loginUser = (Member)session.getAttribute("loginUser");
-			System.out.println("loginUser:"+loginUser);
+			System.out.println("fr보드 controller 에서 loginUser:"+loginUser);
 			
-			String fWriter =loginUser.getmId();
-			System.out.println("fWriter는?"+fWriter);
+			int fWriterNo =loginUser.getmNo();
+			System.out.println("fWriter는?"+fWriterNo);
 		
 			
 			int listCount = FrBoardService.selectListCount(); //총 게시글 개수  db에서 조회해오기 .
@@ -55,7 +55,7 @@ public class FrBoardController {
 			PageInfo pi=Pagenation.getPageinfo(listCount, currentPage, pageLimit, boardLimit);
 			
 			//아래는 게시글 조회 
-			ArrayList<FrBoard> list = FrBoardService.selectList(pi,fWriter);
+			ArrayList<FrBoard> list = FrBoardService.selectList(pi,fWriterNo);
 			
 				System.out.println("게시글 조회 list:"+list);
 				mv.addObject("list", list);
