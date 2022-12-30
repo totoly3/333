@@ -83,38 +83,33 @@
 <jsp:include page="/WEB-INF/views/common/header2.jsp"/>
    
 <div class="container">
-  <h2></h2>
-  <p></p>
-  <form action="insert.tp" method="post"  enctype="multipart/form-data" >
-    <div class="form-group">
-      <label for="usr">제목 </label>
-      <input type="text" class="form-control" id="tTitle" name="tTitle">
-    </div>
-    <div class="form-group">
-      <label for="content">내용</label>
-      <input type="text" class="form-control" id="tContent" name="tContent">
-    </div>
-   	<!--  아래는 드래그  --> 
-<!--   	 <main class="container"> -->
-<!--     <label class="label" id="label" for="input"> -->
-<!--       <div class="inner" id="inner">드래그하거나 클릭해서 업로드</div> -->
-<!--     </label> -->
-<!--     <input id="input" class="input" accept="image/*" type="file" required="true" multiple="true" hidden="true"> -->
-<!--     <p class="preview-title">preview</p> -->
-<!--     <div class="preview" id="preview"></div> -->
-<!--   </main> -->
-   	<!--  위에는 드래그 --> 
-  	
-	<input type="file" id="upfile" class="form-control-file border" name="upfile">
-	<input type="file" id="upfile" class="form-control-file border" name="upfile">	    
+
+  <h2>팁 게시판</h2><p></p>
+  
+	<form action="insert.tp" method="post"  enctype="multipart/form-data" >
+	
+		<div class="form-group">
+			<label for="usr">제목 </label>
+			<input type="text" class="form-control" id="tipTitle" name="tTitle">
+		</div>
+    
+		<div class="form-group">
+			<label for="content">내용</label>
+			<input type="textarea" class="form-control" id="tipContent" name="tContent">
+		</div>
+		
+  		<br>
+		<input type="file" id="upfile" class="form-control-file border" name="upfile">
+		<input type="file" id="upfile" class="form-control-file border" name="upfile">	    
 	  	
-    <button type="submit" class="btn btn-danger">글 등록하기</button>
-  <br><br><br> <br><br><br> <br><br><br>
-  </form>
+	  	<br><br>
+	  	
+		<button type="submit" class="btn btn-danger">글 등록하기</button>
+		
+		<br><br><br><br><br><br><br><br><br>
+		
+	</form>
 </div>
-
-
-
 
 </body>
 </html>

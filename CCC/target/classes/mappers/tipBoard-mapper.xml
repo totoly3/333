@@ -4,6 +4,7 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="tipBoardMapper">  
   
+  
   <!-- TipBoard  -->
   	<resultMap type="tipBoard" id="tipBoardResultSet">
 	  	<result column="T_NO" property="tNo"/>
@@ -124,22 +125,23 @@
 		ORDER BY T_NO DESC
 	</select>
 	
-		
-	
+
 	
 	<!--  게시글등록 (사진 미포함) -->
-	<insert id="insertTipBoard1">
-	INSERT INTO TB_TIP( T_NO
-						,T_TITLE			
-						,T_CONTENT	
+	<insert id="insertBoard">
+	INSERT INTO TB_TIP(T_NO
+					   ,T_TITLE			
+					   ,T_CONTENT
+					   ,T_WRITER
 				)VALUES(SEQ_TNO.NEXTVAL
-						,#{tTitle}		
-						,#{tContent})	
+					   ,#{tTitle}		
+					   ,#{tContent}
+					   ,#{tWriter})	
 	</insert>
 	
 	
 	<!--  게시글등록 (사진 포함) -->
-	<insert id="insertAttTipBoard2" parameterType="java.util.List">
+	<insert id="insertAttach" parameterType="java.util.List">
 	INSERT INTO TB_TIP_ATTACH( TA_NO
 							  ,T_NO
 							  ,TA_ORIGIN_NAME
@@ -151,7 +153,7 @@
 						  ,#{ item.taChangeName }
 					FROM SYS.DUAL	  
 				</foreach>
-			  )A
+			)A
 	</insert>
   
   

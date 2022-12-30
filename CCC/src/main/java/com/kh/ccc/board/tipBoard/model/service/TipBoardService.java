@@ -23,10 +23,12 @@ public interface TipBoardService {
 	TipBoard selectBoard(int bno);
 
 	//게시글 등록
-	int insertTipBoard(TipBoard tb,ArrayList<TipAttach> list);
+	int insertTipBoard(TipBoard tb);
+		
+	//게시글 등록
+	int insertTipBoard(TipBoard tb, ArrayList<TipAttach> talist);
 	
 
-	
 	
 	//게시글 수정
 	int updateBoard(TipBoard cb);

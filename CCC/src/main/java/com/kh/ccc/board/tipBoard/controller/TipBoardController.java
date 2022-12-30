@@ -15,15 +15,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.Gson;
 import com.kh.ccc.board.tipBoard.model.service.TipBoardService;
 import com.kh.ccc.board.tipBoard.model.vo.TipAttach;
 import com.kh.ccc.board.tipBoard.model.vo.TipBoard;
-import com.kh.ccc.board.tipBoard.model.vo.TipReply;
 import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.common.template.Pagenation;
 
@@ -85,7 +82,7 @@ public class TipBoardController {
 		//게시글 리스트 조회
 		ArrayList<TipBoard> list = boardService.selectList(pi);
 		
-		System.out.println(list);
+		System.out.println("list.tp:: list" +list);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
@@ -108,38 +105,52 @@ public class TipBoardController {
 									  ,ModelAndView mv
 									  ,HttpSession session) {
 		
-		//System.out.println("tb : "+tb);
-		//System.out.println("upfile : "+upfile);
+		System.out.println("insert.tp-- tb : "+tb);
+		System.out.println("insert.tp-- upfile : "+upfile);
 		
-		ArrayList<TipAttach> list = new ArrayList<>();
+		ArrayList<TipAttach> talist = new ArrayList<>();
 		
-		for(int i=0; i<=4; i++) {	
-			//만약 첨부파일이 있다면 (파일명이 빈 문자열이 아니라면)
-			if(!upfile.get(i).getOriginalFilename().equals("")) {
-
+		// 첨부파일 리스트를 view에서 전달받은 만큼(upfile 수)만큼 반복
+		for(int i=0; i<upfile.size(); i++) {
+			// 파일이 존재하는지 확인
+			if (!upfile.get(i).getOriginalFilename().equals("")) {//파일이 존재
+			
 				String changeName = saveFile(upfile.get(i),session);
 				
-				//원본명, 업로드 경로를 Board 객체에 담아주기
-				TipAttach ta = new TipAttach();
-				ta.setTaOriginName(upfile.get(i).getOriginalFilename());
-				ta.setTaChangeName("resources/tipBoardImg/" + changeName);
+				TipAttach tab= new TipAttach();
 				
-				System.out.println("ta:"+ta);
+				tab.setTaOriginName(upfile.get(i).getOriginalFilename());
+				tab.setTaChangeName("resources/tipBoardImg/"+changeName);
 				
-				list.add(ta);
+				talist.add(tab);
+				System.out.println("talist:"+talist);
 			}
 		}
+
 		
-		int result = boardService.insertTipBoard(tb,list);
-		
-		System.out.println("result:"+result);
-		
-		if(result > 0) {
-			session.setAttribute("alertMsg", "게시글 등록 성공!");
-			mv.setViewName("redirect:/list.tp");
-		}else {
-			mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
-		}
+		if(talist.isEmpty()) { //글만 작성할때
+			int result = boardService.insertTipBoard(tb);
+			
+			if(result>0) {
+				System.out.println("등록완료");
+				session.setAttribute("alertMsg", "게시글 등록 성공!");
+				mv.addObject("talist",talist);
+				mv.setViewName("redirect:/list.tp");
+			}else {
+				mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
+			}
+				
+		}else {//파일두개 등록할때
+			int finalResult = boardService.insertTipBoard(tb,talist);
+			
+				if(finalResult>0) {
+					System.out.println("등록완료");
+					session.setAttribute("alertMsg", "게시글 등록 성공!");
+					mv.setViewName("redirect:/list.tp");
+				}else {
+					mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
+				}
+			}
 		return mv;
 	}
 

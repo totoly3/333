@@ -48,10 +48,20 @@ public class TipBoardServiceImpl implements TipBoardService {
 	
 	
 	
+	//게시글 등록 (게시글,첨부파일)
+		@Override
+		public int insertTipBoard(TipBoard tb) {
+			
+			int result = boardDao.insertBoard(sqlSession,tb);
+			
+			return result;
+		}
+	
+	
 	
 	//게시글 등록 (게시글,첨부파일)
 	@Override
-	public int insertTipBoard(TipBoard tb,ArrayList<TipAttach> list) {
+	public int insertTipBoard(TipBoard tb, ArrayList<TipAttach> list) {
 		
 		int result = boardDao.insertBoard(sqlSession,tb);
 		int result2 = boardDao.insertAttach(sqlSession,list);

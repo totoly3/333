@@ -129,16 +129,12 @@
 
  	 
  	 <script>
- 	$(function(){
- 		 $("#boardList>tbody>tr").click(function(){
- 			 location.href="detail.tbo?bno="+$(this).children().eq(0).text();
- 			 console.log(this);
- 		 })
- 	
-
- 	
- 	})
- 	 
+	 	$(function(){
+	 		 $("#boardList>tbody>tr").click(function(){
+	 			 location.href="detail.tbo?bno="+$(this).children().eq(0).text();
+	 			 console.log(this);
+	 		 }) 	
+	 	})
  	 </script>
 </body>
 </html>

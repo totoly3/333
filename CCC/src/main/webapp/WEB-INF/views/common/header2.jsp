@@ -30,6 +30,7 @@
             padding-top:20px;
             margin:auto;
         }
+        
         #header>div {width:100%; margin-bottom:10px;}
         #header_1 {height:40%;}
         #header_2 {height:60%;}
@@ -91,6 +92,7 @@
     <div id="jini1">
     	<img src="./resources/header2Img/navi2.jpg" alt="navi2">
     </div>
+    
     <div id="header">
         <div id="header_2">     <!--여기가 리스트 -->
            <ul id="navi11111">
@@ -103,6 +105,9 @@
            </ul>
        </div>
    </div>
+   
+   
+   
    <div id="header4">
         <div id="header_4">     <!--여기가 리스트 -->
             <ul id="navi44444">
