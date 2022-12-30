@@ -55,17 +55,18 @@
 
             <table id="contentArea" algin="center" class="table">
        
-           	<c:forEach var="i" items="${fb}" >
+           	<c:forEach var="F" items="${fb}" >
                 <tr>
                     <th width="10">제목</th>
-                    <td colspan="3">${fb.get(i).fTitle}</td>
+                    <td colspan="3">${F.fTitle}</td>
+                
                 </tr>
 
                 <tr>
                     <th>작성자</th>
-                    <td>${fb.get(i).mId }</td>
+                    <td>${F.mId }</td>
                     <th>작성일</th>
-                    <td>${fb.get(i).fCreateDate }</td>
+                    <td>${F.fCreateDate }</td>
                 </tr>
                
                 <tr>
@@ -73,7 +74,7 @@
                     <td colspan="3"></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><p style="height:150px;">${fb.get(i).fContent }</p></td>
+                    <td colspan="4"><p style="height:150px;">${F.fContent }</p></td>
                 </tr>
            </c:forEach>
       
@@ -91,7 +92,6 @@
                 	<c:when test="${!frba.get(0).faChangeName.isEmpty()}">
          	              <tr>
 			              	<td class="attitle">
-			            		  	<input type="checkbox" name="all" onclick='selectAll(this)'/>전체선택 <br>
 			               		<p style="height:150px;">
 			               			<input type="checkbox" name="all"><img src="${frba.get(0).faChangeName }" >
 			               		</p>
@@ -224,14 +224,7 @@
    
    
      <script >
-//  	     아래는 체크박스 (전체선택)
-// 	      function selectAll(selectAll)  {
-// 		  const checkboxes = document.getElementsByName('all');
-		  
-// 				  checkboxes.forEach((checkbox) => {checkbox.checked = selectAll.checked;}
-// 				  							)
-// 										}
-     
+
 	     function postFormSubmit(num){
 				console.log(num);
 			//action에 속성값을 넣고 submit을 진행하면 된다.

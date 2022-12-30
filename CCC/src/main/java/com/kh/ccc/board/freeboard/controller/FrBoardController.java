@@ -7,6 +7,7 @@ import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,6 @@ public class FrBoardController {
 			//아래는 게시글 조회 
 			ArrayList<FrBoard> list = FrBoardService.selectList(pi);
 				
-			System.out.println("게시글 조회 list:"+list);
 			mv.addObject("list", list);
 			mv.addObject("pi",pi);  //페이징바 처리해줄 
 			
@@ -71,24 +71,19 @@ public class FrBoardController {
 			
 			//아래는 조회수 증가 
 			int result=FrBoardService.increaseCount(fno);
-			System.out.println("리저트"+result);
 			if(result>0) {
 				//아래는 조회 
 				ArrayList<FrBoard> fb=FrBoardService.frboardDetailView(fno);
 				
-				System.out.println("상세보기 fb :"+fb);
-				
 				//아래는 파일만 가져오기 
 				
 				ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
-				System.out.println("상세보기 frba:"+frba);
 				
-//				mv.addObject("frba",frba).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능
 				mv.addObject("frba",frba);
-				mv.addObject("fb",fb).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능
+				mv.addObject("fb",fb);
+				mv.setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능
 				
 			}else {
-				System.out.println("실패");
 				mv.addObject("errorMsg","쉴패").setViewName("common/errorPage");
 			}
 			
@@ -105,18 +100,26 @@ public class FrBoardController {
 		//아래는 게시글 등록 (사진포함)
 				@ResponseBody
 				@RequestMapping("insert.frbo")
-				
 				public ModelAndView insertFrBoard(ModelAndView mv,FrBoard fb,
 						@RequestParam(value="upfile", required=false) List<MultipartFile> upfile
 						,HttpSession session) {
 					
+//					System.out.println("m은?"+m);
+//					
+//					Member loginUser = (Member)session.getAttribute("loginUser");
+//					int fWriterNo =loginUser.getmNo();
+					
 					System.out.println("글쓰기 등록 fb은?:"+fb);
-					
+					//ArrayList로  첨부파일들을 담음.
 					ArrayList<FrBoardAttach> falist = new ArrayList<>();
+					System.out.println("업파일????????????????"+upfile);
+			
 					
+					//아래는 파일 갯수만큼  반복문을 돌려줌
 					for(int i=0; i<upfile.size(); i++) {
+							//아래는 파일이 있으면 
 						if (!upfile.get(i).getOriginalFilename().equals("")) {
-						
+							//saveFile 메소드에   올린 파일을 담아서  changename 변수에 담아준다.(saveFile을 아래 153줄 참고)
 							String changeName = saveFile(upfile.get(i),session);
 							
 							FrBoardAttach fab= new FrBoardAttach();
@@ -129,28 +132,29 @@ public class FrBoardController {
 							System.out.println("falist:"+falist);
 						}
 					}
-		
-				if(falist.isEmpty()) { //글만 작성할때
-					int result1=FrBoardService.insertFrBoardOnlyWrite(fb);
-					
-						if(result1>0) {
-							System.out.println("등록완료");
-							session.setAttribute("alertMsg", "게시글 등록 성공!");
-							mv.setViewName("redirect:/list.fr");
-						}else {
-							mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
+				
+					if(falist.isEmpty()) { //글만 작성할때
+						int result1=FrBoardService.insertFrBoardOnlyWrite(fb);
+						
+							if(result1>0) {
+								System.out.println("등록완료");
+								session.setAttribute("alertMsg", "게시글 등록 성공!");
+								mv.setViewName("redirect:/list.fr");
+							}else {
+								mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
+								}
+					}else {//파일두개 등록할때
+						int finalResult=FrBoardService.insertFrBoard(fb,falist);
+						
+							if(finalResult>0) {
+								System.out.println("등록완료");
+								session.setAttribute("alertMsg", "게시글 등록 성공!");
+								mv.setViewName("redirect:/list.fr");
+							}else {
+								mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
 							}
-				}else {//파일두개 등록할때
-					int finalResult=FrBoardService.insertFrBoard(fb,falist);
-					
-						if(finalResult>0) {
-							System.out.println("등록완료");
-							session.setAttribute("alertMsg", "게시글 등록 성공!");
-							mv.setViewName("redirect:/list.fr");
-						}else {
-							mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
 						}
-					}
+					
 				return mv;
 			}
 		
@@ -357,4 +361,17 @@ public class FrBoardController {
 				return (result == 0) ? "NNNNN" : "NNNNY";
 				
 			}
-	}	
+			
+			//아래는 체크한 글 삭제 
+			@ResponseBody
+			@RequestMapping("deleteClickFrboard.ad")
+			public String deleteClickFrboard(HttpServletRequest request,@RequestParam(value="checkBoxArr[]") List<String> fNo) throws Exception {
+					
+				System.out.println("checkBoxArr :"+fNo);
+				
+				int result = FrBoardService.deleteClickFrboard(fNo);
+				
+				return result>0? "yes":"no";
+				
+			}
+}	
