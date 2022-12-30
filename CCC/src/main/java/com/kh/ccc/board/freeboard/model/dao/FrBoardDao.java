@@ -128,6 +128,12 @@ public class FrBoardDao {
 			System.out.println("댓글수정 result dao: "+result);
 			return result;
 		}
+		//아래는 체크된거 글삭제
+		public int deleteClickFrboard(SqlSessionTemplate sqlSession, List<String> checkBoxArr) {
+			int deresult=sqlSession.update("frBoardMapper.deleteClickFrboard",checkBoxArr);
+			System.out.println("체크된거 삭제되었나"+deresult);
+			return deresult;
+		}
 
 
 }

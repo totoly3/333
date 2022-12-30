@@ -56,6 +56,7 @@
             <table id="boardList" class="table table-hover" align="center">
                 <thead>
                     <tr class="ct">
+                    	<th><input type="checkbox"></th>
                         <th>글번호</th>
                         <th>제목</th>
                		    <th>작성자</th>
@@ -68,13 +69,14 @@
        
                 	<c:forEach var="B" items="${list}">
 						<tr>
-	                        <td>${B.fNo }</td>
-	                        <td>${B.fTitle } </td>
-	                    	<td>${B.mId } </td>
-	                        <td>${B.fCount }</td>
-	                        <td>${B.fCreateDate }</td>
+							<td data-index="1"><input type="checkbox" name="check" id="multiCheck" value="${B.fNo}"></td>
+	                        <td data-index="2">${B.fNo }</td>
+	                        <td data-index="3">${B.fTitle } </td>
+	                    	<td data-index="4">${B.mId } </td>
+	                        <td data-index="5">${B.fCount }</td>
+	                        <td data-index="6">${B.fCreateDate }</td>
 	                        <td>
-	                        <c:if test="${not empty B.fTitleimg}">★
+	                        <c:if test="${!B.fTitleimg.isEmpty()}">★
 	                        </c:if>
 	                        </td>
 	                    </tr>
@@ -114,6 +116,14 @@
                     </c:choose>
                 </ul>
             </div>
+            
+            	<!-- 삭제버튼 구현 --> 
+          	<div id="deleteKey" style="float:right">
+   				<a class="btn btn-outline-dark"  id="checkAll">전체선택</a>
+   				<a class="btn btn-outline-dark"  id="unCheckAll">전체해제</a>
+   				<a class="btn btn-secondary"  onclick="deleteClick()">선택회원 삭제</a>
+			</div>
+            
             <br clear="both"><br>
             <form id="searchForm" action="" method="get" align="center">
                 <div class="select">
@@ -137,11 +147,59 @@
  	 <script>
  	$(function(){
  		 $("#boardList>tbody>tr").click(function(){
- 			 location.href="detail.fbo?fno="+$(this).children().eq(0).text();
+ 			 location.href="detail.fbo?fno="+$(this).children().eq(1).text();
  			 console.log(this);
  		 })
  	})
- 	 
+ 	
+
+ 	
+ 	function deleteClick(){
+ 		var checkBoxArr = [];
+
+ 		$("input:checkbox[name='check']:checked").each(function(){
+ 			checkBoxArr.push($(this).val()); //
+ 			console.log(checkBoxArr);
+ 		});
+ 		
+ 		//아래는 ajax 를 이용 
+ 		var delConfirm=confirm("선택된 글을 삭제하시겠습니까?");
+ 			
+ 			if(delConfirm==true){
+ 				$.ajax({
+ 					url : "deleteClickFrboard.ad",
+ 					data: {checkBoxArr : checkBoxArr},
+ 					success : function(result){
+ 						console.log("선택된글 삭제 통신성공");
+ 						console.log(result);
+		 					if(result == "yes"){
+		 						alert ("글 삭제 되었습니다.");
+		 						$("#multiCheck").val("");
+		 						location.href="list.fr";
+		 					}else{
+		 						alert("글 삭제 실패");
+		 					}
+						},
+					error :function(){
+						console.log("통신실패");
+					}
+ 					
+			})
+		}
+ 	}
+ 	
+ 	 //체크박스 전체선택,전체해제
+    $(document).ready(function(){
+    
+        $("#checkAll").click(function() {
+            $("input[name=check]:checkbox").prop("checked",true); // name이 chkbox인 input 타입들의 checked값을 "true"로 바꿈
+        });
+        
+        $("#unCheckAll").click(function() {
+            $("input[name=check]:checkbox").prop("checked",false); // name이 chkbox인 input 타입들의 checked값을 "false"로 바꿈
+        });
+    });
+ 	
  	 </script>
 </body>
 </html>

@@ -139,6 +139,14 @@ public class FrBoardServiceImpl implements FrBoardService{
 	}
 
 
+	//아래는 체크된 글 삭제 
+	@Override
+	public int deleteClickFrboard(List<String> checkBoxArr) {
+		int deresult=FrBoardDao.deleteClickFrboard(sqlSession,checkBoxArr);
+		return deresult;
+	}
+
+
 
 
 }

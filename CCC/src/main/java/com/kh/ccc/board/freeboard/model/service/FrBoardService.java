@@ -59,12 +59,7 @@ public interface FrBoardService {
 		//아래는 자유게시판 댓글 수정하기
 		int frReplyModify(FrBoardReply refb);
 
-
-
-
-	
-
-
-		
+		//아래는 체크된거 삭제 
+		int deleteClickFrboard(List<String> checkBoxArr);
 		
 	}
