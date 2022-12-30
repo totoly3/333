@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
-
 <mapper namespace="memberMapper">
-
-  
    <select id="loginMember" resultMap="memberResultSet" parameterType="member">
 	 SELECT * FROM TB_MEMBER
 	 WHERE M_ID=#{mId}
@@ -28,28 +25,15 @@
 	<result column="M_POINT" property="mPoint" />
 	<result column="M_STATUS" property="mStatus" />
 	</resultMap>
-
-
-
-
-
-	<!-- 관리자(회원리스트) -->
+	
+	<!-- 회원리스트 조회 (관리자페이지) -->
 	<select id="memberList" resultMap="memberResultSet">
-
-			SELECT 
-			M_NO,
-			M_ID,
-		    M_NAME,
-		    MG_NO,
-		    M_GENDER,
-		    M_POINT
+	SELECT * 
 	FROM TB_MEMBER 
 	WHERE M_STATUS = 'Y'
 	ORDER BY M_NO ASC
-
 	</select>
-	
-	
+		
 	
 	<!-- 관리자 (회원수) -->
 	<select id="selectListCount" resultType="_int">
@@ -57,10 +41,18 @@
 		SELECT COUNT(*)
 		FROM TB_MEMBER
 		WHERE M_STATUS = 'Y'
-	
 	</select>
 	
 	
+	<!-- 일반회원 check회원들 차단삭제 -->
+	<update id="deleteMemberList" parameterType="java.util.List">
+		UPDATE TB_MEMBER
+		SET M_STATUS = 'N'
+		WHERE M_NAME IN 
+		<foreach collection="list" item="checkBoxArr" open="(" close=")" separator=",">
+ 		#{checkBoxArr}
+		</foreach>
+	</update>
 
 </mapper>	
-	
+

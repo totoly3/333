@@ -26,6 +26,7 @@ import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardReply;
 import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.common.template.Pagenation;
+import com.kh.ccc.member.model.vo.Member;
 
 @Controller
 public class FrBoardController {
@@ -36,9 +37,14 @@ public class FrBoardController {
 	//view 페이지 포워딩 
 		@RequestMapping("list.fr")
 		public ModelAndView selectList(@RequestParam(value="currentPage",defaultValue="1")int currentPage,
-													ModelAndView  mv) {
+													ModelAndView  mv,HttpSession session) {
+
 			
-				
+//			Member loginUser = (Member)session.getAttribute("loginUser");
+//			int fWriterNo =loginUser.getmNo();
+	
+		
+			
 			int listCount = FrBoardService.selectListCount(); //총 게시글 개수  db에서 조회해오기 .
 			
 			int pageLimit = 10;	//하단에 페이징바 갯수
@@ -48,50 +54,47 @@ public class FrBoardController {
 			
 			//아래는 게시글 조회 
 			ArrayList<FrBoard> list = FrBoardService.selectList(pi);
-			
-//			if(flist.isEmpty()) {
-//			}else {
-//			}
-				System.out.println("list:"+list);
-				mv.addObject("list", list);
-				mv.addObject("pi",pi);  //페이징바 처리해줄 
 				
-				mv.setViewName("board/freeBoard/freeBoardListView");
-//				mv.addObject("alertMsg","비어있으").setViewName("common/errorPage");
-//	
+			System.out.println("게시글 조회 list:"+list);
+			mv.addObject("list", list);
+			mv.addObject("pi",pi);  //페이징바 처리해줄 
+			
+			mv.setViewName("board/freeBoard/freeBoardListView");
+
 			return mv;
 		}
-		//
+	
 		//아래는 게시물 상세보기 
 		@RequestMapping("detail.fbo")
 		public ModelAndView boardDetailView(int fno,ModelAndView mv,HttpSession session) {
 			System.out.println("fno"+fno);
 			
 			//아래는 조회수 증가 
-		int result=FrBoardService.increaseCount(fno);
+			int result=FrBoardService.increaseCount(fno);
 			System.out.println("리저트"+result);
-		if(result>0) {
-			//아래는 조회 
-			ArrayList<FrBoard> fb=FrBoardService.frboardDetailView(fno);
+			if(result>0) {
+				//아래는 조회 
+				ArrayList<FrBoard> fb=FrBoardService.frboardDetailView(fno);
+				
+				System.out.println("상세보기 fb :"+fb);
+				
+				//아래는 파일만 가져오기 
+				
+				ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
+				System.out.println("상세보기 frba:"+frba);
+				
+//				mv.addObject("frba",frba).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능
+				mv.addObject("frba",frba);
+				mv.addObject("fb",fb).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능
+				
+			}else {
+				System.out.println("실패");
+				mv.addObject("errorMsg","쉴패").setViewName("common/errorPage");
+			}
 			
-			System.out.println("fb :"+fb);
-			
-			//아래는 파일만 가져오기 
-			
-			ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
-			System.out.println("frba:"+frba);
-			
-			mv.addObject("frba",frba).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능 
-			mv.addObject("fb",fb).setViewName("board/freeBoard/freeBoardDetailView"); //한줄작성가능 
-			
-		}else {
-			System.out.println("실패");
-			mv.addObject("errorMsg","쉴패").setViewName("common/errorPage");
+			return mv;
 		}
-		
-		return mv;
-		}
-		
+		//////.//글쓰기
 		//아래는 글쓰기 누르면 글작성 폼으로 이동 
 		@GetMapping("insert.fpom")
 		public String insertFrPomBoard() {
@@ -102,17 +105,12 @@ public class FrBoardController {
 		//아래는 게시글 등록 (사진포함)
 				@ResponseBody
 				@RequestMapping("insert.frbo")
-				/*public ModelAndView insertFrBoard(ModelAndView mv,FrBoard fb,
-						ArrayList<MultipartFile> upfile
-						,HttpSession session) {*/
-				
 				
 				public ModelAndView insertFrBoard(ModelAndView mv,FrBoard fb,
 						@RequestParam(value="upfile", required=false) List<MultipartFile> upfile
 						,HttpSession session) {
 					
 					System.out.println("글쓰기 등록 fb은?:"+fb);
-					System.out.println("글쓰기 등록 upfile은?:"+upfile);
 					
 					ArrayList<FrBoardAttach> falist = new ArrayList<>();
 					
@@ -127,6 +125,7 @@ public class FrBoardController {
 							fab.setFaChangeName("resources/freeBoardImg/"+changeName);
 							
 							falist.add(fab);
+							
 							System.out.println("falist:"+falist);
 						}
 					}
@@ -163,9 +162,15 @@ public class FrBoardController {
 				String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
 				// 3. 뒤에 붙일 랜덤값 뽑기
 				int ranNum = (int) (Math.random() * 90000 + 10000); // 5자리 랜덤값
-				// 4. 원본 파일명으로부터 확장자명 뽑아오기
-				String ext = originName.substring(originName.lastIndexOf("."));
-				// 5. 뽑아놓은 값 전부 붙여서 파일명 만들기
+				
+				// 4. 아래는 원본 파일명으로부터 확장자명 뽑아오기
+				String ext=null; //StringIndexOutOfBoundsException 가 뜨기 때문에 아래는 파일이 있는지 없는지 확인해준다 
+				
+				if(originName != null) {
+				ext = originName.substring(originName.lastIndexOf("."));
+				}
+				
+				// 5. 뽑아놓은 값 전부 붙여서 파일명 만들기				
 				String changeName = currentTime + ranNum + ext;
 				// 6. 업로드 하고자 하는 실제 위치 경로 지정해주기 (실제 경로. 8번 changeName이랑 비교)
 				String savePath = session.getServletContext().getRealPath("/resources/freeBoardImg/");
@@ -185,28 +190,38 @@ public class FrBoardController {
 			@RequestMapping("delete.frbo")
 			public String frboardDelete(int fno, String filePath, ModelAndView mv, HttpSession session) {
 
-				int result = FrBoardService.frboardDelete(fno);
-				System.out.println("삭제할떄 fno는 가져오나 " + fno);
-
-				if (result > 0) {
-					if (!filePath.equals("")) {
-						// 파일이 있는경우 삭제
-						// 물리적인 경로 찾기
-						String realPath = session.getServletContext().getRealPath(filePath);
-
-						// 해당 경로와 연결시켜 파일객체 생성후 삭제 메소드(해당 파일 삭제)
-						new File(realPath).delete();
-						session.setAttribute("alertMsg", "삭제성공!");
+					int result = FrBoardService.frboardDelete(fno);
+					System.out.println("삭제할떄 fno는 가져오나 " + fno);
+	
+					if (result > 0) {
+						if (!filePath.equals("")) {
+							// 파일이 있는경우 삭제
+							// 물리적인 경로 찾기
+							String realPath = session.getServletContext().getRealPath(filePath);
+	
+							// 해당 경로와 연결시켜 파일객체 생성후 삭제 메소드(해당 파일 삭제)
+							new File(realPath).delete();
+							
+							//DB에 DATA 도 삭제 
+							int deResult=FrBoardService.frboardDbDelete(fno);
+							if(deResult>0) {
+								session.setAttribute("alertMsg", "삭제성공!");
+								mv.setViewName("freeBoard/freeBoardListView");
+							}else {
+								session.setAttribute("alertMsg", "삭제실패!");
+							}
+							session.setAttribute("alertMsg", "삭제성공!");
+							mv.setViewName("freeBoard/freeBoardListView");
+					}else {
+						//파일이 비어있으면
 						mv.setViewName("freeBoard/freeBoardListView");
-						}else {
-							//파일이 비어있으면
-						}
-					} else {
-						session.setAttribute("alertMsg", "삭제실패!");
-						mv.setViewName("common/errorPage");
-				}
-				return "redirect:/list.fr";
-			}
+					}
+			}else { //물리경로 삭제 실패했으면
+				session.setAttribute("alertMsg", "삭제실패!");
+				mv.setViewName("common/errorPage");
+		}
+					return "redirect:/list.fr";
+	}
 			
 			//아래는 수정하기 누르면 폼으로 가는거
 		
@@ -218,71 +233,75 @@ public class FrBoardController {
 				
 				//아래는 글번호로 가져온 frba
 				ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
-				System.out.println("수정 폼컨트롤러 에서 fb:"+fb);
-				System.out.println("수정 폼컨트롤러 에서 frba:"+frba);
-				
 				
 				mv.addObject("fb",fb);
 				mv.addObject("frba",frba);
 				mv.setViewName("board/freeBoard/freeBoardUpdateForm");
 				
 				return mv;
-			
 			}
 			
 			//아래는 수정 폼에서 등록하기 누르면~
 			@RequestMapping("update.frboen")
 //			public ModelAndView updateFrboard(ArrayList<MultipartFile> upfile,FrBoard fb,ModelAndView mv
 //												,HttpSession session)
-			public ModelAndView updateFrboard(ModelAndView mv,FrBoard fb,
-					@RequestParam(value="upfile", required=false) List<MultipartFile> upfile
-					,HttpSession session) {
-				System.out.println("오리진오냐0 ::::"+upfile.get(0).getOriginalFilename());
-				System.out.println("오리진오냐1 :::"+upfile.get(1).getOriginalFilename());
-				//새로운첨부파일이 있는지 없는지 확인 
-				System.out.println("upfile사이즈"+upfile.size());
-				
-				//아래는 파일이 하나일수도 두개일수도 있음..사이즈 만큼 돌려
-			for(int i=0; i<=1; i++) {
-				if(!upfile.get(i).getOriginalFilename().equals("")) {
-					
-					System.out.println("오리진 아랫거"+upfile.get(i).getOriginalFilename());
-					//기존 첨부파일의 이름이 담겨있는 경우
-						new File(session.getServletContext().getRealPath(upfile.get(i).getOriginalFilename())).delete();
-				}
-				for(int j=0; j<=1; j++) {
+			
+			public ModelAndView updateFrboard(ModelAndView mv
+											 ,FrBoard fb
+											 ,@RequestParam(value="upfile"
+											 ,required=false) List<MultipartFile> upfile
+											 ,HttpSession session) {
+				int fno = fb.getfNo();
+				//아래는 게시판 글번호를 이용해서 게시글의 파일 정보를 가져온다 . 
+				ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
+			     
+				ArrayList<FrBoardAttach> newfrba = new ArrayList<>();
+				//아래는 파일이 하나일수도 두개일수도 있음..사이즈 만큼 돌려 두개면 두번 돌려
+				for(int i=0; i<upfile.size(); i++) {
+					//아래는 내가 올린 오리진 파일이 있으면(비어있지않으면)
+					if(!upfile.get(i).getOriginalFilename().equals("")) {
+						//내가올린 파일이있으면 반복문 돌려  내가 올린 파일 사이즈만큼!
+						for(int k=0; k<frba.size(); k++) {
+							//아래는 만약 올린파일이 있으면 삭제 
+							if(frba.get(k).getFaOrginName()!=null) {
+								new File(session.getServletContext().getRealPath(frba.get(i).getFaChangeName())).delete();
+							}
+						}
+					}
+				}	
+				////
+				//아래는 이제 새로운 첨부파일 업로드 할껀데  업로드 파일 몇개야 ?
+				for(int j=0; j<upfile.size(); j++) {
 					//새로운 첨부파일 업로드 
 					String changeName = saveFile(upfile.get(j),session);//아래에서 작업한 saveFile메소드 사용 
-					System.out.println("changeName:"+changeName);
-					//attach 빈거 하나 만들고 ! 
-					ArrayList<FrBoardAttach> frba = new ArrayList<>();
-					
-					
+					System.out.println("changeName은?:"+changeName);
+				
+					//아래는 attach 빈거 하나 만들고 ! 
 					FrBoardAttach fat = new FrBoardAttach();
-					
-					fat.setFaChangeName("resources/board/freeBoard/"+changeName);
+					//빈 attach 에  경로 붙여진+changename
+					System.out.println("구분선 fno*/*/*/*/*/*/*/*"+fno);
+					fat.setfNo(fno);
+					fat.setFaNo(frba.get(j).getFaNo());
+					fat.setFaChangeName("resources/freeBoardImg/"+changeName);
 					fat.setFaOrginName(upfile.get(j).getOriginalFilename());
-					System.out.println("fatfat:"+fat);
 					
-					frba.add(fat);
-					System.out.println("frba.get(i): 파일갯수"+frba.get(j)); 
-					
-					System.out.println("업데이트 직전에:"+fat);
-					System.out.println("업데이트 직전의 frba:"+frba);
-					System.out.println("업데이트 직전의 fb:"+fb);
-					System.out.println("frba 사이즈"+frba.size());
+					newfrba.add(fat);
+					System.out.println("newfrb는?????? :"+newfrba);
+				}
 				
 					//파일이 있으면
-						if(frba.size()>0) {
+						if(!frba.isEmpty()) {
+							System.out.println("★★★★★★★★★★★★★★★★★★★★★");
 							//아래는 글만 변경 (첨부파일은 없고) 
 							int result1 =FrBoardService.updateFrboard1(fb);
-							//아래는 첨부파일이있고 글도 변경 
-							int result2 = FrBoardService.updateFrboard2(frba);
+							//아래는 첨부파일만 변경
+							int result2 = FrBoardService.updateFrboard2(newfrba);
 							int result3=result1+result2;
 							
 							if(result3>0) {
+								System.out.println("newfrba 아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ"+newfrba);
 								mv.addObject("fb",fb);
-								mv.addObject("frba",frba);
+								mv.addObject("frba",newfrba);
 								
 								//여기 아래에서 fb.getfno 를 가져가는 이유가 뭘까 ..
 								mv.setViewName("redirect:/detail.fbo?fno="+fb.getfNo());
@@ -292,6 +311,7 @@ public class FrBoardController {
 							
 						}else {
 							//글만변경
+							System.out.println("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆");
 							int result1 =FrBoardService.updateFrboard1(fb);
 							if(result1>0) {
 								mv.addObject("fb",fb);
@@ -301,11 +321,9 @@ public class FrBoardController {
 								mv.addObject("errorMsg", "게시글  글 수정 실패!").setViewName("common/errorPage");
 							}
 						}
+					//상세보기로 이동
+					return mv;
 				}
-			}
-			//상세보기로 이동
-			return mv;
-		}
 			
 			//아래는 게시판 detail 뷰 댓글 전체조회 
 			@ResponseBody
@@ -316,7 +334,6 @@ public class FrBoardController {
 			
 				return new Gson().toJson(rlist);
 			}
-			
 			
 			//아래는 댓글 등록 
 			@ResponseBody
@@ -330,4 +347,14 @@ public class FrBoardController {
 				return result>0 ? "yes" : "no";
 			}
 			
+			//아래는 댓글 수정 
+			@RequestMapping("updateFrReply.fr")
+			public String frReplyModify(ModelAndView mv,FrBoardReply refb) {
+				
+				int result=FrBoardService.frReplyModify(refb);
+				
+				//아래 결과가  0이면 N  , 1이면 Y 
+				return (result == 0) ? "NNNNN" : "NNNNY";
+				
+			}
 	}	

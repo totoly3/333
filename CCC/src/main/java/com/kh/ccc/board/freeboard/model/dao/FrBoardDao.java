@@ -12,6 +12,7 @@ import com.kh.ccc.board.freeboard.model.vo.FrBoard;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardReply;
 import com.kh.ccc.common.model.vo.PageInfo;
+import com.kh.ccc.member.model.vo.Member;
 
 @Repository
 public class FrBoardDao {
@@ -27,6 +28,7 @@ public class FrBoardDao {
 		
 		RowBounds rowBounds = new RowBounds(offset,limit);
 		ArrayList<FrBoard> flist=(ArrayList)sqlSession.selectList("frBoardMapper.selectList",null,rowBounds);
+
 		return flist;
 	}
 
@@ -75,6 +77,13 @@ public class FrBoardDao {
 			System.out.println("삭제성공 이면 1"+delete);
 			return delete;
 		}
+		
+		//아래는 db데이터 삭제 
+		public int frboardDbDelete(SqlSessionTemplate sqlSession, int fno) {
+			int deResult=sqlSession.update("frBoardMapper.frboardDbDelete",fno);
+			System.out.println("db삭제dao deResult는 : "+deResult);
+			return deResult;
+		}
 			
 	//아래는 댓글 조회 	
 		public ArrayList<FrBoardReply> detailFrBoardReviewSelect(SqlSessionTemplate sqlSession, int fno) {
@@ -95,9 +104,30 @@ public class FrBoardDao {
 		}
 
 		//아래는 자유게시판 수정 (파일까지 수정 )
-		public int updateFrboard2(SqlSessionTemplate sqlSession, ArrayList<FrBoardAttach> frba) {
-			int result2=sqlSession.update("frBoardMapper.updateFrboard2",frba);
+		public int updateFrboard2(SqlSessionTemplate sqlSession, ArrayList<FrBoardAttach> newfrba) {
+			System.out.println("여기는 dao 에 파일 수정 newfrba:"+newfrba);
+			int result2=1;
+			
+			for(int i=0; i<newfrba.size(); i++) {
+				result2*=sqlSession.update("frBoardMapper.updateFrboard2",newfrba.get(i));
+			}
+			
+//			result2*=sqlSession.update("frBoardMapper.updateFrboard2",frba.get(i));
+			
+			System.out.println("여기는 dao 에 파일 수정 result2:"+result2);
 			return result2;
 		}
+		
+		//아래는 자유게시판 댓글 수정 
+		public int frReplyModify(SqlSessionTemplate sqlSession, FrBoardReply refb) {
+			
+			System.out.println("FrBoardReply refb은?"+refb);
+			
+			int result =sqlSession.update("frBoardMapper.frReplyModify",refb);
+		
+			System.out.println("댓글수정 result dao: "+result);
+			return result;
+		}
+
 
 }

@@ -9,6 +9,7 @@ import com.kh.ccc.board.freeboard.model.vo.FrBoard;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardReply;
 import com.kh.ccc.common.model.vo.PageInfo;
+import com.kh.ccc.member.model.vo.Member;
 
 public interface FrBoardService {
 
@@ -19,7 +20,7 @@ public interface FrBoardService {
 		
 		
 		//게시글 리스트 조회 
-		ArrayList<FrBoard>selectList(PageInfo pi);
+		ArrayList<FrBoard> selectList(PageInfo pi);
 
 
 		//아래는 게시글 조회수 증가 
@@ -40,20 +41,30 @@ public interface FrBoardService {
 		//아래는 자유게시판 글 삭제 
 		int frboardDelete(int fno);
 
+		//아래는 db데이터 삭제 
+		int frboardDbDelete(int fno);
+		
 		//댓글 조회 
 		ArrayList<FrBoardReply> detailFrBoardReviewSelect(int fno);
 
 		//댓글등록
 		int insertFrReply(FrBoardReply refb);
 
-//		//아래는 수정하기 
-//		int updateFrboard(FrBoard fb, ArrayList<FrBoardAttach> frba);
-
 		//아래는 자유게시판 수정하기(글만)
 		int updateFrboard1(FrBoard fb);
 
 		//아래는 자유게시판 수정하기(파일)
 		int updateFrboard2(ArrayList<FrBoardAttach> frba);
+		
+		//아래는 자유게시판 댓글 수정하기
+		int frReplyModify(FrBoardReply refb);
 
 
-}
+
+
+	
+
+
+		
+		
+	}

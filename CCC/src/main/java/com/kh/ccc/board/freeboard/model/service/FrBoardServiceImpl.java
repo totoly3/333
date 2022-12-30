@@ -13,6 +13,7 @@ import com.kh.ccc.board.freeboard.model.vo.FrBoard;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardReply;
 import com.kh.ccc.common.model.vo.PageInfo;
+import com.kh.ccc.member.model.vo.Member;
 @Service
 public class FrBoardServiceImpl implements FrBoardService{
 
@@ -31,12 +32,14 @@ public class FrBoardServiceImpl implements FrBoardService{
 		return listCount;
 	}
 	
+	
+	
 	//아래는 게시글 리스트 조회 
 	@Override
 	public ArrayList<FrBoard> selectList(PageInfo pi) {
 		return FrBoardDao.selectList(sqlSession,pi);
-		
 	}
+	
 //	//아래는 //게시글 상세 조회
 	@Override
 	public int increaseCount(int fno) {
@@ -90,6 +93,13 @@ public class FrBoardServiceImpl implements FrBoardService{
 		return result;
 	}
 	
+	//아래는 db데이터 삭제 
+	@Override
+	public int frboardDbDelete(int fno) {
+		int deResult=FrBoardDao.frboardDbDelete(sqlSession,fno);
+		System.out.println("deResult 삭제되었으면1"+deResult);
+		return deResult;
+	}
 	
 	//댓글조회
 	@Override
@@ -116,12 +126,18 @@ public class FrBoardServiceImpl implements FrBoardService{
 	
 	//아래는 자유게시판 파일수정
 	@Override
-	public int updateFrboard2(ArrayList<FrBoardAttach> frba) {
-		int result2 = FrBoardDao.updateFrboard2(sqlSession,frba);
+	public int updateFrboard2(ArrayList<FrBoardAttach> newfrba) {
+		int result2 = FrBoardDao.updateFrboard2(sqlSession,newfrba);
 		return result2;
 	}
-
 	
+	//아래는 자유게시판 댓글 수정
+	@Override
+	public int frReplyModify(FrBoardReply refb) {
+		int frlist=FrBoardDao.frReplyModify(sqlSession,refb);
+		return frlist;
+	}
+
 
 
 

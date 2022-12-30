@@ -8,9 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ccc.board.charBoard.model.dao.CharBoardDao;
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
+import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
+import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.common.model.vo.PageInfo;
+import com.kh.ccc.common.model.vo.Ward;
 
 @Service
 public class CharBoardServiceImpl implements CharBoardService {
@@ -31,15 +34,25 @@ public class CharBoardServiceImpl implements CharBoardService {
 		return boardDao.selectList(sqlSession, pi);
 	}
 	
-	//게시글 등록 (게시글,첨부파일)
+	//게시글 등록 (게시글,첨부파일,캐릭터)
 	@Override
-	public int insertCharBoard(CharBoard cb,ArrayList<CharAttach> list) {
+	public int insertCharBoard(CharBoard cb, ArrayList<CharAttach> list, Character c) {
 		
-		int result = boardDao.insertBoard(sqlSession,cb);
-		int result2 = boardDao.insertAttach(sqlSession,list);
-		int finalResult = result * result2;
+		//캐릭터 등록
+		int characterResult = boardDao.insertCharacter(sqlSession,c);
+		//게시글 글 정보 등록
+		int boardResult = boardDao.insertBoard(sqlSession,cb);
+		//게시글 첨부파일 등록
+		int attachResult = boardDao.insertAttach(sqlSession,list);
+				
+		int finalReult = (characterResult * boardResult * attachResult) > 0 ? 1 : 0;
 		
-		return finalResult;
+		return finalReult;
+	}
+	//캐릭터 번호 생성
+	@Override
+	public int characterMaxNum() {
+		return boardDao.characterMaxNum(sqlSession);
 	}
 	
 	//1.게시글 조회수 증가
@@ -47,19 +60,23 @@ public class CharBoardServiceImpl implements CharBoardService {
 	public int increseCount(int bno) {
 		return boardDao.increaseCount(sqlSession, bno);
 	}
-	//2.게시글 상세 조회
+	//2.게시글 상세 조회 (글)
 	@Override
-	public ArrayList<CharBoard> selectBoard(int bno) {
+	public CharBoard selectBoard(int bno) {		
 		return boardDao.selectBoard(sqlSession, bno);
+	}
+	//3.게시글 상세조회 (첨부파일)
+	public ArrayList<CharAttach> selectAttach(int bno){
+		return boardDao.selectAttach(sqlSession, bno);
 	}
 	
 	//게시글 수정
 	@Override
-	public int updateBoard(CharBoard cb) {
-		//게시글 내용 수정
+	public int updateBoard(CharBoard cb, ArrayList<CharAttach> newCaList) {
+		//게시글 수정 (글)
 		int result = boardDao.updateBoard(sqlSession, cb);
-		//게시글 첨부파일 수정
-		int result2 = boardDao.updateAttach(sqlSession, cb);
+		//게시글 수정 (첨부파일)
+		int result2 = boardDao.updateAttach(sqlSession, newCaList);
 		
 		int finalResult = result * result2;
 		
@@ -75,7 +92,7 @@ public class CharBoardServiceImpl implements CharBoardService {
 		int result2 = boardDao.deleteAttach(sqlSession, bno);
 		
 		int finalResult = result * result2;
-		
+	
 		return finalResult;
 	}
 	
@@ -105,8 +122,8 @@ public class CharBoardServiceImpl implements CharBoardService {
 	
 	//댓글 번호 생성
 	@Override
-	public int maxNum() {
-		return boardDao.maxNum(sqlSession);
+	public int replyMaxNum() {
+		return boardDao.replyMaxNum(sqlSession);
 	}
 
 	//대댓글 (부모댓글의 그룹번호와 계층 알아오기)
@@ -127,5 +144,42 @@ public class CharBoardServiceImpl implements CharBoardService {
 		boardDao.updateStep(sqlSession, cr);
 	}
 	
+	//좋아요 조회
+	@Override
+	public CharLike selectLike(CharLike cl) {
+		return boardDao.selectLike(sqlSession, cl);
+	}
+
+	//좋아요 등록
+	@Override
+	public int insertLike(CharLike cl) {
+		//TB_CHARACTER_LIKE에 좋아요 등록
+		int insertTbCharLike = boardDao.insertTbCharLike(sqlSession, cl);
+		//TB_CHARACTER에 좋아요 등록
+		int insertTbChar = boardDao.insertTbChar(sqlSession, cl);
+		//TB_CHARACTER_BOARD 좋아요 등록
+		int insertTbCharBoard = boardDao.insertTbCharBoard(sqlSession, cl);
 	
+		return insertTbCharLike * insertTbChar * insertTbCharBoard > 0 ? 1 : 0;
+	}
+	
+	//좋아요 삭제
+	@Override
+	public int deleteLike(CharLike cl) {
+		//TB_CHARACTER_LIKE에 좋아요 취소
+		int deleteTbCharLike = boardDao.deleteTbCharLike(sqlSession, cl);
+		//TB_CHARACTER에 좋아요 취소
+		int deleteTbChar = boardDao.deleteTbChar(sqlSession, cl);
+		//TB_CHARACTER_BOARD 좋아요 취소
+		int deleteTbCharBoard = boardDao.deleteTbCharBoard(sqlSession, cl);
+		
+		return deleteTbCharLike * deleteTbChar * deleteTbCharBoard > 0 ? 1 : 0;
+	}
+
+	//비속어 필터링
+	@Override
+	public ArrayList<Ward> badLanguage() {
+		return boardDao.badLanguage(sqlSession);
+	}
+
 }

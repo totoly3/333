@@ -2,8 +2,11 @@ package com.kh.ccc.admin.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
@@ -17,8 +20,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.ccc.admin.model.service.AdminService;
+import com.kh.ccc.admin.model.vo.Admin;
 import com.kh.ccc.member.model.vo.Member;
 
 
@@ -30,7 +37,7 @@ public class AdminController {
 		private AdminService adminService;
 	
 	
-		//전달
+		//회원관리로 전달
 		@RequestMapping("mainAdmin.ad")
 		public String mainAdmin() {
 		
@@ -55,7 +62,7 @@ public class AdminController {
 		
 		return "admin/memberAdmin";
 		
-	}
+		}
 	
 	
 		//엑셀
@@ -128,6 +135,70 @@ public class AdminController {
 		}
     
 	
-	}
+		}
+		
+		
+		//관리자리스트 조회 (특수관리자페이지)
+		@RequestMapping("adminList.ad")
+		public String selectAdmin(Model model) {
+			
+		ArrayList<Admin> aList = adminService.adminList();
+			
+		model.addAttribute("aList",aList);	
+			
+		return "admin/selectAdmin";
+
+		}
+		
 	
+		//관리자 상세조회 (특수관리자페이지)
+		@RequestMapping("adminDetail.ad")
+		public String detailAdmin(int ano,Model model) {
+			
+			//System.out.println("번호는:"+ano);
+			
+			Admin a = adminService.detailAdmin(ano);
+			
+			model.addAttribute("a",a);	
+			
+			return "admin/testDetail";
+
+			
+		}
+		
+		
+		//일반회원 check회원들 차단삭제
+		@ResponseBody
+		@RequestMapping("deleteClickMember.ad")
+		public String deleteClick(HttpServletRequest request,@RequestParam(value="checkBoxArr[]") List<String> checkBoxArr) throws Exception {
+			
+			System.out.println(checkBoxArr);
+			
+			//String.join사용 안함 -> String names = String.join(",", checkBoxArr);
+			
+			//차단삭제
+			int result = adminService.deleteMemberList(checkBoxArr);
+			
+			//ArrayList<Member> mList = adminService.memberList();
+			//System.out.println("삭제후 list: "+mList);
+			
+			
+			return result>0? "yes" : "no";
+		
+		}
+		
+		
+		
+		//일반회원 한번에 정보변경
+		@ResponseBody
+		@RequestMapping("updateClickMember.ad")
+		public String updateClick(HttpServletRequest request,@RequestParam(value="checkBoxArr[]") List<String> checkBoxArr) throws Exception {
+			
+			System.out.println(checkBoxArr);
+			
+			return null;
+			
+		}
+
+
 }

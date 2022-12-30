@@ -37,26 +37,26 @@
             <h2>게시글 상세보기</h2>
             <br>
 
-            <a class="btn btn-secondary" style="float:right;" href="">목록으로</a>
+            <a class="btn btn-secondary" style="float:right;" href="list.ch">목록으로</a>
             <br><br>
 
             <table id="contentArea" algin="center" class="table">
                 <tr>
                     <th width="100">제목</th>
-                    <td colspan="3">${ cbList.get(0).boardTitle }</td>
+                    <td colspan="3">${ cb.boardTitle }</td>
                 </tr>
                 <tr>
                     <th>작성자</th>
-                    <td>admin</td>
+                    <td colspan="1">${ cb.boardWriterName }</td>
                     <th>작성일</th>
-                    <td>${ cbList.get(0).createDate }</td>
+                    <td width="120">${ cb.createDate }</td>
                 </tr>
                 <tr>
                     <th>첨부파일</th>
                     <c:choose>
-                    	<c:when test="${ not empty cbList }">
+                    	<c:when test="${ not empty caList }">
 			                    <td colspan="3">
-                    				<c:forEach var="c" items="${ cbList }">
+                    				<c:forEach var="c" items="${ caList }">
 			                       		<a href="${ c.changeName }" download="${ c.originName }">${ c.originName }</a>
                     				</c:forEach>
 			                    </td>
@@ -67,26 +67,31 @@
 	                    	</td>
 	                    </c:otherwise>
                     </c:choose>
-                    
                 </tr>
                 <tr>
-                    <th>내용</th>
+                    <th width="120">캐릭터 이름</th>
+                    <td colspan="3">${ cb.charName }</td>
+                	<th style="text-align:center;"></th>
+                	<td width="150"><button id="likeBtn" onclick="likeGo();" class="btn btn-success">좋아요</button></td>
+                </tr>
+                <tr>
+                    <th>캐릭터 설명</th>
                     <td colspan="3"></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><p style="height:150px;">${ cbList.get(0).boardContent }</p></td>
+                    <td colspan="4"><p style="height:150px;">${ cb.boardContent }</p></td>
                 </tr>
                 <tr>
-                	<th>이미지</th>
-                	<td colspan="3"></td>
+                	<th width="130">캐릭터 이미지</th>
+                	<td colspan="1"></td>
                 </tr>
                 <c:choose>
-                	<c:when test="${ not empty cbList }">
-                		<td colspan="3">
-                			<c:forEach var="c" items="${ cbList }">
-                				<img style="margin: auto;" alt="" src="${ c.changeName }" width="400px" height="300px">
-                			</c:forEach>
-                		</td>
+                	<c:when test="${ not empty caList }">
+	               		<td colspan="3">
+	               			<c:forEach var="c" items="${ caList }">
+	                				<img style="margin: auto;" alt="" src="${ c.changeName }" width="400px" height="300px">
+	               			</c:forEach>
+	               		</td>      		                			
                 	</c:when>
                 	<c:otherwise>
                 		<td colspan="3">
@@ -101,28 +106,52 @@
             <div align="center">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
                 <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
-                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
+                <a class="btn btn-danger" onclick="return postFormSubmit(2);">삭제하기</a>
             </div>
             <br><br>
             
             <!-- 동적으로 DOM요소  만들어 글 번호와 파일 경로를 Controller로 submit하기 -->
             <script>
             	function postFormSubmit(num){
-            		let form = $("<form>");
-            		let subBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${ cbList.get(0).boardNo }");
-        			let subFilePath = $("<input>").prop("type","hidden").prop("name","filePath").prop("value","${ cbList.get(0).changeName }");
-        			
-        			form.append(subBno).append(subFilePath);
-         			
-        			if(num == 1){
-        				form.prop("action","updateForm.ch");
-        			}else{
-        				form.prop("action","delete.ch");
-        			}
-        			
-        			$("body").append(form);
-        			
-        			form.prop("method","POST").submit();
+            		//삭제하기 버튼을 눌렀을 경우
+            		if(num == 2){
+	            		var result = confirm("정말로 삭제하시겠습니까?");            			
+	            		
+	            		if(result){
+		            		let form = $("<form>");
+		            		let subBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${ cb.boardNo }");
+		        			
+		        			form.append(subBno);
+		         			
+		        			if(num == 1){
+		        				form.prop("action","updateForm.ch");
+		        			}else{
+		        				form.prop("action","delete.ch");
+		        			}
+		        			
+		        			$("body").append(form);
+		        			
+		        			form.prop("method","POST").submit();
+	            		}
+	            		return false;
+            		
+            		}
+            		else{ //수정하기 버튼을 눌렀을 경우
+            			let form = $("<form>");
+	            		let subBno = $("<input>").prop("type","hidden").prop("name","bno").prop("value","${ cb.boardNo }");
+	        			
+	        			form.append(subBno);
+	         			
+	        			if(num == 1){
+	        				form.prop("action","updateForm.ch");
+	        			}else{
+	        				form.prop("action","delete.ch");
+	        			}
+	        			
+	        			$("body").append(form);
+	        			
+	        			form.prop("method","POST").submit();
+            		}
             	}
             </script>
 
@@ -200,7 +229,54 @@
         
         	$(function(){
         		selectReplyList();
+        		selectLike();
         	});
+        	//좋아요 조회
+     		function selectLike(){
+     			$.ajax({
+     				url : "selectLike.ch",
+     				data : {
+     					refBno : ${ cb.boardNo },
+     					memberNo : ${ loginUser.mNo },
+     					charNo : ${ cb.charNo }
+     				},
+     				success : function(result){
+     					
+     					if(result == "NNNNY"){
+     						$("#likeBtn").attr("class","btn btn-danger");
+     					}else{
+     						$("#likeBtn").attr("class","btn btn-success");     						
+     					}
+     					
+     				},
+     				error : function(){
+     					console.log("통신실패!");
+     				}
+     			})
+     		}
+        	//좋아요 등록 및 취소
+        	function likeGo(){
+        		$.ajax({
+        			url : "insertLike.ch",
+        			data : {
+	       				refBno : ${ cb.boardNo },
+	        			memberNo : ${ loginUser.mNo },
+						charNo : ${ cb.charNo }
+        			},
+        			success : function(result){
+        				console.log("통신성공!");
+        				
+        				if(result == "NNNNY"){
+        					$("#likeBtn").attr("class","btn btn-danger");
+        				}else{
+        					$("#likeBtn").attr("class","btn btn-success");        					
+        				}
+        			},
+        			error : function(){
+        				console.log("통신실패...");
+        			}
+        		})
+        	}
         	
         	//댓글 등록
         	function insertReply(){
@@ -212,7 +288,8 @@
 	        		$.ajax({
 	        			url : "replyAnswer.ch",
 	        			data : {
-	        				refBno : ${ cbList.get(0).boardNo },
+	        				refBno : ${ cb.boardNo },
+	        				reWriterNo : ${ loginUser.mNo },
 	        				reContent : reContent
 	        			},
 	        			success : function(result){
@@ -246,13 +323,13 @@
         	function selectReplyList(){
         		$.ajax({
         			url : "selectRlist.ch",
-        			data : { boardNo : ${ cbList.get(0).boardNo } },
+        			data : { boardNo : ${ cb.boardNo } },
         			success : function(reList){
         				let resultStr = "";
         				
         				for(var i=0; i<reList.length; i++){
         					resultStr += "<tr>"
-        							   + "<th>"+reList[i].reWriter+"</th>"
+        							   + "<th>"+reList[i].reWriterName+"</th>"
         							   + "<td>"+reList[i].reContent+"</td>"
         							   + "<td>"+reList[i].reCreateDate+"</td>"
         							   + "<td><button class='btn btn-outline-success' data-toggle='modal' data-target='#reReply'"
@@ -278,13 +355,12 @@
         		$.ajax({
         			url : "updateReply.ch",
         			data : {
-        				refBno : ${ cbList.get(0).boardNo },
+        				refBno : ${ cb.boardNo },
         				reNo : reUpdateNo,
         				reContent : $("#updateContent").val()
         			},
         			type : "post",
         			success : function(result){
-        				
         				if(result == "NNNNY"){
 	        				$("#updateContent").val("");
 	        				$("#reply_cnt").html("(0 / 50)");
@@ -292,7 +368,6 @@
         				}else{
         					alert("댓글 수정에 실패했습니다.");
         				}
-        				
         			},
         			error : function(){
         				console.log("통신실패!");
@@ -305,8 +380,9 @@
         		$.ajax({
         			url : "replyAnswer.ch",
         			data : {
-        				refBno : ${ cbList.get(0).boardNo },
+        				refBno : ${ cb.boardNo },
         				reNo : reUpdateNo,
+        				reWriterNo : ${ loginUser.mNo },
         				reContent : $("#reAnswerContent").val()
         			},
         			type : "post",
@@ -319,7 +395,6 @@
         				}else{
         					alert("댓글 등록에 실패했습니다.");
         				}
-        				
         			},
         			error : function(){
         				console.log("통신실패!");
@@ -332,7 +407,8 @@
         		$.ajax({
         			url : "deleteReply.ch",
         			data : {
-        				refBno : ${ cbList.get(0).boardNo },
+        				refBno : ${ cb.boardNo },
+        				reWriterNo : ${ loginUser.mNo },
         				reNo : reNo
         			},
         			success : function(result){
@@ -358,7 +434,7 @@
 					$(this).val($(this).val().substring(0, 50));
 					$('#reply_cnt').html("(50 / 50)");
 				}
-			})
+			});
         	
 			//대댓글 수정 글자 수 제한
 			$('#reAnswerContent').on('keyup',function(){
@@ -368,9 +444,7 @@
 					$(this).val($(this).val().substring(0, 50));
 					$('#reReply_cnt').html("(50 / 50)");
 				}
-			});
-        	
-        	
+			});	
         </script>
 </body>
 </html>
