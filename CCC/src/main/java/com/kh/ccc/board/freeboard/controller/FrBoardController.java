@@ -109,10 +109,8 @@ public class FrBoardController {
 //					Member loginUser = (Member)session.getAttribute("loginUser");
 //					int fWriterNo =loginUser.getmNo();
 					
-					System.out.println("글쓰기 등록 fb은?:"+fb);
 					//ArrayList로  첨부파일들을 담음.
 					ArrayList<FrBoardAttach> falist = new ArrayList<>();
-					System.out.println("업파일????????????????"+upfile);
 			
 					
 					//아래는 파일 갯수만큼  반복문을 돌려줌
@@ -129,7 +127,6 @@ public class FrBoardController {
 							
 							falist.add(fab);
 							
-							System.out.println("falist:"+falist);
 						}
 					}
 				
@@ -137,7 +134,6 @@ public class FrBoardController {
 						int result1=FrBoardService.insertFrBoardOnlyWrite(fb);
 						
 							if(result1>0) {
-								System.out.println("등록완료");
 								session.setAttribute("alertMsg", "게시글 등록 성공!");
 								mv.setViewName("redirect:/list.fr");
 							}else {
@@ -147,7 +143,6 @@ public class FrBoardController {
 						int finalResult=FrBoardService.insertFrBoard(fb,falist);
 						
 							if(finalResult>0) {
-								System.out.println("등록완료");
 								session.setAttribute("alertMsg", "게시글 등록 성공!");
 								mv.setViewName("redirect:/list.fr");
 							}else {
@@ -195,7 +190,6 @@ public class FrBoardController {
 			public String frboardDelete(int fno, String filePath, ModelAndView mv, HttpSession session) {
 
 					int result = FrBoardService.frboardDelete(fno);
-					System.out.println("삭제할떄 fno는 가져오나 " + fno);
 	
 					if (result > 0) {
 						if (!filePath.equals("")) {
@@ -278,24 +272,20 @@ public class FrBoardController {
 				for(int j=0; j<upfile.size(); j++) {
 					//새로운 첨부파일 업로드 
 					String changeName = saveFile(upfile.get(j),session);//아래에서 작업한 saveFile메소드 사용 
-					System.out.println("changeName은?:"+changeName);
 				
 					//아래는 attach 빈거 하나 만들고 ! 
 					FrBoardAttach fat = new FrBoardAttach();
 					//빈 attach 에  경로 붙여진+changename
-					System.out.println("구분선 fno*/*/*/*/*/*/*/*"+fno);
 					fat.setfNo(fno);
 					fat.setFaNo(frba.get(j).getFaNo());
 					fat.setFaChangeName("resources/freeBoardImg/"+changeName);
 					fat.setFaOrginName(upfile.get(j).getOriginalFilename());
 					
 					newfrba.add(fat);
-					System.out.println("newfrb는?????? :"+newfrba);
 				}
 				
 					//파일이 있으면
 						if(!frba.isEmpty()) {
-							System.out.println("★★★★★★★★★★★★★★★★★★★★★");
 							//아래는 글만 변경 (첨부파일은 없고) 
 							int result1 =FrBoardService.updateFrboard1(fb);
 							//아래는 첨부파일만 변경
@@ -303,7 +293,6 @@ public class FrBoardController {
 							int result3=result1+result2;
 							
 							if(result3>0) {
-								System.out.println("newfrba 아ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ"+newfrba);
 								mv.addObject("fb",fb);
 								mv.addObject("frba",newfrba);
 								
@@ -315,7 +304,6 @@ public class FrBoardController {
 							
 						}else {
 							//글만변경
-							System.out.println("☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆");
 							int result1 =FrBoardService.updateFrboard1(fb);
 							if(result1>0) {
 								mv.addObject("fb",fb);
@@ -333,7 +321,6 @@ public class FrBoardController {
 			@ResponseBody
 			@RequestMapping(value="frlist.fbo",produces="application/json; charset=UTF-8")
 			public String detailFrBoardReviewSelect(int fno, ModelAndView mv) {
-				System.out.println("댓글조회 번호가져오나 fno:"+fno);				
 				ArrayList<FrBoardReply> rlist=FrBoardService.detailFrBoardReviewSelect(fno);
 			
 				return new Gson().toJson(rlist);
@@ -344,7 +331,6 @@ public class FrBoardController {
 			@RequestMapping(value="frInsert.fbo",produces="text/html; charset=UTF-8")
 			public String insertFrReply(FrBoardReply refb) {
 	
-				System.out.println("refb"+refb);
 				int result = FrBoardService.insertFrReply(refb);
 
 				System.out.println("댓글등록 성공했으면1: "+result); 
@@ -367,7 +353,6 @@ public class FrBoardController {
 			@RequestMapping("deleteClickFrboard.ad")
 			public String deleteClickFrboard(HttpServletRequest request,@RequestParam(value="checkBoxArr[]") List<String> fNo) throws Exception {
 					
-				System.out.println("checkBoxArr :"+fNo);
 				
 				int result = FrBoardService.deleteClickFrboard(fNo);
 				
