@@ -287,9 +287,9 @@
 	    	    	$.ajax({
 			    		url : "frInsert.fbo",
 			    		data : {
-			    				fNo : ${fb.get(0).fNo},
-			    				frContent :$vali.val()
-// 			    				frWriter : "${loginUser.userId}" 
+			    				fNo : ${fb.get(0).fNo}
+			    				,frContent :$vali.val()
+ 			    				,frWriter : ${fb.get(0).mId}
 			    					//admin 문자 자체로 나오기때문에 문자열 처리를 해줘야함  하지않으면 변수로인식하기때문임.
 			    			},
 		    			success : function(result){
