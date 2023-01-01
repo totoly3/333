@@ -11,7 +11,6 @@
 		<typeAlias type="com.kh.ccc.member.model.vo.Member" alias="member"/>
 		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoard" alias="FrBoard"/>
 		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoardAttach" alias="frAttBoard"/>
-
 		<typeAlias type="com.kh.ccc.mypage.model.vo.MyCharacter" alias="myCharacter"/>
 		<typeAlias type="com.kh.ccc.mypage.model.vo.MyCharacterAttach" alias="myCharacterAttach"/>
 		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoardReply" alias="FrBoardReply"/>
@@ -20,7 +19,10 @@
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharAttach" alias="charAttach"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharLike" alias="charLike"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharReply" alias="charReply"/>
+		<typeAlias type="com.kh.ccc.order.model.vo.MyOrderDetail" alias="myOrderDetail"/>
 		<typeAlias type="com.kh.ccc.order.model.vo.OrderDetail" alias="orderDetail"/>
+		<typeAlias type="com.kh.ccc.order.model.vo.Goods" alias="goods"/>
+		<typeAlias type="com.kh.ccc.order.model.vo.DeliveryDetail" alias="deliveryDetail" />
 	</typeAliases>
 	
 	<mappers>

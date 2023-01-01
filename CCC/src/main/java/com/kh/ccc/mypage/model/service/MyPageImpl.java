@@ -1,6 +1,7 @@
 package com.kh.ccc.mypage.model.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,13 @@ import org.springframework.stereotype.Service;
 import com.kh.ccc.mypage.model.dao.MyPageDao;
 import com.kh.ccc.mypage.model.vo.MyCharacter;
 import com.kh.ccc.mypage.model.vo.MyCharacterAttach;
+import com.kh.ccc.order.model.vo.DeliveryDetail;
+import com.kh.ccc.order.model.vo.Goods;
+import com.kh.ccc.order.model.vo.MyOrderDetail;
 import com.kh.ccc.order.model.vo.Order;
+import com.kh.ccc.order.model.vo.OrderDetail;
+
+import oracle.net.aso.s;
 
 @Service
 public class MyPageImpl implements MyPageService{
@@ -33,9 +40,9 @@ public class MyPageImpl implements MyPageService{
 		
 		//게시글,리스트 등록
 		@Override
-		public int mycharInsert(MyCharacter cha, ArrayList<MyCharacterAttach> mcalist) {
+		public int mycharInsert(MyCharacter cha, ArrayList<MyCharacterAttach> mchalist) {
 			
-			int result=myPageDao.mycharInsert(sqlSession,cha,mcalist); //게시글 넣은 결과
+			int result=myPageDao.mycharInsert(sqlSession,cha,mchalist); //게시글 넣은 결과
 					
 			return result;
 		}
@@ -58,7 +65,6 @@ public class MyPageImpl implements MyPageService{
 		public MyCharacter selecectMyChar(int cNo) {
 			
 			MyCharacter cha=myPageDao.selecectMyChar(sqlSession,cNo);
-			
 			//System.out.println("sss"+cha);
 			
 			return cha;
@@ -70,7 +76,6 @@ public class MyPageImpl implements MyPageService{
 		public ArrayList<MyCharacterAttach> selectChaList(int cNo) {
 			
 			ArrayList<MyCharacterAttach> mchalist=myPageDao.selectChaList(sqlSession,cNo);
-			
 			//System.out.println("sss"+mchalist);
 			
 			return mchalist;
@@ -105,19 +110,48 @@ public class MyPageImpl implements MyPageService{
 		}
 
 
-		//상세보기
+		//주문상세보기1. 리스트 (join캐릭터)
 		@Override
-		public Order orderDetail(int oNo) {
+		public ArrayList<OrderDetail> orderDetail(int oNo) {
+			 
+			ArrayList<OrderDetail> odlist=myPageDao.orderDetail(sqlSession,oNo);
 			
-			Order o=myPageDao.orderDetail(sqlSession,oNo);
+			 return	odlist;
+			 
+		}
+
+		//주문상세보기2.(join)
+		@Override
+		public MyOrderDetail myOrderDetail(int oNo) {
 			
-			return o;
+			MyOrderDetail md=myPageDao.myOrderDetail(sqlSession,oNo);
+			
+			return md;
 		}
 
 
+		//배송조회
+		@Override
+		public DeliveryDetail selectDeliveryDetail(OrderDetail od) {
+			
+			DeliveryDetail deliveryInfo=myPageDao.selectDeliveryDetail(sqlSession,od);
+			
+			return deliveryInfo;
+			
+		}
+
+
+		//기간별 배송조회
+		@Override
+		public ArrayList<Order> selectOrderListView(int mNo, Date startDate, Date endDate) {
+			
+			ArrayList<Order> oList=myPageDao.selectOrderListView(sqlSession,mNo,startDate,endDate);
+			
+			return oList;
+			
+		}
+
+
+
 		
-	
-	
-	
-	
 }

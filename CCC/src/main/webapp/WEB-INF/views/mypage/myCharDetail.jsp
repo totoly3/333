@@ -24,6 +24,7 @@
 
 </head>
 <body>
+   <jsp:include page="/WEB-INF/views/common/header2.jsp"/> 
    <div class="outer">
    <h3>특정캐릭터 상세보기</h3>
    <table align="center">
@@ -57,14 +58,12 @@
    </table>
    </div>   
    
-   
    <br><br><br>
    <div class="buttonArea" align="center">
      <button onclick="location.href='updateForm.my?cNo='+${cha.cNo}">수정</button>
-     <button onclick="location.href='delete.my?cNo=16'">삭제</button>
+     <button onclick="location.href='delete.my?cNo='+${cha.cNo}">삭제</button>
+     <button onclick="location.href='list.mychar'">목록</button>
    </div>
-   
-  
 
 </body>
 </html>

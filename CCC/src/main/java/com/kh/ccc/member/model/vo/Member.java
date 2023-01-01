@@ -21,7 +21,6 @@ public class Member {
 	private String mStatus;	 //M_STATUS	VARCHAR2(1 BYTE)	
 	
 	
-	
 	public Member() {
 		super();
 	}

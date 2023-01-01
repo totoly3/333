@@ -33,7 +33,6 @@
 <body>
 	
 	<jsp:include page="/WEB-INF/views/common/header2.jsp"/> 
-	
 	<div class="outer">
 		<br>
 		<h2 align="center">사진 게시판 목록</h2>
@@ -41,10 +40,10 @@
 	
 		<div class="list-area">
 			<c:choose>
-					<c:when test="${not empty mchalist }">
-						<c:forEach var="cha" items="${mchalist}">
+					<c:when test="${not empty chalist }">
+						<c:forEach var="cha" items="${chalist}">
 						    <div class="thumbnail" align="center">
-							  <input type="hidden" value="${cha.cNo }">
+							  <input type="hidden" value="${cha.cNo}">
 							  <img src="${cha.changeName}" width="200px" height="150px">
 							  <p>
 								캐릭터이름: ${cha.cName} <br>
@@ -57,6 +56,12 @@
 						조회된 게시글이 없습니다.
 					</c:otherwise>
 			 </c:choose>
+		</div>
+		<br>
+		<br>
+		<div id="buttonarea" align="center">
+		   <button onclick="location.href='enrollForm.mychar'">내캐릭터 등록</button>
+		   <button onclick="javascript:history.go(-1);" >마이페이지로</button>
 		</div>
 	</div>
 	
