@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -29,7 +31,7 @@ import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.common.model.vo.Ward;
 import com.kh.ccc.common.template.Pagenation;
-//악성 글 지우기 
+
 @Controller
 public class CharBoardController {
 
@@ -38,7 +40,7 @@ public class CharBoardController {
 	
 	//캐릭터 게시판 view로 이동
 	@RequestMapping("list.ch")
-	public String selectList(@RequestParam(value="currentPage",defaultValue = "1") int currentPage
+	public String selectList(@RequestParam(value="currentPage",defaultValue="1") int currentPage
 							,Model model) {
 		
 		//캐릭터 게시판 총 게시글 수 가져오기
@@ -65,50 +67,49 @@ public class CharBoardController {
 	
 	//캐릭터 게시판 글 등록
 	@PostMapping("insert.ch")
-	public ModelAndView insertCharBoard(CharBoard cb,
-										ArrayList<MultipartFile> upfile,
-										ModelAndView mv,
-										HttpSession session) {
+	public ModelAndView insertCharBoard(CharBoard cb,ModelAndView mv,HttpSession session,
+										@RequestParam(value="multifile", required=false) ArrayList<MultipartFile> upfileList) {
+		
+		System.out.println("insert.ch::CTRL : charBoard : "+cb);
+		System.out.println("insert.ch::CTRL : charBoard : "+upfileList);
 		
 		//캐릭터 등록
 		Character c = new Character();
-		c.setMemberNo(cb.getBoardWriterNo());
-		c.setCharName(cb.getCharName());
-		c.setCharContent(cb.getBoardContent());
-		System.out.println(c);
+		c.setMemberNo( cb.getBoardWriterNo() );
+		c.setCharName( cb.getCharName() );
+		c.setCharContent( cb.getBoardContent() );
+		
 		//첨부파일이 여러개 넘어올 수 있기 때문에 ArrayList에 담아주자
-		ArrayList<CharAttach> list = new ArrayList<>();
+		ArrayList<CharAttach> caList = new ArrayList<>();
 	
 		//게시판 첨부파일 이미지 경로
 		String charBoardFilePath = "resources/character/charBoardImg/";
 		
-		for(int i=0; i<upfile.size(); i++) {	
+		//등록 파일의 개수만큼 반복
+		for(int i=0; i<upfileList.size(); i++) {
+			
+			//첨부파일 정보를 담을 객체 생성
 			CharAttach ca = new CharAttach();
+			
 			//만약 첨부파일이 있다면 (파일명이 빈 문자열이 아니라면)
-			if(!upfile.get(i).getOriginalFilename().equals("")) {
+			if( !upfileList.get(i).getOriginalFilename().equals("") ) {
 				//아래의 saveFile메서드 활용
-				String boardFileChangeName = saveFile(upfile.get(i), session, charBoardFilePath);
+				String boardFileChangeName = saveFile(upfileList.get(i), session, charBoardFilePath);
+				
 				//(아래에 이어)8.원본명,서버에 업로드한 경로를 Board객체에 담아주기
-				ca.setOriginName(upfile.get(i).getOriginalFilename());
-				ca.setChangeName(charBoardFilePath + boardFileChangeName);
+				ca.setOriginName( upfileList.get(i).getOriginalFilename() );
+				ca.setChangeName( charBoardFilePath + boardFileChangeName );
+				
 				//level 1번 : 캐릭터 게시판 썸네일 / 이후 카운트되는 level은 sql에서 해당 게시글의 첨부파일 번호를 나타낸다 (파일번호와 다름)
 				ca.setLevel(i+1);
-				ca.setStatus("Y");
-				//게시글 첨부파일 리스트에 담기
-				list.add(ca);
 				
-			}else {
-				//파일이 없는 경우에는 NULL처리한다 (첨부파일 수정시에 사용할 공간 확보)
-				ca.setOriginName(null);
-				ca.setChangeName(null);
-				ca.setLevel(i+1);
-				ca.setStatus("N");
 				//게시글 첨부파일 리스트에 담기
-				list.add(ca);
+				caList.add(ca);	
 			}
 		}
 		
-		int result = boardService.insertCharBoard(cb,list,c);
+		//게시글 데이터,첨부파일 데이터,캐릭터 데이터 등록
+		int result = boardService.insertCharBoard(cb,caList,c);
 		
 		if(result > 0) {
 			session.setAttribute("alertMsg", "게시글 등록 성공!");
@@ -190,58 +191,95 @@ public class CharBoardController {
 	
 	//게시글 수정
 	@RequestMapping("update.ch")
-	public ModelAndView updateBoard(CharBoard cb
-							 ,ArrayList<MultipartFile> upfile
-							 ,HttpSession session
-							 ,ModelAndView mv) {
+	public ModelAndView updateBoard(CharBoard updateCb, HttpSession session, ModelAndView mv,
+		   @RequestParam(value="multifile", required=false) List<MultipartFile> upfileList,
+		   @RequestParam(value="oldCa", required=false) List<Integer> oldCaList) {
 		
-		System.out.println("게시글 수정 : "+cb);
+		System.out.println("update.ch:: charBoard : "+ updateCb);
+		System.out.println("update.ch:: oldCaList : "+ oldCaList);	// 수정 후 남은 첨부파일.(냅둘 것)
+		System.out.println("update.ch:: upfileList : "+ upfileList);
 		
-		int boardNo = cb.getBoardNo();
-		//게시글 번호를 이용해 해당 게시글의 파일 정보를 가져온다
+		//게시글 번호를 이용해 해당 게시글의 기존 파일 정보를 가져온다
+		int boardNo = updateCb.getBoardNo();
 		ArrayList<CharAttach> caList = boardService.selectAttach(boardNo);
-		//수정된 파일 내용을 담기 위한 리스트 생성
-		ArrayList<CharAttach> newCaList = new ArrayList<>();
+				
 		//게시판 첨부파일 이미지 경로
 		String charBoardFilePath = "resources/character/charBoardImg/";
  		
-		//만약 새로운 첨부파일이 하나라도 있다면 (캐릭터 게시판은 썸네일때문에 없을 수 없지만..)
-		if(!upfile.get(0).getOriginalFilename().equals("")) {
-			//기존 첨부파일 다 지우기 (기존 첨부파일 수만큼 반복) 
-			for(int i=0; i<caList.size(); i++) {
-				if(caList.get(i).getOriginName() != null) {
-					new File(session.getServletContext().getRealPath(caList.get(i).getChangeName())).delete();
+		//기존 첨부파일 수정
+		if( caList.isEmpty() ) {
+			System.out.println("기존 첨부파일이 없습니다.");
+		}
+		else {
+			//수정페이지에서 기존 파일 중 남겨놓은 첨부파일 빼고 삭제
+			int delAttachResult = 0;
+			for(CharAttach ca : caList) {
+				//없는 첨부파일 삭제하기
+				if(!oldCaList.contains(ca.getLevel())) { //기존 파일의 레벨 번호가 없다면
+					CharAttach deleteCa = new CharAttach();
+					deleteCa.setLevel(ca.getLevel());
+					deleteCa.setRefBno(boardNo);
+					
+					//기존파일의 레벨과 게시글 번호를 가지고 기존 첨부파일을 삭제하는 메소드
+					delAttachResult = boardService.deleteCharAttachByCaNo(deleteCa);
+					
+					String realPath = session.getServletContext().getRealPath(ca.getChangeName());
+					new File(realPath).delete();
+					
+					//기존 첨부파일 삭제에 실패했을 경우
+					if(delAttachResult == 0) {
+						mv.addObject("errorMsg", "기존 첨부파일 삭제 실패").setViewName("common/errorPage");
+						return mv;
+					}
 				}
 			}
-			//첨부파일 최대 개수가 4개이기 때문에 4번 반복
-			for(int i=0; i<upfile.size(); i++) {
-				CharAttach ca = new CharAttach();
-				//첨부파일 등록 가능 개수 총 4개를 모두 넣지 않을 수 있기 때문에 조건 처리 (파일이 없으면 새로 생성해서 넣기)
-				if(!upfile.get(i).getOriginalFilename().equals("")) {
-					String changeName = saveFile(upfile.get(i), session, charBoardFilePath);
-					ca.setRefBno(boardNo);
-					ca.setOriginName(upfile.get(i).getOriginalFilename());
-					ca.setChangeName(charBoardFilePath + changeName);
-					//level 1번 : 캐릭터 게시판 썸네일 / 이후 카운트되는 level(2~4)은 sql에서 해당 게시글의 첨부파일 번호를 나타낸다 (파일번호와 다름)
-					ca.setLevel(i+1);
-					ca.setStatus("Y");
-					
-					newCaList.add(ca);
-				}
-				//파일이 없는 경우에는 NULL처리한다 (첨부파일 수정시에 사용할 공간 확보)
-				else {
-					ca.setRefBno(boardNo);
-					ca.setOriginName(null);
-					ca.setChangeName(null);
-					ca.setLevel(i+1);
-					ca.setStatus("N");
-					
-					newCaList.add(ca);
-				}	
-			}	
 		}
+		//--------기존 첨부파일 끝
+		
+		//새롭게 추가된 첨부파일을 담기 위한 리스트 생성
+		ArrayList<CharAttach> updateCaList = new ArrayList<>();
+		//첨부파일 순서를 정하기 위한 리스트 생성
+		List<Integer> checkList1 = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+		
+		//기존 첨부파일의 번호(레벨)중 1,2,3,4와 같은 번호가 있다면 체크 리스트의 번호를 삭제
+		for (int i = 0; i < checkList1.size(); i++) {
+		    if (oldCaList.contains(checkList1.get(i))) {
+		    	checkList1.remove(i);
+		        i--;
+		    }
+		}
+		
+		System.out.println(upfileList.size());
+		
+		if(!upfileList.isEmpty()) {
+			for(int i=0; i<upfileList.size(); i++) {
+				//새로운 파일이 존재하면
+				if(!upfileList.get(i).getOriginalFilename().equals("")) {
+					CharAttach ca = new CharAttach();
+					if(!oldCaList.isEmpty()) {
+						ca.setLevel(checkList1.get(i));
+					}
+					String changeName = saveFile(upfileList.get(i),session,charBoardFilePath);
+					ca.setRefBno(updateCb.getBoardNo()); //수정 게시글 번호
+					ca.setOriginName(upfileList.get(i).getOriginalFilename()); //첨부파일 원본명
+					ca.setChangeName(charBoardFilePath+changeName); //변경된 파일 이름
+					
+					updateCaList.add(ca);
+				}
+			}	
+			
+		}
+		
+		//--------새로운 첨부파일 끝
+		
+		//캐릭터 수정내용 담기 (캐릭터 이름,캐릭터 설명 / 참조게시글 번호를 조건으로 수정)
+		Character updateCharacter = new Character();
+		updateCharacter.setRefBno(updateCb.getBoardNo());
+		updateCharacter.setCharName(updateCb.getCharName());
+		updateCharacter.setCharContent(updateCb.getBoardContent());
+		
 		//수정할 게시글 내용과 첨부파일 목록을 보내자
-		int result = boardService.updateBoard(cb,newCaList);
+		int result = boardService.updateCharBoard(updateCb,updateCharacter,updateCaList);
 		
 		if(result != 0) {
 			session.setAttribute("alertMsg", "게시글 수정 성공!");
@@ -252,7 +290,7 @@ public class CharBoardController {
 		}
 		return mv;
 	}
-	
+			
 	//게시글 삭제
 	@RequestMapping("delete.ch")
 	public String deleteBoard(int bno
@@ -349,7 +387,6 @@ public class CharBoardController {
 	@RequestMapping(value="replyAnswer.ch",produces="text/html; charset=UTF-8")
 	public String insertReplyAnswer(CharReply cr, HttpSession session) {
 		
-		System.out.println("댓글 등록 내용 : "+cr);
 		//int reWriterNo = session.getAttribute("회원번호"); //(ajax에서 넘어옴)
 		int number = boardService.replyMaxNum();   //새 댓글 번호 생성, 참조댓글번호(reGroupNo)는 부모댓글번호(reNo)와 같다 (시퀀스가 필요없다)
 		
@@ -424,7 +461,9 @@ public class CharBoardController {
 	@RequestMapping(value="badLanguage.ch",produces="text/html; charset=UTF-8")
 	public String badLanguage(CharBoard cb) {
 		
+		System.out.println("비속어 : "+cb);
 		ArrayList<Ward> wList = boardService.badLanguage();
+		System.out.println("비속어 : "+wList);
 		
 		for(int i=0; i<wList.size(); i++) {
 			if( cb.getBoardTitle().contains(wList.get(i).getWardName()) ){

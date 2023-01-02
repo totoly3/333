@@ -71,17 +71,17 @@ public class CharBoardServiceImpl implements CharBoardService {
 	}
 	
 	//게시글 수정
-	@Override
-	public int updateBoard(CharBoard cb, ArrayList<CharAttach> newCaList) {
-		//게시글 수정 (글)
-		int result = boardDao.updateBoard(sqlSession, cb);
-		//게시글 수정 (첨부파일)
-		int result2 = boardDao.updateAttach(sqlSession, newCaList);
-		
-		int finalResult = result * result2;
-		
-		return finalResult;
-	}
+//	@Override
+//	public int updateBoard(CharBoard cb, ArrayList<CharAttach> newCaList) {
+//		//게시글 수정 (글)
+//		int result = boardDao.updateBoard(sqlSession, cb);
+//		//게시글 수정 (첨부파일)
+//		int result2 = boardDao.updateAttach(sqlSession, newCaList);
+//		
+//		int finalResult = result * result2;
+//		
+//		return finalResult;
+//	}
 	
 	//게시글 삭제
 	@Override
@@ -180,6 +180,22 @@ public class CharBoardServiceImpl implements CharBoardService {
 	@Override
 	public ArrayList<Ward> badLanguage() {
 		return boardDao.badLanguage(sqlSession);
+	}
+	
+	//게시글 수정 (기존 첨부파일 삭제)
+	@Override
+	public int deleteCharAttachByCaNo(CharAttach deleteCa) {
+		return boardDao.deleteCharAttachByCaNo(sqlSession, deleteCa);
+	}
+	//수정된 게시글 내용(제목,캐릭터 이름,캐릭터 소개,새로운 첨부파일 등록)
+	@Override
+	public int updateCharBoard(CharBoard updateCb, Character updateCharacter, ArrayList<CharAttach> updateCaList) {
+		
+		int updateCbResult = boardDao.updateCb(sqlSession, updateCb);
+		int updateCharacterResult = boardDao.updateCharacter(sqlSession, updateCharacter);
+		int updateCaListResult = boardDao.updateCaList(sqlSession, updateCaList);
+		
+		return updateCbResult * updateCharacterResult * updateCaListResult > 0 ? 1 : 0;
 	}
 
 }

@@ -38,50 +38,101 @@
             <br>
 
             <form id="updateForm" method="post" action="update.ch" enctype="multipart/form-data">
-            	<!-- 글번호 히든으로 넘기기 -->
-            	<input type="hidden" name="boardNo" value="${ cb.boardNo }">
-            	<input type="hidden" name="boardWriterNo" value="${ cb.boardWriterNo }">
                 <table algin="center">
                     <tr>
+		            	<!-- 글번호 히든으로 넘기기 -->
+            			<input type="hidden" name="boardNo" value="${ cb.boardNo }">
                         <th><label for="title">제목</label></th>
                         <td><input type="text" id="title" class="form-control" value="${ cb.boardTitle }" name="boardTitle" required></td>
                     </tr>
                     <tr>
-                        <th><label for="title">수정할 캐릭터 이름</label></th>
-                        <td><input type="text" id="title" class="form-control" value="${ cb.charName }" name="charName" required></td>
+                        <th><label for="charName">캐릭터 이름</label></th>
+                        <td><input type="text" id="charName" class="form-control" value="${ cb.charName }" name="charName" required></td>
                     </tr>
                     <tr>
-                        <th><label for="writer">작성자</label></th>
-                        <td><input type="text" id="writer" class="form-control" value="${ cb.boardWriterName }" name="boardWriterName" readonly></td>
+                        <th><label for="boardWriterName">작성자</label></th>
+                        <td><input type="text" id="boardWriterName" class="form-control" value="${ cb.boardWriterName }" name="boardWriterName" readonly></td>
+                    </tr>
+                    <tr>
+                        <th><label for="boardContent">캐릭터 설명</label></th>
+                        <td><textarea id="boardContent" class="form-control" rows="10" style="resize:none;" name="boardContent" required>${ cb.boardContent }</textarea></td>
                     </tr>
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
-                        <td>
-                            <div id="file-area" align="center">
-								<input type="file" id="file1" name="upfile" onchange="loadImg(this,1);" required> <!--대표이미지라서 필수!-->
-								<input type="file" id="file2" name="upfile" onchange="loadImg(this,2);">
-								<input type="file" id="file3" name="upfile" onchange="loadImg(this,3);">
-								<input type="file" id="file4" name="upfile" onchange="loadImg(this,4);">
-							</div>
-                           	현재 업로드된 파일 : 
-                           	<c:choose>
-                           		<c:when test="${ not empty caList }">
-                           			<c:forEach var="c" items="${ caList }">	
-				                    	<a href="${ c.changeName }" download="${ c.originName }">${ c.originName }</a>                       												
-                           			</c:forEach>
-                           		</c:when>
-                           		<c:otherwise>
-                           			업로드된 파일이 없습니다.
-                           		</c:otherwise>
-                           	</c:choose>
+                        <td id="ca-area">
+                        	현재 업로드된 파일 :
+                        	<br>
+                       			<c:forEach var="ca" items="${ caList }" varStatus="var">	
+                       				<div>
+			                    		<a href="${ ca.originName }" download="${ ca.originName }">${ ca.originName }</a>
+			                    		<input type="hidden" id="ca_${ var.index }" name="oldCa" value="${ ca.level }">                     												
+			                    		<input type="button" id="deleteAttachBtn_${ var.index }" value="파일삭제"><br>                   												
+                       				</div>
+                       			</c:forEach>
+                        	새로 업로드할 파일 :
+                        	<br>
+                        	<div id="newCa-area">
+                        		<input type="button" id="addAttachBtn" value="파일추가"><br>
+                        	</div>
                         </td>
-                    </tr>
-                    <tr>
-                        <th><label for="content">내용</label></th>
-                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="boardContent" required>${ cb.boardContent }</textarea></td>
                     </tr>
                 </table>
                 <br>
+                
+                <script>
+                	//해당 페이지가 실행되면 첨부파일의 개수를 체크
+					$(document).ready(function(){
+						if( $("#ca-area a").length == 4){
+                			$("#addAttachBtn").attr("value","추가불가");
+                		}
+					});
+                
+                	//기존 업로드된 파일의 이름을 지워주는 메소드
+                	//id=ca-area안의 a태그 수만큼 반복하는 반복문
+	                for(var i=0; i<$("#ca-area a").length; i++){
+	                	//현재 업로드된 파일의 id에 인덱스로 번호를 붙여 해당 파일의 버튼을 클릭했을 때 실행되는 메소드 ()
+	                	$("#deleteAttachBtn_"+i).click(function(){
+	              			console.log( $(this).attr("id") );
+							//클릭된 요소 button(id=deleteAttachBtn_인덱스번호)의 부모요소 div영역을 지워준다.
+							//바로위에 hidden요소로 controller에 파일의 고유 번호(level)를 보낸다.
+	              			$(this).parent().remove();
+							
+	              			if( $("#ca-area a").length < 4){
+	                			$("#addAttachBtn").attr("value","파일추가");
+	                		}else{
+	                			$("#addAttachBtn").attr("value","추가불가");
+	                		}
+	              			
+	                	});
+	            	}
+	            	
+	            	var idx = 1; //삭제 버튼의 인덱스를 부여하는 변수
+	            	//파일추가 버튼을 누르면 실행되는 메소드
+                	$("#addAttachBtn").click(function(){
+                		//id=ca-area안의 a태그 수만큼 반복하는 반복문 (첨부파일 총 개수가 4개보다 적으면 파일첨부 버튼 생성)
+						if( $("#ca-area a").length < 4){
+							
+							var addAttach = "<div><label for='upfile'></label><br>"
+			          					  + ($("#ca-area a").length+1)+"번째 첨부파일"+"<input type='file' id='upfile' class='form-control-file border' name='multifile'><br>"
+			          					  + "<a href='#this' name='delete' id='deleteNewAttachBtn"+idx+"' class='btn'>삭제</a><div><br>";
+          					$("#newCa-area").append(addAttach);
+							
+          					//첨부파일의 총 개수(기존 첨부파일 포함)가 4개(최대개수)에 도달하면 추가불가 버튼으로 변경
+							if( $("#ca-area a").length == 4 ){
+								$("#addAttachBtn").attr("value","추가불가");
+							}
+						}
+		            	$(("#deleteNewAttachBtn"+idx)).on("click",function(){
+							$(this).parent().remove();
+							
+							//첨부파일의 총 개수(기존 첨부파일 포함)가 4개 이하라면 파일추가 버튼으로 변경
+							if( $("#ca-area a").length < 4 ){
+								$("#addAttachBtn").attr("value","파일추가");
+							}
+						})
+						idx++;
+                	});
+                </script>
 
                 <div align="center">
                     <button type="submit" class="btn btn-primary">수정하기</button>
