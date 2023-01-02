@@ -215,10 +215,22 @@
 		
 	  <!-- 아래는 게시글 댓글 리뷰  -->  
 	   <select id="detailFrBoardReviewSelect" resultMap="frReplyBoardResultSet">
-	 	SELECT *
-		FROM TB_FREE_REPLY
-		WHERE F_NO = #{FR_NO }
+	 	SELECT FR_NO
+	           , F_NO
+	   	       , FR_WRITER
+	           , FR_CONTENT
+	           , FR_PARENT_NO
+	           , FR_LEVEL
+	           , FR_CREATE_DATE
+	           , FR_UPDATE_DATE
+	           , FR_DELETE_DATE
+	           , FR_STATUS
+	           , M.M_ID AS mId
+		FROM TB_FREE_REPLY FR,TB_MEMBER M
+		WHERE FR.F_NO =#{fNo }
+       AND M.M_NO=FR.FR_WRITER
 		AND FR_STATUS ='Y'
+	 	
 	   </select>
 	   
 	   <!--  아래는 댓글 등록  -->
@@ -237,6 +249,8 @@
 					,#{fWriterNo}
 					)
 		</insert>
+		
+
 		
 		<!-- 아래는 댓글 수정 -->
 		<update id="frReplyModify" parameterType="FrBoardReply">
