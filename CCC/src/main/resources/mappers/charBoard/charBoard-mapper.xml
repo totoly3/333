@@ -5,6 +5,7 @@
 	<resultMap type="character" id="characterResultSet">
 		<result column="C_NO" property="charNo"/>
 		<result column="M_NO" property="memberNo"/>
+		<result column="CB_NO" property="refBno"/>
 		<result column="C_NAME" property="charName"/>
 		<result column="C_CONTENT" property="charContent"/>
 		<result column="C_LIKE" property="like"/>
@@ -163,42 +164,64 @@
 									   ,CB_NO
 									   ,CA_ORIGIN_NAME
 									   ,CA_CHANGE_NAME
-									   ,CA_LEVEL
-									   ,CA_STATUS)
+									   ,CA_LEVEL)
 		SELECT SEQ_CANO.NEXTVAL,SEQ_CBNO.CURRVAL, A.*
 		FROM(
 			 <foreach collection="list" item="list" index="index" separator="union all">
 			 		SELECT #{ list.originName }
 			 			  ,#{ list.changeName }
 			 			  ,#{ list.level }
-			 			  ,#{ list.status }
 			 		FROM SYS.DUAL
 			 </foreach>
 			 )A
 	</insert>
 	
-	<!-- 게시글 수정 -->
-	<update id="updateBoard" parameterType="charBoard">
+	<!-- 1.게시글 수정 (기존 첨부파일 삭제) -->
+	<delete id="deleteCharAttachByCaNo" parameterType="charAttach">
+		DELETE FROM TB_CHARACTER_ATTACH
+		WHERE CB_NO = #{ refBno }
+		AND CA_LEVEL = #{ level }
+	</delete>
+	
+	<!-- 2.게시글 수정 (게시글 정보) -->
+	<update id="updateCb" parameterType="charBoard">
 		UPDATE TB_CHARACTER_BOARD
+		SET CB_TITLE = #{ boardTitle },
+			CB_CONTENT = #{ boardContent },
+			C_NAME = #{ charName },
+			CB_CREATE_DATE = SYSDATE
+		WHERE CB_NO = #{ boardNo }
+	</update>
+	
+	<!-- 3.캐릭터 수정 (캐릭터 정보) -->
+	<update id="updateCharacter" parameterType="character">
+		UPDATE TB_CHARACTER
 		SET C_NAME = #{ charName },
-			CB_TITLE = #{ boardTitle },
-			CB_CONTENT = #{ boardContent }
-		WHERE CB_STATUS = 'Y'
-		AND CB_NO = #{ boardNo }
+			C_CONTENT = #{ charContent },
+			C_CREATE_DATE = SYSDATE
+		WHERE CB_NO = #{ refBno }
 	</update>
 	
-	<!-- 첨부파일 수정 -->
-	<update id="updateAttach" parameterType="java.util.List">
-		<foreach collection="list" item="item" index="index" separator=";" open="DECLARE BEGIN" close="; END;">
-			UPDATE TB_CHARACTER_ATTACH
-			SET CA_ORIGIN_NAME = #{ item.originName },
-				CA_CHANGE_NAME = #{ item.changeName },
-				CA_STATUS = #{ item.status }
-			WHERE CB_NO = #{ item.refBno }
-			AND CA_LEVEL = #{ item.level }
-		</foreach>
-	</update>
-	
+	<!-- 4.게시판 수정 (첨부파일) -->
+	<insert id="updateCaList" parameterType="java.util.List">
+		INSERT INTO TB_CHARACTER_ATTACH(
+									    CA_NO
+									   ,CB_NO
+									   ,CA_ORIGIN_NAME
+									   ,CA_CHANGE_NAME
+									   ,CA_LEVEL)
+		SELECT SEQ_CANO.NEXTVAL, A.*
+		FROM(
+			 <foreach collection="list" item="list" index="index" separator="union all">
+			 		SELECT #{ list.refBno }
+			 			  ,#{ list.originName }
+			 			  ,#{ list.changeName }
+			 			  ,#{ list.level }
+			 		FROM SYS.DUAL
+			 </foreach>
+			 )A
+	</insert>
+
 	<!-- 1.게시글 삭제 (글) -->
 	<update id="deleteBoard" parameterType="_int">
 		UPDATE TB_CHARACTER_BOARD

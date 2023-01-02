@@ -139,4 +139,21 @@ public class CharBoardDao {
 	public ArrayList<Ward> badLanguage(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("charBoardMapper.badLanguage");
 	}
+	//1.게시글 수정 (기존 첨부파일 삭제)
+	public int deleteCharAttachByCaNo(SqlSessionTemplate sqlSession, CharAttach deleteCa) {
+		return sqlSession.delete("charBoardMapper.deleteCharAttachByCaNo", deleteCa);
+	}
+	//2.게시글 수정 (게시글 정보)
+	public int updateCb(SqlSessionTemplate sqlSession, CharBoard updateCb) {
+		return sqlSession.update("charBoardMapper.updateCb", updateCb);
+	}
+	//3.캐릭터 수정 (캐릭터 정보)
+	public int updateCharacter(SqlSessionTemplate sqlSession, Character updateCharacter) {
+		return sqlSession.update("charBoardMapper.updateCharacter", updateCharacter);
+	}
+	//4.게시판 수정 (첨부파일)
+	public int updateCaList(SqlSessionTemplate sqlSession, ArrayList<CharAttach> updateCaList) {
+		return sqlSession.insert("charBoardMapper.updateCaList", updateCaList);
+	}
+	
 }

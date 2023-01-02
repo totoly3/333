@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.ccc.board.playground.WorldCup;
 
 	@Controller
 	public class PlayGround {
@@ -17,17 +16,17 @@ import com.kh.ccc.board.playground.WorldCup;
 			return mv;
 			
 		}
-		
-		
-		@RequestMapping("worldCup.fr")
-		public ModelAndView wouldCup2(ModelAndView mv) {
-			
-			
-			WorldCup.main(null);
-			mv.setViewName("board/playground/playGround");
-			return mv;
-			
-		}
+//		
+//		
+//		@RequestMapping("worldCup.fr")
+//		public ModelAndView wouldCup2(ModelAndView mv) {
+//			
+//			
+//			WorldCup.main(null);
+//			mv.setViewName("board/playground/playGround");
+//			return mv;
+//			
+//		}
 		
 		
 	}
