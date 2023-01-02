@@ -77,8 +77,29 @@
                FROM TB_CHARACTER_ATTACH
                WHERE CA_STATUS ='Y'
 		</select>
-	</mapper>
 	
+		<!-- 아래는 year 좋아요 -->
+		<select id="allTimeYearList" resultMap="characterResultSet" parameterType="java.util.List">
 	
-	
+			SELECT *
+			FROM
+	    		(SELECT ROWNUM RNUM, A.*
+	     		 FROM
+	        		 (SELECT C.C_NO
+	                                ,C.M_NO
+	                                ,C.C_NAME
+	                                ,C.C_LIKE				
+	                                ,MCA.CA_CHANGE_NAME as C_CHANGE_NAME
+	                                ,C.C_CREATE_DATE
+	                                ,C.C_STATUS
+				  FROM TB_CHARACTER  C , TB_CHARACTER_ATTACH MCA, TB_CHARACTER_BOARD CB
+				  WHERE C_STATUS = 'Y'
+					 AND  C.C_NO = CB.C_NO
+	                 AND CB.CB_NO=MCA.CB_NO
+					 AND TO_CHAR(SYSDATE, 'YY') = TO_CHAR(C_CREATE_DATE,'YY')
+				     ORDER BY C_LIKE DESC)A)
+			WHERE RNUM BETWEEN 1 AND 3
+		</select>
+</mapper>
+
 	
