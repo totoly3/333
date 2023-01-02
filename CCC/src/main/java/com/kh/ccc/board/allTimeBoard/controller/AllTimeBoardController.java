@@ -4,9 +4,12 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.ccc.board.allTimeBoard.model.service.AlltimeBoardService;
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.Character;
@@ -17,28 +20,74 @@ public class AllTimeBoardController {
 	@Autowired
 	private AlltimeBoardService AlltimeBoardService;
 	
+	
 	//역대수상작 리스트로 이동 ..! 
-	@RequestMapping("list.alltimech")
-	public ModelAndView allTimeBoard(ModelAndView mv){
+	@RequestMapping("list.alltimelistgo")
+	public ModelAndView alltimelistgo(ModelAndView mv){
 		
-		// 캐릭터 vo 조회 
-		ArrayList<Character> altimelist = AlltimeBoardService.allTimeSelectList();
-		System.out.println("altimelist는??"+altimelist);
+
 		
-		mv.addObject("altimelist",altimelist);
-		
-		
-		System.out.println("0번 1등"+altimelist.get(0).getChangeName());
-		System.out.println("1번 2등"+altimelist.get(1).getChangeName());
-		System.out.println("2번 3등"+altimelist.get(2).getChangeName());
-		
-		//아래는 1등~3등 첨부파일 이미지를 보여주기 위해 캐릭터 어테치 조회
-		ArrayList<CharAttach> myAlltimelist = AlltimeBoardService.myAllTimeBoard();
-		
-		mv.addObject("myAlltimelist",myAlltimelist);
+		System.out.println("============여기는 리스트로 이동  ==========");
+
 		
 		mv.setViewName("board/allTimeBoard/AlltimeBoardListView");
 		return mv;
 		
 	}
+	
+	
+	//리스트 뿌려주기 
+	@ResponseBody
+	@RequestMapping(value="list.alltimech",produces="application/json; charset=UTF-8")
+	public String allTimeBoard(){
+
+		ArrayList<Character> altimelist = AlltimeBoardService.allTimeSelectList();
+
+		System.out.println("altimelist는??"+altimelist);
+		System.out.println("0번째 첸지네임은?"+altimelist.get(0).getChangeName());
+		System.out.println("1번째 첸지네임은?"+altimelist.get(1).getChangeName());
+		
+		System.out.println("============여기는 리스트 뿌리기로 이동  ==========");
+
+		//비어있으면 NNNNN 반환 , 내용이 들어있으면 YYY
+		return new Gson().toJson(altimelist);
+//		return altimelist.isEmpty() ? "NNNNN" : "YYY";
+	}
+	
+	//아래는 이번달 좋아요 
+	@ResponseBody
+	@RequestMapping(value="ThisMonthLikes.li",produces="text/html; charset=UTF-8")
+	public String ThisMonthLikes() {
+		
+		// 캐릭터 vo 조회 
+				ArrayList<Character> altimelist = AlltimeBoardService.allTimeSelectList();
+				System.out.println("altimelist는??"+altimelist);
+		
+//				mv.addObject("altimelist",altimelist);
+				
+				System.out.println("============여기는 이번달 좋아요 ==========");
+				
+				//아래는 1등~3등 첨부파일 이미지를 보여주기 위해 캐릭터 어테치 조회
+				//비어있으면 NNNNN 반환 , 내용이 들어있으면 YYY
+				return new Gson().toJson(altimelist);
+		
+	}
+	
+	//아래는 이번년도 좋아요 리스트 
+	
+	@ResponseBody
+	@RequestMapping(value="ThisYearLikes.li",produces="text/html; charset=UTF-8")
+
+	public String ThisYearLikes() {
+		
+				// 캐릭터 vo 조회 
+		
+				ArrayList<Character> altimelist = AlltimeBoardService.allTimeYearList();
+				System.out.println("올해꺼 좋아요 altimelist는??"+altimelist);
+				
+				System.out.println("============여기는 올해꺼 좋아요 ==========");
+				
+				return new Gson().toJson(altimelist);
+	}
+	
 }

@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.board.allTimeBoard.model.dao.AlltimeBoardDao;
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
-import com.kh.ccc.common.model.vo.PageInfo;
-import com.kh.ccc.mypage.model.vo.MyCharacterAttach;
+
 @Service
 public class AlltimeBoardServiceImpl implements AlltimeBoardService{
 	
@@ -36,6 +35,15 @@ public class AlltimeBoardServiceImpl implements AlltimeBoardService{
 		ArrayList<CharAttach> myca = AlltimeBoardDao.myAllTimeBoard(sqlSession);
 		System.out.println("myca 서비스"+myca);
 		return myca;
+	}
+	
+	//아래는 이번년도 좋아요
+	@Override
+	public ArrayList<Character> allTimeYearList() {
+		
+		ArrayList<Character> acYearlist = AlltimeBoardDao.allTimeYearList(sqlSession);
+		System.out.println("alltime서비스impo acYearlist:"+acYearlist);
+		return acYearlist;
 	}
 
 }

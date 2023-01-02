@@ -150,7 +150,7 @@
 					  <button class="dropbtn">C H A R A C T E R</button>
 						  <div class="dropdown-content">
 					 	 	<a href="list.ch">캐릭터 게시판</a>
-							<a href="list.alltimech">역대수상작</a>
+							<a href="list.alltimelistgo">역대수상작</a>
 					  </div>
 					</div>
 				</li>
