@@ -25,11 +25,10 @@
 
         #enrollForm>table {width:100%;}
         #enrollForm>table * {margin:5px;}
-        
-        #enroll-form input,#enroll-form textarea{
-	       	width:100%;
-	       	box-sizing:border-box;	
-    	}
+        #addAttach-area {width:100%;}
+        #addAttach-area>tr {
+        	background-color: lightgreen;
+        }
     </style>
 </head>
 <body>
@@ -45,40 +44,39 @@
 			<input type="hidden" name="boardWriterNo" value="${ loginUser.mNo }">
 			<table align="center">
 				<tr>
-					<th width="100">제목</th>
-					<td colspan="3"><input type="text" id="boardTitle" name="boardTitle" required></td>
+					<th><label for="boardTitle">제목</label></th>
+					<td><input type="text" id="boardTitle" class="form-control" name="boardTitle" required></td>
 				</tr>
 				<tr>
-					<th width="100">캐릭터 이름</th>
-					<td colspan="3"><input type="text" id="charName" name="charName" required></td>
+					<th><label for="boardWriter">작성자</label></th>
+					<td><input type="text" id="boardWriter" class="form-control" name="boardWriter" value="${ loginUser.mId }" readonly></td>
 				</tr>
 				<tr>
-					<th>캐릭터 설명</th>
-					<td colspan="3"><textarea name="boardContent" id="boardContent" style="resize: none;" cols="30" rows="10" required></textarea></td>
+					<th><label for="charName">캐릭터 이름</label></th>
+					<td><input type="text" id="charName" class="form-control" name="charName" required></td>
 				</tr>
 				<tr>
-					<th>대표이미지</th> <!--미리보기-->
-					<td colspan="3" align="center">
-						<img id="titleImg" width="250" height="170">
-					</td>
+					<th><label for="boardContent">캐릭터 설명</label></th>
+					<td><textarea id="boardContent" class="form-control" rows="10" style="resize:none;" name="boardContent" required></textarea></td>
 				</tr>
 				<tr>
-					<th>상세이미지</th>
-					<td><img id="contentImg1" width="150" height="120"></td>
-					<td><img id="contentImg2" width="150" height="120"></td>
-					<td><img id="contentImg3" width="150" height="120"></td>
+					<th>첨부파일</th>
+					<td><input type="button" id="addAttachBtn" value="파일추가">최대 4개까지 가능합니다. (1장필수)</td>
 				</tr>
 			</table>
-
-			<!-- 파일 첨부 영역 -->
-			<div id="file-area" align="center">
-				<input type="file" id="file1" name="upfile" onchange="loadImg(this,1);" required> <!--대표이미지라서 필수!-->
-				<input type="file" id="file2" name="upfile" onchange="loadImg(this,2);">
-				<input type="file" id="file3" name="upfile" onchange="loadImg(this,3);">
-				<input type="file" id="file4" name="upfile" onchange="loadImg(this,4);">
-			</div>
-			<br><br>
 			
+			<table align="center" id="addAttach-table">
+				<tr>
+					<th><label for="upfile"></label></th>
+					<td><input type="file" id="upfile" class='form-control-file border' name='multifile' required></td>
+				</tr>
+			</table>
+			<br>
+			
+			<script>
+				
+			</script>
+
 			<div align="center">
 				<button type="button" id="gogo" class="searchBtn btn btn-secondary" onclick="return badLanguage();">등록하기</button>
 			</div>
@@ -88,6 +86,32 @@
     </div>
     
     <script>
+    	//첨부파일 영역 만들기
+	    var idx = 1; //현재 첨부파일 몇개가 있는지 확인해서 그 다음 수 대입
+		
+		//파일추가 버튼이 클릭되면 실행되는 함수
+		$("#addAttachBtn").click(function(){
+			if($("#addAttach-table tr").length < 4){ //테이블 tr의 수가 4보다 작으면 
+				var addAttach = "<tr>"
+							  + "<th><label for='upfile'></label></th>"
+							  + "<td><input type='file' id='upfile' class='form-control-file border' name='multifile'></td>"
+							  + "<td><a href='#this' name='delete' id='delete"+idx+"' class='btn'>삭제</a></td>";
+				$("#addAttach-table").append(addAttach);
+			}
+			
+			$(("#delete"+idx)).on("click",function(e){
+				e.preventDefault(); //이벤트를 취소해주는 메소드
+				fn_fileDelete($(this));
+			});
+			idx++;
+		});
+		
+		function fn_fileDelete(obj){
+			console.log("삭제 file idx : "+obj.parent().prev().children().attr("id")); //id확인
+			obj.parent().parent().remove();
+		}
+		
+    	//욕설 필터링
     	function badLanguage(){
     		$.ajax({
     			url : "badLanguage.ch",
@@ -102,7 +126,7 @@
 	    				$("#boardTitle").val("");
 	    				$("#charName").val("");
 	    				$("#boardContent").val("");
-	    				
+	    				$("#boardTitle").val().cursor(); //안먹음
 	    				return false;
     				}else{
     					var charConfirm = confirm("캐릭터를 등록하시겠습니까?");
