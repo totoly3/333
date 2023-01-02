@@ -184,6 +184,7 @@
 	                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addFrReply();">등록하기</button></th>
 	                	</tr>
 
+		   
   
 	          	        <tr>
 	                       <td colspan="3" > 댓글(<span id="rcount"></span>)</td>
@@ -193,6 +194,8 @@
                 <tbody>
        						
                 </tbody>
+                
+                
             </table>
             
    <!-- 댓글 수정 모달 -->
@@ -217,10 +220,8 @@
 		    </div>
 		  </div>
 		</div>
+   
    </div>
-   
-   
-   
    
    
      <script >
