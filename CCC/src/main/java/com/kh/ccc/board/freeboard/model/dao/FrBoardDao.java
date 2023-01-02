@@ -12,6 +12,7 @@ import com.kh.ccc.board.freeboard.model.vo.FrBoard;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardReply;
 import com.kh.ccc.common.model.vo.PageInfo;
+import com.kh.ccc.member.model.vo.Member;
 
 @Repository
 public class FrBoardDao {
@@ -27,6 +28,7 @@ public class FrBoardDao {
 		
 		RowBounds rowBounds = new RowBounds(offset,limit);
 		ArrayList<FrBoard> flist=(ArrayList)sqlSession.selectList("frBoardMapper.selectList",null,rowBounds);
+
 		return flist;
 	}
 
@@ -114,6 +116,23 @@ public class FrBoardDao {
 			
 			System.out.println("여기는 dao 에 파일 수정 result2:"+result2);
 			return result2;
+		}
+		
+		//아래는 자유게시판 댓글 수정 
+		public int frReplyModify(SqlSessionTemplate sqlSession, FrBoardReply refb) {
+			
+			System.out.println("FrBoardReply refb은?"+refb);
+			
+			int result =sqlSession.update("frBoardMapper.frReplyModify",refb);
+		
+			System.out.println("댓글수정 result dao: "+result);
+			return result;
+		}
+		//아래는 체크된거 글삭제
+		public int deleteClickFrboard(SqlSessionTemplate sqlSession, List<String> checkBoxArr) {
+			int deresult=sqlSession.update("frBoardMapper.deleteClickFrboard",checkBoxArr);
+			System.out.println("체크된거 삭제되었나"+deresult);
+			return deresult;
 		}
 
 
