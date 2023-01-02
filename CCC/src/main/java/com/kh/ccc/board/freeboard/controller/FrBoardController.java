@@ -104,11 +104,6 @@ public class FrBoardController {
 						@RequestParam(value="upfile", required=false) List<MultipartFile> upfile
 						,HttpSession session) {
 					
-//					System.out.println("m은?"+m);
-//					
-//					Member loginUser = (Member)session.getAttribute("loginUser");
-//					int fWriterNo =loginUser.getmNo();
-					
 					//ArrayList로  첨부파일들을 담음.
 					ArrayList<FrBoardAttach> falist = new ArrayList<>();
 			
@@ -320,9 +315,19 @@ public class FrBoardController {
 			//아래는 게시판 detail 뷰 댓글 전체조회 
 			@ResponseBody
 			@RequestMapping(value="frlist.fbo",produces="application/json; charset=UTF-8")
-			public String detailFrBoardReviewSelect(int fno, ModelAndView mv) {
+			public String detailFrBoardReviewSelect(int fno, ModelAndView mv,HttpSession session) {
 				ArrayList<FrBoardReply> rlist=FrBoardService.detailFrBoardReviewSelect(fno);
-			
+				System.out.println("디테일 댓글조회 : rlist는????"+rlist);
+				
+//				Member loginUser = (Member)session.getAttribute("loginUser");
+//				String mId =loginUser.getmId();
+//				String mName =loginUser.getmName();
+//			
+//	
+//				mv.addObject("mName",mName);
+//				mv.addObject("mId",mId);
+				
+				mv.setViewName("board/freeBoard/freeBoardDetailView");
 				return new Gson().toJson(rlist);
 			}
 			
@@ -330,9 +335,9 @@ public class FrBoardController {
 			@ResponseBody
 			@RequestMapping(value="frInsert.fbo",produces="text/html; charset=UTF-8")
 			public String insertFrReply(FrBoardReply refb) {
-	
+				System.out.println("refb 댓글1"+refb);
 				int result = FrBoardService.insertFrReply(refb);
-
+				System.out.println("refb 댓글2"+refb);
 				System.out.println("댓글등록 성공했으면1: "+result); 
 				return result>0 ? "yes" : "no";
 			}
