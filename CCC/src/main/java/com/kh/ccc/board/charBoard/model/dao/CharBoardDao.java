@@ -155,5 +155,9 @@ public class CharBoardDao {
 	public int updateCaList(SqlSessionTemplate sqlSession, ArrayList<CharAttach> updateCaList) {
 		return sqlSession.insert("charBoardMapper.updateCaList", updateCaList);
 	}
+	//4.게시글 수정 (기존 첨부파일 모두 삭제하는 경우)
+	public int deleteAllOldAttach(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.delete("charBoardMapper.deleteAllOldAttach", boardNo);
+	}
 	
 }

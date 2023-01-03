@@ -32,12 +32,14 @@ public interface CharBoardService {
 	//3.게시글 상세 조회 (첨부파일)
 	ArrayList<CharAttach> selectAttach(int bno);
 	
-	//게시글 수정
-//	int updateBoard(CharBoard cb, ArrayList<CharAttach> caList);
-	//게시글 수정 (기존 첨부파일 삭제)
-	int deleteCharAttachByCaNo(CharAttach deleteCa);
-	//게시글 수정 (제목,캐릭터 이름,캐릭터 소개,새로운 첨부파일 등록)
-	int updateCharBoard(CharBoard updateCb,Character updateCaracter, ArrayList<CharAttach> updateCaList);
+	//1.게시글 수정 (기존 첨부파일 삭제)
+	int deleteCharAttachByCaNo(CharAttach deleteCa);	
+	//2.게시글 수정 (제목,캐릭터 이름,캐릭터 소개)
+	int updateCharBoard(CharBoard updateCb,Character updateCharacter);
+	//2.게시글 수정 (제목,캐릭터 이름,캐릭터 소개,새로운 첨부파일 등록)
+	int updateCharBoard(CharBoard updateCb,Character updateCharacter, ArrayList<CharAttach> updateCaList);
+	
+	int deleteAllOldAttach(int boardNo);
 	
 	//게시글 삭제
 	int deleteBoard(int bno);

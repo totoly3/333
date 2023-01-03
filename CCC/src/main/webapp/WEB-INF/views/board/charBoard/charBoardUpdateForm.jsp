@@ -38,10 +38,11 @@
             <br>
 
             <form id="updateForm" method="post" action="update.ch" enctype="multipart/form-data">
+            	<input type="hidden" name="boardNo" value="${ cb.boardNo }">
+            	<input type="hidden" name="charNo" value="${ cb.charNo }">
                 <table algin="center">
                     <tr>
 		            	<!-- 글번호 히든으로 넘기기 -->
-            			<input type="hidden" name="boardNo" value="${ cb.boardNo }">
                         <th><label for="title">제목</label></th>
                         <td><input type="text" id="title" class="form-control" value="${ cb.boardTitle }" name="boardTitle" required></td>
                     </tr>
@@ -120,6 +121,8 @@
           					//첨부파일의 총 개수(기존 첨부파일 포함)가 4개(최대개수)에 도달하면 추가불가 버튼으로 변경
 							if( $("#ca-area a").length == 4 ){
 								$("#addAttachBtn").attr("value","추가불가");
+								$("#addAttachBtn").css("disabled","disabled");
+								
 							}
 						}
 		            	$(("#deleteNewAttachBtn"+idx)).on("click",function(){
@@ -135,7 +138,7 @@
                 </script>
 
                 <div align="center">
-                    <button type="submit" class="btn btn-primary">수정하기</button>
+                    <button type="submit" class="btn btn-primary" onclick="return test();">수정하기</button>
                     <button type="button" class="btn btn-danger" onclick="javascript:history.go(-1);">이전으로</button>
                 </div>
             </form>
@@ -143,6 +146,20 @@
         <br><br>
         
     </div>
+    
+    <script>
+    	//수정 시 첨부파일이 하나도 없을 경우 알람을 띄워준다.
+    	function test(){
+    		if($("#ca-area a").length == 0){
+    			alert("첨부파일은 한개 이상 등록해주셔야 합니다.");
+    			return false;
+    		}
+    		let updateResult = confirm("게시글을 수정하시겠습니까?");
+    		if(updateResult){
+    			$("#updateForm").submit();
+    		}
+    	}
+    </script>
     
     <br><br><br>
     
