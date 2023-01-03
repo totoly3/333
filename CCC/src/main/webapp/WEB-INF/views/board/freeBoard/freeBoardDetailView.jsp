@@ -194,7 +194,7 @@
 	                  
 	                       <td rowspan="1" ><b>내용</b></td>
 	                  
-<!-- 	                       <td rowspan="1" ><b>아이디</b></td> -->
+ 	                       <td rowspan="1" ><b>아이디</b></td> 
 	                       
                    		   <td rowspan="1" ><b>날짜</b></td>
 	                    </tr>
@@ -276,7 +276,7 @@
 									"<tr>"
 									+"<th>"+result[i].frNo+"</th>"
 									+"<td>"+result[i].frContent+"</td>"
-//  									+"<td>"+result[i]+"</td>"
+  									+"<td>"+result[i].mId+"</td>"
 									+"<td>"+result[i].frCreateDate+"</td>"	
 									+"<td>"
 									+ "<button class='btn btn-outline-primary' data-toggle='modal' data-target='#updateReply'" //data-target을 사용하면 뒤에오는 값을 사용한
@@ -297,17 +297,24 @@
    		//아래는 댓글 등록 
     
     	function addFrReply(){
+    		console.log(`${loginUser.mNo}`);
+    		console.log(`${loginUser.mId}`);
+    		
     		var $vali = $("#rcontent");
+    		var $mId = (`${loginUser.mId}`);
+    		var $mNo = (`${loginUser.mNo}`);
+    		var $loginUser = (`${loginUser}`);
     		
     		//바로아래는 공백제거 후 댓글이 작성되었는지 확인 (공백작성불가하게 막기 )
     		if($vali.val().trim().length != 0){
+    			if($loginUser !=""){
 	    	    	$.ajax({
 			    		url : "frInsert.fbo",
 			    		data : {
 			    				fNo : ${fb.get(0).fNo}
 			    				,frContent :$vali.val()
- 			    				,fWriterNo : ${fb.get(0).fWriterNo}
-			    					//admin 문자 자체로 나오기때문에 문자열 처리를 해줘야함  하지않으면 변수로인식하기때문임.
+			    				,fWriterNo : $mNo
+
 			    			},
 		    			success : function(result){
 		    				console.log("등록통신 성공");
@@ -320,6 +327,9 @@
 		    				console.log("통신실패");
 		    			}
 			    		});
+   					}else{
+   						alert("로그인좀 하십쇼 ");
+   					}
    				 }else{ //공백을 넣었거나 댓글을 작성하지 않은경우 
    	    			alert("댓글을작성하세요 . 공백은 작성불가");
    				 	$vali.val("");

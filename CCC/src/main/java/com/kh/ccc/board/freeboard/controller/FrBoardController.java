@@ -319,15 +319,16 @@ public class FrBoardController {
 				ArrayList<FrBoardReply> rlist=FrBoardService.detailFrBoardReviewSelect(fno);
 				System.out.println("디테일 댓글조회 : rlist는????"+rlist);
 				
-//				Member loginUser = (Member)session.getAttribute("loginUser");
-//				String mId =loginUser.getmId();
+
+				//				String mId =loginUser.getmId();
+//				System.out.println("컨트롤러 mId : "+mId);
 //				String mName =loginUser.getmName();
-//			
-//	
-//				mv.addObject("mName",mName);
+////						
+////	
+////				mv.addObject("mName",mName);
 //				mv.addObject("mId",mId);
-				
-				mv.setViewName("board/freeBoard/freeBoardDetailView");
+//				
+//				mv.setViewName("board/freeBoard/freeBoardDetailView");
 				return new Gson().toJson(rlist);
 			}
 			
