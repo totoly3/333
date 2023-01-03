@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -28,6 +29,7 @@ import com.kh.ccc.order.model.vo.DeliveryDetail;
 import com.kh.ccc.order.model.vo.MyOrderDetail;
 import com.kh.ccc.order.model.vo.Order;
 import com.kh.ccc.order.model.vo.OrderDetail;
+import com.kh.ccc.order.model.vo.OrderListByDate;
 
 
 @Controller
@@ -336,13 +338,13 @@ public class MyPageController {
 	}
 	
 	
-	
 	//주문목록SELECT(>>mNo) 
 	// 기간별주문내역 조회(좀더 고민) 마이페이지 들어갈때 뿌려줌
-	
 	@ResponseBody
 	@RequestMapping(value="selectoListbyDate.my",produces = "application/json;charset=UTF-8" )
 	public String selectoListbyDate(HttpSession session,int startDay) {
+		
+	  System.out.println("startDay시작일"+startDay);	//확인
 		
 	  Member loginUser=(Member)session.getAttribute("loginUser");
 	  int mNo=loginUser.getmNo(); //mNo나중에 memberNumber로 바꿔주기
@@ -353,57 +355,123 @@ public class MyPageController {
 	    final int THREE_MONTH = 4;     // 3개월 전
 	    final int SIX_MONTH = 5;       // 6개월 전
 	    
+	    Date dt = new Date();
+	   
 	    
+	    
+	    
+	    //시작일 처리용
+	    String before=""; //시작 날짜문자열
+	    Calendar cal=null; //캘린더객체 
 	    Date startDate=null; //시작일 객체
-	    Date endDate=new Date(System.currentTimeMillis());//현재날짜 객체
 	    
-	    ArrayList<Order> oList=null; //주문리스트
-	    String before=""; //날짜문자열
-	    Calendar cal=null; //캘린더객체 생성
+	    //끝일 처리용
+	    Date endDate=new Date(dt.getTime() + (1000 * 60 * 60 * 24));//현재날짜+1일 함
+	    String after=new SimpleDateFormat("yyyy-MM-dd").format(endDate); //마지막 날짜 문자열
+	    java.sql.Date endDatesql=java.sql.Date.valueOf(after);//sql끝일객체
 	    
+	    //사용자번호,시작일,끝일 담을객체
+	    OrderListByDate tbd=new OrderListByDate(); //시작일과 끝일과 사용자번호를 들고갈 객체
 	    
+	    //조회해온 주문번호
+	    int oNo=0;
+	    
+	    //주문번호 받아올 주문리스트
+	    ArrayList<Order> oList=null; //멤버번호,시작일객체,끝일객체 담아가서 담아올 주문리스트
+	    
+	    //진짜주문리스트
+		ArrayList<MyOrderDetail> realoList=null; 
+	    
+		
 		switch (startDay) {
+		
 			case TODAY :
-				startDate = new Date(System.currentTimeMillis());
-				System.out.println("버튼주문조회 ::"+startDate+"~"+endDate+"까지 조회");
-				oList = mypageService.selectOrderListView(mNo, startDate, endDate);
+				//시작일
+				startDate = new Date(System.currentTimeMillis()); //util Date객체생성
+				before = new SimpleDateFormat("yyyy-MM-dd").format(startDate); //문자열로 변경
+				java.sql.Date startDateSql = java.sql.Date.valueOf(before); //sql Date로 변경
+				System.out.println("sql변경한뒤의 버튼주문조회 ::"+startDateSql+"~"+endDatesql+"까지 조회");
+				
+				tbd.setStartDate(startDateSql);
+				tbd.setEndDate(endDatesql);
+				tbd.setMNo(mNo);
+				
+				//시작일-끝일-사용자번호 담아줌
+				System.out.println(tbd+"dd");
+					
+				oList = mypageService.selectOrderListView(tbd);
+				
+//			       for(Order or : oList) {
+//			          oNo= or.getOrderNo(); //주문번호를 뽑아준다.
+//			          System.out.println(oNo+"????");
+//			          
+//			      }
+//			       realoList= mypageService.selectRealOrderListView(oNo);
+//			    
+//			    System.out.println("진짜주문리스트정말돌??"+realoList);
+//			    
 				
 				break;
 				
-				
 	         case ONE_WEEK:
 	        	 cal = Calendar.getInstance();
-	        	 cal.add(Calendar.DATE, -7); // 일주일 전
+	        	 cal.add(Calendar.DATE, -7); // 일주일 전 캘린더객체
+	        	 
+	        	 //캘린더 객체를 형식지정된 문자열로 변경
 	             before = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
-	             // 일주일 전 날짜 스트링을 넣어서 Date타입으로 변경
-	             startDate = Date.valueOf(before);
-	             System.out.println("버튼주문조회 ::"+startDate+"~"+endDate+"까지 조회");
-	             oList = mypageService.selectOrderListView(mNo, startDate, endDate);
-				
-				break;	
-				
+	             //일주일 전 날짜 스트링을 넣어서 Date타입으로 변경
+	             startDateSql = java.sql.Date.valueOf(before);
+	             
+	             tbd.setStartDate(startDateSql);
+			     tbd.setEndDate(endDatesql);
+				 tbd.setMNo(mNo);
+				 
+				 System.out.println("sql변경한뒤의 버튼주문조회 ::"+startDateSql+"~"+endDatesql+"까지 조회");
+	             
+	             oList = mypageService.selectOrderListView(tbd);
+	             
+	             System.out.println(oList+"??????/");
+	             
+	             //oNo뽑는 부분??
+	             System.out.println("출력하셈?"+oNo);
+	             
+//			    
+//	             realoList= mypageService.selectRealOrderListView(oNo);
+//			     System.out.println("진짜주문리스트정말돌??"+realoList);
+	             
+				 break;	
 			
 	         case ONE_MONTH:
 	        	 cal = Calendar.getInstance();
 	        	 cal.add(Calendar.MONTH, -1);
 	             before = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
 	             // 일주일 전 날짜 스트링을 넣어서 Date타입으로 변경
-	             startDate = Date.valueOf(before);
-	             System.out.println("버튼주문조회 ::"+startDate+"~"+endDate+"까지 조회");
-	             oList = mypageService.selectOrderListView(mNo, startDate, endDate);
-	 			
-	 			break;
-	 			
+	             startDateSql = java.sql.Date.valueOf(before);
+	             
+	             System.out.println("sql변경한뒤의 버튼주문조회 ::"+startDateSql+"~"+endDatesql+"까지 조회");
+	             
+	             tbd.setStartDate(startDateSql);
+			     tbd.setEndDate(endDatesql);
+				 tbd.setMNo(mNo);
+				 
+				 oList = mypageService.selectOrderListView(tbd);
+	             
+	 			 break;
 	 		
 	         case THREE_MONTH:
 	        	 cal = Calendar.getInstance();
 	        	 cal.add(Calendar.MONTH, -3);
-	             before = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+	             before = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()); //문자열타입을 yyyy MM dd형태로
 	             // 일주일 전 날짜 스트링을 넣어서 Date타입으로 변경
-	             startDate = Date.valueOf(before);
-	             System.out.println("버튼주문조회 ::"+startDate+"~"+endDate+"까지 조회");
-	             oList = mypageService.selectOrderListView(mNo, startDate, endDate);
-	        	 
+	             startDateSql = java.sql.Date.valueOf(before);
+	             System.out.println("sql변경한뒤의 버튼주문조회 ::"+startDateSql+"~"+endDatesql+"까지 조회");
+
+	             tbd.setStartDate(startDateSql);
+			     tbd.setEndDate(endDatesql);
+				 tbd.setMNo(mNo);
+				 
+				 oList = mypageService.selectOrderListView(tbd);
+	             
 	        	 break;
 	        	 
 	         case SIX_MONTH: 
@@ -411,26 +479,27 @@ public class MyPageController {
 	        	 cal.add(Calendar.MONTH, -6);
 	             before = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
 	             // 일주일 전 날짜 스트링을 넣어서 Date타입으로 변경
-	             startDate = Date.valueOf(before);
-	             System.out.println("버튼주문조회 ::"+startDate+"~"+endDate+"까지 조회");
-	             oList = mypageService.selectOrderListView(mNo, startDate, endDate);
-	        	 
+	             startDateSql = java.sql.Date.valueOf(before);
+	             System.out.println("sql변경한뒤의 버튼주문조회 ::"+startDateSql+"~"+endDatesql+"까지 조회");
+	             
+	             tbd.setStartDate(startDateSql);
+			     tbd.setEndDate(endDatesql);
+				 tbd.setMNo(mNo);
+				 oList = mypageService.selectOrderListView(tbd);
+	             
 	        	 break;
 	         
 			 default:
-				
-				System.out.println("잘못입력");
-				
-				break;
-		
+				 System.out.println("잘못입력");
+				 break;
 		 }
 		
-		
+		 System.out.println("주문리스트돌?"+oList);
+		 
 		 return new Gson().toJson(oList);
-		
-	}
+	  }
 	
-	
+
 	
 	// 상세 주문내역SELECT 이동조회(>>주문번호oNo)
 	@RequestMapping("orderDetail.my")
@@ -456,7 +525,6 @@ public class MyPageController {
 		if (loginUser != null) {
 
 			mv.addObject("myOrderDetail",myOrderDetail).addObject("loginUser",loginUser).addObject("orderDetail", orderDetail).setViewName("mypage/orderDetail");
-			
 			
 		} else {
 
@@ -484,7 +552,7 @@ public class MyPageController {
 		//상세번호,번호 주문객체에 담아서 가져가자 
         //~배송정보()
         DeliveryDetail deliInfo=mypageService.selectDeliveryDetail(od);
-        System.out.println("배송정보돌?"+deliInfo);
+        //System.out.println("배송정보돌?"+deliInfo);
         
         //<<배송정보 객체
         model.addAttribute("deliInfo", deliInfo);
@@ -492,32 +560,48 @@ public class MyPageController {
         return "mypage/deliveryDetail";
 		
 	  }
+	
+	//찜한 리스트 조회	
+	@RequestMapping("wishList.my")
+	public String selectWishList( ){
+			
+		 return "mypage/wish";	
+		 
+    }  
+	
+	
 		
-	
-	    //찜한 리스트 조회	
-		@RequestMapping("wishList.my")
-		public void selectWishList( ){
-			
-			
-			
-		}
-	
+		//장바구니 리스트 조회
+	@RequestMapping("cartList.my")
+	public String selectcartList(){
+		
+     //사용자번호
+     return "mypage/cartList";
+   }
 
-//		//장바구니 리스트 조회
-//		@RequestMapping("cartList.my")
-//		public String selectcartList(){
-//
-//	    //사용자번호로
-//		
-//	  return "mypage/cartList";
-//		
-//	}
+		
+	//-----------------대회참가영역-----------------------------------------------
+	//기간별 작품참가내역 조회
+	
+		
+	//참가한 작품정보(순위변동그래프,현재포인트 현재순위등)
+	@RequestMapping("contest.my")
+	public String contest() {
+		
+ 	  return "mypage/contest";
+		
+	} 
 	
 	
-
+	//대회참가내역>참가정보 상세조회
 	
+	
+	
+	
+	
+	
+	
+	
+	
+		
 }
-
-
-
-

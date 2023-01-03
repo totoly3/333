@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 //굿즈리스트(굿즈+상세주문 join 리스트로 출력)
 public class OrderDetail {
 
-
 	private int orderDetailNo; //OD_NO	NUMBER 주문상세번호
 	private int orderNo;       //O_NO	NUMBER 주문번호
 	private int goodsNo;       //G_NO	NUMBER 굿즈번호

@@ -16,7 +16,6 @@
 		<result  property="cCreateDate" column="C_CREATE_DATE" />
 		<result  property="cStatus" column="C_STATUS" />
 	
-	   	
 		<result property="mCaNo" column="MCA_NO"/>
 		<result property="originName" column="MCA_ORIGIN_NAME"/>
 		<result property="changeName" column="MCA_CHANGE_NAME"/>
@@ -254,6 +253,30 @@
 		WHERE O_NO=#{orderNo}
 		AND OD_NO=#{orderDetailNo}
    </select>
+   
+   
+   <!-- 기간별 날짜 조회 1. 주문번호 먼저 가져옴-->
+   <select id="selectOrderListView" resultMap="myOrderDetailResultSet"  parameterType="orderListByDate">
+	     SELECT O_NO
+	     FROM TB_ORDER
+		 WHERE M_NO=#{mNo}
+		 AND O_DATE BETWEEN #{startDate} AND #{endDate} 
+   </select> 
+   
+   
+   <!--기간별 날짜조회 2. 실제주문리스트 가져옴-->
+   <select id="selectRealOrderListView"  resultMap="myOrderDetailResultSet" parameterType="_int">
+        SELECT G_NAME,G_ORIGIN_NAME1,G_CHANGE_NAME1,G_FILE_PATH,G.G_PRICE
+		FROM TB_GOODS G
+		JOIN TB_ORDER_DETAIL OD USING(G_NO)
+		JOIN TB_ORDER O USING(O_NO)
+		WHERE O_NO=1
+		AND G_STATUS='Y'
+		ORDER BY G.G_PRICE DESC
+   </select>
+   
+   
+   
    
    
 </mapper>

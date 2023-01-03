@@ -2,6 +2,7 @@ package com.kh.ccc.mypage.model.service;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.kh.ccc.order.model.vo.Goods;
 import com.kh.ccc.order.model.vo.MyOrderDetail;
 import com.kh.ccc.order.model.vo.Order;
 import com.kh.ccc.order.model.vo.OrderDetail;
+import com.kh.ccc.order.model.vo.OrderListByDate;
 
 import oracle.net.aso.s;
 
@@ -141,17 +143,25 @@ public class MyPageImpl implements MyPageService{
 		}
 
 
-		//기간별 배송조회
+		//기간별 배송조회(주문번호 조회용)
 		@Override
-		public ArrayList<Order> selectOrderListView(int mNo, Date startDate, Date endDate) {
+		public ArrayList<Order> selectOrderListView(OrderListByDate olByd) {
 			
-			ArrayList<Order> oList=myPageDao.selectOrderListView(sqlSession,mNo,startDate,endDate);
+			ArrayList<Order> oList =myPageDao.selectOrderListView(sqlSession,olByd);
+			//System.out.println("oList"+oList);
 			
 			return oList;
 			
 		}
 
 
-
+		//실제 배송조회
+		@Override
+		public ArrayList<MyOrderDetail> selectRealOrderListView(int oNo) {
+			
+			ArrayList<MyOrderDetail> realOlist=myPageDao.selectRealOrderListView(sqlSession,oNo);
+			
+			return  realOlist;
+		}
 		
 }

@@ -18,7 +18,7 @@ public class MemberController {
 	 	//로그인 폼 이동
 		@RequestMapping("loginform.me")
 		public String loginForm() { 
-			//이동만 함
+			
 			return "member/loginForm";
 		}
 		
@@ -29,22 +29,26 @@ public class MemberController {
 			
 			Member loginUser=memberService.loginMember(m);
 			
-//			System.out.println("넘?"+m.getmNo());
-//			System.out.println("넘???"+m.getmPwd());
-			
-			//System.out.println(loginUser);
-			
 			if (loginUser!=null) { //로그인 성공시
 				session.setAttribute("loginUser", loginUser);
 			}
 			
-			return "redirect:/";
+			//지은임시용: 마이페이지로 넘김
+			return "mypage/mypage";
 		}
+		
+		
+		//회원가입폼이동
+		@RequestMapping("enrollForm.me")
+		public String enrollForm() {
+			
+			return "member/enrollForm";
+			
+		}
+		
+		
+		//실제 회원가입
+		
 	
-	
-		
-		
-		
-		
 
 }

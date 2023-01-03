@@ -14,6 +14,7 @@ import com.kh.ccc.order.model.vo.Goods;
 import com.kh.ccc.order.model.vo.MyOrderDetail;
 import com.kh.ccc.order.model.vo.Order;
 import com.kh.ccc.order.model.vo.OrderDetail;
+import com.kh.ccc.order.model.vo.OrderListByDate;
 
 @Repository
 public class MyPageDao {
@@ -123,12 +124,23 @@ public class MyPageDao {
 		
 	}
 
-	//
-	public ArrayList<Order> selectOrderListView(SqlSessionTemplate sqlSession, int mNo, Date startDate, Date endDate) {
+	
+	//1. (기간별)주문리스트조회  주문번호뽑기용
+	public ArrayList<Order> selectOrderListView(SqlSessionTemplate sqlSession, OrderListByDate olByd) {
 		
-		return oList;
+		//주문리스트
+		return (ArrayList)sqlSession.selectList("myPageMapper.selectOrderListView", olByd);
+		
 	}
 
+	//2. 실제 주문리스트조회 
+	public ArrayList<MyOrderDetail> selectRealOrderListView(SqlSessionTemplate sqlSession, int oNo) {
+		
+		//주문리스트
+		return (ArrayList)sqlSession.selectList("myPageMapper.selectRealOrderListView",oNo);
+		
+	}
+	
 	
 	
 }

@@ -68,7 +68,7 @@ Coded by www.creative-tim.com
             </a>
           </li>
           <li>
-            <a href="장 ">
+            <a href="cartList.my ">
               <i class="nc-icon nc-diamond"></i>
               <p>장바구니조회</p>
             </a>
@@ -217,9 +217,9 @@ Coded by www.creative-tim.com
                       <i class="nc-icon nc-money-coins text-success"></i>
                     </div>
                   </div>
-                  <div class="col-7 col-md-8" onclick="location.href='mychar3.my'">
+                  <div class="col-7 col-md-8" onclick="location.href='contest.my'">
                     <div class="numbers">
-                      <p class="card-category">임시 주문상세</p>
+                      <p class="card-category">대회참가내역</p>
                       <p class="card-title">$ 1,345
                       <p>
                     </div>
@@ -264,16 +264,16 @@ Coded by www.creative-tim.com
           </div>
           <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-stats">
-              <div class="card-body ">
+              <div class="card-body"  onclick="location.href='wishList.my'">
                 <div class="row">
                   <div class="col-5 col-md-4">
                     <div class="icon-big text-center icon-warning">
                       <i class="nc-icon nc-favourite-28 text-primary"></i>
                     </div>
                   </div>
-                  <div class="col-7 col-md-8">
+                  <div class="col-7 col-md-8" >
                     <div class="numbers">
-                      <p class="card-category" onclick="location.href='wishList.my'">관심내역</p>
+                      <p class="card-category" >관심내역</p>
                       <p class="card-title">+45K
                       <p>
                   </div>
@@ -339,7 +339,7 @@ Coded by www.creative-tim.com
             <script>
                 $("#orderList>tbody tr").click(function(){
 				 //alert('클릭됨?');
-                        console.log("들어옴?");
+                 //console.log("들어옴?");
 				 //var a=$(this).childeren().eq(1).text()
 				 //console.log(a);
 				 //location.href="orderDetail.my?oNo="+$(this).childeren().eq(0).text();
@@ -412,26 +412,27 @@ Coded by www.creative-tim.com
 		            $(function(){
 		                // startDate는 시작일자를 언제로 설정할지를 결정하는 변수로
 		                // startDate값에 따라 컨트롤러에서 시작일을 변경하도록 되어 있음
-		                var startDate = 0;
+		                var startDay = 0;
 		                $("#today-order").click(function(){
-		                    startDate = 1; // 오늘 날짜
-		                    selectOrderList(startDate);
+		                	startDay = 1; // 오늘 날짜
+		                    console.log(startDay);
+		                    selectOrderList(startDay);
 		                });
 		                $("#week-order").click(function(){
-		                    startDate = 2;  // 일주일 전
-		                    selectOrderList(startDate);
+		                	startDay = 2;  // 일주일 전
+		                    selectOrderList(startDay);
 		                });
 		                $("#month-order").click(function(){
-		                    startDate = 3;  // 한 달 전
-		                    selectOrderList(startDate);
+		                	startDay = 3;  // 한 달 전
+		                    selectOrderList(startDay);
 		                });
 		                $("#month3-order").click(function(){
-		                    startDate = 4;  // 세 달 전
-		                    selectOrderList(startDate);
+		                	startDay = 4;  // 세 달 전
+		                    selectOrderList(startDay);
 		                });
 		                $("#month6-order").click(function(){
-		                    startDate = 5;  // 여섯 달 전
-		                    selectOrderList(startDate);
+		                	startDay = 5;  // 여섯 달 전
+		                    selectOrderList(startDay);
 		                });
 		            })
 		            
@@ -441,7 +442,7 @@ Coded by www.creative-tim.com
 			        $.ajax({
 			            url : "selectoListbyDate.my",
 			            data :{
-			                startDay : startDay
+			            	startDay : startDay
 			            },
 			            type : "post",
 			            success : function(){

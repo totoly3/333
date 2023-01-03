@@ -10,6 +10,7 @@ import com.kh.ccc.order.model.vo.Goods;
 import com.kh.ccc.order.model.vo.MyOrderDetail;
 import com.kh.ccc.order.model.vo.Order;
 import com.kh.ccc.order.model.vo.OrderDetail;
+import com.kh.ccc.order.model.vo.OrderListByDate;
 
 public interface MyPageService {
 
@@ -44,13 +45,12 @@ public interface MyPageService {
 	//배송정보 조회(상품상세번호객체-상품상세번호, 상품번호 필요)
 	DeliveryDetail selectDeliveryDetail(OrderDetail od);
 
-	
-	//기간별 주문리스트
+	//기간별 주문리스트 (시작날짜,끝날짜, 사용자번호 객체를 담아서 가져감)
     //ArrayList<Order> selectOrderListView(int userNo, Date startDate, Date endDate);
-	ArrayList<Order> selectOrderListView(int mNo, Date startDate, Date endDate);
-	
-	
-	
+	ArrayList<Order> selectOrderListView(OrderListByDate tbd);
+
+	//기간별 주문리스트(실제 주문리스트)
+	ArrayList<MyOrderDetail> selectRealOrderListView(int oNo);
 	
 
 }

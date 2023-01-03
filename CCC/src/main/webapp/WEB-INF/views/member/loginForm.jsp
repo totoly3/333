@@ -34,7 +34,8 @@
                 <div class="text-center pt-3 text-muted">Not a member? 
                 <a href="enrollForm.me">Sign up</a><br>
                 <br>
-                <a href="mypage.me">마이페이지</a>
+                   <span><a href="mypage.me">마이페이지</a></span>
+                   <span><a href="">회원가입</a></span>
                 </div>
             </form>
         </div>
