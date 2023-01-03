@@ -92,24 +92,38 @@
 	
 	            <div id="pagingArea">
 	                <ul class="pagination">
-	                    <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-	                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-	                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-	                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-	                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-	                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-	                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+	                	<!-- currentPage 1이면 숨기기 -->
+	                	<c:choose>
+	                		<c:when test="${ pi.currentPage ne 1 }">
+			                    <li class="page-item"><a class="page-link" href="list.ch?currentPage=${ pi.currentPage - 1 }">Previous</a></li>
+	                		</c:when>
+	                		<c:otherwise>
+			                    <li class="page-item disabled"><a class="page-link" href="list.ch?currentPage=${ pi.currentPage - 1 }">Previous</a></li>
+	                		</c:otherwise>
+	                	</c:choose>
+	                		<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+			                    <li class="page-item"><a class="page-link" href="list.ch?currentPage=${ p }">${ p }</a></li>
+	                		</c:forEach>
+	                	<!-- currentPage가 maxPage와 일치하면 숨기기 -->
+	                	<c:choose>
+	                		<c:when test="${ pi.currentPage eq pi.maxPage }">	                		
+			                    <li class="page-item disabled"><a class="page-link" href="list.ch?currentPage=${ pi.currentPage + 1 }">Next</a></li>
+	                		</c:when>
+	                		<c:otherwise>
+			                    <li class="page-item"><a class="page-link" href="list.ch?currentPage=${ pi.currentPage + 1 }">Next</a></li>
+	                		</c:otherwise>
+	                	</c:choose>
 	                </ul>
 	            </div>
 	
 	            <br clear="both"><br>
 	
-	            <form id="searchForm" action="" method="get" align="center">
+	            <form id="searchForm" action="search.ch" method="get" align="center">
 	                <div class="select">
 	                    <select class="custom-select" name="condition">
-	                        <option value="writer">작성자</option>
-	                        <option value="title">제목</option>
-	                        <option value="content">내용</option>
+	                        <option value="writer">창작자</option>
+	                        <option value="title">캐릭터이름</option>
+	                        <option value="content">캐릭터설명</option>
 	                    </select>
 	                </div>
 	                <div class="text">
@@ -122,5 +136,6 @@
 	        <br><br>
 		</div>
     </div>
+    <br><br><br>
 </body>
 </html>
