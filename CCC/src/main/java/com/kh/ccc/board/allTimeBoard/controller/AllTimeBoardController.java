@@ -25,14 +25,10 @@ public class AllTimeBoardController {
 	@RequestMapping("list.alltimelistgo")
 	public ModelAndView alltimelistgo(ModelAndView mv){
 		
-
-		
 		System.out.println("============여기는 리스트로 이동  ==========");
 
-		
 		mv.setViewName("board/allTimeBoard/AlltimeBoardListView");
 		return mv;
-		
 	}
 	
 	
@@ -56,38 +52,32 @@ public class AllTimeBoardController {
 	
 	//아래는 이번달 좋아요 
 	@ResponseBody
-	@RequestMapping(value="ThisMonthLikes.li",produces="text/html; charset=UTF-8")
+	@RequestMapping(value="ThisMonthLikes.li",produces="application/json; charset=UTF-8")
 	public String ThisMonthLikes() {
 		
 		// 캐릭터 vo 조회 
-				ArrayList<Character> altimelist = AlltimeBoardService.allTimeSelectList();
-				System.out.println("altimelist는??"+altimelist);
-		
-//				mv.addObject("altimelist",altimelist);
-				
-				System.out.println("============여기는 이번달 좋아요 ==========");
-				
-				//아래는 1등~3등 첨부파일 이미지를 보여주기 위해 캐릭터 어테치 조회
-				//비어있으면 NNNNN 반환 , 내용이 들어있으면 YYY
-				return new Gson().toJson(altimelist);
+		ArrayList<Character> allTimelist = AlltimeBoardService.allTimeSelectList();
+
+		System.out.println("altimelist는??"+allTimelist);
+		System.out.println("============여기는 이번달 좋아요 ==========");
+
+		return new Gson().toJson(allTimelist);
 		
 	}
 	
 	//아래는 이번년도 좋아요 리스트 
-	
 	@ResponseBody
-	@RequestMapping(value="ThisYearLikes.li",produces="text/html; charset=UTF-8")
+	@RequestMapping(value="ThisYearLikes.li",produces="application/json; charset=UTF-8")
 
 	public String ThisYearLikes() {
 		
-				// 캐릭터 vo 조회 
+		// 캐릭터 vo 조회 
+		ArrayList<Character> altimelist = AlltimeBoardService.allTimeYearList();
 		
-				ArrayList<Character> altimelist = AlltimeBoardService.allTimeYearList();
-				System.out.println("올해꺼 좋아요 altimelist는??"+altimelist);
-				
-				System.out.println("============여기는 올해꺼 좋아요 ==========");
-				
-				return new Gson().toJson(altimelist);
+		System.out.println("올해꺼 좋아요 altimelist는??"+altimelist);
+		System.out.println("============여기는 올해꺼 좋아요 ==========");
+		
+		return new Gson().toJson(altimelist);
 	}
 	
 }
