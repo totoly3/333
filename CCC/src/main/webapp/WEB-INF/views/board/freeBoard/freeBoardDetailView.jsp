@@ -184,15 +184,29 @@
 	                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addFrReply();">등록하기</button></th>
 	                	</tr>
 
+		   
   
 	          	        <tr>
 	                       <td colspan="3" > 댓글(<span id="rcount"></span>)</td>
 	                    </tr>
+	                    <tr>   
+	                     <td  rowspan="1" ><b>댓글번호</b></td>
+	                  
+	                       <td rowspan="1" ><b>내용</b></td>
+	                  
+<!-- 	                       <td rowspan="1" ><b>아이디</b></td> -->
+	                       
+                   		   <td rowspan="1" ><b>날짜</b></td>
+	                    </tr>
+	                  
+	                  
                 </thead>
                 
                 <tbody>
        						
                 </tbody>
+                
+                
             </table>
             
    <!-- 댓글 수정 모달 -->
@@ -217,11 +231,12 @@
 		    </div>
 		  </div>
 		</div>
+   
    </div>
    
+
    <!-- 아래는 대댓글 모달 -->
-   
-   
+
    
      <script >
 
@@ -257,9 +272,11 @@
 					var resultStr = "";
 					
 					for(var i=0; i<result.length; i++){
-						resultStr += "<tr>"
-									+"<th>"+result[i].frWriter+"</th>"
+						resultStr += 
+									"<tr>"
+									+"<th>"+result[i].frNo+"</th>"
 									+"<td>"+result[i].frContent+"</td>"
+//  									+"<td>"+result[i]+"</td>"
 									+"<td>"+result[i].frCreateDate+"</td>"	
 									+"<td>"
 									+ "<button class='btn btn-outline-primary' data-toggle='modal' data-target='#updateReply'" //data-target을 사용하면 뒤에오는 값을 사용한
@@ -289,7 +306,7 @@
 			    		data : {
 			    				fNo : ${fb.get(0).fNo}
 			    				,frContent :$vali.val()
- 			    				,frWriter : ${fb.get(0).mId}
+ 			    				,fWriterNo : ${fb.get(0).fWriterNo}
 			    					//admin 문자 자체로 나오기때문에 문자열 처리를 해줘야함  하지않으면 변수로인식하기때문임.
 			    			},
 		    			success : function(result){

@@ -54,23 +54,140 @@
 	<div class="container mt-3">
 			  <h2>역대 수상작</h2>
 			  <p>좋아요 순</p>
+		  	 <button type="button" class="btn btn-primary"  onclick="ThisMonthLikes();">이번달 좋아요 높은순</button>
 		  	
+		  	 <button type="button" class="btn btn-danger"  onclick="ThisYearLikes();">올해 좋아요 높은순</button>
+		  	 	
+		  	 <table id="allTimeLikeList1">
+		  	 
+		  	 	<tbody>
+					
+		  	 	</tbody>
+		  	 
+		  	 </table>
 		  	
-		  		<c:if test="${!altimelist.isEmpty()}">
-					  <div class="d-flex mb-3">
+	
+	  			<c:if test="${!altimelist.isEmpty()}">
 						
-						    <div class="p-2 flex-fill bg-info" id="alltime2" >이번달 좋아요 : ${altimelist.get(1).like}<p id="rk2"><img src="${altimelist.get(1).changeName}"></p>좋아요 2등 </div>
+					  <div class="d-flex mb-3">
+<%-- 						    <div class="p-2 flex-fill bg-info" id="alltime2" > 좋아요 : ${altimelist.get(1).like}<p id="rk2"><img src="${altimelist.get(1).changeName}"></p>좋아요 2등 </div> --%>
 						    
 						   	
-						    <div class="p-2 flex-fill bg-warning" id="alltime1" >이번달 좋아요 : ${altimelist.get(0).like}<p id="rk1"><img src="${altimelist.get(0).changeName}"></p>좋아요1등 </div>
+<%-- 						    <div class="p-2 flex-fill bg-warning" id="alltime1" > 좋아요 : ${altimelist.get(0).like}<p id="rk1"><img src="${altimelist.get(0).changeName}"></p>좋아요1등 </div> --%>
 						    
 						   	
-						    <div class="p-2 flex-fill bg-primary" id="alltime3" >이번달 좋아요 : ${altimelist.get(2).like}<p id="rk3"><img src="${altimelist.get(2).changeName}"></p>좋아요 3등</div>
+<%-- 						    <div class="p-2 flex-fill bg-primary" id="alltime3" >좋아요 : ${altimelist.get(2).like}<p id="rk3"><img src="${altimelist.get(2).changeName}"></p>좋아요 3등</div> --%>
 					  </div>
+					  	
 				</c:if>
-		  	
-		  	
+				<c:if test="${altimelist.isEmpty()}">
+					캐릭터 게시판 비어있음
+				</c:if>
+			
 	</div>
+	
+	<script >
+	
+		//좋아요 리스트 뿌려주기 
+		function LikesList(){
+			$.ajax({
+				url : "list.alltimech",			
+				success : function(result){
+						console.log(result)
+						console.log("연결성공");
+							
+								
+							var resultStr = "";
+							
+							
+							// 여기는 반복문 
+							for(var i in altimelist){
+								
+							resultStr += "<div>"
+							                +"<div class='p-2 flex-fill bg-info' id='alltime2'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요2등</div>"
+							                +"<div class='p-2 flex-fill bg-warning' id='alltime1'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요1등</div>"
+							                +"<div class='p-2 flex-fill bg-primary' id='alltime3'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요3등</div>"
+							            +"</div>";
+		
+							}
+							
+							  $("#allTimeLikeList1 > tbody").html(resultStr);
+						},
+					error: function (){
+						console.log("연결실패");
+					}
+					
+			
+			});
+		}
+	
+	
+		//아래는 이번달 좋아요 
+		function ThisMonthLikes(){
+			$.ajax({
+				url : "ThisMonthLikes.li",
+ 				success : function(result){
+ 					console.log(result)
+ 					console.log("연결성공");
+					
+					
+					var resultStr = "";
+					
+					
+					// 여기는 반복문 
+					for(var i in altimelist){
+						
+					resultStr += "<div>"
+					                +"<div class='p-2 flex-fill bg-info' id='alltime2'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요2등</div>"
+					                +"<div class='p-2 flex-fill bg-warning' id='alltime1'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요1등</div>"
+					                +"<div class='p-2 flex-fill bg-primary' id='alltime3'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요3등</div>"
+					            +"</div>";
+
+					}
+					
+					  $("#allTimeLikeList1 > tbody").html(resultStr);
+				},
+				error : function(){
+					console.log("통신실패");
+				}	
+			
+			});
+		}
+	
+		//아래는 올해 좋아요 순 
+		function ThisYearLikes(){
+			$.ajax({
+				url : "ThisYearLikes.li",
+				success : function(result){
+					console.log(result)
+					console.log("연결성공");
+					
+					
+					var resultStr = "";
+					
+					
+					// 여기는 반복문 
+					for(var i in altimelist){
+						
+					resultStr += "<div>"
+					                +"<div class='p-2 flex-fill bg-info' id='alltime2'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요2등</div>"
+					                +"<div class='p-2 flex-fill bg-warning' id='alltime1'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요1등</div>"
+					                +"<div class='p-2 flex-fill bg-primary' id='alltime3'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요3등</div>"
+					            +"</div>";
+
+					}
+					
+					  $("#allTimeLikeList1 > tbody").html(resultStr);
+				},
+				error : function(){
+					console.log("통신실패");
+				}	
+			
+			});
+		}
+	
+	
+	</script>
 
 </body>
 </html>
