@@ -4,11 +4,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	
+<!-- 	  <!-- 우선 jQuery를 추가합니다. --> -->
+<!-- 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+	
+<!-- 	<!-- 그 다음 datepicker 플러그인을 추가합니다. --> -->
+<!-- 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script> -->
+	
+	
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
   
@@ -33,6 +41,20 @@
   width: 250px;
   
   }
+  
+  #rk1 img {
+  height: 100%;
+  width: 100%;
+  }
+  #rk2 img {
+  height: 100%;
+  width: 100%;
+  }
+  #rk3 img {
+  height: 100%;
+  width: 100%;
+  }
+  
     #rk3{
   background-color: black;
   height : 100px;
@@ -45,6 +67,12 @@
   width: 200px;
   
   }
+  #datepicker {
+  background-color: #fff;
+  cursor: pointer;
+  color : black;
+  }
+  
   </style>
 </head>
 <body> 
@@ -57,6 +85,8 @@
 		  	 <button type="button" class="btn btn-primary"  onclick="ThisMonthLikes();">이번달 좋아요 높은순</button>
 		  	
 		  	 <button type="button" class="btn btn-danger"  onclick="ThisYearLikes();">올해 좋아요 높은순</button>
+		  	 
+		  	 <input type="button" class="btn btn-success" id="datepicker" value='기간별 좋아요'>
 		  	 	
 		  	 <table id="allTimeLikeList1">
 		  	 
@@ -87,65 +117,24 @@
 	</div>
 	
 	<script >
-	
-		//좋아요 리스트 뿌려주기 
-		function LikesList(){
-			$.ajax({
-				url : "list.alltimech",			
-				success : function(result){
-						console.log(result)
-						console.log("연결성공");
-							
-								
-							var resultStr = "";
-							
-							
-							// 여기는 반복문 
-							for(var i in altimelist){
-								
-							resultStr += "<div>"
-							                +"<div class='p-2 flex-fill bg-info' id='alltime2'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요2등</div>"
-							                +"<div class='p-2 flex-fill bg-warning' id='alltime1'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요1등</div>"
-							                +"<div class='p-2 flex-fill bg-primary' id='alltime3'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요3등</div>"
-							            +"</div>";
-		
-							}
-							
-							  $("#allTimeLikeList1 > tbody").html(resultStr);
-						},
-					error: function (){
-						console.log("연결실패");
-					}
-					
-			
-			});
-		}
-	
-	
+
 		//아래는 이번달 좋아요 
 		function ThisMonthLikes(){
+			
 			$.ajax({
 				url : "ThisMonthLikes.li",
  				success : function(result){
- 					console.log(result)
  					console.log("연결성공");
-					
-					
-					var resultStr = "";
-					
-					
-					// 여기는 반복문 
-					for(var i in altimelist){
-						
-					resultStr += "<div>"
-					                +"<div class='p-2 flex-fill bg-info' id='alltime2'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요2등</div>"
-					                +"<div class='p-2 flex-fill bg-warning' id='alltime1'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요1등</div>"
-					                +"<div class='p-2 flex-fill bg-primary' id='alltime3'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요3등</div>"
-					            +"</div>";
 
-					}
+ 					var resultStr = "";
 					
-					  $("#allTimeLikeList1 > tbody").html(resultStr);
+					resultStr += "<div>"
+					                +"<div class='p-2 flex-fill bg-info' id='alltime2'>" + result[1].like + "<p id='rk1'><img src='" + result[1].changeName + "' style='height: 100%; width: 100%;'></p>좋아요2등</div>"
+ 					                +"<div class='p-2 flex-fill bg-warning' id='alltime1'>" +result[0].like + "<p id='rk1'><img src='" + result[0].changeName  + "' style='height: 100%; width: 100%;'></p>좋아요1등</div>"
+ 					                +"<div class='p-2 flex-fill bg-primary' id='alltime3'>" + result[2].like + "<p id='rk1'><img src='" + result[2].changeName + "' style='height: 100%; width: 100%;'></p>좋아요3등</div>"
+					            +"</div>";
+ 					
+					$("#allTimeLikeList1 > tbody").html(resultStr);
 				},
 				error : function(){
 					console.log("통신실패");
@@ -162,31 +151,32 @@
 					console.log(result)
 					console.log("연결성공");
 					
-					
 					var resultStr = "";
-					
-					
-					// 여기는 반복문 
-					for(var i in altimelist){
 						
-					resultStr += "<div>"
-					                +"<div class='p-2 flex-fill bg-info' id='alltime2'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요2등</div>"
-					                +"<div class='p-2 flex-fill bg-warning' id='alltime1'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요1등</div>"
-					                +"<div class='p-2 flex-fill bg-primary' id='alltime3'>" + altimelist.get(i).like + "<p id='rk1'><img src='" + altimelist.get(i).changeName + "'></p>좋아요3등</div>"
-					            +"</div>";
+			resultStr += "<div>"
+			            	    +"<div class='p-2 flex-fill bg-info' id='alltime2'>" + result[1].like + "<p id='rk1'><img src='" + result[1].changeName + "' style='height: 100%; width: 100%;'></p>좋아요2등</div>"
+				                +"<div class='p-2 flex-fill bg-warning' id='alltime1'>" +result[0].like + "<p id='rk1'><img src='" + result[0].changeName  + "' style='height: 100%; width: 100%;'></p>좋아요1등</div>"
+				                +"<div class='p-2 flex-fill bg-primary' id='alltime3'>" + result[2].like + "<p id='rk1'><img src='" + result[2].changeName + "' style='height: 100%; width: 100%;'></p>좋아요3등</div>"
+			            +"</div>";
 
-					}
 					
 					  $("#allTimeLikeList1 > tbody").html(resultStr);
 				},
 				error : function(){
 					console.log("통신실패");
 				}	
-			
 			});
 		}
-	
-	
+		
+// 		$(function() {
+// 			  $("#datepicker").datepicker({
+// 			    showOn: "button",
+// 			    buttonImage: "calendar.png",
+// 			    buttonImageOnly: true,
+// 			    buttonText: "Select date"
+// 			  });
+// 			});
+		
 	</script>
 
 </body>
