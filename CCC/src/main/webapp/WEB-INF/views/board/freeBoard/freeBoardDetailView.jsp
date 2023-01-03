@@ -194,7 +194,7 @@
 	                  
 	                       <td rowspan="1" ><b>내용</b></td>
 	                  
-<!-- 	                       <td rowspan="1" ><b>아이디</b></td> -->
+ 	                       <td rowspan="1" ><b>아이디</b></td> 
 	                       
                    		   <td rowspan="1" ><b>날짜</b></td>
 	                    </tr>
@@ -276,7 +276,7 @@
 									"<tr>"
 									+"<th>"+result[i].frNo+"</th>"
 									+"<td>"+result[i].frContent+"</td>"
-//  									+"<td>"+result[i]+"</td>"
+  									+"<td>"+result[i].mId+"</td>"
 									+"<td>"+result[i].frCreateDate+"</td>"	
 									+"<td>"
 									+ "<button class='btn btn-outline-primary' data-toggle='modal' data-target='#updateReply'" //data-target을 사용하면 뒤에오는 값을 사용한
@@ -297,8 +297,13 @@
    		//아래는 댓글 등록 
     
     	function addFrReply(){
-    		var $vali = $("#rcontent");
+    		console.log(`${loginUser.mNo}`);
+    		console.log(`${loginUser.mId}`);
     		
+    		
+    		var $vali = $("#rcontent");
+    		var $mId = (`${loginUser.mId}`);
+    		var $mNo = (`${loginUser.mNo}`);
     		//바로아래는 공백제거 후 댓글이 작성되었는지 확인 (공백작성불가하게 막기 )
     		if($vali.val().trim().length != 0){
 	    	    	$.ajax({
@@ -306,7 +311,9 @@
 			    		data : {
 			    				fNo : ${fb.get(0).fNo}
 			    				,frContent :$vali.val()
- 			    				,fWriterNo : ${fb.get(0).fWriterNo}
+			    				,fWriterNo : $mNo
+//  			    				,mId : $mId
+//  			    				,fWriterNo : ${fb.get(0).fWriterNo}
 			    					//admin 문자 자체로 나오기때문에 문자열 처리를 해줘야함  하지않으면 변수로인식하기때문임.
 			    			},
 		    			success : function(result){
