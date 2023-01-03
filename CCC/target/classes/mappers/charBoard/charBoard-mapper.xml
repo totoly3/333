@@ -98,7 +98,9 @@
 		FROM TB_CHARACTER_ATTACH
 		WHERE CA_STATUS = 'Y'
 		AND CB_NO = #{ bno }
+		ORDER BY CA_LEVEL ASC
 	</select>
+	
 	
 	<!-- 전체 개시글 수 반환 -->
 	<select id="selectListCount" resultType="_int">
@@ -199,7 +201,7 @@
 		SET C_NAME = #{ charName },
 			C_CONTENT = #{ charContent },
 			C_CREATE_DATE = SYSDATE
-		WHERE CB_NO = #{ refBno }
+		WHERE C_NO = #{ charNo }
 	</update>
 	
 	<!-- 4.게시판 수정 (첨부파일) -->
@@ -221,6 +223,12 @@
 			 </foreach>
 			 )A
 	</insert>
+
+	<!-- 게시글 수정 (기존 첨부파일 모두 삭제하는 경우 -->
+	<delete id="deleteAllOldAttach" parameterType="_int">
+		DELETE FROM TB_CHARACTER_ATTACH
+		WHERE CB_NO = #{ boardNo }
+	</delete>
 
 	<!-- 1.게시글 삭제 (글) -->
 	<update id="deleteBoard" parameterType="_int">

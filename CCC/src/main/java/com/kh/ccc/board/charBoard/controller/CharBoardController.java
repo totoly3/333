@@ -195,10 +195,6 @@ public class CharBoardController {
 		   @RequestParam(value="multifile", required=false) List<MultipartFile> upfileList,
 		   @RequestParam(value="oldCa", required=false) List<Integer> oldCaList) {
 		
-		System.out.println("update.ch:: charBoard : "+ updateCb);
-		System.out.println("update.ch:: oldCaList : "+ oldCaList);	// 수정 후 남은 첨부파일.(냅둘 것)
-		System.out.println("update.ch:: upfileList : "+ upfileList);
-		
 		//게시글 번호를 이용해 해당 게시글의 기존 파일 정보를 가져온다
 		int boardNo = updateCb.getBoardNo();
 		ArrayList<CharAttach> caList = boardService.selectAttach(boardNo);
@@ -213,51 +209,76 @@ public class CharBoardController {
 		else {
 			//수정페이지에서 기존 파일 중 남겨놓은 첨부파일 빼고 삭제
 			int delAttachResult = 0;
-			for(CharAttach ca : caList) {
+			int deleteAllOldAttach = 0;
+			String realPath = "";
 				//없는 첨부파일 삭제하기
-				if(!oldCaList.contains(ca.getLevel())) { //기존 파일의 레벨 번호가 없다면
-					CharAttach deleteCa = new CharAttach();
-					deleteCa.setLevel(ca.getLevel());
-					deleteCa.setRefBno(boardNo);
+				if( oldCaList != null) {
+					for(CharAttach ca : caList) {
 					
-					//기존파일의 레벨과 게시글 번호를 가지고 기존 첨부파일을 삭제하는 메소드
-					delAttachResult = boardService.deleteCharAttachByCaNo(deleteCa);
+						if(!oldCaList.contains(ca.getLevel())) { //기존 파일의 레벨 번호가 없다면
+							CharAttach deleteCa = new CharAttach();
+							deleteCa.setLevel(ca.getLevel());
+							deleteCa.setRefBno(boardNo);
+							
+							//기존파일의 레벨과 게시글 번호를 가지고 기존 첨부파일을 삭제하는 메소드
+							delAttachResult = boardService.deleteCharAttachByCaNo(deleteCa);
+							
+							realPath = session.getServletContext().getRealPath(ca.getChangeName());
+							new File(realPath).delete();
+							
+							//기존 첨부파일 삭제에 실패했을 경우
+							if(delAttachResult == 0) {
+								mv.addObject("errorMsg", "기존 첨부파일 삭제 실패").setViewName("common/errorPage");
+								return mv;
+							}
+						}
+					}
+				}else { //기존 첨부파일을 다 지웠으면 (null이면)
+					//기존 첨부파일 모두 DB에서 제거 (게시글번호 이용)
+					deleteAllOldAttach = boardService.deleteAllOldAttach(boardNo);
+					//기존 첨부파일의 실제 파일 경로로 파일도 제거
+					for( CharAttach ca : caList ) {
+						realPath = session.getServletContext().getRealPath(ca.getChangeName());
+						new File(realPath).delete();						
+					}
 					
-					String realPath = session.getServletContext().getRealPath(ca.getChangeName());
-					new File(realPath).delete();
-					
-					//기존 첨부파일 삭제에 실패했을 경우
-					if(delAttachResult == 0) {
-						mv.addObject("errorMsg", "기존 첨부파일 삭제 실패").setViewName("common/errorPage");
+					if( deleteAllOldAttach == 0 ) {
+						mv.addObject("errorMsg", "기존 첨부파일 모두 삭제 실패").setViewName("common/errorPage");
 						return mv;
 					}
+					
 				}
-			}
 		}
 		//--------기존 첨부파일 끝
+		
+		//캐릭터 수정내용 담기 (캐릭터 이름,캐릭터 설명 / 캐릭터의 번호를 조건으로 수정)
+		Character updateCharacter = new Character();
+		updateCharacter.setCharNo(updateCb.getCharNo());
+		updateCharacter.setCharName(updateCb.getCharName());
+		updateCharacter.setCharContent(updateCb.getBoardContent());
 		
 		//새롭게 추가된 첨부파일을 담기 위한 리스트 생성
 		ArrayList<CharAttach> updateCaList = new ArrayList<>();
 		//첨부파일 순서를 정하기 위한 리스트 생성
-		List<Integer> checkList1 = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+		List<Integer> checkList = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
 		
 		//기존 첨부파일의 번호(레벨)중 1,2,3,4와 같은 번호가 있다면 체크 리스트의 번호를 삭제
-		for (int i = 0; i < checkList1.size(); i++) {
-		    if (oldCaList.contains(checkList1.get(i))) {
-		    	checkList1.remove(i);
-		        i--;
-		    }
+		if( oldCaList != null ) {
+			for (int i = 0; i < checkList.size(); i++) {
+				if (oldCaList.contains(checkList.get(i))) {
+					checkList.remove(i);
+					i--;
+				}
+			}			
 		}
 		
-		System.out.println(upfileList.size());
-		
-		if(!upfileList.isEmpty()) {
+		int result = 0;
+		if(upfileList != null) { //게시글 수정 시 새로운 첨부파일이 있다면
 			for(int i=0; i<upfileList.size(); i++) {
-				//새로운 파일이 존재하면
-				if(!upfileList.get(i).getOriginalFilename().equals("")) {
+				if(!upfileList.get(i).getOriginalFilename().equals("")) { //객체는 있지만 데이터가 존재하는지 한번 더 체크
 					CharAttach ca = new CharAttach();
-					if(!oldCaList.isEmpty()) {
-						ca.setLevel(checkList1.get(i));
+					if( oldCaList != null ) { //기존 첨부파일중에 삭제하지않은 파일이 있다면
+						ca.setLevel(checkList.get(i)); //새로운 첨부파일의 레벨 번호는 기존 번호의 다음 번호로 등록
 					}
 					String changeName = saveFile(upfileList.get(i),session,charBoardFilePath);
 					ca.setRefBno(updateCb.getBoardNo()); //수정 게시글 번호
@@ -266,29 +287,33 @@ public class CharBoardController {
 					
 					updateCaList.add(ca);
 				}
-			}	
+			}
+			//게시글 수정 내용 (글 제목,캐릭터 이름,캐릭터 설명,새로운 첨부파일 등록)
+			result = boardService.updateCharBoard(updateCb,updateCharacter,updateCaList);
 			
+			if(result != 0) {
+				session.setAttribute("alertMsg", "게시글 수정 성공!");
+				mv.setViewName("redirect:/detail.ch?bno=" + boardNo);
+			}
+			else {
+				mv.addObject("errorMsg", "게시글 수정에 실패했습니다.").setViewName("common/errorPage");
+			}
+			return mv;
+			
+		}else { //기존의 첨부파일을 모두 삭제한 경우
+			//게시글 수정 내용 (글 제목,캐릭터 이름,캐릭터 설명 등록 / 첨부파일 제외)
+			result = boardService.updateCharBoard(updateCb,updateCharacter);
+			
+			if(result != 0) {
+				session.setAttribute("alertMsg", "게시글 수정 성공!");
+				mv.setViewName("redirect:/detail.ch?bno=" + boardNo);
+			}
+			else {
+				mv.addObject("errorMsg", "게시글 수정에 실패했습니다.").setViewName("common/errorPage");
+			}
+			return mv;
 		}
-		
-		//--------새로운 첨부파일 끝
-		
-		//캐릭터 수정내용 담기 (캐릭터 이름,캐릭터 설명 / 참조게시글 번호를 조건으로 수정)
-		Character updateCharacter = new Character();
-		updateCharacter.setRefBno(updateCb.getBoardNo());
-		updateCharacter.setCharName(updateCb.getCharName());
-		updateCharacter.setCharContent(updateCb.getBoardContent());
-		
-		//수정할 게시글 내용과 첨부파일 목록을 보내자
-		int result = boardService.updateCharBoard(updateCb,updateCharacter,updateCaList);
-		
-		if(result != 0) {
-			session.setAttribute("alertMsg", "게시글 수정 성공!");
-			mv.setViewName("redirect:/detail.ch?bno=" + boardNo);
-		}
-		else {
-			mv.addObject("errorMsg", "게시글 수정에 실패했습니다.").setViewName("common/errorPage");
-		}
-		return mv;
+		//--------새로운 첨부파일 끝	
 	}
 			
 	//게시글 삭제
