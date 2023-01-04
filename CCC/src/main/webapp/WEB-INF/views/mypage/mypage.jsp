@@ -23,7 +23,6 @@ Coded by www.creative-tim.com
   <link rel="icon" type="image/png" href="resources/paper-dashboard-master/assets/img/favicon.png">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Paper Dashboard 2 by Creative Tim
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
     name='viewport' />
@@ -38,6 +37,8 @@ Coded by www.creative-tim.com
 </head>
 
 <body class="">
+ <!--제이쿼리 라이브러리-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
       <div class="logo">
@@ -59,25 +60,25 @@ Coded by www.creative-tim.com
           <li class="active ">
             <a href="./dashboard.html">
               <i class="nc-icon nc-bank"></i>
-              <p>Dashboard</p>
+              <p>대회참가내역>참가상세</p>
             </a>
           </li>
           <li>
-            <a href="./icons.html">
+            <a href="cartList.my ">
               <i class="nc-icon nc-diamond"></i>
-              <p>Icons</p>
+              <p>장바구니조회</p>
             </a>
           </li>
           <li>
-            <a href="./map.html">
+            <a href = "orderDetail.my?oNo=1">
               <i class="nc-icon nc-pin-3"></i>
-              <p>Maps</p>
+              <p>주문목록</p>
             </a>
           </li>
           <li>
             <a href="./notifications.html">
               <i class="nc-icon nc-bell-55"></i>
-              <p>Notifications</p>
+               <p></p>
             </a>
           </li>
           <li>
@@ -212,10 +213,9 @@ Coded by www.creative-tim.com
                       <i class="nc-icon nc-money-coins text-success"></i>
                     </div>
                   </div>
-                  <div class="col-7 col-md-8" onclick="location.href='mychar3.my'">
+                  <div class="col-7 col-md-8" onclick="location.href='contest.my'">
                     <div class="numbers">
-                      <p class="card-category">내 캐릭터</p>
-                      <a href="chardetail.my?cNo=20"  style="font-size:medium;" >특정캐릭터 상세보기</a>
+                         <p class="card-category">대회참가내역</p>
                       <p class="card-title">$ 1,345
                       <p>
                     </div>
@@ -242,7 +242,7 @@ Coded by www.creative-tim.com
                   </div>
                   <div class="col-7 col-md-8" onclick="location.href='list.mychar'">
                     <div class="numbers">
-                      <p class="card-category">캐릭터 목록보기</p>
+                        <p class="card-category">내 캐릭터</p>
                       <p class="card-title">23
                       <p>
                     </div>
@@ -260,7 +260,7 @@ Coded by www.creative-tim.com
           </div>
           <div class="col-lg-3 col-md-6 col-sm-6">
             <div class="card card-stats">
-              <div class="card-body ">
+              <div class="card-body" onclick="location.href='wishList.my'">>
                 <div class="row">
                   <div class="col-5 col-md-4">
                     <div class="icon-big text-center icon-warning">
@@ -305,88 +305,65 @@ Coded by www.creative-tim.com
 				    </tr>
 				  </thead>
 				  <tbody>
-				    <tr>
-				      <th scope="row">1</th>
-				      <td>Mark</td>
-				      <td>Otto</td>
-				      <td>@mdo</td>
-				      <td>하하</td>
-				    </tr>
-				    <tr>
-				      <th scope="row">2</th>
-				      <td>Jacob</td>
-				      <td>Thornton</td>
-				      <td>@fat</td>
-				      <td>하하</td>
-				    </tr>
-				    <tr>
-				      <th scope="row">3</th>
-				      <td>Larry</td>
-				      <td>the Bird</td>
-				      <td>@twitter</td>
-				      <td>하하</td>
-				    </tr>
-				  </tbody>
+                    <tr>
+                       <th scope="row">1</th>
+                       <td>1</td>
+                       <td>가가굿즈</td>
+                       <td>3개</td>
+                       <td>우와</td>
+                    </tr>
+                    <tr>
+                       <th scope="row">2</th>
+                       <td>2</td>
+                       <td>나나굿즈</td>
+                       <td>4개</td>
+                       <td>우와</td>
+                    </tr>
+                    <tr>
+                       <th scope="row">3</th>
+                       <td>3</td>
+                       <td>다다굿즈</td>
+                       <td>5개</td>
+                       <td>우와</td>
+                    </tr>
+                  </tbody>
 				</table>
             </div>
             
+            <script>
+                $("#orderList>tbody tr").click(function () {
+                    //alert('클릭됨?');
+                    //console.log("들어옴?");
+                    //var a=$(this).childeren().eq(1).text()
+                    //console.log(a);
+                    //location.href="orderDetail.my?oNo="+$(this).childeren().eq(0).text();
+                    location.href = "orderDetail.my?oNo=" + $(this).children().eq(1).text();
+                })
+            </script>
           
-            
              <div class="card ">
-             <h3 style="color:green;">영역1-1</h3>
-			 <table class="table">
-			  <thead class="thead-dark">
-			    <tr>
-			      <th scope="col">#</th>
-			      <th scope="col">주문번호</th>
-			      <th scope="col">주문 상품 이미지</th>
-			      <th scope="col">주문상품</th>
-			      <th scope="col">주문일자</th>
-			      <th scope="col">총가격</th>
-			      <th scope="col">상태</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <tr>
-			      <!-- 향상된for문으로 주문리스트 출력--> 
-			      <th scope="row">1</th>
-			      <td>Mark</td>
-                  <%--style="background-image:url(${changeName}); " 주문리스트의 사진경로 /이미지 임의로 넣어줌--%>
-			      <td><div class="img" style="background-image:url('/resources/myPage/myChar/2022122619310041802.jpg');">이미지</div></td>
-			      <td>Otto</td>
-			      <td>@mdo</td>
-			      <td>@mdo</td>
-			      <td>@mdo</td>
-			    </tr>
-			    <tr>
-			      <th scope="row">2</th>
-			      <td>Jacob</td>
-			       <td>ㅇ</td>
-			      <td>Thornton</td>
-			      <td>@fat</td>
-			      <td>@mdo</td>
-			      <td>@mdo</td>
-			    </tr>
-			    <tr>
-			      <th scope="row">3</th>
-			      <td>Larry</td>
-			      <td>ㅇ</td>
-			      <td>the Bird</td>
-			      <td>@twitter</td>
-			      <td>@mdo</td>
-			      <td>@mdo</td>
-			    </tr>
-			  </tbody>
-			</table>
-			
+	             <h3 style="color:green;">영역1-1</h3>
+	             
+	              <div class="orderList button" align="center">
+	                <a class="btn btn-primary" id="today-order" href="#" role="button">오늘</a>
+	                <a class="btn btn-primary" id="week-order" href="#" role="button">일주일</a>
+	                <a class="btn btn-primary" id="month-order" href="#" role="button">한달</a>
+	                <a class="btn btn-primary" id="month3-order" href="#" role="button">세달</a>
+	                <a class="btn btn-primary" id="month6-order" href="#" role="button">여섯달</a>
+	             </div>
+	             
+	               <br>
+	               <br>
+	             
+				 <table class="table" id="orderListArea">
+				  <!-- 여기가 ajax 뿌려지는 곳 -->
+				 </table>
             </div>
             
-              <div class="card ">
+            <div class="card ">
              <br>
              <h3 style="color:green;">영역1-2</h3>
               <div class="card-header ">
-                
-                
                 <br>
                 <br>
                 <br>
@@ -401,8 +378,58 @@ Coded by www.creative-tim.com
               </div>
             </div>
             
-            
-            
+                  <script>
+                        $(function () {
+                            // startDate는 시작일자를 언제로 설정할지를 결정하는 변수로
+                            // startDate값에 따라 컨트롤러에서 시작일을 변경하도록 되어 있음
+                            var startDay = 0;
+                            $("#today-order").click(function () {
+                                startDay = 1; // 오늘 날짜
+                                console.log(startDay);
+                                selectOrderList(startDay);
+                            });
+                            $("#week-order").click(function () {
+                                startDay = 2;  // 일주일 전
+                                selectOrderList(startDay);
+                            });
+                            $("#month-order").click(function () {
+                                startDay = 3;  // 한 달 전
+                                selectOrderList(startDay);
+                            });
+                            $("#month3-order").click(function () {
+                                startDay = 4;  // 세 달 전
+                                selectOrderList(startDay);
+                            });
+                            $("#month6-order").click(function () {
+                                startDay = 5;  // 여섯 달 전
+                                selectOrderList(startDay);
+                            });
+                        })
+
+                        var selectOrderList = function (startDay) {
+                            console.log("startDay : " + startDay);
+
+                            $.ajax({
+                                url: "selectoListbyDate.my",
+                                data: {
+                                    startDay: startDay
+                                },
+                                type: "post",
+                                success: function (realoList) {
+                                    console.log("통신성공");
+                                    console.log("realoList : " + realoList);
+
+                                    $("#orderListArea").html(realoList);
+
+                                    /*   str += "<tr><td colspan='3' align='center'><h3>조회된 결과가 없습니다.</h3></td></tr>";
+                                        $("#orderListArea").html(str);   */
+                                },
+                                error: function () {
+                                    console.log("통신실패");
+                                }
+                            })
+                        }
+                   </script>
           </div>
         </div>
         <div class="row">
@@ -426,15 +453,11 @@ Coded by www.creative-tim.com
           <div class="col-md-8">
             <div class="card card-chart">
               <div class="card-header">
-               
-               
               </div>
               <div class="card-body">
-               
               </div>
               <div class="card-footer">
                 <div class="chart-legend">
-                 
                 </div>
                 <hr />
                 <div class="card-stats">
@@ -457,9 +480,6 @@ Coded by www.creative-tim.com
             </nav>
             <div class="credits ml-auto">
               <span class="copyright">
-                <script>
-                  document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
               </span>
             </div>
           </div>

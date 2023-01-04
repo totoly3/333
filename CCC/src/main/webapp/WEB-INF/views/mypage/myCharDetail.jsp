@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- jQuery 라이브러리 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <style type="text/css">
 
 .outer {
@@ -24,16 +24,17 @@
 
 </head>
 <body>
+   <jsp:include page="/WEB-INF/views/common/header.jsp"/> 
    <div class="outer">
    <h3>특정캐릭터 상세보기</h3>
    <table align="center">
    <tr>
       <th>캐릭터명</th>
-      <td>${cha.cName}</td>
+      <td>${cha.characterName}</td>
    </tr>
    <tr>
       <th>캐릭터내용</th>
-      <td>${cha.cContent}</td>
+      <td>${cha.characterContent}</td>
    </tr>
 
     <tr>
@@ -57,14 +58,12 @@
    </table>
    </div>   
    
-   
    <br><br><br>
    <div class="buttonArea" align="center">
-     <button onclick="location.href='updateForm.my?cNo='+${cha.cNo}">수정</button>
-     <button onclick="location.href='delete.my?cNo=16'">삭제</button>
+     <button onclick="location.href='updateForm.my?cNo='+${cha.characterNo}">수정</button>
+     <button onclick="location.href='delete.my?cNo='+${cha.characterNo}">삭제</button>
+     <button onclick="location.href='list.mychar'">목록</button>
    </div>
-   
-  
 
 </body>
 </html>

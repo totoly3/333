@@ -104,17 +104,17 @@ public class AdminController {
 		
 		Row bodyRow = sheet.createRow(rowIndex++); //바디 생성
 	    Cell bodyCell1 = bodyRow.createCell(0);
-	    bodyCell1.setCellValue(m.getmNo());
+	    bodyCell1.setCellValue(m.getMemberNo());
 	    Cell bodyCell2 = bodyRow.createCell(1);
-	    bodyCell2.setCellValue(m.getmId());
+	    bodyCell2.setCellValue(m.getMemberId());
 	    Cell bodyCell3 = bodyRow.createCell(2);
-	    bodyCell3.setCellValue(m.getmName());
+	    bodyCell3.setCellValue(m.getMemberName());
 	    Cell bodyCell4 = bodyRow.createCell(3);
-	    bodyCell4.setCellValue(m.getmGender());
+	    bodyCell4.setCellValue(m.getMemberGender());
 	    Cell bodyCell5 = bodyRow.createCell(4);
-	    bodyCell5.setCellValue(m.getMgNo());
+	    bodyCell5.setCellValue(m.getMemberGradeNo());
 	    Cell bodyCell6 = bodyRow.createCell(5);
-	    bodyCell6.setCellValue(m.getmPoint());
+	    bodyCell6.setCellValue(m.getMemberPoint());
 		
 		}
 

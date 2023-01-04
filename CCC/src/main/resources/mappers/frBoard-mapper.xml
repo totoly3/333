@@ -14,21 +14,21 @@
 	
   	<!-- 아래는 지은이 꺼 Member -->
   	<resultMap type="member" id="memberResultSet">
-	<result column="M_NO" property="mNo" />
-	<result column="M_ID" property="mId" />
-	<result column="M_PWD" property="mPwd"/>
-	<result column="M_NAME" property="mName" />
-	<result column="MG_NO" property="mgNo" />
-	<result column="M_EMAIL" property="mEmail" />
-	<result column="M_PHONE" property="mPhone" />
-	<result column="M_ADDRESS" property="mAddress"/>
-	<result column="M_GENDER" property="mGender"/>
-	<result column="M_AGE" property="mAge" />
-	<result column="M_CREATE_DATE" property="mCreateDate" />
-	<result column="M_UPDATE_DATE" property="mUpdateDate" />
-	<result column="M_DELETE_DATE" property="mDeleteDate" />
-	<result column="M_POINT" property="mPoint" />
-	<result column="M_STATUS" property="mStatus" />
+	<result column="M_NO" property="memberNo" />
+	<result column="M_ID" property="memberId" />
+	<result column="M_PWD" property="memberPwd"/>
+	<result column="M_NAME" property="memberName" />
+	<result column="MG_NO" property="memberGradeNo" />
+	<result column="M_EMAIL" property="memberEmail" />
+	<result column="M_PHONE" property="memberPhone" />
+	<result column="M_ADDRESS" property="memberAddress"/>
+	<result column="M_GENDER" property="memberGender"/>
+	<result column="M_AGE" property="memberAge" />
+	<result column="M_CREATE_DATE" property="memberCreateDate" />
+	<result column="M_UPDATE_DATE" property="memberUpdateDate" />
+	<result column="M_DELETE_DATE" property="memberDeleteDate" />
+	<result column="M_POINT" property="memberPoint" />
+	<result column="M_STATUS" property="memberStatus" />
 	</resultMap>
   
     <!--//게시글 조회 메소드  게시글 전체 -->
