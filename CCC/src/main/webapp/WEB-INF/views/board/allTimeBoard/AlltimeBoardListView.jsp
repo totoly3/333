@@ -77,7 +77,7 @@
 </head>
 <body> 
 
-	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
+	<jsp:include page="/WEB-INF/views/common/header2.jsp"/>
 
 	<div class="container mt-3">
 			  <h2>역대 수상작</h2>

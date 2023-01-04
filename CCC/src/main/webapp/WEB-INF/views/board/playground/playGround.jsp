@@ -64,7 +64,7 @@
 
 </head>
 <body>
-   <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+   <jsp:include page="/WEB-INF/views/common/header2.jsp"/>
 		       <h1>놀이터</h1>	
 		       
      <div class="wrap">
