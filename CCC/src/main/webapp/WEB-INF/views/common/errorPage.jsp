@@ -4,10 +4,10 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>CCC::에러 페이지</title>
+    <title>Document</title>
 </head>
 <body>
-	<jsp:include page="header.jsp"/>
+	<jsp:include page="header2.jsp"/>
 	
     <br>
     <div align="center">
