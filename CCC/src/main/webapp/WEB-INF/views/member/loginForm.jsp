@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -34,7 +34,17 @@
                 <div class="text-center pt-3 text-muted">Not a member? 
                 <a href="enrollForm.me">Sign up</a><br>
                 <br>
-                <a href="mypage.me">마이페이지</a>
+                <!-- 로그인해야 이동되도록 수정  -->
+                <c:choose>
+                	<c:when test="${not empty loginUser }">
+	                	<li><a href="mypage.me">마이페이지</a></li>
+            		</c:when>
+            		<c:otherwise>
+	            		<!-- 로그인이 안되면 하라고 알림 띄우면 좋을듯 -->
+            			<li><a href="">마이페이지</a></li>
+            		</c:otherwise>
+                </c:choose>
+                
                 </div>
             </form>
         </div>

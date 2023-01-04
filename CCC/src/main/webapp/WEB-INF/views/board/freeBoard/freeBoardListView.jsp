@@ -42,7 +42,7 @@
     </style>
 </head>
 <body>
-   <jsp:include page="/WEB-INF/views/common/header2.jsp"/>
+   <jsp:include page="/WEB-INF/views/common/header.jsp"/>
     <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
@@ -71,7 +71,7 @@
 						<tr>
 							<td data-index="1"><input type="checkbox" name="check" id="multiCheck" value="${B.fNo}"></td>
 	                        <td data-index="2">${B.fNo }</td>
-	                        <td data-index="3">${B.fTitle } </td>
+	                        <td data-index="3" class="goDetailFr">${B.fTitle }</td>
 	                    	<td data-index="4">${B.mId } </td>
 	                        <td data-index="5">${B.fCount }</td>
 	                        <td data-index="6">${B.fCreateDate }</td>
@@ -146,8 +146,12 @@
  	 
  	 <script>
  	$(function(){
- 		 $("#boardList>tbody>tr").click(function(){
- 			 location.href="detail.fbo?fno="+$(this).children().eq(1).text();
+//  		 $("#boardList>tbody>tr").click(function(){
+//  			 location.href="detail.fbo?fno="+$(this).children().eq(1).text();
+//  			 console.log(this);
+//  		 })
+ 		 $(".goDetailFr").click(function(){
+ 			 location.href="detail.fbo?fno="+$(this).prev().text();
  			 console.log(this);
  		 })
  	})
