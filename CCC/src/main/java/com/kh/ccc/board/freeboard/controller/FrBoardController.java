@@ -43,7 +43,7 @@ public class FrBoardController {
 			
 //			Member loginUser = (Member)session.getAttribute("loginUser");
 //			int fWriterNo =loginUser.getmNo();
-	//
+	
 		
 			
 			int listCount = FrBoardService.selectListCount(); //총 게시글 개수  db에서 조회해오기 .
