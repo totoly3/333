@@ -9,12 +9,14 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ccc.mypage.model.vo.MyCharacter;
 import com.kh.ccc.mypage.model.vo.MyCharacterAttach;
+import com.kh.ccc.order.model.vo.Cart;
 import com.kh.ccc.order.model.vo.DeliveryDetail;
 import com.kh.ccc.order.model.vo.Goods;
 import com.kh.ccc.order.model.vo.MyOrderDetail;
 import com.kh.ccc.order.model.vo.Order;
 import com.kh.ccc.order.model.vo.OrderDetail;
 import com.kh.ccc.order.model.vo.OrderListByDate;
+import com.kh.ccc.order.model.vo.Wish;
 
 @Repository
 public class MyPageDao {
@@ -141,6 +143,19 @@ public class MyPageDao {
 		
 	}
 	
+	
+	//장바구니 조회
+	public ArrayList<Cart> selectCartList(SqlSessionTemplate sqlSession, int mNo) {
+		
+	   return (ArrayList)sqlSession.selectList("myPageMapper.selectCartList",mNo);
+		
+	}
+
+	
+	//찜하기 조회
+	public ArrayList<Wish> selectWishList(SqlSessionTemplate sqlSession, int mNo) {
+		return (ArrayList)sqlSession.selectList("myPageMapper.selectWishList",mNo);
+	}
 	
 	
 }

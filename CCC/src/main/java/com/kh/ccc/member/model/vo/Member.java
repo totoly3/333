@@ -4,16 +4,19 @@ import java.sql.Date;
 
 public class Member {
 	
-	private int mNo;		//	M_NO	NUMBER
-	private String mId;		//	M_ID	VARCHAR2(20 BYTE)
-	private String mPwd;		//	M_PWD	VARCHAR2(20 BYTE)
-	private String mName;		//	M_NAME	VARCHAR2(30 BYTE)
-	private int mgNo;		//	MG_NO	NUMBER
-	private String mEmail; 	//	M_EMAIL	VARCHAR2(30 BYTE)
-	private String mPhone;	//	M_PHONE	VARCHAR2(20 BYTE)
-	private String mAddress; //	M_ADDRESS	VARCHAR2(100 BYTE)
-	private String mGender;		//	M_GENDER	VARCHAR2(20 BYTE)
-	private int mAge;		//	M_AGE	NUMBER
+	private int mNo;		//	M_NO	NUMBER   회원번호
+
+	private String mId;		//	M_ID	VARCHAR2(20 BYTE)  회원아이디
+
+	private String mPwd;		//	M_PWD	VARCHAR2(20 BYTE) 회원비밀번호
+
+	private String mName;		//	M_NAME	VARCHAR2(30 BYTE) 회원이름
+	private int mgNo;		//	MG_NO	NUMBER 회원등급
+	private String mEmail; 	//	M_EMAIL	VARCHAR2(30 BYTE) 회원 이메일
+	private String mPhone;	//	M_PHONE	VARCHAR2(20 BYTE) 핸드폰 번호
+	private String mAddress; //	M_ADDRESS	VARCHAR2(100 BYTE) 주소
+	private String mGender;		//	M_GENDER	VARCHAR2(20 BYTE) 성별
+	private int mAge;		//	M_AGE	NUMBER 회원 나이
 	private Date mCreateDate;	//	M_CREATE_DATE	DATE
 	private Date mUpdateDate;	//	M_UPDATE_DATE	DATE
 	private Date mDeleteDate;	//	M_DELETE_DATE	DATE
@@ -25,8 +28,7 @@ public class Member {
 		super();
 	}
 
-
-
+	
 	public Member(int mNo, String mId, String mPwd, String mName, int mgNo, String mEmail, String mPhone,
 			String mAddress, String mGender, int mAge, Date mCreateDate, Date mUpdateDate, Date mDeleteDate, int mPoint,
 			String mStatus) {

@@ -84,8 +84,6 @@
 	                       <!-- 배송이 진행중일때만 보여줌 -->
 	                       <!-- 상품번호/상세번호 넘기기-->
 	                       <div> <a class="btn btn-primary" id="delivery" onclick="location.href='delivery.my?'">배송조회</a></div>
-	                       <div><a class="btn btn-danger" href="" >교환 반품</a></div>
-	                       <div><a class="btn btn-danger" href="">리뷰쓰기</a></div>
                          </td>
 	                   </tr>
 	                   

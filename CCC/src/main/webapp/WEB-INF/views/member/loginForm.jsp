@@ -10,6 +10,8 @@
 
 </head>
 <body>
+
+    <br><br><br><br><br><br><br>
     <div class="loginarea">
         <div class="wrapper bg-white">
             <div class="h2 text-center" style="font-size: xx-large;" >C C C</div>
@@ -31,11 +33,10 @@
                             <span class="checkmark"></span> </label> </div>
                     <div class="ml-auto"> <a href="#" id="forgot"></a> </div>
                 </div><button class="btn btn-block text-center my-3">로그인</button>
-                <div class="text-center pt-3 text-muted">Not a member? 
-                <a href="enrollForm.me">Sign up</a><br>
+                <div class="text-center pt-3 text-muted">
+                <a href="enrollForm.me">회원가입</a><br>
                 <br>
                    <span><a href="mypage.me">마이페이지</a></span>
-                   <span><a href="">회원가입</a></span>
                 </div>
             </form>
         </div>

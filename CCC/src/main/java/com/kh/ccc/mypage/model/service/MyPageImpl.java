@@ -11,12 +11,14 @@ import org.springframework.stereotype.Service;
 import com.kh.ccc.mypage.model.dao.MyPageDao;
 import com.kh.ccc.mypage.model.vo.MyCharacter;
 import com.kh.ccc.mypage.model.vo.MyCharacterAttach;
+import com.kh.ccc.order.model.vo.Cart;
 import com.kh.ccc.order.model.vo.DeliveryDetail;
 import com.kh.ccc.order.model.vo.Goods;
 import com.kh.ccc.order.model.vo.MyOrderDetail;
 import com.kh.ccc.order.model.vo.Order;
 import com.kh.ccc.order.model.vo.OrderDetail;
 import com.kh.ccc.order.model.vo.OrderListByDate;
+import com.kh.ccc.order.model.vo.Wish;
 
 import oracle.net.aso.s;
 
@@ -162,6 +164,27 @@ public class MyPageImpl implements MyPageService{
 			ArrayList<MyOrderDetail> realOlist=myPageDao.selectRealOrderListView(sqlSession,oNo);
 			
 			return  realOlist;
+		}
+
+
+		
+		//장바구니 조회
+		@Override
+		public ArrayList<Cart> selectCartList(int mNo) {
+			
+			ArrayList<Cart> cList=myPageDao.selectCartList(sqlSession,mNo);
+					
+			return cList;
+		}
+
+
+		//찜리스트 조회
+		@Override
+		public ArrayList<Wish> selectWishList(int mNo) {
+			
+			ArrayList<Wish> wList=myPageDao.selectWishList(sqlSession,mNo);
+			
+			return wList;
 		}
 		
 }

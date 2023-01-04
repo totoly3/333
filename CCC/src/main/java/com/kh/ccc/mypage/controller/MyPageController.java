@@ -1,12 +1,10 @@
 package com.kh.ccc.mypage.controller;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -25,12 +23,13 @@ import com.kh.ccc.member.model.vo.Member;
 import com.kh.ccc.mypage.model.service.MyPageService;
 import com.kh.ccc.mypage.model.vo.MyCharacter;
 import com.kh.ccc.mypage.model.vo.MyCharacterAttach;
+import com.kh.ccc.order.model.vo.Cart;
 import com.kh.ccc.order.model.vo.DeliveryDetail;
 import com.kh.ccc.order.model.vo.MyOrderDetail;
 import com.kh.ccc.order.model.vo.Order;
 import com.kh.ccc.order.model.vo.OrderDetail;
 import com.kh.ccc.order.model.vo.OrderListByDate;
-
+import com.kh.ccc.order.model.vo.Wish;
 
 @Controller
 public class MyPageController {
@@ -43,13 +42,16 @@ public class MyPageController {
 	public String myPage() {
 		return "mypage/mypage";
 	}
+	
 
 	// 마이페이지 내정보 조회
 	@RequestMapping("profileEnroll.me")
 	public String profile() {
 		return "mypage/profile";
 	}
+	
 
+	//////////////////////////////내 캐릭터영역
 	// 내 캐릭터 목록조회
 	@RequestMapping("list.mychar")
 	public ModelAndView selectMychaList(HttpSession session, ModelAndView mv) {
@@ -57,17 +59,16 @@ public class MyPageController {
 		// 사용자번호를 가지고 내캐릭터 목록조회
 		Member loginUser = (Member) session.getAttribute("loginUser");
 		int mNo = loginUser.getmNo();
-		// System.out.println("목록조회컨트롤러 사용자번호 넘?"+mNo);
 
 		// ~글리스트,파일리스트 join해서 조회
 		ArrayList<MyCharacter> chalist = mypageService.selectchaList(mNo);
-		// System.out.println("목록조회 컨트롤러 리스트 돌?"+mchalist);
 
 		// <<리스트
 		mv.addObject("chalist",chalist).setViewName("mypage/myCharList");
 
 		return mv;
 	}
+	
 
 	// 마이캐릭터 업로드폼으로 이동
 	@RequestMapping("enrollForm.mychar")
@@ -75,23 +76,18 @@ public class MyPageController {
 		return "mypage/myCharEnrollForm";
 	}
 
-	// 다중첨부파일 입력
-	// 타이틀이미지는 따로 받아줌 upfileList 새로 올라오는 파일
+	
+	// 다중첨부파일 입력- 타이틀이미지는 따로 받아줌 upfileList 새로 올라오는 파일
 	@RequestMapping("insert.mychar")
 	public ModelAndView mycharInsert(MyCharacter cha, ModelAndView mv, MultipartFile titleImg,
 			@RequestParam(value = "upfileList", required = false) List<MultipartFile> upfileList, HttpSession session) {
 
 		Member loginUser = (Member) session.getAttribute("loginUser");
-		int mNo = loginUser.getmNo(); // 멤버번호
-
-		//System.out.println("2시39분업로드파일 출력" + upfileList);
-		//System.out.println(titleImg);
+		int mNo = loginUser.getmNo(); 
 
 		ArrayList<MyCharacterAttach> mchalist = new ArrayList<>(); // 담아줄 파일 ArrayList
 
-		// >>가져가야할 것? 객체와 리스트 넘겨줌(글과 파일리스트)
-
-		// Q 썸네일 처리과정??????????????????
+		//썸네일 첨부파일
 		if (!titleImg.getOriginalFilename().equals("")) {// 파일 업로드가 되었다면
 
 			// 아래에서 모듈화 시킨 saveFile 메소드 활용
@@ -124,21 +120,15 @@ public class MyPageController {
 		}
 
 		cha.setmNo(loginUser.getmNo());
-		// System.out.println("cha:"+cha);
-		// System.out.println("회원번호"+cha.getmNo());
-		// System.out.println(mcalist+"확인1시");
 
 		// ~게시물과 파일리스트를 가지고 요청처리(INSERT)
 		int result = mypageService.mycharInsert(cha, mchalist);
-		//System.out.println("5시26분" + result);
-		//System.out.println("mchalist : " + mchalist);
 
 		if (result > 0) {
 
 			session.setAttribute("alsertMsg", "내 캐릭터 등록완료");
 
 			//멤버번호로 파일리스트조회
-			//mypageService.selectchaList(mNo);
 			ArrayList<MyCharacter> chalist = mypageService.selectchaList(mNo);
 
 			mv.addObject("chalist", chalist).setViewName("mypage/myCharList"); // 내캐릭터 페이지로 보내줌
@@ -156,17 +146,12 @@ public class MyPageController {
 	@RequestMapping("chardetail.my")
 	public ModelAndView detailMyChar(@RequestParam(value = "cNo") int cNo, ModelAndView mv) {
 
-		// int count=mypageService.increaseCount(cNo); //캐릭터번호 넘겨오는지 확인작업
-
-		MyCharacter cha = mypageService.selecectMyChar(cNo); // 게시글조회
-		// System.out.println("게시글 돌?"+cha);
+		MyCharacter cha = mypageService.selecectMyChar(cNo); //게시글조회
 
 		ArrayList<MyCharacterAttach> mchalist = mypageService.selectChaList(cNo); // 게시글 파일리스트조회
 
 		MyCharacterAttach ml = new MyCharacterAttach();
 		ml.setOriginName(mchalist.get(0).getOriginName());
-		// System.out.println("111"+ml);
-		// System.out.println("파일리스트 돌아오니?"+mchalist);
 
 		mv.addObject("cha", cha).addObject("mchalist", mchalist).setViewName("mypage/myCharDetail");
 
@@ -177,13 +162,9 @@ public class MyPageController {
 	@RequestMapping("updateForm.my")
 	public String updateFormMychar(@RequestParam(value = "cNo") int cNo, Model model) {
 
-		// System.out.println("수정폼 캐릭터번호 넘?"+cNo);
-
 		// ~게시글,파일리스트 SELECT(cNo를 가지고가서)
 		MyCharacter cha = mypageService.selecectMyChar(cNo);
 		ArrayList<MyCharacterAttach> mchalist = mypageService.selectChaList(cNo);
-		// System.out.println("게시글수정폼돌?"+cha);
-		// System.out.println("수정폼돌?"+mchalist);
 
 		// <<게시글 파일리스트
 		model.addAttribute("cha", cha);
@@ -196,8 +177,6 @@ public class MyPageController {
 	@RequestMapping("update.my")
 	public ModelAndView updateMyChar(MyCharacter cha, MultipartFile titleImg,
 			@RequestParam(value = "upfileList") List<MultipartFile> upfileList, HttpSession session, ModelAndView mv) {
-
-		// System.out.println("컨트롤러 캐릭터객체 넘?"+cha);
 
 		// 해당 캐릭터번호로 기존파일리스트 조회
 		int cNo = cha.getcNo();
@@ -240,11 +219,9 @@ public class MyPageController {
 
 				// 담아줄 파일객체 생성
 				MyCharacterAttach mca = new MyCharacterAttach();
-				// System.out.println("파일번호?"+mCaNo);
 
 				// 수정파일명 구해줌
 				String changeName = saveFile(upfileList.get(i), session);
-				// System.out.println("수정파일명??"+changeName);
 
 				// 참조캐릭터번호,원본파일명,체인지파일명,파일레벨
 				mca.setcNo(cNo);
@@ -258,9 +235,6 @@ public class MyPageController {
 
 		}
 		
-		//썸네일과 일반파일리스트
-		//System.out.println("6시16분 넘겨줄첨부파일"+newList);
-
 		// ~게시글과 담을리스트에 넣어서 요청처리
 		int result = mypageService.updateMyChar(cha, newList);
 		//System.out.println("6시 요청결과"+result);
@@ -338,11 +312,12 @@ public class MyPageController {
 	}
 	
 	
-	//주문목록SELECT(>>mNo) 
+	/////////////////////////////////////////////////////주문영역
+	
 	// 기간별주문내역 조회(좀더 고민) 마이페이지 들어갈때 뿌려줌
 	@ResponseBody
 	@RequestMapping(value="selectoListbyDate.my",produces = "application/json;charset=UTF-8" )
-	public String selectoListbyDate(HttpSession session,int startDay) {
+	public ModelAndView selectoListbyDate(HttpSession session,int startDay, ModelAndView mv) {
 		
 	  System.out.println("startDay시작일"+startDay);	//확인
 		
@@ -356,16 +331,13 @@ public class MyPageController {
 	    final int SIX_MONTH = 5;       // 6개월 전
 	    
 	    Date dt = new Date();
-	   
 	    
-	    
-	    
-	    //시작일 처리용
+	    //시작일
 	    String before=""; //시작 날짜문자열
 	    Calendar cal=null; //캘린더객체 
 	    Date startDate=null; //시작일 객체
 	    
-	    //끝일 처리용
+	    //끝일
 	    Date endDate=new Date(dt.getTime() + (1000 * 60 * 60 * 24));//현재날짜+1일 함
 	    String after=new SimpleDateFormat("yyyy-MM-dd").format(endDate); //마지막 날짜 문자열
 	    java.sql.Date endDatesql=java.sql.Date.valueOf(after);//sql끝일객체
@@ -376,12 +348,11 @@ public class MyPageController {
 	    //조회해온 주문번호
 	    int oNo=0;
 	    
-	    //주문번호 받아올 주문리스트
+	    //주문번호 받아오기용 주문리스트
 	    ArrayList<Order> oList=null; //멤버번호,시작일객체,끝일객체 담아가서 담아올 주문리스트
 	    
 	    //진짜주문리스트
 		ArrayList<MyOrderDetail> realoList=null; 
-	    
 		
 		switch (startDay) {
 		
@@ -392,25 +363,22 @@ public class MyPageController {
 				java.sql.Date startDateSql = java.sql.Date.valueOf(before); //sql Date로 변경
 				System.out.println("sql변경한뒤의 버튼주문조회 ::"+startDateSql+"~"+endDatesql+"까지 조회");
 				
+				//시작일-끝일-사용자번호 담아줌
 				tbd.setStartDate(startDateSql);
 				tbd.setEndDate(endDatesql);
 				tbd.setMNo(mNo);
 				
-				//시작일-끝일-사용자번호 담아줌
-				System.out.println(tbd+"dd");
-					
 				oList = mypageService.selectOrderListView(tbd);
 				
-//			       for(Order or : oList) {
-//			          oNo= or.getOrderNo(); //주문번호를 뽑아준다.
-//			          System.out.println(oNo+"????");
-//			          
-//			      }
-//			       realoList= mypageService.selectRealOrderListView(oNo);
-//			    
-//			    System.out.println("진짜주문리스트정말돌??"+realoList);
-//			    
+			       for(Order or : oList) {
+			          oNo= or.getOrderNo(); //주문번호를 뽑아준다.
+			          System.out.println(oNo+"????");
+		           }
 				
+			    realoList= mypageService.selectRealOrderListView(oNo);
+			    
+			    System.out.println("진짜주문리스트정말돌??"+realoList);
+			    mv.addObject("realoList", realoList).setViewName("mypage/mypageselectOrderList");				
 				break;
 				
 	         case ONE_WEEK:
@@ -430,15 +398,15 @@ public class MyPageController {
 	             
 	             oList = mypageService.selectOrderListView(tbd);
 	             
-	             System.out.println(oList+"??????/");
+				      for(Order or : oList) {
+			          oNo= or.getOrderNo(); //주문번호를 뽑아준다.
+		          }
 	             
-	             //oNo뽑는 부분??
-	             System.out.println("출력하셈?"+oNo);
-	             
-//			    
-//	             realoList= mypageService.selectRealOrderListView(oNo);
-//			     System.out.println("진짜주문리스트정말돌??"+realoList);
-	             
+				 realoList= mypageService.selectRealOrderListView(oNo);
+				 mv.addObject("realoList", realoList).setViewName("mypage/mypageselectOrderList");	
+				 
+				 System.out.println("결과"+realoList);
+				 
 				 break;	
 			
 	         case ONE_MONTH:
@@ -448,14 +416,19 @@ public class MyPageController {
 	             // 일주일 전 날짜 스트링을 넣어서 Date타입으로 변경
 	             startDateSql = java.sql.Date.valueOf(before);
 	             
-	             System.out.println("sql변경한뒤의 버튼주문조회 ::"+startDateSql+"~"+endDatesql+"까지 조회");
-	             
 	             tbd.setStartDate(startDateSql);
 			     tbd.setEndDate(endDatesql);
 				 tbd.setMNo(mNo);
 				 
 				 oList = mypageService.selectOrderListView(tbd);
+				 
+				 for(Order or : oList) {
+			          oNo= or.getOrderNo(); //주문번호를 뽑아준다.
+		          }
 	             
+	             realoList= mypageService.selectRealOrderListView(oNo);
+				 mv.addObject("realoList", realoList).setViewName("mypage/mypageselectOrderList");
+				 
 	 			 break;
 	 		
 	         case THREE_MONTH:
@@ -471,7 +444,15 @@ public class MyPageController {
 				 tbd.setMNo(mNo);
 				 
 				 oList = mypageService.selectOrderListView(tbd);
+				 
+				 for(Order or : oList) {
+			          oNo= or.getOrderNo(); //주문번호를 뽑아준다.
+			          //System.out.println(oNo+"????");
+		          }
 	             
+	             realoList= mypageService.selectRealOrderListView(oNo);
+				 mv.addObject("realoList", realoList).setViewName("mypage/mypageselectOrderList");
+				 
 	        	 break;
 	        	 
 	         case SIX_MONTH: 
@@ -480,13 +461,20 @@ public class MyPageController {
 	             before = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
 	             // 일주일 전 날짜 스트링을 넣어서 Date타입으로 변경
 	             startDateSql = java.sql.Date.valueOf(before);
-	             System.out.println("sql변경한뒤의 버튼주문조회 ::"+startDateSql+"~"+endDatesql+"까지 조회");
 	             
 	             tbd.setStartDate(startDateSql);
 			     tbd.setEndDate(endDatesql);
 				 tbd.setMNo(mNo);
 				 oList = mypageService.selectOrderListView(tbd);
+				 
+				 for(Order or : oList) {
+			          oNo= or.getOrderNo(); //주문번호를 뽑아준다.
+		          }
 	             
+	             //oNo뽑는 부분??
+	             realoList= mypageService.selectRealOrderListView(oNo);
+				 mv.addObject("realoList", realoList).setViewName("mypage/mypageselectOrderList");
+				 
 	        	 break;
 	         
 			 default:
@@ -494,22 +482,15 @@ public class MyPageController {
 				 break;
 		 }
 		
-		 System.out.println("주문리스트돌?"+oList);
-		 
-		 return new Gson().toJson(oList);
+		 return mv;
 	  }
 	
-
-	
-	// 상세 주문내역SELECT 이동조회(>>주문번호oNo)
+	// 상세 주문내역SELECT 
 	@RequestMapping("orderDetail.my")
 	public ModelAndView orderDetail(int oNo, HttpSession session, ModelAndView mv) {
 
 		// 로그인유저
 		Member loginUser = (Member) session.getAttribute("loginUser");
-
-		//System.out.println("주문번호" + oNo);
-		// 주문번호1을 가지고 selectArrayList >>
 
 		//~상세주문리스트가져옴(SELECT)
 		ArrayList<OrderDetail> orderDetail= mypageService.orderDetail(oNo);
@@ -517,10 +498,6 @@ public class MyPageController {
 		//~join한 주문객체가져옴(SELECT) 객체하나
 		MyOrderDetail myOrderDetail=mypageService.myOrderDetail(oNo);
 		
-		//~굿즈객체 가져옴(SELECT) 보류x
-		//System.out.println("돌?"+myOrderDetail);
-		//System.out.println("상세보기리스트 돌?"+orderDetail);
-				
 		// 로그인이 되어있다면
 		if (loginUser != null) {
 
@@ -548,11 +525,9 @@ public class MyPageController {
         od.setOrderDetailNo(odNo);
         od.setOrderNo(oNo);
         
-		// order.set(oNo);
 		//상세번호,번호 주문객체에 담아서 가져가자 
         //~배송정보()
         DeliveryDetail deliInfo=mypageService.selectDeliveryDetail(od);
-        //System.out.println("배송정보돌?"+deliInfo);
         
         //<<배송정보 객체
         model.addAttribute("deliInfo", deliInfo);
@@ -563,27 +538,39 @@ public class MyPageController {
 	
 	//찜한 리스트 조회	
 	@RequestMapping("wishList.my")
-	public String selectWishList( ){
-			
+	public String selectWishList(HttpSession session ){
+		
+		 Member loginUser=(Member)session.getAttribute("loginUser");
+		 int mNo= loginUser.getmNo();
+		
+		 ArrayList<Wish> wList=mypageService.selectWishList(mNo);
+		
 		 return "mypage/wish";	
 		 
     }  
 	
-	
-		
-		//장바구니 리스트 조회
+    //장바구니 리스트 조회
 	@RequestMapping("cartList.my")
-	public String selectcartList(){
+	public String selectCartList(HttpSession session,Model model){
 		
-     //사용자번호
-     return "mypage/cartList";
-   }
+	 Member loginUser=(Member)session.getAttribute("loginUser");
+	 int mNo= loginUser.getmNo();
 
-		
-	//-----------------대회참가영역-----------------------------------------------
+	 ArrayList<Cart> cList=mypageService.selectCartList(mNo);
+	 
+		 if (cList!=null) {
+			 model.addAttribute("cList",cList);
+			 
+		 } else {
+			session.setAttribute("errorMsg", "장바구니 불러오기 실패");
+		 }
+	 
+     return "mypage/cartList";
+   
+	}
+
+	//-----------------대회참가영역------------------------------------------------
 	//기간별 작품참가내역 조회
-	
-		
 	//참가한 작품정보(순위변동그래프,현재포인트 현재순위등)
 	@RequestMapping("contest.my")
 	public String contest() {
@@ -591,17 +578,6 @@ public class MyPageController {
  	  return "mypage/contest";
 		
 	} 
-	
-	
-	//대회참가내역>참가정보 상세조회
-	
-	
-	
-	
-	
-	
-	
-	
 	
 		
 }

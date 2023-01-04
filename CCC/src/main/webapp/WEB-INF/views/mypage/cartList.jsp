@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>     
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,8 +48,10 @@
             <br><br>
 
             <table id="contentArea" algin="center" class="table">
+              <c:forEach var="c" items="${cList}">
                 <tr>
                     <td>
+                        ${cList}?? 
                         <input type="checkbox">
                     </td>
                     <td>
@@ -73,6 +76,7 @@
                         <span>총가격?원</span>
                     </td>
                 </tr>
+               </c:forEach> 
             </table>
             <br>
 

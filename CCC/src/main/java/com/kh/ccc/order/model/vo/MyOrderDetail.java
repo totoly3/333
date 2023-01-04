@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 public class MyOrderDetail {
 	
 	
-	
 	    //주문
 		private int orderNo;	  		  //O_NO	NUMBER 주문번호 *
 		private int memberNo;	  		  //M_NO	NUMBER 사용자번호 *
@@ -46,7 +45,6 @@ public class MyOrderDetail {
 		//배송비영역
 		private String deliveryName;//	D_NAME	VARCHAR2(20 BYTE)
 		private int deliveryFee;//	D_FEE	NUMBER
-		
 		
 
 }

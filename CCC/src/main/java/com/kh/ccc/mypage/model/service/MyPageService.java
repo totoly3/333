@@ -1,16 +1,16 @@
 package com.kh.ccc.mypage.model.service;
-
 import java.util.ArrayList;
 import java.util.Date;
-
 import com.kh.ccc.mypage.model.vo.MyCharacter;
 import com.kh.ccc.mypage.model.vo.MyCharacterAttach;
+import com.kh.ccc.order.model.vo.Cart;
 import com.kh.ccc.order.model.vo.DeliveryDetail;
 import com.kh.ccc.order.model.vo.Goods;
 import com.kh.ccc.order.model.vo.MyOrderDetail;
 import com.kh.ccc.order.model.vo.Order;
 import com.kh.ccc.order.model.vo.OrderDetail;
 import com.kh.ccc.order.model.vo.OrderListByDate;
+import com.kh.ccc.order.model.vo.Wish;
 
 public interface MyPageService {
 
@@ -41,7 +41,6 @@ public interface MyPageService {
 	//주문상세페이지2. 조회(join)
 	MyOrderDetail myOrderDetail(int oNo);
 
-
 	//배송정보 조회(상품상세번호객체-상품상세번호, 상품번호 필요)
 	DeliveryDetail selectDeliveryDetail(OrderDetail od);
 
@@ -51,6 +50,11 @@ public interface MyPageService {
 
 	//기간별 주문리스트(실제 주문리스트)
 	ArrayList<MyOrderDetail> selectRealOrderListView(int oNo);
-	
 
+	//장바구니 조회
+	ArrayList<Cart> selectCartList(int mNo);
+
+	//찜한 위시리스트 조회
+	ArrayList<Wish> selectWishList(int mNo);
+	
 }

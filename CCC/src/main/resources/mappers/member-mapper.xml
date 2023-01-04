@@ -25,6 +25,7 @@
 	<result column="M_POINT" property="mPoint" />
 	<result column="M_STATUS" property="mStatus" />
 	</resultMap>
+	
 	<!-- 회원리스트 조회 (관리자페이지) -->
 	<select id="memberList" resultMap="memberResultSet">
 	SELECT *
@@ -32,8 +33,6 @@
 	WHERE M_STATUS = 'Y'
 	ORDER BY M_NO ASC
 	</select>
-	
-	
 	
 	<!-- 관리자 (회원수) -->
 	<select id="selectListCount" resultType="_int">
@@ -44,16 +43,27 @@
 	
 	</select>
 	
-	
 	<!-- 일반회원 check회원들 차단삭제 -->
 	<update id="deleteMemberList" parameterType="java.util.List">
-	
 		UPDATE TB_MEMBER
 		SET M_STATUS = 'N'
 		WHERE M_NAME IN
 		<foreach collection="list" item="checkBoxArr" open="(" close=")" separator=",">
  		#{checkBoxArr}
 		</foreach>
-	
 	</update>
+	
+	<insert id="insertMember" parameterType="member">	
+		INSERT INTO TB_MEMBER (M_NO,M_ID,M_PWD,M_NAME,MG_NO,M_EMAIL,M_PHONE,M_ADDRESS,M_GENDER,M_AGE,M_CREATE_DATE,M_UPDATE_DATE,M_DELETE_DATE,M_POINT,M_STATUS) 
+		VALUES (SEQ_MNO.NEXTVAL,#{mId},#{mPwd},#{mName},1,#{mEmail},#{mPhone},#{mAddress},#{mGender},#{mAge},SYSDATE,SYSDATE,SYSDATE,100,'Y')
+	</insert>
+	
+	<select id="checkId" resultType="_int">
+	  SELECT COUNT(*)
+	  FROM TB_MEMBER
+	  WHERE M_ID=#{userId}
+	  AND M_STATUS='Y'
+	</select>
+	
+	
 </mapper>
