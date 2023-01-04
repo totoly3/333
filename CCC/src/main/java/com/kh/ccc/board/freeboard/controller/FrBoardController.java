@@ -45,7 +45,7 @@ public class FrBoardController {
 //			int fWriterNo =loginUser.getmNo();
 	
 		
-			
+	//아니 왜안올라가냐고		
 			int listCount = FrBoardService.selectListCount(); //총 게시글 개수  db에서 조회해오기 .
 			
 			int pageLimit = 10;	//하단에 페이징바 갯수
