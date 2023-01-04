@@ -10,7 +10,6 @@ import com.kh.ccc.board.charBoard.model.dao.CharBoardDao;
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
-import com.kh.ccc.board.charBoard.model.vo.CharBoardSearch;
 import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.common.model.vo.PageInfo;
@@ -210,11 +209,6 @@ public class CharBoardServiceImpl implements CharBoardService {
 	@Override
 	public int deleteAllOldAttach(int boardNo) {
 		return boardDao.deleteAllOldAttach(sqlSession,boardNo);
-	}
-	//게시글 검색
-	@Override
-	public ArrayList<CharBoard> charBoardSearch(CharBoardSearch c) {
-		return boardDao.charBoardSearch(sqlSession, c);
 	}
 
 }
