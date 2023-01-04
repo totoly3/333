@@ -243,35 +243,6 @@
 			WHERE CB_NO = #{ bno }
 	</delete>
 	
-	<!-- 게시글 검색 -->
-	<select id="charBoardSearch" resultMap="charBoardResultSet" parameterType="charBoardSearch">
-		SELECT CB_NO
-		      ,CB_WRITER
-		      ,C_NAME
-		      ,CB_TITLE
-		      ,CB_CONTENT
-		      ,CB_VIEWS
-		      ,CB_LIKE
-		      ,CB_CREATE_DATE
-		FROM TB_CHARACTER_BOARD
-		WHERE CB_STATUS = 'Y'
-		<choose>
-			<when test="condition == 'writer'">
-				AND CB_WRITER
-			</when>
-			<when test="condition == 'title'">
-				AND C_NAME
-			</when>
-			<!-- 캐릭터 설명 -->
-			<otherwise>
-				AND CB_CONTENT
-			</otherwise>
-		</choose>
-		<!-- 공통적으로 사용하는 구문 -->
-		LIKE '%'||#{ keyword }||'%'
-		ORDER BY CB_CREATE_DATE DESC
-	</select>
-	
 	<!-- 좋아요 조회 (TB_CHARACTER_LIKE) -->
 	<select id="selectLike" resultMap="charLikeResultSet" parameterType="charLike">
 		SELECT COUNT(C_LIKE) AS C_LIKE

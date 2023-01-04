@@ -25,7 +25,6 @@ import com.google.gson.Gson;
 import com.kh.ccc.board.charBoard.model.service.CharBoardService;
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
-import com.kh.ccc.board.charBoard.model.vo.CharBoardSearch;
 import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.board.charBoard.model.vo.Character;
@@ -43,7 +42,7 @@ public class CharBoardController {
 	@RequestMapping("list.ch")
 	public String selectList(@RequestParam(value="currentPage",defaultValue="1") int currentPage
 							,Model model) {
-		//페이징 처리는 아직 구현 안함
+		
 		//캐릭터 게시판 총 게시글 수 가져오기
 		int listCount = boardService.selectListCount();
 		int pageLimit = 10; //하단에 보여질 페이징바의 최대 개수
@@ -70,6 +69,10 @@ public class CharBoardController {
 	@PostMapping("insert.ch")
 	public ModelAndView insertCharBoard(CharBoard cb,ModelAndView mv,HttpSession session,
 										@RequestParam(value="multifile", required=false) ArrayList<MultipartFile> upfileList) {
+		
+		System.out.println("insert.ch::CTRL : charBoard : "+cb);
+		System.out.println("insert.ch::CTRL : charBoard : "+upfileList);
+		
 		//캐릭터 등록
 		Character c = new Character();
 		c.setMemberNo( cb.getBoardWriterNo() );
@@ -499,22 +502,6 @@ public class CharBoardController {
 		return "NNNNN";
 	}
 
-	//캐릭터 게시판  리스트 검색기능
-	@RequestMapping("search.ch")
-	public String searchList(String condition, String keyword) {
-		
-		CharBoardSearch s = new CharBoardSearch();
-		s.setCondition(condition);
-		s.setKeyword(keyword);
-		
-		System.out.println("검색어"+ s);
-		
-		ArrayList<CharBoard> searchList = boardService.charBoardSearch(s); 
-		
-		System.out.println(searchList);
-		
-		return "";
-	}
 	
 
 	

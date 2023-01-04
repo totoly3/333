@@ -61,7 +61,7 @@
 				</tr>
 				<tr>
 					<th>첨부파일</th>
-					<td><input type="button" id="addAttachBtn" value="캐릭터 이미지 추가">최대 4장까지 가능합니다. (2장필수)</td>
+					<td><input type="button" id="addAttachBtn" value="파일추가">최대 4개까지 가능합니다. (1장필수)</td>
 				</tr>
 			</table>
 			
@@ -87,40 +87,32 @@
     
     <script>
     	//첨부파일 영역 만들기
-	    var idx = 1; //첨부파일추가 삭제 버튼의 고유 아이디값 지정을 위한 변수
+	    var idx = 1; //현재 첨부파일 몇개가 있는지 확인해서 그 다음 수 대입
 		
 		//파일추가 버튼이 클릭되면 실행되는 함수
 		$("#addAttachBtn").click(function(){
-			if( $("#addAttach-table tr").length < 4 ){ //테이블 tr의 수가 4보다 작으면 
+			if($("#addAttach-table tr").length < 4){ //테이블 tr의 수가 4보다 작으면 
 				var addAttach = "<tr>"
 							  + "<th><label for='upfile'></label></th>"
 							  + "<td><input type='file' id='upfile' class='form-control-file border' name='multifile'></td>"
 							  + "<td><a href='#this' name='delete' id='delete"+idx+"' class='btn'>삭제</a></td>";
 				$("#addAttach-table").append(addAttach);
 			}
-			//삭제버튼을 클릭되면 실행되는 함수
-			$( ("#delete"+idx) ).on("click",function(e){
+			
+			$(("#delete"+idx)).on("click",function(e){
 				e.preventDefault(); //이벤트를 취소해주는 메소드
 				fn_fileDelete($(this));
 			});
-			//삭제버튼 생성 후 1씩 증가하여 고유 아이디값을 가지도록 한다
 			idx++;
 		});
 		
-	    //첨부파일 추가 영역을 삭제해주는 메소드 (삭제버튼 클릭시)
 		function fn_fileDelete(obj){
-// 			console.log("삭제 file idx : "+obj.parent().prev().children().attr("id")); //id확인
+			console.log("삭제 file idx : "+obj.parent().prev().children().attr("id")); //id확인
 			obj.parent().parent().remove();
 		}
 		
-    	//게시글 등록하기 버튼을 누르면 실행되는 함수
+    	//욕설 필터링
     	function badLanguage(){
-    		//파일선택 영역이 2개 이하일 경우 등록 불가
-    		if( $("#addAttach-table tr").length < 2 ){
-    			alert("캐릭터 이미지는 두장 이상 등록해주셔야 합니다!");
-    			return false;
-    		}
-    		//금지어 필터링
     		$.ajax({
     			url : "badLanguage.ch",
     			data : {
@@ -129,14 +121,14 @@
     				boardContent : $("#boardContent").val()
     			},
     			success : function(result){
-    				if(result == "NNNNY"){ //비속어가 있는 경우
+    				if(result == "NNNNY"){
 	    				alert("비속어가 있어요! 다시 입력해주세요!");
 	    				$("#boardTitle").val("");
 	    				$("#charName").val("");
 	    				$("#boardContent").val("");
 	    				$("#boardTitle").val().cursor(); //안먹음
 	    				return false;
-    				}else{ //비속어가 없는 경우
+    				}else{
     					var charConfirm = confirm("캐릭터를 등록하시겠습니까?");
     					
     					if(charConfirm){

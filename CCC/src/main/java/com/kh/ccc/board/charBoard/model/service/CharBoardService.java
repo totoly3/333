@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
-import com.kh.ccc.board.charBoard.model.vo.CharBoardSearch;
 import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.board.charBoard.model.vo.Character;
@@ -35,18 +34,15 @@ public interface CharBoardService {
 	
 	//1.게시글 수정 (기존 첨부파일 삭제)
 	int deleteCharAttachByCaNo(CharAttach deleteCa);	
-	//2-1.게시글 수정 (제목,캐릭터 이름,캐릭터 소개)
+	//2.게시글 수정 (제목,캐릭터 이름,캐릭터 소개)
 	int updateCharBoard(CharBoard updateCb,Character updateCharacter);
-	//2-2.게시글 수정 (제목,캐릭터 이름,캐릭터 소개,새로운 첨부파일 등록)
+	//2.게시글 수정 (제목,캐릭터 이름,캐릭터 소개,새로운 첨부파일 등록)
 	int updateCharBoard(CharBoard updateCb,Character updateCharacter, ArrayList<CharAttach> updateCaList);
-	//3.게시글 수정 (기존 첨부파일을 모두 지우는 경우)
+	
 	int deleteAllOldAttach(int boardNo);
 	
 	//게시글 삭제
 	int deleteBoard(int bno);
-	
-	//게시글 검색
-	ArrayList<CharBoard> charBoardSearch(CharBoardSearch c);
 	
 	//1.좋아요 조회
 	CharLike selectLike(CharLike cl);
