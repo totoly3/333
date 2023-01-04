@@ -7,16 +7,13 @@
 <title>CCC 메인 페이지</title>
 </head>
 <body>
-	<jsp:include page="common/header2.jsp"/>
-	<br><br>
-	<jsp:include page="common/mainViewPage.jsp"/>
-
-	<div style="text-align : center;">
-
-	</div>
+	<jsp:include page="common/header.jsp"/>
 	
-	<br><br><br>
+	<br><br>
+	
+	<jsp:include page="common/mainView.jsp"/>
 
+	<br><br><br>
 	
 </body>
 </html>
