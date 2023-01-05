@@ -234,8 +234,7 @@ public class FrBoardController {
 			
 			public ModelAndView updateFrboard(ModelAndView mv
 											 ,FrBoard fb
-											 ,@RequestParam(value="upfile"
-											 ,required=false) List<MultipartFile> upfile
+											 ,@RequestParam(value="upfile" ,required=false) List<MultipartFile> upfile
 											 ,HttpSession session) {
 				// view에서 전달받은 데이터 확인
 //			    System.out.println("update.frboen :: CTRL :: fno = " + fno);
@@ -252,7 +251,34 @@ public class FrBoardController {
 				//여기는아래는  병철이형 부분 
 				//여기는아래는  병철이형 부분 
 				//여기는아래는  병철이형 부분 
-				
+				if(frba.isEmpty()) {
+					System.out.println("기존 첨부파일 없음.");
+					//글만변경
+					int result1 =FrBoardService.updateFrboard1(fb);
+					if(result1>0) {
+						mv.addObject("fb",fb);
+						//여기 아래에서 fb.getfno 를 가져가는 이유가 뭘까 ..
+						mv.setViewName("redirect:/detail.fbo?fno="+fb.getfNo());
+					}else {
+						mv.addObject("errorMsg", "게시글  글 수정 실패!").setViewName("common/errorPage");
+					}
+				}else {
+					
+					//파일이 있으면 삭제 후 insert
+					
+					//현재 남아있는것을 제외하고 첨부파일 삭제 
+					int delAttachResult = 0 ;
+					for(int k=0; k<frba.size(); k++) {
+						//아래는 만약 올린파일이 있으면 삭제 
+						if(frba.get(k).getFaOrginName()!=null) {
+							// 물리아래는  경로에서 삭제
+							new File(session.getServletContext().getRealPath(frba.get(k).getFaChangeName())).delete();
+							
+							// 아래는 DB에서 삭제
+							
+						}
+					}
+				}
 				//여기는위에는  병철이형 부분 
 				//여기는위에는는  병철이형 부분 
 				//여기는위에는  병철이형 부분 
@@ -265,10 +291,16 @@ public class FrBoardController {
 				for(int k=0; k<frba.size(); k++) {
 					//아래는 만약 올린파일이 있으면 삭제 
 					if(frba.get(k).getFaOrginName()!=null) {
-						// 물리 경로에서 삭제
+						//아래는 물리 경로에서 삭제
 						new File(session.getServletContext().getRealPath(frba.get(k).getFaChangeName())).delete();
 						// DB에서 삭제
+						int result=FrBoardService.deleteFrFile(frba);
 						
+						if(result>0) {
+							System.out.println("db삭제 성공");
+						}else {
+							System.out.println("db삭제 실패");
+						}
 					}
 				}
 

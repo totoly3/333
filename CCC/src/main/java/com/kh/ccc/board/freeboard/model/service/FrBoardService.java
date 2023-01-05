@@ -61,5 +61,8 @@ public interface FrBoardService {
 
 		//아래는 체크된거 삭제 
 		int deleteClickFrboard(List<String> checkBoxArr);
+
+		//첨부파일 삭제(병철이형 부분)
+		int deleteFrFile(ArrayList<FrBoardAttach> frba);
 		
 	}

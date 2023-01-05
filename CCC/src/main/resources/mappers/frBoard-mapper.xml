@@ -272,5 +272,15 @@
 			</foreach>
 		
 		</update>
+		
+		
+		
+		<!-- 아래는 기존첨부파일 삭제 병철이형 부분  -->
+		<delete id="deleteFrFile" parameterType="java.util.List">
+			DELETE FROM TB_FREE_ATTACH FRA
+			WHERE 
+			FA_NO = #{faNo};
+		
+		</delete>
 	
 </mapper>

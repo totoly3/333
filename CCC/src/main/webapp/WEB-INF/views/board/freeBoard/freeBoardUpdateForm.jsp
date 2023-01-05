@@ -122,7 +122,7 @@
                             <c:forEach var="na" items="${frba }" varStatus="var">
                             	<div>
                             	<a href="" id="" download="${na.faChangeName }">${na.faOrginName }</a>
-                            	<input type="hidden" id="na_${var.index }" name="faNo" value="${na.faNo }">
+                            	<input type="hidden" id="na_${var.index }" name="oldNa" value="${na.faNo }">
                             	<input type="button" id="deleteAttachBtn_${var.index }" value="파일삭제"><br>
                             	</div>
                            	</c:forEach>

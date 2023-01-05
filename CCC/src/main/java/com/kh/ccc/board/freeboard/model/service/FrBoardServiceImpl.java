@@ -147,6 +147,15 @@ public class FrBoardServiceImpl implements FrBoardService{
 	}
 
 
+	//기존첨부파일 진짜 삭제 (병철이형 부분)
+	@Override
+	public int deleteFrFile(ArrayList<FrBoardAttach> frba) {
+		int result=FrBoardDao.deleteFrFile(sqlSession,frba);
+		
+		return result;
+	}
+
+
 
 
 }

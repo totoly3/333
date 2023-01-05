@@ -134,6 +134,13 @@ public class FrBoardDao {
 			System.out.println("체크된거 삭제되었나"+deresult);
 			return deresult;
 		}
+		
+		//기존파일 삭제 (병철이형 부분)
+		public int deleteFrFile(SqlSessionTemplate sqlSession, ArrayList<FrBoardAttach> frba) {
+			int result=sqlSession.delete("frBoardMapper.deleteFrFile",frba);
+			System.out.println("기존파일 삭제 되었으면을까?: "+result);
+			return result;
+		}
 
 
 }
