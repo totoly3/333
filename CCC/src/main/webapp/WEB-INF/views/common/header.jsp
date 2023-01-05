@@ -12,7 +12,12 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
- 
+ 	
+ 	<!-- 폰트 -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Dongle:wght@300;400;700&family=Jua&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Single+Day&family=Stylish&display=swap" rel="stylesheet">
+ 	
     <style>
 	    <!--아래 부분은 드롭다운추가한거 -->
 	    .dropbtn {	  
@@ -147,6 +152,7 @@
 				</li>
 				<li><a href="playground.fr">P L A Y - G R O U N D</a></li>
 				<li><a href="goodsMain.go">G O O D S</a></li>
+				<li><a href="logout.me">여기 클릭하면 로그아웃!!만들었슴다!</a></li>
 			</ul>
 		</div>
    </div>
@@ -162,8 +168,6 @@
             		</c:otherwise>
                 </c:choose>
                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/key.png" width="25px;"></a></li>
-                <!-- 굿즈 아이콘 새로 구할 것 -->
-                <li><a href="goodsMain.go"><img src="./resources/header2Img/cart.png" width="22px;"></a></li>
                 <li><a href="cart.ca"><img src="./resources/header2Img/cart.png" width="22px;"></a></li>
                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/menu.png" width="14px;"></a></li>
             </ul>

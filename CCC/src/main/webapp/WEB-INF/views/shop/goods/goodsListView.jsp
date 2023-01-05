@@ -34,6 +34,13 @@
 
 	<!-- 네비바 -->
  	<jsp:include page="/WEB-INF/views/shop/goods/goodsNavi.jsp"/>
+ 	
+ 	
+ 	<c:if test="${not empty loginUser}">
+		<!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
+		<a class="btn btn-secondary" style="float:right;" href="insert.bo">글쓰기</a>
+	</c:if>
+	<a class="btn btn-secondary" style="float:right;" href="insert.go">글쓰기</a>
 
 	<section class="ftco-section">
     <div class="container">
@@ -114,148 +121,7 @@
                     </a>
                 </div>
             </div>
-            
-            
-            
-            
-            <div class="col-md-6 col-lg-4 ftco-animate">
-                <div class="project">
-                    <div class="img">
-                        <a href="destination.html"><img src="resources/css/listView/images/destination-2.jpg" class="img-fluid" alt="Colorlib Template"></a>
-                    </div>
-                    <div class="text">
-                        <h4 class="price">$400</h4>
-                        <span>15 Days Tour</span>
-                        <h3><a href="destination.html">Gurtnellen, Swetzerland</a></h3>
-                        <div class="star d-flex clearfix">
-                            <div class="mr-auto float-left">
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                            </div>
-                            <div class="float-right">
-                                <span class="rate"><a href="#">(120)</a></span>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="resources/css/listView/images/destination-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 ftco-animate">
-                <div class="project">
-                    <div class="img">
-                        <a href="destination.html"><img src="resources/css/listView/images/destination-3.jpg" class="img-fluid" alt="Colorlib Template"></a>
-                    </div>
-                    <div class="text">
-                        <h4 class="price">$400</h4>
-                        <span>15 Days Tour</span>
-                        <h3><a href="destination.html">Gurtnellen, Swetzerland</a></h3>
-                        <div class="star d-flex clearfix">
-                            <div class="mr-auto float-left">
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                            </div>
-                            <div class="float-right">
-                                <span class="rate"><a href="#">(120)</a></span>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="resources/css/listView/images/destination-3.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 ftco-animate">
-                <div class="project">
-                    <div class="img">
-                        <a href="destination.html"><img src="resources/css/listView/images/destination-4.jpg" class="img-fluid" alt="Colorlib Template"></a>
-                    </div>
-                    <div class="text">
-                        <h4 class="price">$400</h4>
-                        <span>15 Days Tour</span>
-                        <h3><a href="destination.html">Gurtnellen, Swetzerland</a></h3>
-                        <div class="star d-flex clearfix">
-                            <div class="mr-auto float-left">
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                            </div>
-                            <div class="float-right">
-                                <span class="rate"><a href="#">(120)</a></span>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="resources/css/listView/images/destination-4.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 ftco-animate">
-                <div class="project">
-                    <div class="img">
-                        <a href="destination.html"><img src="resources/css/listView/images/destination-5.jpg" class="img-fluid" alt="Colorlib Template"></a>
-                    </div>
-                    <div class="text">
-                        <h4 class="price">$400</h4>
-                        <span>15 Days Tour</span>
-                        <h3><a href="destination.html">Gurtnellen, Swetzerland</a></h3>
-                        <div class="star d-flex clearfix">
-                            <div class="mr-auto float-left">
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                            </div>
-                            <div class="float-right">
-                                <span class="rate"><a href="#">(120)</a></span>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="resources/css/listView/images/destination-5.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 ftco-animate">
-                <div class="project">
-                    <div class="img">
-                        <a href="destination.html"><img src="resources/css/listView/images/destination-6.jpg" class="img-fluid" alt="Colorlib Template"></a>
-                    </div>
-                    <div class="text">
-                        <h4 class="price">$400</h4>
-                        <span>15 Days Tour</span>
-                        <h3><a href="destination.html">Gurtnellen, Swetzerland</a></h3>
-                        <div class="star d-flex clearfix">
-                            <div class="mr-auto float-left">
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                            </div>
-                            <div class="float-right">
-                                <span class="rate"><a href="#">(120)</a></span>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="resources/css/listView/images/destination-6.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            
             -->
-             
         </div>
     </div>
 </section>

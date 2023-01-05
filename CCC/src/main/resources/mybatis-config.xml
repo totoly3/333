@@ -15,6 +15,11 @@
 		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoard" alias="FrBoard"/>
 		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoardAttach" alias="frAttBoard"/>
 		<typeAlias type="com.kh.ccc.board.freeboard.model.vo.FrBoardReply" alias="FrBoardReply"/>
+
+		<typeAlias type="com.kh.ccc.board.tipBoard.model.vo.TipBoard" alias="tipBoard"/>
+		<typeAlias type="com.kh.ccc.board.tipBoard.model.vo.TipAttach" alias="tipAttBoard"/>
+		<typeAlias type="com.kh.ccc.board.tipBoard.model.vo.TipReply" alias="tipReply"/>
+
 		<!-- 내 캐릭터 -->
 		<typeAlias type="com.kh.ccc.mypage.model.vo.MyCharacter" alias="myCharacter"/>
 		<typeAlias type="com.kh.ccc.mypage.model.vo.MyCharacterAttach" alias="myCharacterAttach"/>
@@ -27,6 +32,7 @@
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharBoardSearch" alias="charBoardSearch"/>		
 		<!-- 금지어 -->
 		<typeAlias type="com.kh.ccc.common.model.vo.Ward" alias="ward"/>
+		
 		<!-- 공지사항 -->
 		<typeAlias type="com.kh.ccc.board.notice.model.vo.Notice" alias="notice"/>
 		<typeAlias type="com.kh.ccc.board.notice.model.vo.NoticeAttach" alias="noticeAttach"/>
@@ -51,6 +57,14 @@
 	</typeAliases>
 	
 	<mappers>
+		<mapper resource="/mappers/frBoard-mapper.xml"/>
+		<mapper resource="/mappers/tipBoard-mapper.xml"/>
+		<mapper resource="/mappers/member-mapper.xml"/>
+		<mapper resource="/mappers/myPage-mapper.xml"/>
+		<mapper resource="/mappers/admin-mapper.xml"/>
+		<mapper resource="/mappers/alltimeboard-mapper.xml"/>
+		<mapper resource="/mappers/goods-mapper.xml"/>
+
 		<mapper resource="/mappers/frBoard-mapper.xml"/>
 		<mapper resource="/mappers/charBoard-mapper.xml"/>
 
