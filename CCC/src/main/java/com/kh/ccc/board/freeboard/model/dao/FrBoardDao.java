@@ -155,7 +155,7 @@ public class FrBoardDao {
 			return deresult;
 		}
 		
-<<<<<<< HEAD
+
 		//기존파일 삭제 (병철이형 부분)
 		public int deleteFrFile(SqlSessionTemplate sqlSession, ArrayList<FrBoardAttach> frba) {
 			int result=sqlSession.delete("frBoardMapper.deleteFrFile",frba);
@@ -168,8 +168,7 @@ public class FrBoardDao {
 			int result=sqlSession.update("frBoardMapper.deleteReply");
 			return result;
 		}
-=======
->>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
+
 
 
 }
