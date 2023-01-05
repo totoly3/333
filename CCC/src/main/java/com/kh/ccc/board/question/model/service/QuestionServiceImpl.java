@@ -90,4 +90,10 @@ public class QuestionServiceImpl implements QuestionService {
 		int result = questionDao.responseQuestion(sqlSession, q);
 		return result;
 	}
+
+	@Override
+	public int deleteGroup(int[] deleteNoArr) {
+		int result = questionDao.deleteGroup(sqlSession, deleteNoArr);
+		return result;
+	}
 }

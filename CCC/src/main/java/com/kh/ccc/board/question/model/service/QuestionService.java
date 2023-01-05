@@ -43,4 +43,7 @@ public interface QuestionService {
 
 	// 문의글에 답변 작성
 	int responseQuestion(Question q);
+
+	// 문의글 그룹 삭제
+	int deleteGroup(int[] deleteNoArr);
 }

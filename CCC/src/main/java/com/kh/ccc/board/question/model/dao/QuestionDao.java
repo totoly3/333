@@ -82,4 +82,14 @@ public class QuestionDao {
 		return sqlSession.update("questionMapper.updateResponse", q);
 		
 	}
+
+	public int deleteGroup(SqlSessionTemplate sqlSession, int[] deleteNoArr) {
+		int result = 1;
+		
+		for(int i=0; i<deleteNoArr.length; i++) {
+			result *= sqlSession.update("questionMapper.deleteQuestion", deleteNoArr[i]);
+		}
+		
+		return result;
+	}
 }

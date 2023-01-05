@@ -54,11 +54,19 @@
             <c:if test="${not empty loginUser}">
             	<a class="btn btn-secondary" style="float:right;" href="insert.qu">글쓰기</a>
             </c:if>
+            <a class="btn btn-secondary" style="float:right; margin-right:30px;" href="">내 글 보기</a>
+            <!-- 관리자 로그인 시에만 보이는 체크박스 -->
+            <c:if test="${ not empty loginAdmin }">
+              	<button type="button" id="deleteChk" class="btn btn-secondary" style="float:right; margin-right:30px;">그룹 글삭제</button>
+        	</c:if>
             <br>
             <br>
             <table id="questionList" class="table table-hover" align="center">
                 <thead>
-                    <tr>
+                    <tr align="center">
+                    	<c:if test="${ not empty loginAdmin }">
+                    		<th><input type="checkbox" id="allChkBtn"></th>
+                    	</c:if>
                         <th>글번호</th>
                         <th>답변</th>
                         <th>제목</th>
@@ -71,7 +79,12 @@
 	                <c:choose>
 	                	<c:when test="${not empty list }">
 			                <c:forEach var="q" items="${list }">
-			                    <tr>
+			                    <tr align="center">
+		                    		<c:if test="${ not empty loginAdmin }">
+				                    	<td>
+				                    		<input type="checkbox" class="chkBtn">
+				                    	</td>
+		                    		</c:if>
 			                        <td>${q.questionNo }</td>
 			                        <td>
 			                        	<!-- 답변이 되면 (LEVEL이 1) 답변 완료 표시 -->
@@ -152,11 +165,11 @@
 
     </div>
     <script>
-    	// 삭제할 코드 클릭시 이동하는 코드 바꿈 
+    	// 삭제할 코드. 클릭시 이동하는 코드 바꿈 
     	$("#questionList tbody tr").click(function(){
 			// 클릭한 행 가져오기 
     		var tr = $(this);
-    		console.log(tr.text());
+//     		console.log(tr.text());
     		
     		// tr에 들어있는 정보 가져오기
     		// 순서대로 eq(0)~eq(4)까지
@@ -175,6 +188,53 @@
     		
     	});
     	
+    	// 전체 선택, 전체 선택 해제
+    	$("#allChkBtn").click(function(){
+    		var isChecked = $("#allChkBtn").is(":checked");
+    		var trArr = $("#questionList tbody tr");
+    		
+    		if(isChecked){
+	    		$(trArr).find(':checkbox').prop("checked", true);
+    		}
+    		else{
+    			$(trArr).find(":checkbox").prop("checked", false);
+    		}
+    	});
+    	
+    	$("#deleteChk").click(function(){
+
+			var trArr = $("#questionList tbody tr");
+// 			console.log("trArr : \n " + trArr);
+// 			console.log("길이 : " + trArr.length);
+// 			var temp = trArr.eq(0).find(':checkbox').parent().next().text();
+// 			console.log(temp);			
+
+
+			// 체크된 번호를 담아서 전달할 배열
+			let chkArr = new Array();
+			
+			trArr.each(function (index, item){
+				// index는 0부터 시작함
+				var chkbox = $(item).find(":checkbox");
+				var isChecked = chkbox.is(":checked");
+				
+				if(isChecked){
+					console.log("체크O : " + index);
+					var bno = chkbox.parent().next().text();
+					console.log("bno : " + bno);
+					chkArr.push(bno);
+				}
+			});
+			console.log("삭제 글 리스트 : " + chkArr);
+			if(chkArr.length==0){
+				console.log("길이 : " + chkArr.length);
+				window.alert("선택된 상품이 없습니다.");
+			}
+			else{
+				location.href="deleteGroup.qu?chkArr="+chkArr;
+			}
+			
+    	});
     </script>
 
 <%--     <jsp:include page="../../common/footer.jsp"/> --%>
