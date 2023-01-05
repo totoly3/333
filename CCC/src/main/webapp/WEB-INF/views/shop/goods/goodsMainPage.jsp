@@ -80,7 +80,7 @@
     </section>
     <!--================ End header top Area =================-->
 
-    <!-- Start header Menu Area -->
+   <!-- Start header Menu Area -->
     <header id="header" class="header_area">
         <div class="main_menu">
             <nav class="navbar navbar-expand-lg navbar-light">
@@ -98,73 +98,73 @@
                        		<li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Decoration</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=1">Stiker</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=sticker">Stiker</a></li>
                                     <li class="nav-item"><a class="nav-link" href="detail.go">Poster</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="navi.go">Masking tape</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=4">Gift wrapping</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=5">Badge / Wapen</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=masking">Masking tape</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=gift">Gift wrapping</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=badge">Badge / Wapen</a></li>
                                 </ul>
                             </li>
                             <!-- 다이어리 드롭다운 -->
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Diary/Planner</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=6">Diary</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=7">Planner</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=8">Calendar</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=9">Scheduler</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=10">Organizer</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=diary">Diary</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=planner">Planner</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=calendar">Calendar</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=scheduler">Scheduler</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=organizer">Organizer</a></li>
                                 </ul>
                             </li>
                             <!-- 노트 드롭다운 -->
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Note/Memo</a>
                                 <ul class="dropdown-menu">
-                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=11">Post it</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=12">Memo paper</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=13">Basic Note</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=14">Hardcover Note</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=15">Spring Note</a></li>
+                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=postit">Post it</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=memo">Memo paper</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=basic">Basic Note</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=hardcover">Hardcover Note</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=spring">Spring Note</a></li>
                                 </ul>
                             </li>
                             <!-- 사무용풍 드롭다운 -->
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Office Supplies</a>
                                 <ul class="dropdown-menu">
-                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=16">Pen</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=17">Card / Envelope</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=18">File binder</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=19">Art tools</a></li>
+                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=pen">Pen</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=card">Card / Envelope</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=binder">File binder</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=art">Art tools</a></li>
                                 </ul>
                             </li>
                             <!-- 패션 드롭다운 -->
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Fashion accessories</a>
                                 <ul class="dropdown-menu">
-                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=20">Bag</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=21">Pouch / Wallet</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=22">Umbrella</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=23">Carrier</a></li>
+                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=bag">Bag</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=pouch">Pouch / Wallet</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=umbrella">Umbrella</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=carrier">Carrier</a></li>
                                 </ul>
                             </li>
                             <!-- 디지털용품 드롭다운 -->
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Digital</a>
                                 <ul class="dropdown-menu">
-                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=24">Phone</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=25">Tablet</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=26">PC / Laptop</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=27">Camera</a></li>
+                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=phone">Phone</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=tablet">Tablet</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=pc">PC / Laptop</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=camera">Camera</a></li>
                                 </ul>
                             </li>
                              <!-- 뷰티용품 드롭다운 -->
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Beauty</a>
                                 <ul class="dropdown-menu">
-                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=28">Skin care</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=29">MAke up</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=30">Cleansing</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=31">Hair / body</a></li>
+                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=skin">Skin care</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=make">Make up</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=cleansing">Cleansing</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=hair">Hair / body</a></li>
                                 </ul>
                             </li>
                                                         
@@ -175,6 +175,7 @@
         </div>
     </header>
     <!-- End header MEnu Area -->
+
     
     <br>
 
