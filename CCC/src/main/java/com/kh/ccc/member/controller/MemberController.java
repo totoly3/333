@@ -23,7 +23,6 @@ public class MemberController {
 			return "member/loginForm";
 		}
 		
-		
 		//실제 로그인
 		@RequestMapping("login.me")
 		public String loginMember(Member m,HttpSession session) {
