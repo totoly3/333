@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
+import com.kh.ccc.board.charBoard.model.vo.CharBoardSearch;
 import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.board.charBoard.model.vo.Character;
@@ -139,4 +140,43 @@ public class CharBoardDao {
 	public ArrayList<Ward> badLanguage(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("charBoardMapper.badLanguage");
 	}
+	//1.게시글 수정 (기존 첨부파일 삭제)
+	public int deleteCharAttachByCaNo(SqlSessionTemplate sqlSession, CharAttach deleteCa) {
+		return sqlSession.delete("charBoardMapper.deleteCharAttachByCaNo", deleteCa);
+	}
+	//2.게시글 수정 (게시글 정보)
+	public int updateCb(SqlSessionTemplate sqlSession, CharBoard updateCb) {
+		return sqlSession.update("charBoardMapper.updateCb", updateCb);
+	}
+	//3.캐릭터 수정 (캐릭터 정보)
+	public int updateCharacter(SqlSessionTemplate sqlSession, Character updateCharacter) {
+		return sqlSession.update("charBoardMapper.updateCharacter", updateCharacter);
+	}
+	//4.게시판 수정 (첨부파일)
+	public int updateCaList(SqlSessionTemplate sqlSession, ArrayList<CharAttach> updateCaList) {
+		return sqlSession.insert("charBoardMapper.updateCaList", updateCaList);
+	}
+	//4.게시글 수정 (기존 첨부파일 모두 삭제하는 경우)
+	public int deleteAllOldAttach(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.delete("charBoardMapper.deleteAllOldAttach", boardNo);
+	}
+	//게시글 검색
+	public ArrayList<CharBoard> charBoardSearch(SqlSessionTemplate sqlSession, CharBoardSearch c) {
+		return (ArrayList)sqlSession.selectList("charBoardMapper.charBoardSearch", c);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

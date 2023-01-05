@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% String filePath = request.getContextPath(); %>
-    
 <!doctype html>
 <html lang="en">
 <head>
@@ -57,7 +54,7 @@
                         <ul>
                            <!-- <li><a id="search" href="javascript:void(0)"><i class="fas fa-search"></i></a></li> -->
                             <li><a id="search" href="javascript:void(0)"><i class="fas fa-search"></i></a></li>
-                            <li><a href="">Cart</a></li>
+                            <li><a href="cart.ca">Cart</a></li>
                             <li><a href="">Login</a></li>
                             <li><a href="">Wish</a></li>
                         </ul>
@@ -182,7 +179,6 @@
         </div>
     </header>
     <!-- End header MEnu Area -->
-
 
 
 <!-- Optional JavaScript -->

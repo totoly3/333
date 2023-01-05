@@ -10,6 +10,7 @@ import com.kh.ccc.board.charBoard.model.dao.CharBoardDao;
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
+import com.kh.ccc.board.charBoard.model.vo.CharBoardSearch;
 import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.common.model.vo.PageInfo;
@@ -34,20 +35,25 @@ public class CharBoardServiceImpl implements CharBoardService {
 		return boardDao.selectList(sqlSession, pi);
 	}
 	
-	//게시글 등록 (게시글,첨부파일,캐릭터)
+	//게시글 등록 (캐릭터 -> 게시글 -> 첨부파일순으로 / 게시글이 캐릭터의 번호를 참조하기 때문)
 	@Override
 	public int insertCharBoard(CharBoard cb, ArrayList<CharAttach> list, Character c) {
 		
-		//캐릭터 등록
+		int boardResult = 1;
+		int attachResult = 1;
+
+		//1.캐릭터 등록
 		int characterResult = boardDao.insertCharacter(sqlSession,c);
-		//게시글 글 정보 등록
-		int boardResult = boardDao.insertBoard(sqlSession,cb);
-		//게시글 첨부파일 등록
-		int attachResult = boardDao.insertAttach(sqlSession,list);
-				
-		int finalReult = (characterResult * boardResult * attachResult) > 0 ? 1 : 0;
-		
-		return finalReult;
+	
+		if( characterResult>0 ) {
+			//2.게시글 글 정보 등록
+			boardResult = boardDao.insertBoard(sqlSession,cb);			
+		}
+		if( (characterResult*boardResult)>0 ) {
+			//3.게시글 첨부파일 등록
+			attachResult = boardDao.insertAttach(sqlSession,list);			
+		}	
+		return (characterResult * boardResult * attachResult) > 0 ? 1 : 0;
 	}
 	//캐릭터 번호 생성
 	@Override
@@ -69,31 +75,16 @@ public class CharBoardServiceImpl implements CharBoardService {
 	public ArrayList<CharAttach> selectAttach(int bno){
 		return boardDao.selectAttach(sqlSession, bno);
 	}
-	
-	//게시글 수정
-	@Override
-	public int updateBoard(CharBoard cb, ArrayList<CharAttach> newCaList) {
-		//게시글 수정 (글)
-		int result = boardDao.updateBoard(sqlSession, cb);
-		//게시글 수정 (첨부파일)
-		int result2 = boardDao.updateAttach(sqlSession, newCaList);
 		
-		int finalResult = result * result2;
-		
-		return finalResult;
-	}
-	
-	//게시글 삭제
+	//게시글 삭제 (캐릭터 등록 내용은 삭제되지 않는다 / 캐릭터는 마이페이지에서만 삭제 가능)
 	@Override
 	public int deleteBoard(int bno) {
 		//게시글 내용 삭제
 		int result = boardDao.deleteBoard(sqlSession, bno);
 		//게시글 첨부파일 삭제
 		int result2 = boardDao.deleteAttach(sqlSession, bno);
-		
-		int finalResult = result * result2;
 	
-		return finalResult;
+		return result * result2;
 	}
 	
 	//댓글 리스트 조회
@@ -180,6 +171,50 @@ public class CharBoardServiceImpl implements CharBoardService {
 	@Override
 	public ArrayList<Ward> badLanguage() {
 		return boardDao.badLanguage(sqlSession);
+	}
+	
+	//1.게시글 수정 (기존 첨부파일 삭제)
+	@Override
+	public int deleteCharAttachByCaNo(CharAttach deleteCa) {
+		return boardDao.deleteCharAttachByCaNo(sqlSession, deleteCa);
+	}
+	
+	//2.수정된 게시글 내용 등록(게시글,캐릭터 이름,캐릭터 소개,새로운 첨부파일 등록)
+	@Override
+	public int updateCharBoard(CharBoard updateCb, Character updateCharacter, ArrayList<CharAttach> updateCaList) {
+		
+		int updateCbResult = boardDao.updateCb(sqlSession, updateCb);
+		int updateCharacterResult = boardDao.updateCharacter(sqlSession, updateCharacter);
+		int updateCaListResult = boardDao.updateCaList(sqlSession, updateCaList);
+		
+		System.out.println("updateCbResult"+ updateCbResult);
+		System.out.println("updateCharacterResult"+ updateCharacterResult);
+		System.out.println("updateCaListResult"+ updateCaListResult);
+		
+		return updateCbResult * updateCharacterResult * updateCaListResult > 0 ? 1 : 0;
+	}
+	
+	//3.수정된 게시글 내용 등록(게시글,캐릭터 이름,캐릭터 소개)
+	@Override
+	public int updateCharBoard(CharBoard updateCb, Character updateCharacter) {
+		
+		int updateCbResult = boardDao.updateCb(sqlSession, updateCb);
+		int updateCharacterResult = boardDao.updateCharacter(sqlSession, updateCharacter);
+
+		System.out.println("updateCbResult"+ updateCbResult);
+		System.out.println("updateCharacterResult"+ updateCharacterResult);
+		
+		return updateCbResult * updateCharacterResult > 0 ? 1 : 0;
+	}
+	//4.게시글 수정 (기존 첨부파일 모두 삭제하는 경우)
+	@Override
+	public int deleteAllOldAttach(int boardNo) {
+		return boardDao.deleteAllOldAttach(sqlSession,boardNo);
+	}
+	//게시글 검색
+	@Override
+	public ArrayList<CharBoard> charBoardSearch(CharBoardSearch c) {
+		return boardDao.charBoardSearch(sqlSession, c);
 	}
 
 }

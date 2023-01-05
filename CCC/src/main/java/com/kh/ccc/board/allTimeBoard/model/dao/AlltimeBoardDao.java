@@ -25,5 +25,12 @@ public class AlltimeBoardDao {
 		System.out.println("myca dao는?"+myca);
 		return myca;
 	}
+	
+	//이번년도 좋아요 
+	public ArrayList<Character> allTimeYearList(SqlSessionTemplate sqlSession) {
+		ArrayList<Character> caYearlist=(ArrayList)sqlSession.selectList("allTimeBoardMapper.allTimeYearList");
+		System.out.println("calist Dao는?: "+caYearlist);
+		return caYearlist;
+	}
 
 }

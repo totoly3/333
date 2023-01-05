@@ -29,7 +29,7 @@
 </head>
 <body>
         
-    <jsp:include page="/WEB-INF/views/common/header2.jsp"/>
+    <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
     <div class="content">
         <br><br>
@@ -55,11 +55,11 @@
                     <th>첨부파일</th>
                     <c:choose>
                     	<c:when test="${ not empty caList }">
-			                    <td colspan="3">
-                    				<c:forEach var="c" items="${ caList }">
-			                       		<a href="${ c.changeName }" download="${ c.originName }">${ c.originName }</a>
-                    				</c:forEach>
-			                    </td>
+		                    <td colspan="3">
+                   				<c:forEach var="c" items="${ caList }">
+		                       		<a href="${ c.changeName }" download="${ c.originName }">${ c.originName }</a>
+                   				</c:forEach>
+		                    </td>
 	                    </c:when>
 	                    <c:otherwise>
 	                    	<td colspan="3">
@@ -71,8 +71,11 @@
                 <tr>
                     <th width="120">캐릭터 이름</th>
                     <td colspan="3">${ cb.charName }</td>
-                	<th style="text-align:center;"></th>
-                	<td width="150"><button id="likeBtn" onclick="likeGo();" class="btn btn-success">좋아요</button></td>
+                    <!-- 좋아요 버튼은 로그인 유저만 가능하도록 -->
+                    <c:if test="${ not empty loginUser }">
+	                	<th style="text-align:center;"></th>
+	                	<td width="150"><button id="likeBtn" onclick="likeGo();" class="btn btn-success">좋아요</button></td>
+                    </c:if>
                 </tr>
                 <tr>
                     <th>캐릭터 설명</th>
@@ -102,14 +105,16 @@
                 
             </table>
             <br>
-
-            <div align="center">
-                <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-                <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
-                <a class="btn btn-danger" onclick="return postFormSubmit(2);">삭제하기</a>
-            </div>
-            <br><br>
+            <!-- 수정하기, 삭제하기 버튼은 글 작성자 본인만 보이도록 -->
+			<c:if test="${ loginUser.memberNo eq cb.boardWriterNo }">
+	            <div align="center">
+	                <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
+	                <a class="btn btn-danger" onclick="return postFormSubmit(2);">삭제하기</a>
+	            </div>
+			</c:if>
             
+            <br><br>
+           
             <!-- 동적으로 DOM요소  만들어 글 번호와 파일 경로를 Controller로 submit하기 -->
             <script>
             	function postFormSubmit(num){
@@ -134,7 +139,6 @@
 		        			form.prop("method","POST").submit();
 	            		}
 	            		return false;
-            		
             		}
             		else{ //수정하기 버튼을 눌렀을 경우
             			let form = $("<form>");
@@ -154,23 +158,27 @@
             		}
             	}
             </script>
-
-            <table id="replyArea" class="table" align="center">
-                <thead>
-                    <tr>
-                        <th colspan="5">
-                            <textarea class="form-control" name="reContent" id="reContent" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
-                        </th>
-                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="insertReply();">등록하기</button></th>
-                    </tr>
-                    <tr>
-                        <td colspan="5">댓글(<span id="rcount">0</span>)</td>
-                    </tr>
-                </thead>
-                
-                <tbody>
-                </tbody>
-            </table>
+			<!-- 댓글 작성 영역 -->
+			<!-- 로그인 유저만 댓글 작성 가능하도록 -->
+			<c:if test="${ not empty loginUser }">
+	            <table id="replyArea" class="table" align="center">
+	                <thead>
+	                    <tr>
+	                        <th colspan="5">
+	                            <textarea class="form-control" name="reContent" id="reContent" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
+	                        </th>
+	                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="insertReply();">등록하기</button></th>
+	                    </tr>
+	                    <tr>
+	                        <td colspan="5">댓글(<span id="rcount">0</span>)</td>
+	                    </tr>
+	                </thead>
+	                
+	                <tbody>
+	                <!-- 댓글 리스트 출력 부분 -->
+	                </tbody>
+	            </table>
+			</c:if>
         </div>
         <br><br>
         
@@ -222,229 +230,229 @@
         
     </div>
     
-        <script>
-        
-        	//댓글의 고유 번호를 담을 전역 변수 선언
-        	let reUpdateNo;
-        
-        	$(function(){
-        		selectReplyList();
-        		selectLike();
-        	});
-        	//좋아요 조회
-     		function selectLike(){
-     			$.ajax({
-     				url : "selectLike.ch",
-     				data : {
-     					refBno : ${ cb.boardNo },
-     					memberNo : ${ loginUser.mNo },
-     					charNo : ${ cb.charNo }
-     				},
-     				success : function(result){
-     					
-     					if(result == "NNNNY"){
-     						$("#likeBtn").attr("class","btn btn-danger");
-     					}else{
-     						$("#likeBtn").attr("class","btn btn-success");     						
-     					}
-     					
-     				},
-     				error : function(){
-     					console.log("통신실패!");
-     				}
-     			})
-     		}
-        	//좋아요 등록 및 취소
-        	function likeGo(){
-        		$.ajax({
-        			url : "insertLike.ch",
-        			data : {
-	       				refBno : ${ cb.boardNo },
-	        			memberNo : ${ loginUser.mNo },
-						charNo : ${ cb.charNo }
-        			},
-        			success : function(result){
-        				console.log("통신성공!");
-        				
-        				if(result == "NNNNY"){
-        					$("#likeBtn").attr("class","btn btn-danger");
-        				}else{
-        					$("#likeBtn").attr("class","btn btn-success");        					
-        				}
-        			},
-        			error : function(){
-        				console.log("통신실패...");
-        			}
-        		})
-        	}
-        	
-        	//댓글 등록
-        	function insertReply(){
-        		
-        		let reContent = $("#reContent").val();
-        		       		
-        		if(reContent.trim().length != 0){
-        			
-	        		$.ajax({
-	        			url : "replyAnswer.ch",
-	        			data : {
-	        				refBno : ${ cb.boardNo },
-	        				reWriterNo : ${ loginUser.mNo },
-	        				reContent : reContent
-	        			},
-	        			success : function(result){
-	        				
-	        				if(result == "NNNNY"){
-	        					alert("댓글이 등록되었습니다!");
-	        					$("#reContent").val("");
-	        					selectReplyList();
-	        				}else{
-	        					alert("댓글 등록에 실패했습니다.");
-	        				}
-	        				
-	        			},
-	        			error : function(){
-	        				console.log("통신실패!");
-	        			}
-	        		});
-        		
-        		}else{ //댓글 작성란에 공백을 넣거나 댓글을 작성하지 않은 경우
-        			alert("댓글을 입력해주세요. 공백은 작성불가합니다.");
-        			reContent.val("");
-        			reContent.focus();
-        		}
-        	}
-        	
-        	$(document).on("click","table #reUpdateNo",function(){
-        		reUpdateNo = $(this).val();
-        	});
- 
-        	//댓글 리스트 출력
-        	function selectReplyList(){
-        		$.ajax({
-        			url : "selectRlist.ch",
-        			data : { boardNo : ${ cb.boardNo } },
-        			success : function(reList){
-        				let resultStr = "";
-        				
-        				for(var i=0; i<reList.length; i++){
-        					resultStr += "<tr>"
-        							   + "<th>"+reList[i].reWriterName+"</th>"
-        							   + "<td>"+reList[i].reContent+"</td>"
-        							   + "<td>"+reList[i].reCreateDate+"</td>"
-        							   + "<td><button class='btn btn-outline-success' data-toggle='modal' data-target='#reReply'"
-        							   + "id='reUpdateNo' value=+"+reList[i].reNo+">답글</button>"
-        							   + "<button class='btn btn-outline-primary' data-toggle='modal' data-target='#updateReply'"
-        							   + "id='reUpdateNo' value=+"+reList[i].reNo+">수정</button>"
-        							   + "<button onclick='return deleteReply("+reList[i].reNo+")' class='btn btn-outline-danger'>삭제</button></td>"     							   
-        							   + "</tr>";
-        				}
-        				//댓글 내용 body에 추가
-        				$("#replyArea > tbody").html(resultStr);
-        				//댓글 수
-        				$("#rcount").text(reList.length);
-        			},
-        			error : function(){
-        				console.log("통신실패!");
-        			}
-        		})
-        	}
-        	
-        	//댓글 수정
-        	function UpdateReply(){
-        		$.ajax({
-        			url : "updateReply.ch",
-        			data : {
-        				refBno : ${ cb.boardNo },
-        				reNo : reUpdateNo,
-        				reContent : $("#updateContent").val()
-        			},
-        			type : "post",
-        			success : function(result){
-        				if(result == "NNNNY"){
-	        				$("#updateContent").val("");
-	        				$("#reply_cnt").html("(0 / 50)");
-	        				selectReplyList();        					
-        				}else{
-        					alert("댓글 수정에 실패했습니다.");
-        				}
-        			},
-        			error : function(){
-        				console.log("통신실패!");
-        			}
-        		})
-        	}
-        	
-        	//대댓글 등록
-        	function ReplyAnswer(){
+       <script>
+       	//댓글 자신의 번호를 담을 전역 변수 선언 (댓글 수정과 삭제용)
+       	let reUpdateNo;
+       	
+       	//이 페이지가 실행되면 댓글 리스트 조회와 좋아요 상태여부를 바로 실행 
+       	$(function(){
+       		selectReplyList();
+       		selectLike();
+       	});
+       	
+       	//좋아요 조회 (게시글 번호,로그인유저 번호,캐릭터 번호)
+   		function selectLike(){
+   			$.ajax({
+   				url : "selectLike.ch",
+   				data : {
+   					refBno : ${ cb.boardNo },
+   					memberNo : ${ loginUser.memberNo },
+   					charNo : ${ cb.charNo }
+   				},
+   				success : function(result){
+   					
+   					if(result == "NNNNY"){
+   						$("#likeBtn").attr("class","btn btn-danger");
+   					}else{
+   						$("#likeBtn").attr("class","btn btn-success");     						
+   					}
+   					
+   				},
+   				error : function(){
+   					console.log("통신실패!");
+   				}
+   			})
+   		}
+       	//좋아요 등록 및 취소 (게시글 번호,로그인유저 번호,캐릭터 번호)
+       	function likeGo(){
+       		$.ajax({
+       			url : "insertLike.ch",
+       			data : {
+       				refBno : ${ cb.boardNo },
+        			memberNo : ${ loginUser.memberNo },
+					charNo : ${ cb.charNo }
+       			},
+       			success : function(result){
+       				console.log("통신성공!");
+       				
+       				if(result == "NNNNY"){
+       					$("#likeBtn").attr("class","btn btn-danger");
+       				}else{
+       					$("#likeBtn").attr("class","btn btn-success");        					
+       				}
+       			},
+       			error : function(){
+       				console.log("통신실패...");
+       			}
+       		})
+       	}
+       	
+       	//댓글 등록 (글 번호,로그인유저 번호,댓글 내용)
+       	function insertReply(){
+       		
+       		let reContent = $("#reContent").val();
+       		       		
+       		if(reContent.trim().length != 0){
         		$.ajax({
         			url : "replyAnswer.ch",
         			data : {
         				refBno : ${ cb.boardNo },
-        				reNo : reUpdateNo,
-        				reWriterNo : ${ loginUser.mNo },
-        				reContent : $("#reAnswerContent").val()
+        				reWriterNo : ${ loginUser.memberNo },
+        				reContent : reContent
         			},
-        			type : "post",
         			success : function(result){
         				
         				if(result == "NNNNY"){
         					alert("댓글이 등록되었습니다!");
-        					$("#reAnswerContent").val("");
+        					$("#reContent").val("");
         					selectReplyList();
         				}else{
         					alert("댓글 등록에 실패했습니다.");
         				}
-        			},
-        			error : function(){
-        				console.log("통신실패!");
-        			}
-        		})
-        	}
-        	
-        	//댓글 삭제
-        	function deleteReply(reNo){
-        		$.ajax({
-        			url : "deleteReply.ch",
-        			data : {
-        				refBno : ${ cb.boardNo },
-        				reWriterNo : ${ loginUser.mNo },
-        				reNo : reNo
-        			},
-        			success : function(result){
-        				let deleteReply = confirm("정말 삭제하시겠습니까?");
         				
-        				if((result == "NNNNY") && deleteReply){
-        					alert("댓글을 삭제하였습니다!");
-        					selectReplyList();
-        				}
-        				return false;
         			},
         			error : function(){
         				console.log("통신실패!");
         			}
-        		})
-        	}
-        	
-        	//댓글 수정 글자 수 제한
-			$('#updateContent').on('keyup',function(){
-				$('#reply_cnt').html("("+$(this).val().length+" / 50)");
-				
-				if($(this).val().length > 50){
-					$(this).val($(this).val().substring(0, 50));
-					$('#reply_cnt').html("(50 / 50)");
-				}
-			});
-        	
-			//대댓글 수정 글자 수 제한
-			$('#reAnswerContent').on('keyup',function(){
-				$('#reReply_cnt').html("("+$(this).val().length+" / 50)");
-				
-				if($(this).val().length > 50){
-					$(this).val($(this).val().substring(0, 50));
-					$('#reReply_cnt').html("(50 / 50)");
-				}
-			});	
-        </script>
+        		});
+       		}else{ //댓글 작성란에 공백을 넣거나 댓글을 작성하지 않은 경우
+       			alert("댓글을 입력해주세요. 공백은 작성불가합니다.");
+       			reContent.val("");
+       			reContent.focus();
+       		}
+       	}
+       	
+       	//클릭된 댓글의 번호를 담는 로직
+       	$(document).on("click","table #reUpdateNo",function(){
+       		reUpdateNo = $(this).val();
+       	});
+
+       	//댓글 리스트 출력 (게시글 번호)
+       	function selectReplyList(){
+       		$.ajax({
+       			url : "selectRlist.ch",
+       			data : { boardNo : ${ cb.boardNo } },
+       			success : function(reList){
+       				let resultStr = "";
+       				
+       				for(var i=0; i<reList.length; i++){
+       					resultStr += "<tr>"
+       							   + "<th>"+reList[i].reWriterName+"</th>"
+       							   + "<td>"+reList[i].reContent+"</td>"
+       							   + "<td>"+reList[i].reCreateDate+"</td>"
+       							   + "<td><button class='btn btn-outline-success' data-toggle='modal' data-target='#reReply'"
+       							   + "id='reUpdateNo' value=+"+reList[i].reNo+">답글</button>"
+       							   + "<button class='btn btn-outline-primary' data-toggle='modal' data-target='#updateReply'"
+       							   + "id='reUpdateNo'"+reList[i].reNo+" value=+"+reList[i].reNo+">수정</button>"
+       							   + "<button onclick='return deleteReply("+reList[i].reNo+")' class='btn btn-outline-danger'>삭제</button></td>"     							   
+       							   + "</tr>";
+       				}
+       				//댓글 내용 body에 추가
+       				$("#replyArea > tbody").html(resultStr);
+       				//댓글 수
+       				$("#rcount").text(reList.length);
+       			},
+       			error : function(){
+       				console.log("통신실패!");
+       			}
+       		})
+       	}
+       	
+       	//댓글 수정 (글 번호,댓글 번호,댓글 수정내용)
+       	function UpdateReply(){
+       		$.ajax({
+       			url : "updateReply.ch",
+       			data : {
+       				refBno : ${ cb.boardNo },
+       				reNo : reUpdateNo,
+       				reContent : $("#updateContent").val()
+       			},
+       			type : "post",
+       			success : function(result){
+       				if(result == "NNNNY"){
+        				$("#updateContent").val("");
+        				$("#reply_cnt").html("(0 / 50)");
+        				selectReplyList();        					
+       				}else{
+       					alert("댓글 수정에 실패했습니다.");
+       				}
+       			},
+       			error : function(){
+       				console.log("통신실패!");
+       			}
+       		})
+       	}
+       	
+       	//대댓글 등록 (글 번호,댓글 번호,로그인유저 번호,대댓글 등록내용)
+       	function ReplyAnswer(){
+       		$.ajax({
+       			url : "replyAnswer.ch",
+       			data : {
+       				refBno : ${ cb.boardNo },
+       				reNo : reUpdateNo,
+       				reWriterNo : ${ loginUser.memberNo },
+       				reContent : $("#reAnswerContent").val()
+       			},
+       			type : "post",
+       			success : function(result){
+       				
+       				if(result == "NNNNY"){
+       					alert("댓글이 등록되었습니다!");
+       					$("#reAnswerContent").val("");
+       					selectReplyList();
+       				}else{
+       					alert("댓글 등록에 실패했습니다.");
+       				}
+       			},
+       			error : function(){
+       				console.log("통신실패!");
+       			}
+       		})
+       	}
+       	
+       	//댓글 삭제 (글 번호,로그인유저 번호,댓글 번호)
+       	function deleteReply(reNo){
+       		$.ajax({
+       			url : "deleteReply.ch",
+       			data : {
+       				refBno : ${ cb.boardNo },
+       				reWriterNo : ${ loginUser.memberNo },
+       				reNo : reNo
+       			},
+       			success : function(result){
+       				let deleteReply = confirm("정말 삭제하시겠습니까?");
+       				
+       				if((result == "NNNNY") && deleteReply){
+       					alert("댓글을 삭제하였습니다!");
+       					selectReplyList();
+       				}
+       				return false;
+       			},
+       			error : function(){
+       				console.log("통신실패!");
+       			}
+       		})
+       	}
+       	
+       	//댓글 수정 글자 수 50자 제한
+		$('#updateContent').on('keyup',function(){
+			$('#reply_cnt').html("("+$(this).val().length+" / 50)");
+			
+			if($(this).val().length > 50){
+				$(this).val($(this).val().substring(0, 50));
+				$('#reply_cnt').html("(50 / 50)");
+			}
+		});
+       	
+		//대댓글 수정 글자 수 50자 제한
+		$('#reAnswerContent').on('keyup',function(){
+			$('#reReply_cnt').html("("+$(this).val().length+" / 50)");
+			
+			if($(this).val().length > 50){
+				$(this).val($(this).val().substring(0, 50));
+				$('#reReply_cnt').html("(50 / 50)");
+			}
+		});	
+       </script>
 </body>
 </html>

@@ -25,15 +25,14 @@
 
         #enrollForm>table {width:100%;}
         #enrollForm>table * {margin:5px;}
-        
-        #enroll-form input,#enroll-form textarea{
-	       	width:100%;
-	       	box-sizing:border-box;	
-    	}
+        #addAttach-area {width:100%;}
+        #addAttach-area>tr {
+        	background-color: lightgreen;
+        }
     </style>
 </head>
 <body>
-	<jsp:include page="/WEB-INF/views/common/header2.jsp"/>
+	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	
 	<div class="content">
         <br><br>
@@ -42,43 +41,42 @@
             <br>
 
         <form action="insert.ch" id="enroll-form" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="boardWriterNo" value="${ loginUser.mNo }">
+			<input type="hidden" name="boardWriterNo" value="${ loginUser.memberNo }">
 			<table align="center">
 				<tr>
-					<th width="100">제목</th>
-					<td colspan="3"><input type="text" id="boardTitle" name="boardTitle" required></td>
+					<th><label for="boardTitle">제목</label></th>
+					<td><input type="text" id="boardTitle" class="form-control" name="boardTitle" required></td>
 				</tr>
 				<tr>
-					<th width="100">캐릭터 이름</th>
-					<td colspan="3"><input type="text" id="charName" name="charName" required></td>
+					<th><label for="boardWriter">작성자</label></th>
+					<td><input type="text" id="boardWriter" class="form-control" name="boardWriter" value="${ loginUser.memberId }" readonly></td>
 				</tr>
 				<tr>
-					<th>캐릭터 설명</th>
-					<td colspan="3"><textarea name="boardContent" id="boardContent" style="resize: none;" cols="30" rows="10" required></textarea></td>
+					<th><label for="charName">캐릭터 이름</label></th>
+					<td><input type="text" id="charName" class="form-control" name="charName" required></td>
 				</tr>
 				<tr>
-					<th>대표이미지</th> <!--미리보기-->
-					<td colspan="3" align="center">
-						<img id="titleImg" width="250" height="170">
-					</td>
+					<th><label for="boardContent">캐릭터 설명</label></th>
+					<td><textarea id="boardContent" class="form-control" rows="10" style="resize:none;" name="boardContent" required></textarea></td>
 				</tr>
 				<tr>
-					<th>상세이미지</th>
-					<td><img id="contentImg1" width="150" height="120"></td>
-					<td><img id="contentImg2" width="150" height="120"></td>
-					<td><img id="contentImg3" width="150" height="120"></td>
+					<th>첨부파일</th>
+					<td><input type="button" id="addAttachBtn" value="캐릭터 이미지 추가">최대 4장까지 가능합니다. (2장필수)</td>
 				</tr>
 			</table>
-
-			<!-- 파일 첨부 영역 -->
-			<div id="file-area" align="center">
-				<input type="file" id="file1" name="upfile" onchange="loadImg(this,1);" required> <!--대표이미지라서 필수!-->
-				<input type="file" id="file2" name="upfile" onchange="loadImg(this,2);">
-				<input type="file" id="file3" name="upfile" onchange="loadImg(this,3);">
-				<input type="file" id="file4" name="upfile" onchange="loadImg(this,4);">
-			</div>
-			<br><br>
 			
+			<table align="center" id="addAttach-table">
+				<tr>
+					<th><label for="upfile"></label></th>
+					<td><input type="file" id="upfile" class='form-control-file border' name='multifile' required></td>
+				</tr>
+			</table>
+			<br>
+			
+			<script>
+				
+			</script>
+
 			<div align="center">
 				<button type="button" id="gogo" class="searchBtn btn btn-secondary" onclick="return badLanguage();">등록하기</button>
 			</div>
@@ -88,7 +86,41 @@
     </div>
     
     <script>
+    	//첨부파일 영역 만들기
+	    var idx = 1; //첨부파일추가 삭제 버튼의 고유 아이디값 지정을 위한 변수
+		
+		//파일추가 버튼이 클릭되면 실행되는 함수
+		$("#addAttachBtn").click(function(){
+			if( $("#addAttach-table tr").length < 4 ){ //테이블 tr의 수가 4보다 작으면 
+				var addAttach = "<tr>"
+							  + "<th><label for='upfile'></label></th>"
+							  + "<td><input type='file' id='upfile' class='form-control-file border' name='multifile'></td>"
+							  + "<td><a href='#this' name='delete' id='delete"+idx+"' class='btn'>삭제</a></td>";
+				$("#addAttach-table").append(addAttach);
+			}
+			//삭제버튼을 클릭되면 실행되는 함수
+			$( ("#delete"+idx) ).on("click",function(e){
+				e.preventDefault(); //이벤트를 취소해주는 메소드
+				fn_fileDelete($(this));
+			});
+			//삭제버튼 생성 후 1씩 증가하여 고유 아이디값을 가지도록 한다
+			idx++;
+		});
+		
+	    //첨부파일 추가 영역을 삭제해주는 메소드 (삭제버튼 클릭시)
+		function fn_fileDelete(obj){
+// 			console.log("삭제 file idx : "+obj.parent().prev().children().attr("id")); //id확인
+			obj.parent().parent().remove();
+		}
+		
+    	//게시글 등록하기 버튼을 누르면 실행되는 함수
     	function badLanguage(){
+    		//파일선택 영역이 2개 이하일 경우 등록 불가
+    		if( $("#addAttach-table tr").length < 2 ){
+    			alert("캐릭터 이미지는 두장 이상 등록해주셔야 합니다!");
+    			return false;
+    		}
+    		//금지어 필터링
     		$.ajax({
     			url : "badLanguage.ch",
     			data : {
@@ -97,14 +129,14 @@
     				boardContent : $("#boardContent").val()
     			},
     			success : function(result){
-    				if(result == "NNNNY"){
+    				if(result == "NNNNY"){ //비속어가 있는 경우
 	    				alert("비속어가 있어요! 다시 입력해주세요!");
 	    				$("#boardTitle").val("");
 	    				$("#charName").val("");
 	    				$("#boardContent").val("");
-	    				
+	    				$("#boardTitle").val().cursor(); //안먹음
 	    				return false;
-    				}else{
+    				}else{ //비속어가 없는 경우
     					var charConfirm = confirm("캐릭터를 등록하시겠습니까?");
     					
     					if(charConfirm){

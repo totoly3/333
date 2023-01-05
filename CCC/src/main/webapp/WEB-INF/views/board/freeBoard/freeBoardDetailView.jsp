@@ -42,7 +42,7 @@
     </style>
 </head>
 <body>
-      <jsp:include page="/WEB-INF/views/common/header2.jsp"/>
+      <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
     <div class="content">
         <br><br>
@@ -55,17 +55,18 @@
 
             <table id="contentArea" algin="center" class="table">
        
-           	<c:forEach var="i" items="${fb}" >
+           	<c:forEach var="F" items="${fb}" >
                 <tr>
                     <th width="10">제목</th>
-                    <td colspan="3">${fb.get(i).fTitle}</td>
+                    <td colspan="3">${F.fTitle}</td>
+                
                 </tr>
 
                 <tr>
                     <th>작성자</th>
-                    <td>${fb.get(i).mId }</td>
+                    <td>${F.mId }</td>
                     <th>작성일</th>
-                    <td>${fb.get(i).fCreateDate }</td>
+                    <td>${F.fCreateDate }</td>
                 </tr>
                
                 <tr>
@@ -73,7 +74,7 @@
                     <td colspan="3"></td>
                 </tr>
                 <tr>
-                    <td colspan="4"><p style="height:150px;">${fb.get(i).fContent }</p></td>
+                    <td colspan="4"><p style="height:150px;">${F.fContent }</p></td>
                 </tr>
            </c:forEach>
       
@@ -91,7 +92,6 @@
                 	<c:when test="${!frba.get(0).faChangeName.isEmpty()}">
          	              <tr>
 			              	<td class="attitle">
-			            		  	<input type="checkbox" name="all" onclick='selectAll(this)'/>전체선택 <br>
 			               		<p style="height:150px;">
 			               			<input type="checkbox" name="all"><img src="${frba.get(0).faChangeName }" >
 			               		</p>
@@ -184,15 +184,29 @@
 	                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addFrReply();">등록하기</button></th>
 	                	</tr>
 
+		   
   
 	          	        <tr>
 	                       <td colspan="3" > 댓글(<span id="rcount"></span>)</td>
 	                    </tr>
+	                    <tr>   
+	                     <td  rowspan="1" ><b>댓글번호</b></td>
+	                  
+	                       <td rowspan="1" ><b>내용</b></td>
+	                  
+ 	                       <td rowspan="1" ><b>아이디</b></td> 
+	                       
+                   		   <td rowspan="1" ><b>날짜</b></td>
+	                    </tr>
+	                  
+	                  
                 </thead>
                 
                 <tbody>
        						
                 </tbody>
+                
+                
             </table>
             
    <!-- 댓글 수정 모달 -->
@@ -217,21 +231,15 @@
 		    </div>
 		  </div>
 		</div>
+   
    </div>
    
-   
-   
-   
+
+   <!-- 아래는 대댓글 모달 -->
+
    
      <script >
-//  	     아래는 체크박스 (전체선택)
-// 	      function selectAll(selectAll)  {
-// 		  const checkboxes = document.getElementsByName('all');
-		  
-// 				  checkboxes.forEach((checkbox) => {checkbox.checked = selectAll.checked;}
-// 				  							)
-// 										}
-     
+
 	     function postFormSubmit(num){
 				console.log(num);
 			//action에 속성값을 넣고 submit을 진행하면 된다.
@@ -264,9 +272,11 @@
 					var resultStr = "";
 					
 					for(var i=0; i<result.length; i++){
-						resultStr += "<tr>"
-									+"<th>"+result[i].frWriter+"</th>"
+						resultStr += 
+									"<tr>"
+									+"<th>"+result[i].frNo+"</th>"
 									+"<td>"+result[i].frContent+"</td>"
+  									+"<td>"+result[i].mId+"</td>"
 									+"<td>"+result[i].frCreateDate+"</td>"	
 									+"<td>"
 									+ "<button class='btn btn-outline-primary' data-toggle='modal' data-target='#updateReply'" //data-target을 사용하면 뒤에오는 값을 사용한
@@ -287,17 +297,24 @@
    		//아래는 댓글 등록 
     
     	function addFrReply(){
+    		console.log(`${loginUser.memberNo}`);
+    		console.log(`${loginUser.memberId}`);
+    		
     		var $vali = $("#rcontent");
+    		var $mId = (`${loginUser.memberId}`);
+    		var $mNo = (`${loginUser.memberNo}`);
+    		var $loginUser = (`${loginUser}`);
     		
     		//바로아래는 공백제거 후 댓글이 작성되었는지 확인 (공백작성불가하게 막기 )
     		if($vali.val().trim().length != 0){
+    			if($loginUser !=""){
 	    	    	$.ajax({
 			    		url : "frInsert.fbo",
 			    		data : {
-			    				fNo : ${fb.get(0).fNo},
-			    				frContent :$vali.val()
-// 			    				frWriter : "${loginUser.userId}" 
-			    					//admin 문자 자체로 나오기때문에 문자열 처리를 해줘야함  하지않으면 변수로인식하기때문임.
+			    				fNo : ${fb.get(0).fNo}
+			    				,frContent :$vali.val()
+			    				,fWriterNo : $mNo
+
 			    			},
 		    			success : function(result){
 		    				console.log("등록통신 성공");
@@ -310,6 +327,9 @@
 		    				console.log("통신실패");
 		    			}
 			    		});
+   					}else{
+   						alert("로그인좀 하십쇼 ");
+   					}
    				 }else{ //공백을 넣었거나 댓글을 작성하지 않은경우 
    	    			alert("댓글을작성하세요 . 공백은 작성불가");
    				 	$vali.val("");
@@ -340,6 +360,8 @@
 				}
 			})
 		} 	
+    	
+    	
     
     </script>
   

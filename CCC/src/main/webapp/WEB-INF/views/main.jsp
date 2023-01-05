@@ -4,17 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>CCC 메인 페이지</title>
+<title>CCC::Main</title>
 </head>
 <body>
-	<jsp:include page="common/header2.jsp"/>
+
+	<jsp:include page="common/header.jsp"/>
 	
 	<br><br>
-	<jsp:include page="common/mainViewPage.jsp"/>
-
-	<div style="text-align : center;">
-
-	</div>	
+	<jsp:include page="common/mainView.jsp"/>
 
 	<br><br><br>
 

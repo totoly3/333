@@ -24,7 +24,7 @@ public class GoodsController {
 	@Autowired private GoodsService goodsService;
 	
 	//굿즈 메인 페이지로 보내기
-	@RequestMapping("cart.ca")
+	@RequestMapping("goodsMain.go")
 	public String GoodsMainPage() {
 		return "shop/goods/goodsMainPage";
 	}
@@ -200,6 +200,5 @@ public class GoodsController {
 			}
 			return changeName;
 		}
-		
 		
 }

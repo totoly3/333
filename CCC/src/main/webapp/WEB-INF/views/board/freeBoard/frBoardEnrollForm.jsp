@@ -81,7 +81,7 @@
 
 </head>
 <body>
-<jsp:include page="/WEB-INF/views/common/header2.jsp"/>
+<jsp:include page="/WEB-INF/views/common/header.jsp"/>
    
 <div class="container">
   <h2></h2>
@@ -99,7 +99,7 @@
 <%--     <input type="hidden" name="fNo" value="${fb.get(0).fNo}"> --%>
     
 <!--      글번호 히든으로 넘기기 -->
-    <input type="hidden" name="fWriterNo" value="${loginUser.mNo}">
+    <input type="hidden" name="fWriterNo" value="${loginUser.memberNo}">
     
    	<!--  아래는 드래그  --> 
 <!--   	 <main class="container"> -->

@@ -1,12 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% String filePath = request.getContextPath(); %>
 <%@page import="java.util.ArrayList" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <title>Sticker List Page</title>
     
@@ -64,9 +62,9 @@
 			                    
 			                    <div class="text">
 			                        <!-- <h4 class="price"><span class="old-price mr-2">$500</span>$400</h4> -->
-			                        <span>${b.category}</span><br>
-			                        <span>${b.price}원</span>
-			                        <h3><a href="destination.html">${b.gName}</a></h3>
+			                        <span>${b.goodsCategory}</span><br>
+			                        <span>${b.goodsPrice}원</span>
+			                        <h3><a href="destination.html">${b.goodsName}</a></h3>
 			                        <div class="star d-flex clearfix">
 			                            <div class="mr-auto float-left">
 			                                <span class="ion-ios-star"></span>
@@ -123,148 +121,7 @@
                     </a>
                 </div>
             </div>
-            
-            
-            
-            
-            <div class="col-md-6 col-lg-4 ftco-animate">
-                <div class="project">
-                    <div class="img">
-                        <a href="destination.html"><img src="resources/css/listView/images/destination-2.jpg" class="img-fluid" alt="Colorlib Template"></a>
-                    </div>
-                    <div class="text">
-                        <h4 class="price">$400</h4>
-                        <span>15 Days Tour</span>
-                        <h3><a href="destination.html">Gurtnellen, Swetzerland</a></h3>
-                        <div class="star d-flex clearfix">
-                            <div class="mr-auto float-left">
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                            </div>
-                            <div class="float-right">
-                                <span class="rate"><a href="#">(120)</a></span>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="resources/css/listView/images/destination-2.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 ftco-animate">
-                <div class="project">
-                    <div class="img">
-                        <a href="destination.html"><img src="resources/css/listView/images/destination-3.jpg" class="img-fluid" alt="Colorlib Template"></a>
-                    </div>
-                    <div class="text">
-                        <h4 class="price">$400</h4>
-                        <span>15 Days Tour</span>
-                        <h3><a href="destination.html">Gurtnellen, Swetzerland</a></h3>
-                        <div class="star d-flex clearfix">
-                            <div class="mr-auto float-left">
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                            </div>
-                            <div class="float-right">
-                                <span class="rate"><a href="#">(120)</a></span>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="resources/css/listView/images/destination-3.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 ftco-animate">
-                <div class="project">
-                    <div class="img">
-                        <a href="destination.html"><img src="resources/css/listView/images/destination-4.jpg" class="img-fluid" alt="Colorlib Template"></a>
-                    </div>
-                    <div class="text">
-                        <h4 class="price">$400</h4>
-                        <span>15 Days Tour</span>
-                        <h3><a href="destination.html">Gurtnellen, Swetzerland</a></h3>
-                        <div class="star d-flex clearfix">
-                            <div class="mr-auto float-left">
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                            </div>
-                            <div class="float-right">
-                                <span class="rate"><a href="#">(120)</a></span>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="resources/css/listView/images/destination-4.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 ftco-animate">
-                <div class="project">
-                    <div class="img">
-                        <a href="destination.html"><img src="resources/css/listView/images/destination-5.jpg" class="img-fluid" alt="Colorlib Template"></a>
-                    </div>
-                    <div class="text">
-                        <h4 class="price">$400</h4>
-                        <span>15 Days Tour</span>
-                        <h3><a href="destination.html">Gurtnellen, Swetzerland</a></h3>
-                        <div class="star d-flex clearfix">
-                            <div class="mr-auto float-left">
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                            </div>
-                            <div class="float-right">
-                                <span class="rate"><a href="#">(120)</a></span>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="resources/css/listView/images/destination-5.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-4 ftco-animate">
-                <div class="project">
-                    <div class="img">
-                        <a href="destination.html"><img src="resources/css/listView/images/destination-6.jpg" class="img-fluid" alt="Colorlib Template"></a>
-                    </div>
-                    <div class="text">
-                        <h4 class="price">$400</h4>
-                        <span>15 Days Tour</span>
-                        <h3><a href="destination.html">Gurtnellen, Swetzerland</a></h3>
-                        <div class="star d-flex clearfix">
-                            <div class="mr-auto float-left">
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                                <span class="ion-ios-star"></span>
-                            </div>
-                            <div class="float-right">
-                                <span class="rate"><a href="#">(120)</a></span>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="resources/css/listView/images/destination-6.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
-                        <span class="icon-expand"></span>
-                    </a>
-                </div>
-            </div>
-            
             -->
-             
         </div>
     </div>
 </section>

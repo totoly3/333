@@ -14,21 +14,21 @@
 	
   	<!-- 아래는 지은이 꺼 Member -->
   	<resultMap type="member" id="memberResultSet">
-	<result column="M_NO" property="mNo" />
-	<result column="M_ID" property="mId" />
-	<result column="M_PWD" property="mPwd"/>
-	<result column="M_NAME" property="mName" />
-	<result column="MG_NO" property="mgNo" />
-	<result column="M_EMAIL" property="mEmail" />
-	<result column="M_PHONE" property="mPhone" />
-	<result column="M_ADDRESS" property="mAddress"/>
-	<result column="M_GENDER" property="mGender"/>
-	<result column="M_AGE" property="mAge" />
-	<result column="M_CREATE_DATE" property="mCreateDate" />
-	<result column="M_UPDATE_DATE" property="mUpdateDate" />
-	<result column="M_DELETE_DATE" property="mDeleteDate" />
-	<result column="M_POINT" property="mPoint" />
-	<result column="M_STATUS" property="mStatus" />
+	<result column="M_NO" property="memberNo" />
+	<result column="M_ID" property="memberId" />
+	<result column="M_PWD" property="memberPwd"/>
+	<result column="M_NAME" property="memberName" />
+	<result column="MG_NO" property="memberGradeNo" />
+	<result column="M_EMAIL" property="memberEmail" />
+	<result column="M_PHONE" property="memberPhone" />
+	<result column="M_ADDRESS" property="memberAddress"/>
+	<result column="M_GENDER" property="memberGender"/>
+	<result column="M_AGE" property="memberAge" />
+	<result column="M_CREATE_DATE" property="memberCreateDate" />
+	<result column="M_UPDATE_DATE" property="memberUpdateDate" />
+	<result column="M_DELETE_DATE" property="memberDeleteDate" />
+	<result column="M_POINT" property="memberPoint" />
+	<result column="M_STATUS" property="memberStatus" />
 	</resultMap>
   
     <!--//게시글 조회 메소드  게시글 전체 -->
@@ -124,7 +124,7 @@
 	
 	<!-- 아래는 게시글 상세보기 파일 -->
 		<select id="frboardAttDetailView" resultMap="frAttBoardResultSet">
-	SELECT 	FA_NO
+	SELECT 		FA_NO
 				,F_NO
 				,FA_ORIGIN_NAME
 				,FA_CHANGE_NAME
@@ -215,10 +215,22 @@
 		
 	  <!-- 아래는 게시글 댓글 리뷰  -->  
 	   <select id="detailFrBoardReviewSelect" resultMap="frReplyBoardResultSet">
-	 	SELECT *
-		FROM TB_FREE_REPLY
-		WHERE F_NO = #{FR_NO }
+	 	SELECT FR_NO
+	           , F_NO
+	   	       , FR_WRITER
+	           , FR_CONTENT
+	           , FR_PARENT_NO
+	           , FR_LEVEL
+	           , FR_CREATE_DATE
+	           , FR_UPDATE_DATE
+	           , FR_DELETE_DATE
+	           , FR_STATUS
+	           , M.M_ID AS mId
+		FROM TB_FREE_REPLY FR,TB_MEMBER M
+		WHERE FR.F_NO =#{fNo }
+       AND M.M_NO=FR.FR_WRITER
 		AND FR_STATUS ='Y'
+	 	
 	   </select>
 	   
 	   <!--  아래는 댓글 등록  -->
@@ -234,9 +246,11 @@
 					SEQ_FRNO.NEXTVAL
 					,#{frContent}
 					,#{fNo}
-					,1
+					,#{fWriterNo}
 					)
 		</insert>
+		
+
 		
 		<!-- 아래는 댓글 수정 -->
 		<update id="frReplyModify" parameterType="FrBoardReply">
@@ -245,6 +259,18 @@
 			  WHERE FR_STATUS = 'Y'
 			  AND F_NO=#{fNo}
 			  AND FR_NO=#{frNo}
+		</update>
+		
+		
+		<!-- 아래는 체크된 글 삭제  -->
+		<update id="deleteClickFrboard" parameterType="java.util.List">
+			UPDATE TB_FREE 
+			 SET F_STATUS = 'N' 
+			 WHERE F_NO IN
+			 <foreach collection="list" item="checkBoxArr" open="(" close=")" separator=",">
+		 		#{checkBoxArr}
+			</foreach>
+		
 		</update>
 	
 </mapper>
