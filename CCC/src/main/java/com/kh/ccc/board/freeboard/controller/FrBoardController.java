@@ -27,7 +27,6 @@ import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardReply;
 import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.common.template.Pagenation;
-import com.kh.ccc.member.model.vo.Member;
 
 @Controller
 public class FrBoardController {

@@ -106,15 +106,70 @@
 <%--   		<input type="hidden" name="originName" value="${frba.faOrginName}"> --%>
 <%--     	<input type="hidden" name="changeName" value="${frba.faChangeName}"> --%>
     				
-	<input type="file" id="upfile" class="form-control-file border" name="upfile">
-	<input type="file" id="upfile" class="form-control-file border" name="upfile">	    
-	  	
+<!-- 	<input type="file" id="upfile" class="form-control-file border" name="upfile"> -->
+<!-- 	<input type="file" id="upfile" class="form-control-file border" name="upfile">	     -->
+	
+	<!-- 아래는 병철이형 버전으로 진행하기 !!!! -->
+	<!-- 아래는 병철이형 버전으로 진행하기 !!!! -->
+	<!-- 아래는 병철이형 버전으로 진행하기 !!!! -->
+	<!-- 아래는 병철이형 버전으로 진행하기 !!!! -->
+	
+	<table algin="center">
+		<tr>
+			<th><label for="upfile">첨부파일</label></th>
+			<td id="na-area">
+				현재 업로드된 파일 : <br>
+                            <c:forEach var="na" items="${frba }" varStatus="var">
+                            	<div>
+                            	<a href="" id="" download="${na.faChangeName }">${na.faOrginName }</a>
+                            	<input type="hidden" id="na_${var.index }" name="oldNa" value="${na.faNo }">
+                            	<input type="button" id="deleteAttachBtn_${var.index }" value="파일삭제"><br>
+                            	</div>
+                           	</c:forEach>
+                           	새로 업로드할 파일 : <br>
+							<input type="button" id="addAttachBtn" value="파일추가"><br>
+		      				<div id="newNa-area">   </div>
+	        </td>
+		</tr>
+	 </table> 	
+	 
+	 
+	<!-- 위에는는 병철이형 버전으로 진행하기 !!!!-->
+	<!-- 위에는 병철이형 버전으로 진행하기 !!!! -->
+	<!-- ㅇ ㅟ에는 병철이형 버전으로 진행하기 !!!!-->
+	<!-- 위에는 병철이형 버전으로 진행하기 !!!!  -->
+	
     <button type="submit" class="btn btn-primary">글 수정하기</button>
   <br><br><br> <br><br><br> <br><br><br>
   </form>
 </div>
 
+<script>
+ <!--바로아래는  파일추가 버튼 클릭했을때  -->
+ for(var i=0; i<$("#na-area a").length; i++){
+ 	$("#deleteAttachBtn_"+i).click(function(){
+// 			console.log($(this).attr("id"));
+			$(this).parent().remove();
+ 	});
+	};
+	
+	$("#addAttachBtn").click(function(){
+//		console.log("addAttachBtn클릭");
 
+		if( $("#na-area a").length  < 10){
+			var addAttach = "<div><input type='file' class='form-control-file border' name='multifile'><br>"
+   					  + "<a href='#this' name='delete' class='btn deleteAttachBtn'>삭제</a><br><div>";
+			$("#newNa-area").append(addAttach);
+		}
+ 	
+ 	$(".deleteAttachBtn").click(function(){
+			$(this).parent().remove();
+ 	});
+	});
+	
+
+
+</script>
 
 
 </body>

@@ -40,29 +40,29 @@
             <form id="enrollForm" method="post" action="insert.go" enctype="multipart/form-data">
                 <table algin="center">
                    <tr>
-                        <th><label for="title">글 제목</label></th>
-                        <td colspan="5"><input type="text" id="gName" class="form-control" name="gName" required></td>
+                        <th><label for="goodsName">글 제목</label></th>
+                        <td colspan="5"><input type="text" id="goodsName" class="form-control" name="goodsName" required></td>
                    </tr>
                    
                    <tr>
-                        <th width="100px;"><label for="writer">브랜드명</label></th>
-                        <td colspan="2"><input type="text" id="gBrand" class="form-control" name="gBrand" required></td>
+                        <th width="100px;"><label for="goodsBrand">브랜드명</label></th>
+                        <td colspan="2"><input type="text" id="goodsBrand" class="form-control" name="goodsBrand" required></td>
                         
-                        <th width="100px;"><label for="writer">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;카테고리</label></th>
-                        <td colspan="2"><input type="text" id="category" class="form-control" name="category" required></td>
+                        <th width="100px;"><label for="goodsCategory">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;카테고리</label></th>
+                        <td colspan="2"><input type="text" id="goodsCategory" class="form-control" name="goodsCategory" required></td>
                     </tr>
                     
                     <tr>
-                        <th width="100px;"><label for="title">가격</label></th>
-                        <td colspan="2"><input type="text" id="price" class="form-control" name="price" required></td>
+                        <th width="100px;"><label for="goodsPrice">가격</label></th>
+                        <td colspan="2"><input type="text" id="goodsPrice" class="form-control" name="goodsPrice" required></td>
                         
-                        <th width="100px;"><label for="title">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;재고</label></th>
-                        <td colspan="2"><input type="text" id="stock" class="form-control" name="stock" required></td>
+                        <th width="100px;"><label for="goodsStock">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;재고</label></th>
+                        <td colspan="2"><input type="text" id="goodsStock" class="form-control" name="goodsStock" required></td>
                     </tr>
                     
                     <tr>
                         <th><label for="upfile">썸네일</label></th>
-                        <td colspan="5"><input type="file" id="upfile" class="form-control-file border" name="upfile1" required></td>
+                        <td colspan="5"><input type="file" id="upfile" class="form-control-file border" name="upfile" required></td>
                     </tr>
                     
                     <tr>
@@ -75,8 +75,8 @@
                     </tr>
                     
                     <tr>
-                        <th><label for="content">내용</label></th>
-                        <td colspan="5"><textarea id="content" class="form-control" rows="10" style="resize:none;" name="content" required></textarea></td>
+                        <th><label for="goodsContent">내용</label></th>
+                        <td colspan="5"><textarea id="goodsContent" class="form-control" rows="10" style="resize:none;" name="goodsContent" required></textarea></td>
                     </tr>
                     
                 </table>

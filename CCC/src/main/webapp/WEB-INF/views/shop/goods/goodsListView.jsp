@@ -49,22 +49,21 @@
 		</div>
     
     	<div class="row">
-        
         <!-- 리스트 뽑기 -->
 	        <c:choose>
 				<c:when test="${ not empty list }">
-					<c:forEach var="b" items="${ list }">
+					<c:forEach var="g" items="${ list }">
 				        <div class="col-md-6 col-lg-4 ftco-animate">
 			                <div class="project">
 			                    <div class="img">
-			                        <a href="destination.html"><img src="resources/css/listView/images/destination-1.jpg" class="img-fluid" alt="Colorlib Template"></a>
+			                    	<a href="destination.html"><img src="${g.goodsChangeName1}" class="img-fluid" alt="${g.goodsChangeName1}"></a>
 			                    </div>
 			                    
 			                    <div class="text">
 			                        <!-- <h4 class="price"><span class="old-price mr-2">$500</span>$400</h4> -->
-			                        <span>${b.goodsCategory}</span><br>
-			                        <span>${b.goodsPrice}원</span>
-			                        <h3><a href="destination.html">${b.goodsName}</a></h3>
+			                        <span>${g.goodsCategory}</span><br>
+			                        <span>${g.goodsPrice}원</span>
+			                        <h3><a href="destination.html">${g.goodsName}</a></h3>
 			                        <div class="star d-flex clearfix">
 			                            <div class="mr-auto float-left">
 			                                <span class="ion-ios-star"></span>
@@ -126,11 +125,7 @@
     </div>
 </section>
 
-
 <br><br><br><br><br><br><br>
-	
-	
-	
 
  <!--  <script src="resources/css/listView/js/jquery.min.js"></script>
   <script src="resources/css/listView/js/jquery-migrate-3.0.1.min.js"></script>

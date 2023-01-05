@@ -280,8 +280,8 @@
 									+"<td>"+result[i].frCreateDate+"</td>"	
 									+"<td>"
 									+ "<button class='btn btn-outline-primary' data-toggle='modal' data-target='#updateReply'" //data-target을 사용하면 뒤에오는 값을 사용한
-      							    + "id='frReUpdateNo' value=+"+result[i].fNo+">수정</button>"
-      							 	+ "<button onclick='return deleteReply("+result[i].fNo+")' class='btn btn-outline-danger'>삭제</button></td>"     							   
+      							    + "id='frReUpdateNo' value=+"+result[i].frNo+">수정</button>"
+      							 	+ "<button onclick='return deleteReply("+result[i].frNo+")' class='btn btn-outline-danger'>삭제</button></td>"     							   
 									+"</tr>";
 							}	
 					
@@ -341,9 +341,9 @@
 			$.ajax({
 				url : "updateFrReply.fr",
 				data :{
-						frContent : $("#frContent").val(), //내용
-					    frNo : frReUpdateNo,   //자유게시판 댓글번호 
-					    fNo : ${fb.get(0).fNo} //글번호
+						frContent : $("#frContent").val(), 
+					    frNo : frReUpdateNo,  
+					    fNo : ${fb.get(0).fNo} 
 				},
 			    type : "post",
 			    success : function(result){
@@ -360,8 +360,25 @@
 				}
 			})
 		} 	
-    	
-    	
+    	// 댓글 삭제 
+    	function deleteReply(frNo){
+    		$.ajax({
+    			url : "deleteFrReply.fr",
+    			data : {
+    				frNo : frNo,  
+				    fNo : ${fb.get(0).fNo},
+				    fWriterNo : ${ loginUser.memberNo }
+    			},
+    			success : function(result){
+    				if(result=="yes"){
+	    				console.log("통쉰성겅!");
+	    				alert("댓글을 삭제하였습니다.");
+	    				selectReplyList();
+    				}
+    				return false;
+    			},
+    		})
+    	}
     
     </script>
   
