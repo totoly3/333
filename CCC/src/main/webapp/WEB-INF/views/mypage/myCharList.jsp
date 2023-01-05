@@ -43,7 +43,7 @@
 					<c:when test="${not empty chalist }">
 						<c:forEach var="cha" items="${chalist}">
 						    <div class="thumbnail" align="center">
-							  <input type="hidden" value="${cha.chacterNo}">
+							  <input type="hidden" value="${cha.characterNo}">
 							  <img src="${cha.changeName}" width="200px" height="150px">
 							  <p>
 								캐릭터이름: ${cha.characterName} <br>

@@ -13,6 +13,7 @@ public class WishGoods {
 	private int goodsNumber; //	G_NO NUMBER 굿즈넘버
 	
 	//join goods영역
+	private int goodsNo;
 	private int characterNo;	//	C_NO	NUMBER 캐릭터번호
 	private String goodsName;	//	G_NAME	VARCHAR2(100 BYTE) 굿즈명
 	private	String goodsCategory;//	G_CATEGORY	VARCHAR2(100 BYTE) 굿즈카테
