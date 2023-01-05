@@ -29,7 +29,7 @@
 </head>
 <body>
         
-    <jsp:include page="/WEB-INF/views/common/header2.jsp"/>
+    <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
     <div class="content">
         <br><br>
@@ -106,7 +106,7 @@
             </table>
             <br>
             <!-- 수정하기, 삭제하기 버튼은 글 작성자 본인만 보이도록 -->
-			<c:if test="${ loginUser.mNo eq cb.boardWriterNo }">
+			<c:if test="${ loginUser.memberNo eq cb.boardWriterNo }">
 	            <div align="center">
 	                <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
 	                <a class="btn btn-danger" onclick="return postFormSubmit(2);">삭제하기</a>
@@ -246,7 +246,7 @@
    				url : "selectLike.ch",
    				data : {
    					refBno : ${ cb.boardNo },
-   					memberNo : ${ loginUser.mNo },
+   					memberNo : ${ loginUser.memberNo },
    					charNo : ${ cb.charNo }
    				},
    				success : function(result){
@@ -269,7 +269,7 @@
        			url : "insertLike.ch",
        			data : {
        				refBno : ${ cb.boardNo },
-        			memberNo : ${ loginUser.mNo },
+        			memberNo : ${ loginUser.memberNo },
 					charNo : ${ cb.charNo }
        			},
        			success : function(result){
@@ -297,7 +297,7 @@
         			url : "replyAnswer.ch",
         			data : {
         				refBno : ${ cb.boardNo },
-        				reWriterNo : ${ loginUser.mNo },
+        				reWriterNo : ${ loginUser.memberNo },
         				reContent : reContent
         			},
         			success : function(result){
@@ -390,7 +390,7 @@
        			data : {
        				refBno : ${ cb.boardNo },
        				reNo : reUpdateNo,
-       				reWriterNo : ${ loginUser.mNo },
+       				reWriterNo : ${ loginUser.memberNo },
        				reContent : $("#reAnswerContent").val()
        			},
        			type : "post",
@@ -416,7 +416,7 @@
        			url : "deleteReply.ch",
        			data : {
        				refBno : ${ cb.boardNo },
-       				reWriterNo : ${ loginUser.mNo },
+       				reWriterNo : ${ loginUser.memberNo },
        				reNo : reNo
        			},
        			success : function(result){

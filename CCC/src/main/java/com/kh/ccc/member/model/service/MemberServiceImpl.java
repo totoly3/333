@@ -24,7 +24,23 @@ public class MemberServiceImpl implements MemberService{
 		return loginUser;
 	}
 	
-	
+	//회원가입
+	@Override
+	public int insertMember(Member m) {
+		
+		int result=memberDao.insertMember(sqlSession,m);
+		
+		return result;
+	}
+
+	//아이디 중복체크
+	@Override
+	public int idCheck(String userId) {
+		
+		int count=memberDao.idCheck(sqlSession,userId);
+		
+		return count;
+	}
 	
 	
 

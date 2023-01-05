@@ -42,7 +42,7 @@
     </style>
 </head>
 <body>
-      <jsp:include page="/WEB-INF/views/common/header2.jsp"/>
+      <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
     <div class="content">
         <br><br>
@@ -297,12 +297,12 @@
    		//아래는 댓글 등록 
     
     	function addFrReply(){
-    		console.log(`${loginUser.mNo}`);
-    		console.log(`${loginUser.mId}`);
+    		console.log(`${loginUser.memberNo}`);
+    		console.log(`${loginUser.memberId}`);
     		
     		var $vali = $("#rcontent");
-    		var $mId = (`${loginUser.mId}`);
-    		var $mNo = (`${loginUser.mNo}`);
+    		var $mId = (`${loginUser.memberId}`);
+    		var $mNo = (`${loginUser.memberNo}`);
     		var $loginUser = (`${loginUser}`);
     		
     		//바로아래는 공백제거 후 댓글이 작성되었는지 확인 (공백작성불가하게 막기 )
