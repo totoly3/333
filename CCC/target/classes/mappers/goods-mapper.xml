@@ -8,7 +8,6 @@
   	<!-- Goods  -->
   	<resultMap type="goods" id="GoodsResultSet">
 	  	<result column="G_NO" property="goodsNo"/>
-	   	<result column="C_NO" property="characterNo"/>
 	   	<result column="C_NAME" property="characterName"/>
 	   	<result column="G_NAME" property="goodsName"/>
 	   	<result column="G_BRAND" property="goodsBrand"/>
@@ -38,16 +37,18 @@
 			   ,G_PRICE
 			   ,G_CONTENT
 			   ,G_ORIGIN_NAME1
+			   ,G_CHANGE_NAME1
 			   ,G_FILE_PATH
 			   ,G_STATUS
 		FROM TB_GOODS
 		WHERE G_STATUS='Y'
+			AND G_CATEGORY = #{category}
 		ORDER BY G_NO DESC
 	</select>
 	
 	<!-- 굿즈 등록 -->
 	<insert id="insertGoods">
-	INSERT INTO BOARD(G_NO,
+	INSERT INTO TB_GOODS(G_NO,
 					  G_BRAND,
 					  G_NAME,
 					  G_CATEGORY,
@@ -62,7 +63,7 @@
 					  G_ORIGIN_NAME4,
 					  G_CHANGE_NAME4,
 					  G_FILE_PATH,
-					  G_CONTENT
+					  G_CONTENT)
 				VALUES(SEQ_GNO.NEXTVAL
 						,#{goodsBrand}
 						,#{goodsName}
@@ -78,7 +79,7 @@
 						,#{goodsOriginName4}
 						,#{goodsChangeName4}
 						,#{goodsFilePath}
-						,#{content})
+						,#{goodsContent})
 	</insert>
 	
 </mapper>
