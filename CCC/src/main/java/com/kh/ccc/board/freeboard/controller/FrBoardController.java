@@ -45,7 +45,7 @@ public class FrBoardController {
 //			int fWriterNo =loginUser.getmNo();
 	
 		
-	//아니 왜안올라가냐고		
+	
 			int listCount = FrBoardService.selectListCount(); //총 게시글 개수  db에서 조회해오기 .
 			
 			int pageLimit = 10;	//하단에 페이징바 갯수
@@ -160,9 +160,9 @@ public class FrBoardController {
 				// 4. 아래는 원본 파일명으로부터 확장자명 뽑아오기
 				String ext=null; //StringIndexOutOfBoundsException 가 뜨기 때문에 아래는 파일이 있는지 없는지 확인해준다 
 				
-				if(originName != null) {
+			
 				ext = originName.substring(originName.lastIndexOf("."));
-				}
+		
 				
 				// 5. 뽑아놓은 값 전부 붙여서 파일명 만들기				
 				String changeName = currentTime + ranNum + ext;
