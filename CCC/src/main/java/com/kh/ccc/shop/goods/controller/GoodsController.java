@@ -17,7 +17,7 @@ public class GoodsController {
 	@RequestMapping("goodsMain.go")
 	public String goCart(HttpSession session, Model model) {
 		
-		return "shop/goodsMain";
+		return "shop/goods/goodsMain";
 	}
 	
 }

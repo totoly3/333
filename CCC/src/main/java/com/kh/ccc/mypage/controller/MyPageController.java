@@ -375,7 +375,7 @@ public class MyPageController {
 			    realoList= mypageService.selectRealOrderListView(oNo);
 			    
 			    System.out.println("진짜주문리스트정말돌??"+realoList);
-			    mv.addObject("realoList", realoList).setViewName("mypage/mypageselectOrderList");				
+			    mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");				
 				break;
 				
 	         case ONE_WEEK:
@@ -400,7 +400,7 @@ public class MyPageController {
 		          }
 	             
 				 realoList= mypageService.selectRealOrderListView(oNo);
-				 mv.addObject("realoList", realoList).setViewName("mypage/mypageselectOrderList");	
+				 mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");	
 				 
 				 System.out.println("결과"+realoList);
 				 
@@ -424,7 +424,7 @@ public class MyPageController {
 		          }
 	             
 	             realoList= mypageService.selectRealOrderListView(oNo);
-				 mv.addObject("realoList", realoList).setViewName("mypage/mypageselectOrderList");
+				 mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");
 				 
 	 			 break;
 	 		
@@ -448,7 +448,7 @@ public class MyPageController {
 		          }
 	             
 	             realoList= mypageService.selectRealOrderListView(oNo);
-				 mv.addObject("realoList", realoList).setViewName("mypage/mypageselectOrderList");
+				 mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");
 				 
 	        	 break;
 	        	 
@@ -470,7 +470,7 @@ public class MyPageController {
 	             
 	             //oNo뽑는 부분??
 	             realoList= mypageService.selectRealOrderListView(oNo);
-				 mv.addObject("realoList", realoList).setViewName("mypage/mypageselectOrderList");
+				 mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");
 				 
 	        	 break;
 	         

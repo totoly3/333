@@ -19,13 +19,13 @@
    
    	<!--마이캐릭터 파일조회 -->
 	<resultMap type="myCharacterAttach" id="myCharacterAttachResultSet" >
-	<result  property="mCaNo" column="MCA_NO" />
-	<result  property="cNo" column="C_NO" />
+	<result  property="myCharAttachNo" column="MCA_NO" />
+	<result  property="characterNo" column="C_NO" />
 	<result  property="originName" column="MCA_ORIGIN_NAME" />
 	<result  property="changeName" column="MCA_CHANGE_NAME" />
-	<result  property="mCaLevel" column="MCA_CA_LEVEL" />
-	<result  property="mCaCreateDate" column="MCA_CREATE_DATE" />
-	<result  property="mCaStatus" column="MCA_STATUS" />
+	<result  property="myCharAttachLevel" column="MCA_CA_LEVEL" />
+	<result  property="myCharAttachCreateDate" column="MCA_CREATE_DATE" />
+	<result  property="myCharAttachStatus" column="MCA_STATUS" />
 	</resultMap>
    
    
