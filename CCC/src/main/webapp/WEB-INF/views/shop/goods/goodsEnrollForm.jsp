@@ -37,16 +37,16 @@
             <h2>게시글 작성하기</h2>
             <br>
 
-            <form id="enrollForm" method="post" action="insert.bo" enctype="multipart/form-data">
+            <form id="enrollForm" method="post" action="insert.go" enctype="multipart/form-data">
                 <table algin="center">
                    <tr>
                         <th><label for="title">글 제목</label></th>
-                        <td colspan="5"><input type="text" id="title" class="form-control" name="title" required></td>
+                        <td colspan="5"><input type="text" id="gName" class="form-control" name="gName" required></td>
                    </tr>
                    
                    <tr>
                         <th width="100px;"><label for="writer">브랜드명</label></th>
-                        <td colspan="2"><input type="text" id="brand" class="form-control" name="brand" required></td>
+                        <td colspan="2"><input type="text" id="gBrand" class="form-control" name="gBrand" required></td>
                         
                         <th width="100px;"><label for="writer">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;카테고리</label></th>
                         <td colspan="2"><input type="text" id="category" class="form-control" name="category" required></td>
@@ -67,11 +67,11 @@
                     
                     <tr>
                         <th width="100px;"><label for="upfile">첨부파일2</label></th>
-                        <td width="200px;"><input type="file" id="upfile2" class="form-control-file border" name="upfile2" required></td>
+                        <td width="200px;"><input type="file" id="upfile" class="form-control-file border" name="upfile" required></td>
                         <th width="100px;"><label for="upfile">&emsp;첨부파일3</label></th>
-                        <td width="200px;"><input type="file" id="upfile3" class="form-control-file border" name="upfile3" required></td>
+                        <td width="200px;"><input type="file" id="upfile" class="form-control-file border" name="upfile"></td>
                         <th width="100px;"><label for="upfile">&emsp;첨부파일4</label></th>
-                        <td width="200px;"><input type="file" id="upfile4" class="form-control-file border" name="upfile4" required></td>
+                        <td width="200px;"><input type="file" id="upfile" class="form-control-file border" name="upfile"></td>
                     </tr>
                     
                     <tr>

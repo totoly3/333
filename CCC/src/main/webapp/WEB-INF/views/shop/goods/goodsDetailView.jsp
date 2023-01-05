@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -788,7 +790,9 @@ $(function() {
 								<p class="pdtBrand">
 									
 									<a href="" id="zzimBrandCnt" onclick="TnMyBrandJJim('luxiai', 'LUXIAI'); return false;">
-									<dfn id="zzimBr_luxiai" class="">찜브랜드</dfn></a> <a href="https://www.10x10.co.kr/street/street_brand.asp?makerid=luxiai&ab=012_a_1"><span>LUXIAI</span></a>
+									<dfn id="zzimBr_luxiai" class="">찜브랜드</dfn></a> <a href="https://www.10x10.co.kr/street/street_brand.asp?makerid=luxiai&ab=012_a_1">
+									<!-- 브랜드명 위치 -->
+									<span>LUXIAI ${g.brand}</span></a>
 									<a href="https://www.10x10.co.kr/street/street_brand.asp?makerid=luxiai&ab=012_a_2" class="btn btnS6 btnGry2 fn lMar10" style="display:none;"><em class="whiteArr03">브랜드샵</em></a>
 									
 								</p>
@@ -1030,9 +1034,10 @@ $(function() {
 					<!-- (2/9) 상품설명 -------------------------------->
 					
 <h3>상품 설명</h3>
-	
 
-	<iframe id="itemPrdDetail" style="width:100%;" src="/shopping/inc_itemDescription_iframe.asp?itemid=5055471" frameborder="0" scrolling="no"></iframe>
+	<!-- <iframe id="itemPrdDetail" style="width:100%;" src="/shopping/inc_itemDescription_iframe.asp?itemid=5055471" frameborder="0" scrolling="no"></iframe> -->
+	<!-- 여기에 사진 넣기 -->
+	
     <script>
         (function(){
             // 브라우저 상태에 따라 iframe 높이값 조정

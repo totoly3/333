@@ -6,6 +6,7 @@ public class Goods {
 	private int	gNo;
 	private int	cNo;
 	private String gName;
+	private String gBrand;
 	private String category;
 	private String stock;
 	private String price;
@@ -26,14 +27,15 @@ public class Goods {
 		super();
 	}
 
-	public Goods(int gNo, int cNo, String gName, String category, String stock, String price, String content,
-			String originName1, String changeName1, String originName2, String changeName2, String originName3,
-			String changeName3, String originName4, String changeName4, String filePath, Date enrollDate,
-			String status) {
+	public Goods(int gNo, int cNo, String gName, String gBrand, String category, String stock, String price,
+			String content, String originName1, String changeName1, String originName2, String changeName2,
+			String originName3, String changeName3, String originName4, String changeName4, String filePath,
+			Date enrollDate, String status) {
 		super();
 		this.gNo = gNo;
 		this.cNo = cNo;
 		this.gName = gName;
+		this.gBrand = gBrand;
 		this.category = category;
 		this.stock = stock;
 		this.price = price;
@@ -50,6 +52,8 @@ public class Goods {
 		this.enrollDate = enrollDate;
 		this.status = status;
 	}
+
+
 
 	public int getgNo() {
 		return gNo;
@@ -194,18 +198,25 @@ public class Goods {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+
+	public String getgBrand() {
+		return gBrand;
+	}
+
+	public void setgBrand(String gBrand) {
+		this.gBrand = gBrand;
+	}
 
 	@Override
 	public String toString() {
-		return "Goods [gNo=" + gNo + ", cNo=" + cNo + ", gName=" + gName + ", category=" + category + ", stock=" + stock
-				+ ", price=" + price + ", content=" + content + ", originName1=" + originName1 + ", changeName1="
-				+ changeName1 + ", originName2=" + originName2 + ", changeName2=" + changeName2 + ", originName3="
-				+ originName3 + ", changeName3=" + changeName3 + ", originName4=" + originName4 + ", changeName4="
-				+ changeName4 + ", filePath=" + filePath + ", enrollDate=" + enrollDate + ", status=" + status + "]";
+		return "Goods [gNo=" + gNo + ", cNo=" + cNo + ", gName=" + gName + ", gBrand=" + gBrand + ", category="
+				+ category + ", stock=" + stock + ", price=" + price + ", content=" + content + ", originName1="
+				+ originName1 + ", changeName1=" + changeName1 + ", originName2=" + originName2 + ", changeName2="
+				+ changeName2 + ", originName3=" + originName3 + ", changeName3=" + changeName3 + ", originName4="
+				+ originName4 + ", changeName4=" + changeName4 + ", filePath=" + filePath + ", enrollDate=" + enrollDate
+				+ ", status=" + status + "]";
 	}
-	
-	
-	
-	
+
 
 }
