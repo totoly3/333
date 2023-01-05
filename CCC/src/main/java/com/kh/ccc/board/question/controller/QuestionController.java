@@ -45,7 +45,6 @@ public class QuestionController {
 //		loginUser.setmName("오상희");
 //		loginUser.setMgNo(1);	// 등급 번호
 //		
-//		
 //		System.out.println("일반회원 자동 로그인");
 //		System.out.println(loginUser);
 //		session.setAttribute("loginUser", loginUser);
@@ -61,11 +60,11 @@ public class QuestionController {
 		
 		PageInfo pi = Pagenation.getPageinfo(listCount, currentPage, pageLimit, boardLimit);
 		model.addAttribute("pi", pi);
-		System.out.println("QuestionList::CTRL:: pi : " + pi);
+//		System.out.println("QuestionList::CTRL:: pi : " + pi);
 		
 		ArrayList<Question> list = questionService.selectList(pi);
 		model.addAttribute("list", list);
-		System.out.println("QuestionList::CTRL:: list : " + list);
+//		System.out.println("QuestionList::CTRL:: list : " + list);
 		
 		return "board/question/questionListView";
 	}
@@ -93,11 +92,11 @@ public class QuestionController {
 		
 		if(upfileList != null) {
 			for(int i=0; i<upfileList.size(); i++) {
-				System.out.println("반복문 확인 i : "+i);
+//				System.out.println("반복문 확인 i : "+i);
 				
 				// 파일이 존재하면 
 				if(!upfileList.get(i).getOriginalFilename().equals("")) {
-					System.out.println("담기 전 : "+upfileList.get(i));
+//					System.out.println("담기 전 : "+upfileList.get(i));
 					
 					// resources/question/uploadFiles 에 저장하고 파일명 수정하여 반환
 					String changeName = saveFile(upfileList.get(i),session);
@@ -112,9 +111,9 @@ public class QuestionController {
 			}
 //			System.out.println("다 담은 후 : ");
 //			System.out.println(qaList);
-			for(int i=0; i<qaList.size(); i++) {
-				System.out.println("qaList의 "+i+"번째 데이터 : "+qaList.get(i));
-			}
+//			for(int i=0; i<qaList.size(); i++) {
+//				System.out.println("qaList의 "+i+"번째 데이터 : "+qaList.get(i));
+//			}
 		}
 		//------------------- 첨부파일 End
 		
@@ -208,7 +207,7 @@ public class QuestionController {
 			}*/
 				
 			ArrayList<QuestionAttach> qaList = questionService.selectQAList(qno);
-			System.out.println("detail.qu:: qaList : "+qaList);
+//			System.out.println("detail.qu:: qaList : "+qaList);
 			
 			mv.addObject("qaList", qaList).addObject("q",q).setViewName("board/question/questionDetailView");
 			
@@ -223,11 +222,11 @@ public class QuestionController {
 	public String questionUpdateForm(int qno, Model model) {
 		Question q = questionService.selectQuestion(qno);
 		model.addAttribute("q", q);
-		System.out.println("updateForm.qu:: q :" + q);
+//		System.out.println("updateForm.qu:: q :" + q);
 		
 		ArrayList<QuestionAttach> qaList = questionService.selectQAList(qno);
 		model.addAttribute("qaList", qaList);
-		System.out.println("updateForm.qu:: qaList : "+qaList);
+//		System.out.println("updateForm.qu:: qaList : "+qaList);
 		
 		return "board/question/questionUpdateForm";
 	}
@@ -430,6 +429,31 @@ public class QuestionController {
 		else {
 			System.out.println("response.qu:: result" + result);
 			model.addAttribute("errorMsg","답변 작성 실패");
+			return "common/errorPage";
+		}
+	}
+	
+	@RequestMapping("deleteGroup.qu")
+	public String deleteGroup(Model model, String chkArr) {
+	
+//		System.out.println("deleteGroup.qu :: chk = " + chkArr);
+		// 문자열을 ',' 로 나누어서 String 배열에 담기
+		String[] deleteNoList = chkArr.split(",");
+		int[] deleteNoArr = new int[deleteNoList.length];
+		// int 배열로 변경
+		for(int i=0; i<deleteNoList.length; i++) {
+			deleteNoArr[i] =  Integer.parseInt(deleteNoList[i]);
+//			System.out.println(deleteNoList[i]+" -> " + deleteNoArr[i]);
+		}
+		
+		int result = questionService.deleteGroup(deleteNoArr);
+		if(result > 0) {
+//			System.out.println("deleteGroup.qu:: result : "+ result);
+			return "redirect:/list.qu";
+		}
+		else {
+//			System.out.println("deleteGroup.qu:: result : "+ result);
+			model.addAttribute("errorMsg", "그룹삭제 실패");
 			return "common/errorPage";
 		}
 	}
