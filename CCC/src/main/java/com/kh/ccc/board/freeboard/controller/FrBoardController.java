@@ -154,7 +154,7 @@ public class FrBoardController {
 				
 				// 4. 아래는 원본 파일명으로부터 확장자명 뽑아오기
 				String ext=null; //StringIndexOutOfBoundsException 가 뜨기 때문에 아래는 파일이 있는지 없는지 확인해준다 
-
+				
 				ext = originName.substring(originName.lastIndexOf("."));
 				
 				// 5. 뽑아놓은 값 전부 붙여서 파일명 만들기				
@@ -249,6 +249,17 @@ public class FrBoardController {
 				// 아래는 게시판 글번호를 이용해서 게시글의 파일 정보를 가져온다 . 기존 글 첨부파일 
 				ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
 			    
+				//여기는아래는  병철이형 부분 
+				//여기는아래는  병철이형 부분 
+				//여기는아래는  병철이형 부분 
+				
+				//여기는위에는  병철이형 부분 
+				//여기는위에는는  병철이형 부분 
+				//여기는위에는  병철이형 부분 
+				
+				
+				
+				
 				// 내가올린 파일이있으면 반복문 돌려  내가 올린 파일 사이즈만큼!
 				// 그리고 지워. 기존꺼 전부 삭제
 				for(int k=0; k<frba.size(); k++) {
@@ -276,7 +287,7 @@ public class FrBoardController {
 						FrBoardAttach fat = new FrBoardAttach();
 						//빈 attach 에  경로 붙여진+changename
 						fat.setfNo(fno);
-//						fat.setFaNo(frba.get(j).getFaNo());
+						fat.setFaNo(frba.get(j).getFaNo());
 						fat.setFaChangeName("resources/freeBoard/uploadFiles/"+changeName);
 						fat.setFaOrginName(upfile.get(j).getOriginalFilename());
 //						System.out.println("update.frboen :: CTRL :: 담기전 fat = : " + fat);

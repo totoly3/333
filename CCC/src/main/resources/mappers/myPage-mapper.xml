@@ -104,7 +104,7 @@
 	  <result  property="orderDetailNo" column="OD_NO" />
 	</resultMap>
 	
-	<resultMap type="cart" id="cartResultSet">
+	<resultMap type="wishGoods" id="wishGoodsResultSet">
 		<result property="cartNo" column="CART_NO" />	
 		<result property="memberNo" column="M_NO" />
 		<result property="goodsNo" column="G_NO" />	
@@ -329,7 +329,7 @@
    </select>
    
    <!-- 카트리스트 조회-->
-   <select id="selectCartList" resultMap="cartResultSet" parameterType="_int" >
+   <select id="selectCartList" resultMap="wishGoodsResultSet" parameterType="_int" >
       	SELECT * FROM TB_CART
 		JOIN TB_GOODS USING(G_NO)
 		WHERE M_NO=#{memberNo}

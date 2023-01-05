@@ -375,7 +375,7 @@ public class MyPageController {
 			    realoList= mypageService.selectRealOrderListView(oNo);
 			    
 			    System.out.println("진짜주문리스트정말돌??"+realoList);
-			    mv.addObject("realoList", realoList).setViewName("mypage/mypageselectOrderList");				
+			    mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");				
 				break;
 				
 	         case ONE_WEEK:
@@ -400,7 +400,7 @@ public class MyPageController {
 		          }
 	             
 				 realoList= mypageService.selectRealOrderListView(oNo);
-				 mv.addObject("realoList", realoList).setViewName("mypage/mypageselectOrderList");	
+				 mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");	
 				 
 				 System.out.println("결과"+realoList);
 				 
@@ -424,7 +424,7 @@ public class MyPageController {
 		          }
 	             
 	             realoList= mypageService.selectRealOrderListView(oNo);
-				 mv.addObject("realoList", realoList).setViewName("mypage/mypageselectOrderList");
+				 mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");
 				 
 	 			 break;
 	 		
@@ -448,7 +448,7 @@ public class MyPageController {
 		          }
 	             
 	             realoList= mypageService.selectRealOrderListView(oNo);
-				 mv.addObject("realoList", realoList).setViewName("mypage/mypageselectOrderList");
+				 mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");
 				 
 	        	 break;
 	        	 
@@ -470,7 +470,7 @@ public class MyPageController {
 	             
 	             //oNo뽑는 부분??
 	             realoList= mypageService.selectRealOrderListView(oNo);
-				 mv.addObject("realoList", realoList).setViewName("mypage/mypageselectOrderList");
+				 mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");
 				 
 	        	 break;
 	         
@@ -535,14 +535,16 @@ public class MyPageController {
 	
 	//찜한 리스트 조회	
 	@RequestMapping("wishList.my")
-	public String selectWishList(HttpSession session ){
+	public String selectWishList(HttpSession session, Model model){
 		
-		 Member loginUser=(Member)session.getAttribute("loginUser");
-		 int mNo= loginUser.getMemberNo();
+		Member loginUser=(Member)session.getAttribute("loginUser");
+		int mNo= loginUser.getMemberNo();
 		
-		 ArrayList<WishGoods> wList=mypageService.selectWishList(mNo);
+		ArrayList<WishGoods> wList=mypageService.selectWishList(mNo);
+//		System.out.println("WishGoodsList : " + wList);
+		model.addAttribute("wList", wList);
 		
-		 return "mypage/wish";	
+		return "mypage/wish";	
 		 
     }  
 	
