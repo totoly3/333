@@ -196,10 +196,11 @@ public class CharBoardController {
 		int boardNo = updateCb.getBoardNo();
 		ArrayList<CharAttach> caList = boardService.selectAttach(boardNo);
 				
-		//게시판 첨부파일 이미지 경로
+		//게시판 첨부파일등록 이미지 경로
 		String charBoardFilePath = "resources/character/charBoardImg/";
  		
-		//기존 첨부파일 수정
+		//--------기존 첨부파일 수정 시작
+		//기존 첨부파일이 없다면
 		if( caList.isEmpty() ) {
 			System.out.println("기존 첨부파일이 없습니다.");
 		}
@@ -208,8 +209,8 @@ public class CharBoardController {
 			int delAttachResult = 0;
 			int deleteAllOldAttach = 0;
 			String realPath = "";
-				//없는 첨부파일 삭제하기
-				if( oldCaList != null) {
+				//삭제 선택된 기존의 첨부파일 삭제하기 (수정페이지에서 기존 첨부파일을 지우지 않았다면==있다면)
+				if( oldCaList != null ) {
 					for(CharAttach ca : caList) {
 					
 						if(!oldCaList.contains(ca.getLevel())) { //기존 파일의 레벨 번호가 없다면
@@ -269,19 +270,32 @@ public class CharBoardController {
 			}			
 		}
 		
-		int result = 0;
+		//--------새로운 첨부파일 시작
+		
+		int result = 0; //결과값을 담을 변수
+		String changeName = "";
 		if(upfileList != null) { //게시글 수정 시 새로운 첨부파일이 있다면
 			for(int i=0; i<upfileList.size(); i++) {
 				if(!upfileList.get(i).getOriginalFilename().equals("")) { //객체는 있지만 데이터가 존재하는지 한번 더 체크
+					//새로 등록한 파일 정보를 담을 객체를 생성 
 					CharAttach ca = new CharAttach();
+					
 					if( oldCaList != null ) { //기존 첨부파일중에 삭제하지않은 파일이 있다면
 						ca.setLevel(checkList.get(i)); //새로운 첨부파일의 레벨 번호는 기존 번호의 다음 번호로 등록
+
+						changeName = saveFile(upfileList.get(i),session,charBoardFilePath);
+						ca.setRefBno(updateCb.getBoardNo()); //수정 게시글 번호
+						ca.setOriginName(upfileList.get(i).getOriginalFilename()); //첨부파일 원본명
+						ca.setChangeName(charBoardFilePath+changeName); //변경된 파일 이름
 					}
-					String changeName = saveFile(upfileList.get(i),session,charBoardFilePath);
-					ca.setRefBno(updateCb.getBoardNo()); //수정 게시글 번호
-					ca.setOriginName(upfileList.get(i).getOriginalFilename()); //첨부파일 원본명
-					ca.setChangeName(charBoardFilePath+changeName); //변경된 파일 이름
-					
+					else { //기존 첨부파일을 모두 삭제했다면
+						changeName = saveFile(upfileList.get(i),session,charBoardFilePath);
+						ca.setRefBno(updateCb.getBoardNo()); //수정 게시글 번호
+						ca.setOriginName(upfileList.get(i).getOriginalFilename()); //첨부파일 원본명
+						ca.setChangeName(charBoardFilePath+changeName); //변경된 파일 이름
+						ca.setLevel(i+1);
+					}
+					//새로운 파일 정보를 배열로 담는다
 					updateCaList.add(ca);
 				}
 			}
@@ -297,7 +311,7 @@ public class CharBoardController {
 			}
 			return mv;
 			
-		}else { //기존의 첨부파일을 모두 삭제한 경우
+		}else { //기존의 첨부파일을 수정하지 않고 나머지를 수정한 경우
 			//게시글 수정 내용 (글 제목,캐릭터 이름,캐릭터 설명 등록 / 첨부파일 제외)
 			result = boardService.updateCharBoard(updateCb,updateCharacter);
 			
@@ -310,7 +324,8 @@ public class CharBoardController {
 			}
 			return mv;
 		}
-		//--------새로운 첨부파일 끝	
+		//--------새로운 첨부파일 끝
+		
 	}
 			
 	//게시글 삭제
@@ -356,6 +371,8 @@ public class CharBoardController {
 	@RequestMapping(value="insertLike.ch",produces="text/html; charset=UTF-8")
 	public String insertLike(CharLike cl) {
 		
+		System.out.println(cl);
+	
 		//좋아요 데이터가 있는지 조회
 		CharLike clSelect = boardService.selectLike(cl);
 		
@@ -372,6 +389,42 @@ public class CharBoardController {
 			
 			return deleteResult != 0 ? "NNNNN" : "NNNNY";
 		}
+	}
+	
+	//캐릭터 리스트 좋아요 조회
+	@ResponseBody
+	@RequestMapping(value="listLike.ch",produces="text/html; charset=UTF-8")
+	public String selectListLike(@RequestParam(value="cbList[]") ArrayList<CharBoard> cbList,int memberNo) {
+		
+		System.out.println(cbList);
+		System.out.println(memberNo);
+		
+		return "야호";
+		
+	}
+	
+	//게시판 리스트에서 좋아요/취소 (캐릭터)
+	@ResponseBody
+	@RequestMapping(value="boardListLike.ch",produces="text/html; charset=UTF-8")
+	public String charBoardListLike(CharLike cl) {
+		
+		//좋아요 데이터가 있는지 조회
+		CharLike clSelect = boardService.selectLike(cl);
+		
+		//좋아요가 없다면 좋아요 등록
+		if((clSelect.getCharLike() == 0)) {
+			//TB_CHARACTER_LIKE / TB_CHARACTER 테이블에 좋아요 추가
+			int insertResult = boardService.insertLike(cl);
+			
+			return insertResult != 0 ? "NNNNY" : "NNNNN";
+		}
+		else {//좋아요가 있다면 좋아요 취소
+			//TB_CHARACTER_LIKE / TB_CHARACTER 테이블에 좋아요 삭제
+			int deleteResult = boardService.deleteLike(cl);
+			
+			return deleteResult != 0 ? "NNNNN" : "NNNNY";
+		}
+		
 	}
 	
 	//댓글 등록
@@ -483,10 +536,8 @@ public class CharBoardController {
 	@RequestMapping(value="badLanguage.ch",produces="text/html; charset=UTF-8")
 	public String badLanguage(CharBoard cb) {
 		
-		System.out.println("비속어 : "+cb);
 		ArrayList<Ward> wList = boardService.badLanguage();
-		System.out.println("비속어 : "+wList);
-		
+	
 		for(int i=0; i<wList.size(); i++) {
 			if( cb.getBoardTitle().contains(wList.get(i).getWardName()) ){
 				return "NNNNY"; 
@@ -506,15 +557,25 @@ public class CharBoardController {
 		CharBoardSearch s = new CharBoardSearch();
 		s.setCondition(condition);
 		s.setKeyword(keyword);
-		
-		System.out.println("검색어"+ s);
-		
+	
 		ArrayList<CharBoard> searchList = boardService.charBoardSearch(s); 
-		
-		System.out.println(searchList);
 		
 		return "";
 	}
+	
+	//검색어 자동완성 기능
+//	@ResponseBody
+//	@RequestMapping(value="searchRecommend.ch", method = RequestMethod.GET, produces="text/plain; charset=UTF-8")
+//	public String searchRecommend(Locale locale, Model model) {
+//		
+//		String[] array = {"폼폼푸린","열무","프랭크","킹냥","고먐미"};
+//		
+//		Gson gson = new Gson();
+//		
+//		return gson.toJson(array);
+//	}
+	
+				
 	
 
 	
