@@ -80,8 +80,7 @@
 		<mapper resource="/mappers/question-mapper.xml"/>
 		<mapper resource="/mappers/cart-mapper.xml"/>
 		<mapper resource="/mappers/shipping-mapper.xml"/>
-		
-		<mapper resource="/mappers/goods-mapper.xml"/>
+
 	</mappers>
 	
 </configuration>
