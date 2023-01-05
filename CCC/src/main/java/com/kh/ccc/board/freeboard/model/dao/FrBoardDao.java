@@ -6,13 +6,11 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.ccc.board.freeboard.model.vo.FrBoard;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardReply;
 import com.kh.ccc.common.model.vo.PageInfo;
-import com.kh.ccc.member.model.vo.Member;
 
 @Repository
 public class FrBoardDao {
@@ -118,6 +116,28 @@ public class FrBoardDao {
 			return result2;
 		}
 		
+		//아래는 자유게시판 글 수정 (파일두개)
+		public int updateFrboard3(SqlSessionTemplate sqlSession, ArrayList<FrBoardAttach> newfrba) {
+			//result3 을 1로  초기화
+			int result3=1;
+			
+			//일단 사이즈만큼돌려서 업데이트 
+		
+			result3 =sqlSession.update("frBoardMapper.updateFrboard2",newfrba.get(0));
+			
+			//나머지 하나는 insert 해서 넣어주기
+			int result=sqlSession.insert("frBoardMapper.updateFrboard3",newfrba.get(1));
+			
+			//둘중하나 0이면  0return
+			int result4 = result3*result;
+			
+			return result4;
+		}
+		
+		
+		
+		
+		
 		//아래는 자유게시판 댓글 수정 
 		public int frReplyModify(SqlSessionTemplate sqlSession, FrBoardReply refb) {
 			
@@ -135,6 +155,7 @@ public class FrBoardDao {
 			return deresult;
 		}
 		
+<<<<<<< HEAD
 		//기존파일 삭제 (병철이형 부분)
 		public int deleteFrFile(SqlSessionTemplate sqlSession, ArrayList<FrBoardAttach> frba) {
 			int result=sqlSession.delete("frBoardMapper.deleteFrFile",frba);
@@ -147,6 +168,8 @@ public class FrBoardDao {
 			int result=sqlSession.update("frBoardMapper.deleteReply");
 			return result;
 		}
+=======
+>>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
 
 
 }

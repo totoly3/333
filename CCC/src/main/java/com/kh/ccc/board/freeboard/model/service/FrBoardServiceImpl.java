@@ -6,14 +6,12 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.ccc.board.freeboard.model.dao.FrBoardDao;
 import com.kh.ccc.board.freeboard.model.vo.FrBoard;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardReply;
 import com.kh.ccc.common.model.vo.PageInfo;
-import com.kh.ccc.member.model.vo.Member;
 @Service
 public class FrBoardServiceImpl implements FrBoardService{
 
@@ -131,6 +129,19 @@ public class FrBoardServiceImpl implements FrBoardService{
 		return result2;
 	}
 	
+	
+	
+
+	// 파일 수정 파일 둘다 있을때 
+	@Override
+	public int updateFrboard3(ArrayList<FrBoardAttach> newfrba) {
+		int result3 = FrBoardDao.updateFrboard3(sqlSession,newfrba);
+		return result3;
+	}
+	
+	
+	
+	
 	//아래는 자유게시판 댓글 수정
 	@Override
 	public int frReplyModify(FrBoardReply refb) {
@@ -162,6 +173,7 @@ public class FrBoardServiceImpl implements FrBoardService{
 		int result=FrBoardDao.deleteReply(sqlSession,refb);
 		return result;
 	}
+
 
 
 

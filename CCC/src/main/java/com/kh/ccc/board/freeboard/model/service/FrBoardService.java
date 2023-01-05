@@ -3,13 +3,11 @@ package com.kh.ccc.board.freeboard.model.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.ccc.board.freeboard.model.vo.FrBoard;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardReply;
 import com.kh.ccc.common.model.vo.PageInfo;
-import com.kh.ccc.member.model.vo.Member;
 
 public interface FrBoardService {
 
@@ -62,10 +60,15 @@ public interface FrBoardService {
 		//아래는 체크된거 삭제 
 		int deleteClickFrboard(List<String> checkBoxArr);
 
+<<<<<<< HEAD
 		//첨부파일 삭제(병철이형 부분)
 		int deleteFrFile(ArrayList<FrBoardAttach> frba);
 
 		//댓글 삭제 
 		int deleteReply(FrBoardReply refb);
+=======
+		//글 수정  (파일 둘다있을때 ) 
+		int updateFrboard3(ArrayList<FrBoardAttach> newfrba);
+>>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
 		
 	}

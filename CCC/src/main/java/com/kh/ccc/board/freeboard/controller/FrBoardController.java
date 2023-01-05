@@ -27,7 +27,6 @@ import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardReply;
 import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.common.template.Pagenation;
-import com.kh.ccc.member.model.vo.Member;
 
 @Controller
 public class FrBoardController {
@@ -40,7 +39,16 @@ public class FrBoardController {
 		public ModelAndView selectList(@RequestParam(value="currentPage",defaultValue="1")int currentPage,
 													ModelAndView  mv,HttpSession session) {
 
+<<<<<<< HEAD
 
+=======
+			
+//			Member loginUser = (Member)session.getAttribute("loginUser");
+//			int fWriterNo =loginUser.getmNo();
+	
+		
+			
+>>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
 			int listCount = FrBoardService.selectListCount(); //총 게시글 개수  db에서 조회해오기 .
 			
 			int pageLimit = 10;	//하단에 페이징바 갯수
@@ -248,6 +256,7 @@ public class FrBoardController {
 				// 아래는 게시판 글번호를 이용해서 게시글의 파일 정보를 가져온다 . 기존 글 첨부파일 
 				ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
 			    
+<<<<<<< HEAD
 				//여기는아래는  병철이형 부분 
 				//여기는아래는  병철이형 부분 
 				//여기는아래는  병철이형 부분 
@@ -301,6 +310,17 @@ public class FrBoardController {
 						}else {
 							System.out.println("db삭제 실패");
 						}
+=======
+				// 내가올린 파일이있으면 반복문 돌려  내가 올린 파일 사이즈만큼!
+				// 그리고 지워. 기존꺼 전부 삭제
+				for(int k=0; k<frba.size(); k++) {
+					//아래는 만약 올린파일이 있으면 삭제 
+					if(frba.get(k).getFaOrginName()!=null) {
+						// 물리 경로에서 삭제
+						new File(session.getServletContext().getRealPath(frba.get(k).getFaChangeName())).delete();
+						// DB에서 삭제
+						
+>>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
 					}
 				}
 
@@ -317,6 +337,7 @@ public class FrBoardController {
 						
 						//아래는 attach 빈거 하나 만들고 ! 
 						FrBoardAttach fat = new FrBoardAttach();
+<<<<<<< HEAD
 						//빈 attach 에  경로 붙여진+changename
 						fat.setfNo(fno);
 						fat.setFaNo(frba.get(j).getFaNo());
@@ -335,12 +356,48 @@ public class FrBoardController {
 					// 새 첨부파일 insert
 					int result2 = FrBoardService.updateFrboard2(newfrba);
 					int result3=result1+result2;
+=======
+						
+						//빈 attach 에  경로 붙여진+changename
+						fat.setfNo(fno);
+//						fat.setFaNo(frba.get(j).getFaNo());
+						fat.setFaChangeName("resources/freeBoard/uploadFiles/"+changeName);
+						fat.setFaOrginName(upfile.get(j).getOriginalFilename());
+//						System.out.println("update.frboen :: CTRL :: 담기전 fat = : " + fat);
+						newfrba.add(fat);
+					}
+				}
+//				System.out.println("update.frboen :: 파일삭제 후. 글 수정 전");
+				//파일이 있으면
+				if(!frba.isEmpty()) {
+					//아래는 글만 변경 (첨부파일은 없고) 
+					int result1 =FrBoardService.updateFrboard1(fb);
+					//아래는 첨부파일만 변경
+					// 새 첨부파일 insert
+					int result2 = 0;
+					int result3 = 0;
+					//아래는 0번째 또는1번째 파일이 있으면 
+					if((!frba.get(0).getFaChangeName().isEmpty())||(!frba.get(1).getFaChangeName().isEmpty())) {
+						 result2 = FrBoardService.updateFrboard2(newfrba);
+					}else if(!frba.get(0).getFaChangeName().isEmpty() && !frba.get(0).getFaChangeName().isEmpty() ){
+						//여기는 0번과 1번 파일 둘다 있는 경우 
+						 result3 = FrBoardService.updateFrboard3(newfrba);
+					}
+					int result4=result1+result2;
+					int result5=result1+result3;
+					if(result4>0 || result5>0) {
+						mv.addObject("fb",fb);
+						mv.addObject("frba",newfrba);
+>>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
 					
+<<<<<<< HEAD
 					if(result3>0) {
 						mv.addObject("fb",fb);
 						mv.addObject("frba",newfrba);
 						
 						//여기 아래에서 fb.getfno 를 가져가는 이유가 뭘까 ..
+=======
+>>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
 						mv.setViewName("redirect:/detail.fbo?fno="+fb.getfNo());
 					}else {
 						mv.addObject("errorMsg", "게시글 글,첨부 수정 실패!").setViewName("common/errorPage");

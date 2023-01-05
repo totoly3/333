@@ -170,6 +170,13 @@
 					FROM SYS.DUAL	  
 				</foreach>
 			  )A
+			  
+			  
+			  
+			  
+			  
+			  
+			  
 	</insert>
 	  <!-- 아래는 게시글 삭제   -->
 		<update id="frboardDelete"  >
@@ -204,7 +211,7 @@
 			 AND F_NO=#{fNo}
 	   </update>
 	   
-	    <!-- 아래는 게시글 수정(첨부파일)  -->
+	    <!-- 아래는 게시글 수정(첨부파일1개 2개는 아래)  -->
 		<update id="updateFrboard2" parameterType="frAttBoard">
 			 UPDATE TB_FREE_ATTACH
 			 SET FA_ORIGIN_NAME = #{faOrginName} 
@@ -212,6 +219,36 @@
 			 WHERE FA_STATUS = 'Y'
 			 AND FA_NO = #{faNo}
 	   </update>
+	   
+	   
+	   <!-- 아래는 게시글 수정(첨부파일2개_) -->
+
+	   <insert id="updateFrboard3" parameterType="frAttBoard">
+<!-- 	   	INSERT INTO TB_FREE_ATTACH( -->
+<!-- 				 FA_NO -->
+<!-- 				,F_NO -->
+<!-- 				,FA_ORIGIN_NAME -->
+<!-- 				,FA_CHANGE_NAME -->
+<!-- 	   SELECT SEQ_FANO.NEXTVAL,SEQ_FNO.CURRVAL, A.* -->
+<!-- 		FROM ( -->
+			
+<!-- 					SELECT #{ faOrginName } -->
+<!-- 						  ,#{ faChangeName } -->
+<!-- 					FROM SYS.DUAL	   -->
+			
+<!-- 			  )A -->
+			  
+			  
+			  INSERT INTO TB_FREE_ATTACH (FA_NO, F_NO, FA_ORIGIN_NAME, FA_CHANGE_NAME)
+   SELECT SEQ_FANO.NEXTVAL, SEQ_FNO.CURRVAL, A.*
+   FROM (
+        SELECT #{ faOrginName }, #{ faChangeName }
+        FROM DUAL
+   ) A;
+			  
+			  
+			  
+	   </insert>
 		
 	  <!-- 아래는 게시글 댓글 리뷰  -->  
 	   <select id="detailFrBoardReviewSelect" resultMap="frReplyBoardResultSet">
