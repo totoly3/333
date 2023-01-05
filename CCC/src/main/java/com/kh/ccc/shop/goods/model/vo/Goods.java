@@ -1,6 +1,8 @@
+
 package com.kh.ccc.shop.goods.model.vo;
 
 import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +17,7 @@ public class Goods {
 	private int characterNo;	//	C_NO	NUMBER
 	private String characterName;
 	private String goodsName;	//	G_NAME	VARCHAR2(100 BYTE)
+	private String goodsBrand;
 	private	String goodsCategory;//	G_CATEGORY	VARCHAR2(100 BYTE)
 	private	int goodsStock;//	G_STOCK	NUMBER
 	private	int goodsPrice;//	G_PRICE	NUMBER

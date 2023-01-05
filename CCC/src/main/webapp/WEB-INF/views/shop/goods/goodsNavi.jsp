@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% String filePath = request.getContextPath(); %>
-    
 <!doctype html>
 <html lang="en">
 <head>
@@ -45,7 +42,7 @@
                     </div>
                 </div>
                 <div class="col-6 col-lg-4 col-md-6 col-sm-6 logo-wrapper">
-                    <a href="cart.ca" class="logo">
+                    <a href="goodsMain.go" class="logo">
                         <!-- <img src="resources/css/goods/img/logo.png" alt=""> -->
                         <img src="resources/css/goods/img/chalogo3.jpg" alt="">
                         
@@ -182,8 +179,6 @@
         </div>
     </header>
     <!-- End header MEnu Area -->
-    
-    <br>
 
 
 <!-- Optional JavaScript -->
