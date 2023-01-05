@@ -156,6 +156,14 @@ public class FrBoardServiceImpl implements FrBoardService{
 	}
 
 
+	//댓글 삭제 
+	@Override
+	public int deleteReply(FrBoardReply refb) {
+		int result=FrBoardDao.deleteReply(sqlSession,refb);
+		return result;
+	}
+
+
 
 
 }

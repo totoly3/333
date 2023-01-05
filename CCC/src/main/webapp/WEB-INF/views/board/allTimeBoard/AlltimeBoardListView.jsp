@@ -151,16 +151,38 @@
 					console.log(result)
 					console.log("연결성공");
 					
-					var resultStr = "";
-						
-			resultStr += "<div>"
-			            	    +"<div class='p-2 flex-fill bg-info' id='alltime2'>" + result[1].like + "<p id='rk1'><img src='" + result[1].changeName + "' style='height: 100%; width: 100%;'></p>좋아요2등</div>"
-				                +"<div class='p-2 flex-fill bg-warning' id='alltime1'>" +result[0].like + "<p id='rk1'><img src='" + result[0].changeName  + "' style='height: 100%; width: 100%;'></p>좋아요1등</div>"
-				                +"<div class='p-2 flex-fill bg-primary' id='alltime3'>" + result[2].like + "<p id='rk1'><img src='" + result[2].changeName + "' style='height: 100%; width: 100%;'></p>좋아요3등</div>"
-			            +"</div>";
-
+					var resultStr1 = "";  //1등
+					var resultStr2 = "";  //2등
+					var resultStr3 = "";  //3등
 					
-					  $("#allTimeLikeList1 > tbody").html(resultStr);
+					
+					
+			            	    +"<div class='p-2 flex-fill bg-info' id='alltime2'>" + result[1].like + "<p id='rk1'><img src='" + result[1].changeName + "' style='height: 100%; width: 100%;'></p>좋아요2등</div>"
+				                +"<div class='p-2 flex-fill bg-primary' id='alltime3'>" + result[2].like + "<p id='rk1'><img src='" + result[2].changeName + "' style='height: 100%; width: 100%;'></p>좋아요3등</div>"
+				                
+				                /////////////////아래 1등////////////////////
+			resultStr1 += "<div>"
+				                +"<div class='p-2 flex-fill bg-warning' id='alltime1'>" +result[0].like + "<p id='rk1'><img src='" + result[0].changeName  + "' style='height: 100%; width: 100%;'></p>좋아요1등</div>"
+			            +"</div>";
+								
+								
+								/////////////////아래 2등////////////////////
+            resultStr2 += "<div>"
+              					  +"<div class='p-2 flex-fill bg-warning' id='alltime1'>" +result[0].like + "<p id='rk1'><img src='" + result[0].changeName  + "' style='height: 100%; width: 100%;'></p>좋아요1등</div>"
+         				  +"</div>";    
+       						  	
+       						  	
+       						  	/////////////////아래 3등////////////////////
+		 	resultStr3 += "<div>"
+								  +"<div class='p-2 flex-fill bg-warning' id='alltime1'>" +result[0].like + "<p id='rk1'><img src='" + result[0].changeName  + "' style='height: 100%; width: 100%;'></p>좋아요1등</div>"
+						+"</div>";   
+          
+					
+					  $("#allTimeLikeList1 > tbody").html(resultStr1);
+					  $("#allTimeLikeList2 > tbody").html(resultStr2);
+					  $("#allTimeLikeList3 > tbody").html(resultStr3);
+				
+				
 				},
 				error : function(){
 					console.log("통신실패");
@@ -168,14 +190,7 @@
 			});
 		}
 		
-// 		$(function() {
-// 			  $("#datepicker").datepicker({
-// 			    showOn: "button",
-// 			    buttonImage: "calendar.png",
-// 			    buttonImageOnly: true,
-// 			    buttonText: "Select date"
-// 			  });
-// 			});
+
 		
 	</script>
 

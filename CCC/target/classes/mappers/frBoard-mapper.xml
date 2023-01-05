@@ -282,5 +282,17 @@
 			FA_NO = #{faNo};
 		
 		</delete>
+		
+		
+		<!-- 댓글 삭제  -->
+		
+		<update id="deleteReply" parameterType="FrBoardReply">
+			  UPDATE TB_FREE_REPLY 
+			  SET FR_STATUS ='N'			
+			  WHERE FR_STATUS = 'Y'
+			  AND F_NO=#{fNo}
+			  AND FR_NO=#{frNo}
+		
+		</update>
 	
 </mapper>

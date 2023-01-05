@@ -141,6 +141,12 @@ public class FrBoardDao {
 			System.out.println("기존파일 삭제 되었으면을까?: "+result);
 			return result;
 		}
+		
+		//댓글 삭제 
+		public int deleteReply(SqlSessionTemplate sqlSession, FrBoardReply refb) {
+			int result=sqlSession.update("frBoardMapper.deleteReply");
+			return result;
+		}
 
 
 }

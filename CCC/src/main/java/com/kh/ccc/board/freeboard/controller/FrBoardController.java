@@ -367,17 +367,7 @@ public class FrBoardController {
 			public String detailFrBoardReviewSelect(int fno, ModelAndView mv,HttpSession session) {
 				ArrayList<FrBoardReply> rlist=FrBoardService.detailFrBoardReviewSelect(fno);
 				System.out.println("디테일 댓글조회 : rlist는????"+rlist);
-				
 
-				//				String mId =loginUser.getmId();
-//				System.out.println("컨트롤러 mId : "+mId);
-//				String mName =loginUser.getmName();
-////						
-////	
-////				mv.addObject("mName",mName);
-//				mv.addObject("mId",mId);
-//				
-//				mv.setViewName("board/freeBoard/freeBoardDetailView");
 				return new Gson().toJson(rlist);
 			}
 			
@@ -393,11 +383,12 @@ public class FrBoardController {
 			}
 			
 			//아래는 댓글 수정 
-			@RequestMapping("updateFrReply.fr")
+			@ResponseBody
+			@RequestMapping(value="updateFrReply.fr",produces="text/html; charset=UTF-8")
 			public String frReplyModify(ModelAndView mv,FrBoardReply refb) {
-				
+				System.out.println("refb는..?? "+refb);
 				int result=FrBoardService.frReplyModify(refb);
-				
+				System.out.println("수정"+result);
 				//아래 결과가  0이면 N  , 1이면 Y 
 				return (result == 0) ? "NNNNN" : "NNNNY";
 				
@@ -411,7 +402,24 @@ public class FrBoardController {
 				
 				int result = FrBoardService.deleteClickFrboard(fNo);
 				
-				return result>0? "yes":"no";
+				return result>0 ? "yes":"no";
 				
 			}
+			
+			
+			//아래는 댓글 삭제 
+			@ResponseBody
+			@RequestMapping("deleteFrReply.fr")
+			public String deleteReply(HttpServletRequest request
+									  ,FrBoardReply refb) {
+					
+				
+				int result = FrBoardService.deleteReply(refb);
+				
+				return result>0 ? "yes":"no";
+				
+			}
+			
+			
+			
 }	

@@ -64,5 +64,8 @@ public interface FrBoardService {
 
 		//첨부파일 삭제(병철이형 부분)
 		int deleteFrFile(ArrayList<FrBoardAttach> frba);
+
+		//댓글 삭제 
+		int deleteReply(FrBoardReply refb);
 		
 	}
