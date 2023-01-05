@@ -535,14 +535,16 @@ public class MyPageController {
 	
 	//찜한 리스트 조회	
 	@RequestMapping("wishList.my")
-	public String selectWishList(HttpSession session ){
+	public String selectWishList(HttpSession session, Model model){
 		
-		 Member loginUser=(Member)session.getAttribute("loginUser");
-		 int mNo= loginUser.getMemberNo();
+		Member loginUser=(Member)session.getAttribute("loginUser");
+		int mNo= loginUser.getMemberNo();
 		
-		 ArrayList<WishGoods> wList=mypageService.selectWishList(mNo);
+		ArrayList<WishGoods> wList=mypageService.selectWishList(mNo);
+//		System.out.println("WishGoodsList : " + wList);
+		model.addAttribute("wList", wList);
 		
-		 return "mypage/wish";	
+		return "mypage/wish";	
 		 
     }  
 	

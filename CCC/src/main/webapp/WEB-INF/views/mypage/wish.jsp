@@ -36,7 +36,7 @@
         <div class="innerOuter">
             <h2>찜리스트 상품 총?개</h2>
             <br>
-
+			test : ${wList }
             <a class="btn btn-secondary" style="float:right;" href="">목록으로</a>
             <br><br>
 
