@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
+import com.kh.ccc.board.charBoard.model.vo.CharBoardSearch;
 import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.board.charBoard.model.vo.Character;
@@ -159,5 +160,23 @@ public class CharBoardDao {
 	public int deleteAllOldAttach(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.delete("charBoardMapper.deleteAllOldAttach", boardNo);
 	}
+	//게시글 검색
+	public ArrayList<CharBoard> charBoardSearch(SqlSessionTemplate sqlSession, CharBoardSearch c) {
+		return (ArrayList)sqlSession.selectList("charBoardMapper.charBoardSearch", c);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

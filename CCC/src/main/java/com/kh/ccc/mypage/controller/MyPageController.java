@@ -3,8 +3,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,315 +14,567 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.member.model.vo.Member;
 import com.kh.ccc.mypage.model.service.MyPageService;
 import com.kh.ccc.mypage.model.vo.MyCharacter;
 import com.kh.ccc.mypage.model.vo.MyCharacterAttach;
+import com.kh.ccc.shop.cart.model.vo.Cart;
+import com.kh.ccc.shop.goods.model.vo.WishGoods;
+import com.kh.ccc.shop.order.model.vo.MyOrderDetail;
+import com.kh.ccc.shop.order.model.vo.Order;
+import com.kh.ccc.shop.order.model.vo.OrderDetail;
+import com.kh.ccc.shop.order.model.vo.OrderListByDate;
+import com.kh.ccc.shop.shipping.model.vo.DeliveryDetail;
 
 @Controller
-public class MyPageController{
+public class MyPageController {
 
-		@Autowired
-		private MyPageService mypageService;
-	 
-		
-				
-		//마이페이지 조회
-		@RequestMapping("mypage.me")
-		public String myPage() {
-			return "mypage/mypage";
+	@Autowired
+	private MyPageService mypageService;
+
+	// 마이페이지 조회
+	@RequestMapping("mypage.me")
+	public String myPage() {
+		return "mypage/mypage";
+	}
+	
+
+	// 마이페이지 내정보 조회
+	@RequestMapping("profileEnroll.me")
+	public String profile() {
+		return "mypage/profile";
+	}
+	
+
+	//////////////////////////////내 캐릭터영역
+	// 내 캐릭터 목록조회
+	@RequestMapping("list.mychar")
+	public ModelAndView selectMychaList(HttpSession session, ModelAndView mv) {
+
+		// 사용자번호를 가지고 내캐릭터 목록조회
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		int mNo = loginUser.getMemberNo();
+
+		// ~글리스트,파일리스트 join해서 조회
+		ArrayList<MyCharacter> chalist = mypageService.selectchaList(mNo);
+
+		// <<리스트
+		mv.addObject("chalist",chalist).setViewName("mypage/myCharList");
+
+		return mv;
+	}
+	
+
+	// 마이캐릭터 업로드폼으로 이동
+	@RequestMapping("enrollForm.mychar")
+	public String myCharpage3() {
+		return "mypage/myCharEnrollForm";
+	}
+
+	
+	// 다중첨부파일 입력- 타이틀이미지는 따로 받아줌 upfileList 새로 올라오는 파일
+	@RequestMapping("insert.mychar")
+	public ModelAndView mycharInsert(MyCharacter cha, ModelAndView mv, MultipartFile titleImg,
+			@RequestParam(value = "upfileList", required = false) List<MultipartFile> upfileList, HttpSession session) {
+
+		Member loginUser = (Member) session.getAttribute("loginUser");
+		int mNo = loginUser.getMemberNo(); 
+
+		ArrayList<MyCharacterAttach> mchalist = new ArrayList<>(); // 담아줄 파일 ArrayList
+
+		//썸네일 첨부파일
+		if (!titleImg.getOriginalFilename().equals("")) {// 파일 업로드가 되었다면
+
+			// 아래에서 모듈화 시킨 saveFile 메소드 활용
+			String titleChangeName = saveFile(titleImg, session);
+			MyCharacterAttach mca = new MyCharacterAttach();
+
+			// 원본명,서버에 업로드한 경로를 기존객체에 담아주기
+			mca.setOriginName(titleImg.getOriginalFilename());
+			mca.setChangeName("resources/myPage/myChar/" + titleChangeName);
+			mca.setMyCharAttachLevel(1);// 레벨1로 처리
+			mchalist.add(mca);
+		}
+
+		// 일반첨부파일 처리과정
+		for (int i = 0; i < upfileList.size(); i++) {
+			if (!upfileList.get(i).getOriginalFilename().equals("")) { // 만약 올라오는 파일이 있다면
+
+				// System.out.println("파일리스트 원본명 출력"+upfileList.get(i).getOriginalFilename());
+
+				String changeName = saveFile(upfileList.get(i), session); // 수정명 모듈화 메소드로 구해줌
+
+				// 파일객체 생성(원본명,수정명,파일레벨 설정해준다.)
+				MyCharacterAttach mca = new MyCharacterAttach();
+
+				mca.setOriginName(upfileList.get(i).getOriginalFilename()); // 원본명
+				mca.setChangeName("resources/myPage/myChar/" + changeName); // 파일경로=실제경로+수정
+				mca.setMyCharAttachLevel(2); // 일반첨부파일
+				mchalist.add(mca); // 리스트에 담아서 가져가준다.
+			}
+		}
+		cha.setMemberNo(loginUser.getMemberNo());
+
+		// ~게시물과 파일리스트를 가지고 요청처리(INSERT)
+		int result = mypageService.mycharInsert(cha, mchalist);
+
+		if (result > 0) {
+
+			session.setAttribute("alsertMsg", "내 캐릭터 등록완료");
+
+			//멤버번호로 파일리스트조회
+			ArrayList<MyCharacter> chalist = mypageService.selectchaList(mNo);
+
+			mv.addObject("chalist", chalist).setViewName("mypage/myCharList"); // 내캐릭터 페이지로 보내줌
+
+		} else {
+			mv.addObject("errorMsg", "문의글 등록실패").setViewName("common/errorPage");
+		}
+
+		return mv;
+	}
+
+	// 상세보기
+	// 목록에서 특정캐릭터를 누르면 캐릭터번호를 가지고 조회수 증가후에
+	// 게시글 정보와 파일정보ArrayList를 가져와준다.
+	@RequestMapping("chardetail.my")
+	public ModelAndView detailMyChar(@RequestParam(value = "cNo") int characterNo, ModelAndView mv) {
+
+		MyCharacter cha = mypageService.selecectMyChar(characterNo); //게시글조회
+
+		ArrayList<MyCharacterAttach> mchalist = mypageService.selectChaList(characterNo); // 게시글 파일리스트조회
+
+		MyCharacterAttach ml = new MyCharacterAttach();
+		ml.setOriginName(mchalist.get(0).getOriginName());
+
+		mv.addObject("cha", cha).addObject("mchalist", mchalist).setViewName("mypage/myCharDetail");
+
+		return mv;
+	}
+
+	// 수정폼이동 (SELECT)
+	@RequestMapping("updateForm.my")
+	public String updateFormMychar(@RequestParam(value = "cNo") int characterNo, Model model) {
+
+		// ~게시글,파일리스트 SELECT(cNo를 가지고가서)
+		MyCharacter cha = mypageService.selecectMyChar(characterNo);
+		ArrayList<MyCharacterAttach> mchalist = mypageService.selectChaList(characterNo);
+
+		// <<게시글 파일리스트
+		model.addAttribute("cha", cha);
+		model.addAttribute("mchalist", mchalist);
+
+		return "mypage/myCharUpdateForm";
+	}
+
+	// 실제수정과정
+	@RequestMapping("update.my")
+	public ModelAndView updateMyChar(MyCharacter cha, MultipartFile titleImg,
+			@RequestParam(value = "upfileList") List<MultipartFile> upfileList, HttpSession session, ModelAndView mv) {
+
+		// 해당 캐릭터번호로 기존파일리스트 조회
+		int characterNo = cha.getCharacterNo();
+
+		// ~해당 게시글의 기존파일리스트
+		ArrayList<MyCharacterAttach> oldList = mypageService.selectChaList(characterNo);
+		// System.out.println("실제수정 기존파일리스트"+mchalist);
+		// System.out.println("실제수정 새로운 수정파일"+upfile);
+
+		// 수정 파일리스트 담을 곳
+		ArrayList<MyCharacterAttach> newList = new ArrayList<>();
+
+		// 새썸네일파일이 있다면
+		if (!titleImg.getOriginalFilename().equals("")) {// 파일 업로드가 되었다면
+
+			// 아래에서 모듈화 시킨 saveFile 메소드 활용
+			String titleChangeName = saveFile(titleImg, session);
+			MyCharacterAttach mca = new MyCharacterAttach();
+
+			// 원본명,서버에 업로드한 경로를 기존객체에 담아주기
+			mca.setOriginName(titleImg.getOriginalFilename());
+			mca.setChangeName("resources/myPage/myChar/" + titleChangeName);
+			mca.setMyCharAttachLevel(1);// 레벨1로 처리
+			mca.setCharacterNo(characterNo);//캐릭터번호
+			newList.add(mca);
+		}
+
+		// 새첨부파일이 있다면
+		if (!upfileList.get(0).getOriginalFilename().equals("")) {
+
+			// 기존첨부파일 리스트의 수만큼 기존첨부파일 삭제해줌
+			for (int i = 0; i < oldList.size(); i++) {
+				if (oldList.get(i).getOriginName() != null) {
+					new File(session.getServletContext().getRealPath(oldList.get(i).getChangeName())).delete();
+				}
+			}
+
+			// 새첨부파일이 올라온 수만큼 파일객체생성후에 담을용으로 만든 list에 넣어주기
+			for (int i = 0; i < upfileList.size(); i++) {
+
+				// 담아줄 파일객체 생성
+				MyCharacterAttach mca = new MyCharacterAttach();
+
+				// 수정파일명 구해줌
+				String changeName = saveFile(upfileList.get(i), session);
+
+				// 참조캐릭터번호,원본파일명,체인지파일명,파일레벨
+				mca.setCharacterNo(characterNo);
+				mca.setOriginName(upfileList.get(i).getOriginalFilename());
+				mca.setChangeName("resources/myPage/myChar/" + changeName);
+				mca.setMyCharAttachLevel(2);
+				mca.setCharacterNo(characterNo);
+				newList.add(mca);
+			}
+
 		}
 		
+		// ~게시글과 담을리스트에 넣어서 요청처리
+		int result = mypageService.updateMyChar(cha, newList);
+		//System.out.println("6시 요청결과"+result);
 		
-		//마이페이지 내정보 조회
-		@RequestMapping("profileEnroll.me")
-		public String profile() {
-		 return "mypage/profile";
+		if (result != 0) {
+			session.setAttribute("alertMsg", "게시글 수정성공");
+			mv.setViewName("redirect:/chardetail.my?cNo=" + characterNo);
+
+		} else {
+			mv.addObject("errorMsg", "게시글 수정에 실패했습니다").setViewName("common/errorPage");
 		}
-		
-		
-		//내 캐릭터 영역
-		//사용자번호를 가지고 내캐릭터 목록조회
-		@RequestMapping("list.mychar")
-		public String selectMychaList(HttpSession session,Model model) {
-			
-		 //>>사용자번호
-		 Member loginUser=(Member)session.getAttribute("loginUser");
-		 int mNo=loginUser.getmNo();
-		 System.out.println("목록조회컨트롤러 사용자번호 넘?"+mNo); 
-		
-	     //~조회
-		 ArrayList<MyCharacter> mchalist=mypageService.selectchaList(mNo);
-		 
-		 System.out.println("목록조회 컨트롤러 리스트 돌?"+mchalist);
-		 
-		 //<<리스트
-		 model.addAttribute("mchalist",mchalist);
-			
-		 return "mypage/myCharList";
-			
+
+		// 객체를 넣어줘서 update
+		return mv;
+	}
+
+	
+	// 마이캐릭터 삭제
+	@RequestMapping("delete.my")
+	public String delteMyChar(@RequestParam(value = "cNo") int characterNo, HttpSession session, Model model) {
+
+		// ~해당 캐릭터글의 첨부파일 리스트를 가져와
+		ArrayList<MyCharacterAttach> mchalist = mypageService.selectChaList(characterNo);
+
+		// 게시글 번호의 글과 첨부파일을 삭제하는 메소드
+		int result = mypageService.delteMyChar(characterNo);
+
+		if (result != 0) {
+			for (int i = 0; i < mchalist.size(); i++) { // 첨부파일리스트의 수만큼 반복해줘. 첨부파일리스트가 있다면
+				if (!mchalist.get(i).equals("")) {
+					// 수정첨부파일의 물리적경로를 구한뒤 파일을 생성해서 지워줌
+					String realPath = session.getServletContext().getRealPath(mchalist.get(i).getChangeName());
+					new File(realPath).delete();
+				}
+			}
+			session.setAttribute("alertMsg", "게시글 삭제에 성공했습니다!");
+		} else {
+			model.addAttribute("errorMsg", "게시글 삭제에 실패했습니다.");
+			return "common/errorPage";
 		}
-		
-		
-		//마이캐릭터 업로드폼으로 이동
-		@RequestMapping("mychar3.my")
-		public String myCharpage3() {
-			return "mypage/myCharEnrollForm";
+
+		return "mypage/mypage";
+	}
+
+	// 현재 넘어온 첨부파일 그 자체를 서버의 폴더에 저장시키는 메소드 (모듈)
+	public String saveFile(MultipartFile upfile, HttpSession session) {
+		// 1. 원본파일명 뽑기
+		String originName = upfile.getOriginalFilename();
+		//System.out.println(originName);
+		// 2. 시간형식을 문자열로 뽑기
+		String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+		//System.out.println(currentTime);
+		// 3. 뒤에 붙일 랜덤값 뽑기
+
+		int ranNum = (int) (Math.random() * 90000 + 10000); // 5자리 랜덤값
+		//System.out.println(ranNum);
+		// 4. 원본 파일명으로부터 확장자명 뽑아오기
+		String ext = originName.substring(originName.lastIndexOf("."));
+		//System.out.println(ext);
+		// 5. 뽑아놓은 값 전부 붙여서 파일명 만들기
+		String changeName = currentTime + ranNum + ext;
+		//System.out.println(changeName);
+		// 6. 업로드 하고자 하는 실제 위치 경로 지정해주기 (실제 경로. 8번 changeName이랑 비교)
+		String savePath = session.getServletContext().getRealPath("/resources/myPage/myChar/");
+		//System.out.println(savePath);
+		// 7. 경로와 수정파일명 합쳐서 파일을 업로드해주기
+		try {
+			upfile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
-			
+		return changeName;
+	}
+	
+	
+	/////////////////////////////////////////////////////주문영역
+	
+	// 기간별주문내역 조회(좀더 고민) 마이페이지 들어갈때 뿌려줌
+	@ResponseBody
+	@RequestMapping(value="selectoListbyDate.my",produces = "application/json;charset=UTF-8" )
+	public ModelAndView selectoListbyDate(HttpSession session,int startDay, ModelAndView mv) {
 		
-		//다중첨부파일 입력
-		@RequestMapping("insert.mychar")
-		public ModelAndView mycharInsert(MyCharacter cha,ModelAndView mv, @RequestParam(value="multifile", required=false) List<MultipartFile> upfileList,HttpSession session) {
+	  System.out.println("startDay시작일"+startDay);	//확인
+		
+	  Member loginUser=(Member)session.getAttribute("loginUser");
+	  int mNo=loginUser.getMemberNo(); //mNo나중에 memberNumber로 바꿔주기
+	  
+		final int TODAY = 1;           // 오늘
+	    final int ONE_WEEK = 2;        // 일주일 전
+	    final int ONE_MONTH = 3;       // 한 달 전
+	    final int THREE_MONTH = 4;     // 3개월 전
+	    final int SIX_MONTH = 5;       // 6개월 전
 	    
-			Member loginUser = (Member) session.getAttribute("loginUser");
-				
-			ArrayList<MyCharacterAttach> mcalist = new ArrayList<>(); //파일 ArrayList
-			
-				//>>가져가야할 것?
-				//객체와 리스트 넘겨줌(글과 파일리스트)
-	
-				//파일처리과정
-				for (int i = 0; i<upfileList.size(); i++) {
-					if (!upfileList.get(i).getOriginalFilename().equals("")) { //만약 올라오는 파일이 있다면
-						
-						System.out.println("파일리스트 원본명 출력"+upfileList.get(i).getOriginalFilename());
-						
-						String changeName=saveFile(upfileList.get(i), session);  //수정명 모듈화 메소드로 구해줌
-						//System.out.println("3시 changeName~~~!!!"+changeName);
-						
-						//파일객체
-						MyCharacterAttach mca=new MyCharacterAttach();
-					
-						mca.setOriginName(upfileList.get(i).getOriginalFilename()); //원본명
-						mca.setChangeName("resources/myPage/myChar/"+changeName); //파일경로=실제경로+수정
-						
-						mcalist.add(mca); //리스트에 담아서 가져가준다.
-				      }
-				  }
-			
-				cha.setmNo(loginUser.getmNo()); 
-				
-				//System.out.println("cha:"+cha);
-				//System.out.println("회원번호"+cha.getmNo());
-				
-				//System.out.println(mcalist+"확인1시");
-				
-				//~게시물과 파일리스트를 가지고 요청처리(INSERT)
-				int result=mypageService.mycharInsert(cha,mcalist);
-				
-				if (result>0) {
-					
-					session.setAttribute("alsertMsg", "내 캐릭터 등록완료");
-					mv.setViewName("mypage/myCharDetail"); //내캐릭터 페이지로 보내줌
-					
-				} else {
-					mv.addObject("errorMsg","문의글 등록실패").setViewName("common/errorPage");
-				}
-			
-			 return mv;
-		}
+	    Date dt = new Date();
+	    
+	    //시작일
+	    String before=""; //시작 날짜문자열
+	    Calendar cal=null; //캘린더객체 
+	    Date startDate=null; //시작일 객체
+	    
+	    //끝일
+	    Date endDate=new Date(dt.getTime() + (1000 * 60 * 60 * 24));//현재날짜+1일 함
+	    String after=new SimpleDateFormat("yyyy-MM-dd").format(endDate); //마지막 날짜 문자열
+	    java.sql.Date endDatesql=java.sql.Date.valueOf(after);//sql끝일객체
+	    
+	    //사용자번호,시작일,끝일 담을객체
+	    OrderListByDate tbd=new OrderListByDate(); //시작일과 끝일과 사용자번호를 들고갈 객체
+	    
+	    //조회해온 주문번호
+	    int oNo=0;
+	    
+	    //주문번호 받아오기용 주문리스트
+	    ArrayList<Order> oList=null; //멤버번호,시작일객체,끝일객체 담아가서 담아올 주문리스트
+	    
+	    //진짜주문리스트
+		ArrayList<MyOrderDetail> realoList=null; 
 		
+		switch (startDay) {
 		
-		//상세보기(번호 넘겨주는것 미완)
-		//목록에서 특정캐릭터를 누르면 캐릭터번호를 가지고 조회수 증가후에 
-		//게시글 정보와 파일정보ArrayList를 가져와준다.
-		//임의로 캐릭터번호 15 부여
-		@RequestMapping("chardetail.my")
-		public ModelAndView detailMyChar(@RequestParam(value="cNo") int cNo,ModelAndView mv){
-			
-				//System.out.println("캐릭터 번호 넘???"+cNo);
-				//int count=mypageService.increaseCount(cNo);
-			
-				//게시글조회
-				MyCharacter cha=mypageService.selecectMyChar(cNo); 
-			    //System.out.println("게시글  돌?"+cha);
+			case TODAY :
+				//시작일
+				startDate = new Date(System.currentTimeMillis()); //util Date객체생성
+				before = new SimpleDateFormat("yyyy-MM-dd").format(startDate); //문자열로 변경
+				java.sql.Date startDateSql = java.sql.Date.valueOf(before); //sql Date로 변경
+				System.out.println("sql변경한뒤의 버튼주문조회 ::"+startDateSql+"~"+endDatesql+"까지 조회");
 				
-			
-				//게시글 파일조회
-				ArrayList<MyCharacterAttach> mchalist=mypageService.selectChaList(cNo);
+				//시작일-끝일-사용자번호 담아줌
+				tbd.setStartDate(startDateSql);
+				tbd.setEndDate(endDatesql);
+				tbd.setMemberNo(mNo);
 				
-				MyCharacterAttach ml = new MyCharacterAttach();
+				oList = mypageService.selectOrderListView(tbd);
 				
-				ml.setOriginName(mchalist.get(0).getOriginName());
+			       for(Order or : oList) {
+			          oNo= or.getOrderNo(); //주문번호를 뽑아준다.
+			          System.out.println(oNo+"????");
+		           }
 				
-				//System.out.println("111"+ml);
-				//System.out.println("파일리스트 돌아오니?"+mchalist);
+			    realoList= mypageService.selectRealOrderListView(oNo);
+			    
+			    System.out.println("진짜주문리스트정말돌??"+realoList);
+			    mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");				
+				break;
 				
-				mv.addObject("cha",cha).addObject("mchalist", mchalist).setViewName("mypage/myCharDetail");
-		
-			return mv;
-		}
-		
-		
-		//임의로 15넘겨줌(미완)
-		//수정폼이동 (SELECT) 
-		@RequestMapping("updateForm.my")
-		public String updateFormMychar(@RequestParam(value ="cNo")int cNo, Model model) {
+	         case ONE_WEEK:
+	        	 cal = Calendar.getInstance();
+	        	 cal.add(Calendar.DATE, -7); // 일주일 전 캘린더객체
+	        	 
+	        	 //캘린더 객체를 형식지정된 문자열로 변경
+	             before = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+	             //일주일 전 날짜 스트링을 넣어서 Date타입으로 변경
+	             startDateSql = java.sql.Date.valueOf(before);
+	             
+	             tbd.setStartDate(startDateSql);
+			     tbd.setEndDate(endDatesql);
+			     tbd.setMemberNo(mNo);
+				 
+				 System.out.println("sql변경한뒤의 버튼주문조회 ::"+startDateSql+"~"+endDatesql+"까지 조회");
+	             
+	             oList = mypageService.selectOrderListView(tbd);
+	             
+				      for(Order or : oList) {
+			          oNo= or.getOrderNo(); //주문번호를 뽑아준다.
+		          }
+	             
+				 realoList= mypageService.selectRealOrderListView(oNo);
+				 mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");	
+				 
+				 System.out.println("결과"+realoList);
+				 
+				 break;	
 			
-			//>>
-			//System.out.println("수정폼 캐릭터번호 넘?"+cNo);
-			//임의로 넣어줌
-			//System.out.println(cNo);
-			
-			//~게시글,파일리스트 SELECT
-			MyCharacter cha=mypageService.selecectMyChar(cNo); 
-			
-			ArrayList<MyCharacterAttach> mchalist=mypageService.selectChaList(cNo);
-			
-			
-			//System.out.println("게시글수정폼돌?"+cha);
-			//System.out.println("수정폼돌?"+mchalist);
-			
-			
-			//<<
-			model.addAttribute("cha", cha);
-			model.addAttribute("mchalist", mchalist);
-			
-			
-			return "mypage/myCharUpdateForm" ;
-			
-		}
-		
-		
-		//실제수정과정
-		@RequestMapping("update.my")
-		public ModelAndView updateMyChar(MyCharacter cha,ArrayList<MultipartFile> upfile,
-				                         HttpSession session,ModelAndView mv) {
-			
-			System.out.println("컨트롤러 캐릭터객체 넘?"+cha);
-				
-			//해당 캐릭터의 의 파일리스트 조회	
-			int cNo=cha.getcNo();
-			System.out.println("실제수정cNo"+cNo);
-			
-			//~해당 게시글의 파일리스트
-			ArrayList<MyCharacterAttach> mchalist=mypageService.selectChaList(cNo);
-			System.out.println("실제수정 기존파일리스트"+mchalist);
-			
-			System.out.println("실제수정 새로운 수정파일"+upfile);
-			
-			//수정된 파일리스트
-			ArrayList<MyCharacterAttach> newmchalist=new ArrayList<>();
-				
-				
-			//새첨부파일이 있다면 
-			if(!upfile.get(0).getOriginalFilename().equals("")){
-				
-				//기존첨부파일 삭제해줌
-				for (int i = 0; i < mchalist.size(); i++) {
-					if(mchalist.get(i).getOriginName() != null) {
-						new File(session.getServletContext().getRealPath(mchalist.get(i).getChangeName())).delete();
-					}
-				}
-			
-			
-				//새첨부파일이 올라온 수만큼 파일객체생성후에 list에 넣어주기
-				for (int i = 0; i < upfile.size(); i++) {
-					
-					//담아줄 파일객체 생성
-					MyCharacterAttach mca=new MyCharacterAttach();
-					//System.out.println("파일번호?"+mCaNo);
-				   
-					//수정파일명 구해줌
-					String changeName = saveFile(upfile.get(i),session);
-					//System.out.println("수정파일명??"+changeName);
-				   
-					//참조캐릭터번호,원본파일명,체인지파일명
-					mca.setcNo(cNo);
-					mca.setOriginName(upfile.get(i).getOriginalFilename());
-					mca.setChangeName(changeName);
-					//level 1번 : 캐릭터 게시판 썸네일 / 이후 카운트되는 level(2~4)은 sql에서 해당 게시글의 첨부파일 번호를 나타낸다 (파일번호와 다름)
-				   
-					newmchalist.add(mca);
-				}
-			
-			}
-			
-			//~요청처리
-			int result=mypageService.updateMyChar(cha,newmchalist);
-			
-			if (result !=0) {
-				session.setAttribute("alertMsg", "게시글 수정성공");
-				mv.setViewName("redirect:/chardetail.my?cNo="+cNo); 
-				
-			} else {
-				mv.addObject("errorMsg","게시글 수정에 실패했습니다").setViewName("common/errorPage");
-			}
-			
-			//객체를 넣어줘서 update	
-			return mv;
-		}
-		
-		
-		//삭제
-		@RequestMapping("delete.my")
-		public String delteMyChar(@RequestParam(value ="cNo")int cNo,HttpSession session,Model model) {
-		
-			//~해당 글의 첨부파일 리스트를 가져와	
-			ArrayList<MyCharacterAttach> mchalist=mypageService.selectChaList(cNo);
-			
-			//게시글 번호의 글과 첨부파일을 삭제하는 메소드
-			int result=mypageService.delteMyChar(cNo);
-				
-			if(result != 0) {
-		        for(int i=0; i<mchalist.size(); i++) {
-		            if(!mchalist.get(i).equals("")) {
-		                String realPath = session.getServletContext().getRealPath(mchalist.get(i).getChangeName());
-		                new File(realPath).delete();
-		            }
-		        }
-		        session.setAttribute("alertMsg", "게시글 삭제에 성공했습니다!");
-		    }
-		    else {
-		        model.addAttribute("errorMsg", "게시글 삭제에 실패했습니다.");
-		        return "common/errorPage";
-		    }
-				
-			 return "mypage/mypage";
-			
-		}
-		
-		
-		
-		
-		// 현재 넘어온 첨부파일 그 자체를 서버의 폴더에 저장시키는 메소드 (모듈)
-		public String saveFile(MultipartFile upfile, HttpSession session) {
-			// 1. 원본파일명 뽑기
-			String originName = upfile.getOriginalFilename();
-			System.out.println(originName);
-			// 2. 시간형식을 문자열로 뽑기
-			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-			System.out.println(currentTime);
-			// 3. 뒤에 붙일 랜덤값 뽑기
-	
-			int ranNum = (int) (Math.random() * 90000 + 10000); // 5자리 랜덤값
-			System.out.println(ranNum);
-			// 4. 원본 파일명으로부터 확장자명 뽑아오기
-			String ext = originName.substring(originName.lastIndexOf("."));
-			System.out.println(ext);
-			// 5. 뽑아놓은 값 전부 붙여서 파일명 만들기
-			String changeName = currentTime + ranNum + ext;
-			System.out.println(changeName);
-			// 6. 업로드 하고자 하는 실제 위치 경로 지정해주기 (실제 경로. 8번 changeName이랑 비교)
-			String savePath = session.getServletContext().getRealPath("/resources/myPage/myChar/");
-			System.out.println(savePath);
-			// 7. 경로와 수정파일명 합쳐서 파일을 업로드해주기
-			try {
-				upfile.transferTo(new File(savePath + changeName));
-			} catch (IllegalStateException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			return changeName;
-		}
-		
-	
-    
+	         case ONE_MONTH:
+	        	 cal = Calendar.getInstance();
+	        	 cal.add(Calendar.MONTH, -1);
+	             before = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+	             // 일주일 전 날짜 스트링을 넣어서 Date타입으로 변경
+	             startDateSql = java.sql.Date.valueOf(before);
+	             
+	             tbd.setStartDate(startDateSql);
+			     tbd.setEndDate(endDatesql);
+			     tbd.setMemberNo(mNo);
+				 
+				 oList = mypageService.selectOrderListView(tbd);
+				 
+				 for(Order or : oList) {
+			          oNo= or.getOrderNo(); //주문번호를 뽑아준다.
+		          }
+	             
+	             realoList= mypageService.selectRealOrderListView(oNo);
+				 mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");
+				 
+	 			 break;
+	 		
+	         case THREE_MONTH:
+	        	 cal = Calendar.getInstance();
+	        	 cal.add(Calendar.MONTH, -3);
+	             before = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime()); //문자열타입을 yyyy MM dd형태로
+	             // 일주일 전 날짜 스트링을 넣어서 Date타입으로 변경
+	             startDateSql = java.sql.Date.valueOf(before);
+	             System.out.println("sql변경한뒤의 버튼주문조회 ::"+startDateSql+"~"+endDatesql+"까지 조회");
 
+	             tbd.setStartDate(startDateSql);
+			     tbd.setEndDate(endDatesql);
+			     tbd.setMemberNo(mNo);
+				 
+				 oList = mypageService.selectOrderListView(tbd);
+				 
+				 for(Order or : oList) {
+			          oNo= or.getOrderNo(); //주문번호를 뽑아준다.
+			          //System.out.println(oNo+"????");
+		          }
+	             
+	             realoList= mypageService.selectRealOrderListView(oNo);
+				 mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");
+				 
+	        	 break;
+	        	 
+	         case SIX_MONTH: 
+	        	 cal = Calendar.getInstance();
+	        	 cal.add(Calendar.MONTH, -6);
+	             before = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
+	             // 일주일 전 날짜 스트링을 넣어서 Date타입으로 변경
+	             startDateSql = java.sql.Date.valueOf(before);
+	             
+	             tbd.setStartDate(startDateSql);
+			     tbd.setEndDate(endDatesql);
+			     tbd.setMemberNo(mNo);
+				 oList = mypageService.selectOrderListView(tbd);
+				 
+				 for(Order or : oList) {
+			          oNo= or.getOrderNo(); //주문번호를 뽑아준다.
+		          }
+	             
+	             //oNo뽑는 부분??
+	             realoList= mypageService.selectRealOrderListView(oNo);
+				 mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");
+				 
+	        	 break;
+	         
+			 default:
+				 System.out.println("잘못입력");
+				 break;
+		 }
+		
+		 return mv;
+	  }
+	
+	// 상세 주문내역SELECT 
+	@RequestMapping("orderDetail.my")
+	public ModelAndView orderDetail(int oNo, HttpSession session, ModelAndView mv) {
+
+		// 로그인유저
+		Member loginUser = (Member) session.getAttribute("loginUser");
+
+		//~상세주문리스트가져옴(SELECT)
+		ArrayList<OrderDetail> orderDetail= mypageService.orderDetail(oNo);
+		
+		//~join한 주문객체가져옴(SELECT) 객체하나
+		MyOrderDetail myOrderDetail=mypageService.myOrderDetail(oNo);
+		
+		// 로그인이 되어있다면
+		if (loginUser != null) {
+
+			mv.addObject("myOrderDetail",myOrderDetail).addObject("loginUser",loginUser).addObject("orderDetail", orderDetail).setViewName("mypage/orderDetail");
+			
+		} else {
+
+			session.setAttribute("alertMsg", "로그인후 사용할 수 있습니다.");
+		
+		}
+
+		return mv;
+	}
+	
+	
+	//배송조회 >>상세번호
+	@RequestMapping("delivery.my")
+	public String deliveryDetail(HttpSession session,Model model) {
+	
+		//상품 상세번호,주문번호odNo 1, oNo 1>> 임의로 넣음
+        int odNo=1;
+        int oNo=1;
+        
+        OrderDetail od=new OrderDetail();
+        od.setOrderDetailNo(odNo);
+        od.setOrderNo(oNo);
+        
+		//상세번호,번호 주문객체에 담아서 가져가자 
+        //~배송정보()
+        DeliveryDetail deliInfo=mypageService.selectDeliveryDetail(od);
+        
+        //<<배송정보 객체
+        model.addAttribute("deliInfo", deliInfo);
+        
+        return "mypage/deliveryDetail";
+		
+	  }
+	
+	//찜한 리스트 조회	
+	@RequestMapping("wishList.my")
+	public String selectWishList(HttpSession session ){
+		
+		 Member loginUser=(Member)session.getAttribute("loginUser");
+		 int mNo= loginUser.getMemberNo();
+		
+		 ArrayList<WishGoods> wList=mypageService.selectWishList(mNo);
+		
+		 return "mypage/wish";	
+		 
+    }  
+	
+    //장바구니 리스트 조회
+	@RequestMapping("cartList.my")
+	public String selectCartList(HttpSession session,Model model){
+		
+	 Member loginUser=(Member)session.getAttribute("loginUser");
+	 int mNo= loginUser.getMemberNo();
+
+	 ArrayList<Cart> cList=mypageService.selectCartList(mNo);
+	 
+		 if (cList!=null) {
+			 model.addAttribute("cList",cList);
+			 
+		 } else {
+			session.setAttribute("errorMsg", "장바구니 불러오기 실패");
+		 }
+	 
+     return "mypage/cartList";
+   
+	}
+
+	//-----------------대회참가영역------------------------------------------------
+	//기간별 작품참가내역 조회
+	//참가한 작품정보(순위변동그래프,현재포인트 현재순위등)
+	@RequestMapping("contest.my")
+	public String contest() {
+		
+ 	  return "mypage/contest";
+		
+	} 
+	
+		
 }

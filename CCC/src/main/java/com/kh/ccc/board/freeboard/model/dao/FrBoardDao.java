@@ -50,7 +50,7 @@ public class FrBoardDao {
 	public ArrayList<FrBoardAttach> frboardAttDetailView(SqlSessionTemplate sqlSession, int fno) {
 		
 		ArrayList<FrBoardAttach> result= (ArrayList)sqlSession.selectList("frBoardMapper.frboardAttDetailView",fno);
-		System.out.println("result : "+result);
+		System.out.println("frboardAttDetailView :: DAO:: result : "+result);
 		return result;
 	}
 	

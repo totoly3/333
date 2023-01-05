@@ -15,7 +15,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
   <meta charset="utf-8" />
@@ -146,7 +146,7 @@ Coded by www.creative-tim.com
                 </a>
               </li>
               <li class="nav-item btn-rotate dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" href="" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="nc-icon nc-bell-55"></i>
                   <p>
                     <span class="d-lg-none d-md-block">Some Actions</span>
@@ -242,7 +242,7 @@ Coded by www.creative-tim.com
                         </div>
                       </div>
                       <div class="col-md-7 col-7">
-                        ${m.mName}
+                        ${m.memberName}
                         <br />
                         <span class="text-success"><small>Available</small></span>
                       </div>
@@ -283,19 +283,19 @@ Coded by www.creative-tim.com
                     <div class="col-md-5 pr-1">
                       <div class="form-group">
                         <label>이름</label>
-                        <input type="text" class="form-control" disabled="" placeholder="이름" value="${loginUser.mName}">
+                        <input type="text" class="form-control" disabled="" placeholder="이름" value="${loginUser.memberName}">
                       </div>
                     </div>
                     <div class="col-md-3 px-1">
                       <div class="form-group">
                         <label>아이디</label>
-                        <input type="text" class="form-control" placeholder="아이디" value="${loginUser.mId}">
+                        <input type="text" class="form-control" placeholder="아이디" value="${loginUser.memberId}">
                       </div>
                     </div>
                     <div class="col-md-4 pl-1">
                       <div class="form-group">
                         <label for="exampleInputEmail1">비밀번호</label>
-                        <input type="email" class="form-control" placeholder="${loginUser.mPwd}">
+                        <input type="email" class="form-control" placeholder="${loginUser.memberPwd}">
                        
                       </div>
                     </div>
@@ -304,13 +304,13 @@ Coded by www.creative-tim.com
                     <div class="col-md-6 pr-1">
                       <div class="form-group">
                         <label>이메일</label>
-                        <input type="text" class="form-control" placeholder="이메일" value="${loginUser.mEmail}">
+                        <input type="text" class="form-control" placeholder="이메일" value="${loginUser.memberEmail}">
                       </div>
                     </div>
                     <div class="col-md-6 pl-1">
                       <div class="form-group">
                         <label>핸드폰</label>
-                        <input type="text" class="form-control" placeholder="Last Name" value="${loginUser.mPhone}">
+                        <input type="text" class="form-control" placeholder="Last Name" value="${loginUser.memberPhone}">
                       </div>
                     </div>
                   </div>
@@ -318,7 +318,7 @@ Coded by www.creative-tim.com
                     <div class="col-md-12">
                       <div class="form-group">
                         <label>회원주소</label>
-                        <input type="text" class="form-control" placeholder="Home Address" value="${loginUser.mAddress}">
+                        <input type="text" class="form-control" placeholder="Home Address" value="${loginUser.memberAddress}">
                       </div>
                     </div>
                   </div>
@@ -326,19 +326,19 @@ Coded by www.creative-tim.com
                     <div class="col-md-4 pr-1">
                       <div class="form-group">
                         <label>회원등급</label>
-                        <input type="text" class="form-control" placeholder="City" value="${loginUser.mgNo}">
+                        <input type="text" class="form-control" placeholder="City" value="${loginUser.memberGradeNo}">
                       </div>
                     </div>
                     <div class="col-md-4 px-1">
                       <div class="form-group">
                         <label>성별</label>
-                        <input type="text" class="form-control" placeholder="Country" value="${loginUser.mGender}">
+                        <input type="text" class="form-control" placeholder="Country" value="${loginUser.memberGender}">
                       </div>
                     </div>
                     <div class="col-md-4 pl-1">
                       <div class="form-group">
                         <label>회원나이</label>
-                        <input type="number" class="form-control" placeholder="ZIP Code"  value="${loginUser.mAge}">
+                        <input type="number" class="form-control" placeholder="ZIP Code"  value="${loginUser.memberAge}">
                       </div>
                     </div>
                   </div>
