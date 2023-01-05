@@ -44,6 +44,13 @@
         	bottom: 350px;
 			display: none;
         }
+        .categoryTag{
+        	color: black;
+        }
+        .categoryTag:hover{
+        	text-decoration:none;
+        	color: lightpink;
+        }
     </style>
     <title>CCC::장바구니</title>
 </head>
@@ -118,7 +125,11 @@
         <form action="">
             <div class="cartHead">
                 <span style="font-size: 16pt; font-weight: bold;">장바구니</span>
-                <span class="home">홈 > 장바구니</span>
+                <span class="home">
+                	<a class="categoryTag" href="goodsMain.go">홈</a>
+                	 > 
+                	<a class="categoryTag" href="cart.ca">장바구니</a>
+                </span>
             </div>
             <div class="cartBody">
                 <table id="cart-area">
@@ -127,7 +138,7 @@
                             <th colspan="7" style="text-align: left; padding-left: 10px;">일반상품(1)</th>
                         </tr>
                         <tr align="center" style="height:30px;">
-                            <th><input type="checkbox" name="checkbox" id="allCheck" style="width:20px; height:20px;"></th>
+                            <th><input type="checkbox" name="checkboxHeader" id="allCheck" style="width:20px; height:20px;"></th>
                             <th colspan="2" style="width: 700px;"><span>상품정보</span></th>
                             <th style="width:110px;">가격</th>
                             <th style="width:50px;">수량</th>
@@ -151,7 +162,7 @@
 			                                <input type="number" style="text-align: right; width: 50px; margin-bottom: 5px;" min="1" max="99" step="1" value="${c.quantity }">
 			                                <button type="button" class="btn default quantityBtn" style="size: 10px; border-radius: 3px; border: 0px;">변경</button>
 			                            </td>
-			                            <td class="cart-td-center" style="width: 100px;"><span class="trPrice">${c.goodsPrice*c.quantity}</span>원</td>
+			                            <td class="cart-td-center trTdPrice" style="width: 100px;"><span class="trPrice">${c.goodsPrice*c.quantity}</span>원</td>
 			                            <td class="cart-td-center" style="width: 110px;">
 			                                <button type="button"  class="btn default buyBtn" style="border-radius: 3px; width: 110px; margin-bottom: 3px; font-size: 11px; background-color: lightpink; border:0px;">구매</button>
 			                                <button type="button"  class="btn default addWishBtn" style="border-radius: 3px; width: 110px; margin-bottom: 3px; font-size: 11px; background-color: rgb(235, 194, 215); border:0px;">관심상품 등록</button>
@@ -172,7 +183,15 @@
                     <tfoot>
                         <tr style="height: 60px;">
                             <td colspan="7" style="border-right: none; text-align: left; padding-left: 10px;">
-                                <span class="totalGoodsPrice" style="font-size:15pt; margin-right: 20px;">상품 금액</span>+<span style="font-size:15pt; margin: 0 20px 0 20px;">배송비 2,500 =</span><span class="totalPrice">합계</span>&nbsp;<span style="font-weight: bold; font-size:15pt;">1,000,000원</span>
+                            	<span>상품 금액</span>
+                                <span id="totalGoodsPrice" style="font-size:15pt; margin-right: 20px;"></span>
+                                <span>+</span>
+                                <span>배송비 </span>
+                                <span id="deliveryFee" style="font-size:15pt; margin: 0 20px 0 20px;"></span>
+                                <span> = </span>
+                                <span class="totalPrice">합계</span>&nbsp;
+                                <span id="totalFinalPrice" style="font-weight: bold; font-size:15pt;"></span>
+                                <span>원</span>
                             </td>
                         </tr>
                     </tfoot>
@@ -257,10 +276,11 @@
 			var temp = price.text()*quantity;
 			console.log("price is " + temp);
 			
-			var trTotal = $(this).parent().next();
-			trTotal.html(temp+'원');
+			var trTotal = $(this).parent().next().find('span');
+			trTotal.html(temp);
 			
-			changeTotalPrice();
+			changeTotalPrice();	// 전체 합계 금액 변경
+			changeCheckTotalPrice();	// 체크한 합계 금액 변경
 		});
 		
         // db 수량 변경 ajax
@@ -282,20 +302,55 @@
 		};
 		// 수량변경 버튼 클릭 --------------------------------- End
 		
-		// 최종 금액 변경 -> 나중에 할 것.
+		$(function(){
+			// 시작하면서 계산
+// 			changeTotalPrice();	// 전체 합계 금액 변경
+			changeCheckTotalPrice();	// 체크한 합계 금액 변경
+			
+			// 체크할 때마다 계산
+			$(":checkbox").change(function(){
+				changeCheckTotalPrice();	// 체크한 합계 금액 변경
+			});
+		});
+		
+		// 최종 금액 변경
 		function changeTotalPrice(){
-			var trPrice =$("#cart-area>tbody tr");
 			var totalPrice = 0;
-// 			console.log(trPrice.length);
+			var trPriceArr = $(".trPrice");
+// 			console.log(trPriceArr);
+			for(var i=0; i<trPriceArr.length; i++){
+				totalPrice += Number(trPriceArr.eq(i).text());
+			}
+			console.log(totalPrice);
 			
-// 			for(var i=0; i<trPrice.length; i++){
-// 				var temp = trPrice.eq(i).find('td').eq(5).find('span').text();
-// 				console.log(temp);
-// 			}
-			// 왜 마지막 4번 tr만 값이 안 나오는지 모르겠음
-// 			var test = trPrice.eq(4).find('td').eq(5).find('span').text();
-// 			console.log("test :" + test);
+			// 값 구했으니 변경하는 코드만 넣으면 됨
 			
+		}
+		
+		
+		// 체크한 상품 합계 금액 변경
+		function changeCheckTotalPrice(){
+			var checkTotalPrice = 0;
+			var checkTotalFinalPrice = 0;
+			var deliveryFee = 2500;
+			$("input:checkbox[name=checkbox]:checked").each(function(){
+				var trPrice = $(this).parent().parent().children().eq(5).find('span').text();
+// 				console.log(trPrice);
+				checkTotalPrice += Number(trPrice);
+			});
+			console.log("checkTotalPrice = "+checkTotalPrice);
+			
+			// 값 구했으니 변경하는 코드만 넣으면 됨
+			$("#totalGoodsPrice").html(checkTotalPrice);
+			if(checkTotalPrice >= 50000){
+				checkTotalFinalPrice = Number(checkTotalPrice);
+				$("#deliveryFee").html(0);
+			}
+			else{
+				checkTotalFinalPrice = Number(deliveryFee)+Number(checkTotalPrice);
+				$("#deliveryFee").html(2500);
+			}
+			$("#totalFinalPrice").html(checkTotalFinalPrice);
 		}
 		
 		
