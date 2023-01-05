@@ -27,7 +27,7 @@ public class AllTimeBoardController {
 		
 		System.out.println("============여기는 리스트로 이동  ==========");
 
-		mv.setViewName("board/allTimeBoard/AlltimeBoardListView");
+		mv.setViewName("board/allTimeBoard/AlltimeBoardListView2");
 		return mv;
 	}
 	

@@ -152,6 +152,7 @@
 				</li>
 				<li><a href="playground.fr">P L A Y - G R O U N D</a></li>
 				<li><a href="goodsMain.go">G O O D S</a></li>
+				<li><a href="logout.me">여기 클릭하면 로그아웃!!만들었슴다!</a></li>
 			</ul>
 		</div>
    </div>
