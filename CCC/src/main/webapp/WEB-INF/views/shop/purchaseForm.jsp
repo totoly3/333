@@ -76,6 +76,27 @@
         	background-color: lightgreen;
         }
         
+        /*주문 버튼*/
+        #purchaseBtn{
+        	border: 0px;
+        	vertical-align: middle;
+        	border-radius: 10px;
+        	background-color: lightgreen;
+        	width: 130px;
+        	height: 50px;
+        	margin-left: 250px;
+        }
+        
+        /*뒤로가기 버튼*/
+        #goBackBtn{
+        	border: 0px;
+        	vertical-align: middle;
+        	border-radius: 10px;
+        	background-color: lightblue;
+        	width: 130px;
+        	height: 50px;
+        }
+        
     </style>
 </head>
 <body>
@@ -84,151 +105,177 @@
         <span class="purchaseHeaderSpan">주문 / 결제</span>
         <hr class="purchaseHeaderHr">
         <div class="purchaseForm">
-            <div class="buyerInfo">
-                <table id="buyerInfoBTL" class="purchaseNormalTb">
-                    <tr align="center">
-                        <th>이름</th>
-                        <td>${loginUser.memberName }</td>
-                    </tr>
-                    <tr align="center">
-                        <th>이메일</th>
-                        <td>${loginUser.memberEmail }</td>
-                    </tr>
-                    <tr align="center">
-                        <th>휴대폰 번호</th>
-                        <td>${loginUser.memberPhone }</td>
-                    </tr>
-                </table>
-            </div>
-			<br>
-			<span class="purchaseHeaderSpan">받는 사람 정보</span>
-			<button type="button" class="changePackageBtn" id="defaultPackageInfo">기본 배송지</button>
-			<button type="button" class="changePackageBtn" id="changePackageInfo">배송지 불러오기</button>
-			<button type="button" class="insertCommentBtn" id="insertComment">배송지 불러오기</button>
-			<hr class="purchaseHeaderHr">
-			<div class="receiverInfo">
-                <table id="receiverInfoTBL" class="purchaseNormalTb">
-                    <tr align="center">
-                        <th>이름</th>
-                        <td>${loginUser.memberName }</td>
-                    </tr>
-                    <tr align="center">
-                        <th>배송주소</th>
-                        <td>${loginUser.memberAddress }</td>
-                    </tr>
-                    <tr align="center">
-                        <th>연락처</th>
-                        <td>${loginUser.memberPhone }</td>
-                    </tr>
-                    <tr align="center">
-                        <th>배송 요청사항</th>
-                        <td></td>
-                    </tr>
-                </table>
-			</div>
-			<br>
-			<span class="purchaseHeaderSpan">구매 목록</span>
-			<hr class="purchaseHeaderHr">
-			<div class="goodsInfo">
-                <table id="goodsInfoTBL" class="purchaseNormalTb">
-                    <tr align="center">
-                        <th>주문 상품명</th>
-                        <th>가격</th>
-                        <th>수량</th>
-                        <th>옵션1</th>
-                        <th>옵션2</th>
-                    </tr>
-                    <!-- 개별구매했을 경우에 표시 -->
-                	<c:if test="${not empty cart }">
+        	<form>
+	            <div class="buyerInfo">
+	                <table id="buyerInfoBTL" class="purchaseNormalTb">
 	                    <tr align="center">
-	                        <td>${cart.goodsName}</td>
-	                        <td>${cart.goodsPrice }원</td>
-	                        <td>${cart.quantity }개</td>
-	                        <td>없음</td>
-	                        <td>없음</td>
+	                        <th>이름</th>
+	                        <td>${loginUser.memberName }</td>
 	                    </tr>
-                    </c:if>
-                    <!-- 그룹구매했을 경우에 표시 -->
-                    <c:choose>
-                    	<c:when test="${not empty clist}">
-	                    	<c:forEach var="c" items="${clist}">
-			                    <tr align="center">
-			                        <td>${c.goodsName }</td>
-			                        <td>${c.goodsPrice }원</td>
-			                        <td>${c.quantity }개</td>
-			                        <td>없음</td>
-			                        <td>없음</td>
-			                    </tr>
-		                    </c:forEach>
-		            	</c:when>
-                    </c:choose>
-                </table>
-			</div>
-			<br>
-			<span class="purchaseHeaderSpan">결제 정보</span>
-			<hr class="purchaseHeaderHr">
-			<div class="purchaseInfo">
-                <table id="purchaseInfoTBL" class="purchaseNormalTb">
-                    <tr align="center">
-                        <th>총 상품 가격</th>
-                        <td>${totalPrice }원</td>
-                    </tr>
-                    <tr align="center">
-                        <th>배송비</th>
-                        <td>5000원</td>
-                    </tr>
-                    <tr align="center">
-                        <th>총 결제 금액</th>
-                        <td>${totalPrice+5000 }원</td>
-                    </tr>
-                    <tr align="center">
-                        <th>결제 방법</th>
-                        <td align="left">
-                            <input type="radio" name="payType" value="1" checked>신용카드
-                            <input type="radio" name="payType" value="2">계좌이체
-                            <input type="radio" name="payType" value="3">가상계좌
-                            <input type="radio" name="payType" value="4">휴대폰결제
-                            <div class="payType">
-                                <table class="cardTab">
-                                    <tr>
-                                        <th>카드 선택</th>
-                                        <td>드롭다운
-                                        	
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>할부기간</th>
-                                        <td>일시불</td>
-                                              </tr>
-                                </table>
-                                <table class="accountTab">
-                                    <tr>
-                                        <th>은행선택</th>
-                                        <td>은행종류드롭다운</td>
-                                    </tr>
-                                </table>
-                                <table class="virtualTab">
-                                    <tr>
-                                        <th>입금은행</th>
-                                        <td>은행종류드롭다운</td>
-                                    </tr>
-                                    <tr>
-                                        <th>입금기한</th>
-                                        <td>2022년 12월 29일까지</td>
-                                    </tr>
-                                </table>
-                                <table class="phoneTab">
-                                    <tr>
-                                        <th>통신사</th>
-                                        <td>통신사 종류</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-			</div>
-			<br>
+	                    <tr align="center">
+	                        <th>이메일</th>
+	                        <td>${loginUser.memberEmail }</td>
+	                    </tr>
+	                    <tr align="center">
+	                        <th>휴대폰 번호</th>
+	                        <td>${loginUser.memberPhone }</td>
+	                    </tr>
+	                </table>
+	            </div>
+				<br>
+				<span class="purchaseHeaderSpan">받는 사람 정보</span>
+				<button type="button" class="changePackageBtn" id="defaultPackageInfo">기본 배송지</button>
+				<button type="button" class="changePackageBtn" id="changePackageInfo">배송지 불러오기</button>
+				<button type="button" class="insertCommentBtn" id="insertComment">배송지 불러오기</button>
+				<hr class="purchaseHeaderHr">
+				<div class="receiverInfo">
+	                <table id="receiverInfoTBL" class="purchaseNormalTb">
+	                    <tr align="center">
+	                        <th>이름</th>
+	                        <td>${loginUser.memberName }</td>
+	                    </tr>
+	                    <tr align="center">
+	                        <th>배송주소</th>
+	                        <td>${loginUser.memberAddress }</td>
+	                    </tr>
+	                    <tr align="center">
+	                        <th>연락처</th>
+	                        <td>${loginUser.memberPhone }</td>
+	                    </tr>
+	                    <tr align="center">
+	                        <th>배송 요청사항</th>
+	                        <td></td>
+	                    </tr>
+	                </table>
+				</div>
+				<br>
+				<span class="purchaseHeaderSpan">구매 목록</span>
+				<hr class="purchaseHeaderHr">
+				<div class="goodsInfo">
+	                <table id="goodsInfoTBL" class="purchaseNormalTb">
+	                    <tr align="center">
+	                        <th>주문 상품명</th>
+	                        <th>가격</th>
+	                        <th>수량</th>
+	                        <th>옵션1</th>
+	                        <th>옵션2</th>
+	                    </tr>
+	                    <!-- 개별구매했을 경우에 표시 -->
+	                	<c:if test="${not empty cart }">
+		                    <tr align="center">
+		                        <td>${cart.goodsName}</td>
+		                        <td>${cart.goodsPrice }원</td>
+		                        <td>${cart.quantity }개</td>
+		                        <td>없음</td>
+		                        <td>없음</td>
+		                    </tr>
+	                    </c:if>
+	                    <!-- 그룹구매했을 경우에 표시 -->
+	                    <c:choose>
+	                    	<c:when test="${not empty clist}">
+		                    	<c:forEach var="c" items="${clist}">
+				                    <tr align="center">
+				                        <td>${c.goodsName }</td>
+				                        <td>${c.goodsPrice }원</td>
+				                        <td>${c.quantity }개</td>
+				                        <td>없음</td>
+				                        <td>없음</td>
+				                    </tr>
+			                    </c:forEach>
+			            	</c:when>
+	                    </c:choose>
+	                </table>
+				</div>
+				<br>
+				<span class="purchaseHeaderSpan">결제 정보</span>
+				<hr class="purchaseHeaderHr">
+				<div class="purchaseInfo">
+	                <table id="purchaseInfoTBL" class="purchaseNormalTb">
+	                    <tr align="center">
+	                        <th>총 상품 가격</th>
+	                        <td>${totalPrice }원</td>
+	                    </tr>
+	                    <tr align="center">
+	                        <th>배송비</th>
+	                        <c:choose>
+	                        	<c:when test="${totalPrice > 50000 }">
+			                        <td>
+			                        	<span>0</span><span>원</span>
+			                        </td>
+	                        	</c:when>
+	                        	<c:otherwise>
+	                        		<td>
+			                        	<span>2500</span><span>원</span>
+			                        </td>
+	                        	</c:otherwise>
+	                        </c:choose>
+	                    </tr>
+	                    <tr align="center">
+	                        <th>총 결제 금액</th>
+	                        <c:choose>
+	                        	<c:when test="${totalPrice > 50000 }">
+			                        <td>
+			                        	<span>${totalPrice}</span><span>원</span>
+			                        </td>
+	                        	</c:when>
+	                        	<c:otherwise>
+	                        		<td>
+			                        	<span>${totalPrice+2500}</span><span>원</span>
+			                        </td>
+	                        	</c:otherwise>
+	                        </c:choose>
+	                    </tr>
+	                    <tr align="center">
+	                        <th>결제 방법</th>
+	                        <td align="left">
+	                            <input type="radio" name="payType" value="1" checked>신용카드
+	                            <input type="radio" name="payType" value="2">계좌이체
+	                            <input type="radio" name="payType" value="3">가상계좌
+	                            <input type="radio" name="payType" value="4">휴대폰결제
+	                            <div class="payType">
+	                                <table class="cardTab">
+	                                    <tr>
+	                                        <th>카드 선택</th>
+	                                        <td>드롭다운
+	                                        	
+	                                        </td>
+	                                    </tr>
+	                                    <tr>
+	                                        <th>할부기간</th>
+	                                        <td>일시불</td>
+	                                              </tr>
+	                                </table>
+	                                <table class="accountTab">
+	                                    <tr>
+	                                        <th>은행선택</th>
+	                                        <td>은행종류드롭다운</td>
+	                                    </tr>
+	                                </table>
+	                                <table class="virtualTab">
+	                                    <tr>
+	                                        <th>입금은행</th>
+	                                        <td>은행종류드롭다운</td>
+	                                    </tr>
+	                                    <tr>
+	                                        <th>입금기한</th>
+	                                        <td>2022년 12월 29일까지</td>
+	                                    </tr>
+	                                </table>
+	                                <table class="phoneTab">
+	                                    <tr>
+	                                        <th>통신사</th>
+	                                        <td>통신사 종류</td>
+	                                    </tr>
+	                                </table>
+	                            </div>
+	                        </td>
+	                    </tr>
+	                </table>
+				</div>
+				<br>
+				<button type="submit" id="purchaseBtn">주문</button>
+				<button type="button" id="goBackBtn">뒤로 가기</button>
+			</form>
 			<!-- 구매 동의 내용 -->
 			<br><br><br>
         </div>

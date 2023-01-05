@@ -24,6 +24,14 @@
             width: 100%;
             height: 100%;
         }
+        #cart-area{
+        	border-collapse: separate;
+        	border : 0.5px solid skyblue;
+        	border-radius: 20px;
+        }
+        #cart-area th{
+            border-bottom: 1px solid black; 
+        }
         #cart-area tr{
             border: solid 1px lightgray;
         }
@@ -32,6 +40,41 @@
         }
         #cart-td-left{
             text-align: left;
+        }
+        /*버튼*/
+        #cart-area tr button{
+        	height: 30px;
+        }
+        .addWishBtn{
+        	 border-radius: 3px;
+        	 width: 110px;
+        	 margin-bottom: 3px;
+        	 font-size: 11px;
+        	 background-color: rgb(235, 194, 215);
+        	 border:0px;
+        }
+        .buyBtn{
+        	 border-radius: 3px;
+        	 width: 110px;
+        	 margin-bottom: 3px;
+        	 font-size: 11px;
+        	 background-color: lightpink;
+        	 border:0px;
+        }
+        .deleteBtn{
+        	 border-radius: 3px;
+        	 width: 110px;
+        	 margin-bottom: 3px;
+        	 font-size: 11px;
+        	 background-color: rgb(236, 181, 236);
+        	 border:0px;
+        }
+        .quantityBtn{
+        	 width: 50px;
+        	 height: 30px;
+        	 border-radius: 10px;
+        	 background-color: rgb(136, 181, 236);
+        	 border: 0px;
         }
         
         /*리모콘*/
@@ -132,12 +175,10 @@
                 </span>
             </div>
             <div class="cartBody">
+            	<br>
                 <table id="cart-area">
                     <thead>
-                        <tr>
-                            <th colspan="7" style="text-align: left; padding-left: 10px;">일반상품(1)</th>
-                        </tr>
-                        <tr align="center" style="height:30px;">
+                        <tr align="center" style="height:50px;">
                             <th><input type="checkbox" name="checkboxHeader" id="allCheck" style="width:20px; height:20px;"></th>
                             <th colspan="2" style="width: 700px;"><span>상품정보</span></th>
                             <th style="width:110px;">가격</th>
@@ -160,13 +201,13 @@
 			                            <td class="cart-td-center" style="width: 70px;">
 			                        		<input type="hidden" name="" value="${c.cartNo }">
 			                                <input type="number" style="text-align: right; width: 50px; margin-bottom: 5px;" min="1" max="99" step="1" value="${c.quantity }">
-			                                <button type="button" class="btn default quantityBtn" style="size: 10px; border-radius: 3px; border: 0px;">변경</button>
+			                                <button type="button" class="quantityBtn">변경</button>
 			                            </td>
 			                            <td class="cart-td-center trTdPrice" style="width: 100px;"><span class="trPrice">${c.goodsPrice*c.quantity}</span>원</td>
 			                            <td class="cart-td-center" style="width: 110px;">
-			                                <button type="button"  class="btn default buyBtn" style="border-radius: 3px; width: 110px; margin-bottom: 3px; font-size: 11px; background-color: lightpink; border:0px;">구매</button>
-			                                <button type="button"  class="btn default addWishBtn" style="border-radius: 3px; width: 110px; margin-bottom: 3px; font-size: 11px; background-color: rgb(235, 194, 215); border:0px;">관심상품 등록</button>
-			                                <button type="button"  class="btn default deleteBtn" style="border-radius: 3px; width: 110px; margin-bottom: 3px; font-size: 11px; background-color: rgb(236, 181, 236); border:0px;">삭제</button>
+			                                <button type="button"  class="buyBtn">구매</button>
+			                                <button type="button"  class="addWishBtn">관심상품 등록</button>
+			                                <button type="button"  class="deleteBtn">삭제</button>
 			                            </td>
 			                        </tr>
                     			</c:forEach>
