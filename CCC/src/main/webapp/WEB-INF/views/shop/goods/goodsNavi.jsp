@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="col-6 col-lg-4 col-md-6 col-sm-6 logo-wrapper">
-                    <a href="cart.ca" class="logo">
+                    <a href="goodsMain.go" class="logo">
                         <!-- <img src="resources/css/goods/img/logo.png" alt=""> -->
                         <img src="resources/css/goods/img/chalogo3.jpg" alt="">
                         
