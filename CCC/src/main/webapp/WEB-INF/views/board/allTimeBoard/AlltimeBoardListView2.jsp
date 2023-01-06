@@ -7,7 +7,7 @@
 
 <head>
 
-	<title>Melon Music Awards</title>
+	<title>CCC Awards</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -19,21 +19,21 @@
 </head>
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
-
+	<jsp:include page="/WEB-INF/views/board/allTimeBoard/popup.jsp"/>
+<%-- 	<jsp:include page="/WEB-INF/views/shop/goods/goodsNavi.jsp"/> --%>
 
 <div id="month202212" class="month-timeline d_timeline ">
 
 	
 
-	<div class="sec-week-wrap">
+	<div class="sec-week-wrap"> 광고영역
 		<div class="fix-timeline">
 			<div class="green-box">
-				
-
 				<strong> 01.02</strong>	
 			</div>
 		</div>
 		<div class="area">
+				<h1><b>CCC 역대 수상작</b></h1>
 			<div class="sec-title">
 				<h2>
 					 <button type="button" class="btn btn-primary"  onclick="ThisMonthLikes();">이번달 좋아요 높은순</button>
@@ -48,104 +48,96 @@
 				<div class="list-section">
 					<div class="img-area">
 						
-						
+						<div></div> <!-- 여기 div는 썸네일마냥 1등만 크게 띄워주는곳  -->
 						<span class="n1"></span><!-- 클래스 n1 ~ n5 -->						
 						
 					</div>
 					<div class="list-area">
 						<ul>
-
+<!-- //////////////////////////////////////////여기 아래는 1등///////////////////////// -->
 							<li class="num01">
 								<div class="vote-info">
 									<div class="vote-rate">
-										<div class="rank-area">
+										<div class="rank-area"> <!--rank-area지우면 안됌  -->
 											<span class="rank n01">순위</span>
-											
-											<p class="score">70.0<span class="txt">점</span></p>
+											좋아요 👍
+											<p class="score1">1등 좋아요 갯수는 과연?<span class="txt">👍</span>👍👍</p>
 										</div>
 										<div class="graph-area type1">
 											<!--  -->
-											<div class="rankName1">
+											<div class="rankName">
+												
+												1등 캐릭터 명 :
+													<!-- 여기 아래는 div는 1등한 캐릭터 이름  -->
+												<div>
+												
+												</div>
+										
 											
-												<div><b>좋아요 1등 !</b></div>	
 											</div>
 			
 										</div>
 									</div>
 								</div>
 							</li>
-
+<!-- //////////////////////////////////////////여기 아래는 2등///////////////////////// -->
 							<li class="num02">
 								<div class="vote-info">
 									<div class="vote-rate">
 										<div class="rank-area">
 											<span class="rank n02">순위</span>
-											
-											<p class="score">66.7<span class="txt">점</span></p>
+												좋아요 👍
+											<p class="score2">2등 좋아요 갯수는 과연?<span class="txt">👍👍</span></p>
 										</div>
 										<div class="graph-area type1">
 											<!-- 복수 아티스트 -->
-											<div class="artist-info">
-												<div class="artist-cont">
-			
-				
-													<a href="javascript:melon.link.goArtistDetail('3114174');" title="NewJeans" class="artist">NewJeans</a>													
-			
-												</div>
-												
-										
+												<div class="rankName2">
 													
-												<div class="song-cont">
-													<a href="javascript:melon.play.playSong('57170101',35945927);" class="song">Ditto</a>
+													2등 캐릭터 명 :
+														<!-- 여기 아래는 div는 1등한 캐릭터 이름  -->
+													<div>
+														<b></b>
+													</div>
+											
+												
 												</div>
-											</div>
-											<div class="vote-rate">
-												<p>투표 3위 (24.9점) + 주간차트 1위 (41.8점)</p>
+											<div class="vote-rate2">
+												<p>좋아요 2등!!!!</p>
 												
-												<table id="allTimeLikeList2">
-		  	 
-												  	 	<tbody>
-															
-												  	 	</tbody>
-										  	 
-											  	 </table>
+											
 												
 											</div>
-											<p class="user-area" style="display:none;" id="v_2022122618"><span class="ellipsis">노래하는멜론노래하는멜론</span>님은 72표를 주셨네요! <br>지금까지 300번 들었습니다.</p>											
 										</div>
 									</div>
 								</div>
 							</li>
 	
-
+<!-- //////////////////////////////////////////여기 아래는 3등///////////////////////// -->
 							<li class="num03">
 								<div class="vote-info">
 									<div class="vote-rate">
 										<div class="rank-area">
 											<span class="rank n03">순위</span>
-											
-											<p class="score">60.5<span class="txt">점</span></p>
+											좋아요 👍
+											<p class="score3">3등 좋아요 갯수는 과연?<span class="txt">👍</span>👍</p>
 										</div>
 										<div class="graph-area type1">
 											<!-- 복수 아티스트 -->
-											<div class="artist-info">
-												<div class="artist-cont">
-			
-				
-													<a href="javascript:melon.link.goArtistDetail('725991');" title="RM" class="artist">RM</a>													
-			
-												</div>
+												<div class="rankName3">
 												
-										
-													
-												<div class="song-cont">
-													<a href="javascript:melon.play.playSong('57170101',35888486);" class="song">들꽃놀이 (with 조유진)</a>
+													3등 캐릭터 명 :
+														<!-- 여기 아래는 div는 1등한 캐릭터 이름  -->
+													<div>
+														<b></b>
+													</div>
+											
+												
 												</div>
-											</div>
-											<div class="vote-rate">
-												<p>좋아요3위  </p>
+										
+											<div class="vote-rate3">
+												<p>좋아요3등 !!!!  </p>
 												  	 
-													  	 </table>
+													  
 											</div>
 										</div>
 									</div>
@@ -168,25 +160,90 @@
 </div>
 
 	<script type="text/javascript">
-		
+		$(function(){
+			
+		})
 		
 		//아래는 이번달 좋아요 
 		function ThisMonthLikes(){
 			
 			$.ajax({
 				url : "ThisMonthLikes.li",
- 				success : function(result){
- 					console.log("연결성공");
+				success : function(result){
+					console.log(result)
+					console.log("연결성공");
+	
+			
+			var resultStr = ""; 	 // 좋아요만
+			var resultStr2 = "";	 //좋아요만
+			var resultStr3 = "";	 //좋아요만 
+			var resultStrimg = "";   //이미지
+			var resultStrimg2 = "";   //이미지
+			var resultStrimg3 = "";   //이미지
+			var resultStrName= ""; //1등 이름
+			var resultStrName2= ""; //2등 이름
+			var resultStrName3= ""; //3등 이름
+			
+			
+			///////아래1등 좋아요만//////
+			
+			resultStr += "<div>"
+				                +"<div >" +result[0].like + "</div>"
+			            +"</div>";
+			
+			    //아래는 1등이미지         
+            resultStrimg += "<div>"
+				                +"<div >" +"<p ><img src='" + result[0].changeName  + "' style='height: 100%; width: 100%;'></p>👍👍👍👍👍👍👍👍좋아요1등👍👍👍👍👍👍👍👍</div>"
+				           +"</div>";            
+			  //1등 이름
+           resultStrName += "<div>"
+				                +"<div >" + result[0].charName  + "</div>"
+				           +"</div>"; 	           
+			            
+				           
+		 //////////아래 좋아요2222222222222222222등///////		           
+  		 //////////아래 좋아요2222222222222222222등///////
+   		 //////////아래 좋아요2222222222222222222등///////
 
- 					var resultStr = "";
-					
-					resultStr += "<div>"
-					                +"<div class='p-2 flex-fill bg-info' id='alltime2'>" + result[1].like + "<p id='rk1'><img src='" + result[1].changeName + "' style='height: 100%; width: 100%;'></p>좋아요2등</div>"
- 					                +"<div class='p-2 flex-fill bg-warning' id='alltime1'>" +result[0].like + "<p id='rk1'><img src='" + result[0].changeName  + "' style='height: 100%; width: 100%;'></p>좋아요1등</div>"
- 					                +"<div class='p-2 flex-fill bg-primary' id='alltime3'>" + result[2].like + "<p id='rk1'><img src='" + result[2].changeName + "' style='height: 100%; width: 100%;'></p>좋아요3등</div>"
-					            +"</div>";
- 					
-					$("#allTimeLikeList1 > tbody").html(resultStr);
+           resultStr2 += "<div>"
+       					    +"<div>" + result[1].like + "</div>"
+			           +"</div>";
+			           
+           resultStrName2 += "<div>"
+				                +"<div >" + result[1].charName  + "</div>"
+				           +"</div>"; 
+           //아래는 2등이미지         
+            resultStrimg2 += "<div>"
+				                +"<div >" +"<img src='" + result[1].changeName  + "' style='height: 20%; width: 50%;'></div>"
+				           +"</div>";
+           
+		 //////////아래 좋아요33333333333333333333등///////
+		 //////////아래 좋아요33333333333333333333등///////
+         //////////아래 좋아요33333333333333333333등///////
+         
+           resultStr3 += "<div>"
+          				     +"<div>" + result[2].like + "</div>"
+				         +"</div>";
+				         
+         resultStrName3 += "<div>"
+				                +"<div >" + result[2].charName  + "</div>"
+				           +"</div>"; 
+          //아래는 3등이미지         
+           resultStrimg3 += "<div>"
+			                +"<div >" +"<p ><img src='" + result[2].changeName  + "' style='height: 20%; width: 50%;'></p></div>"
+			          	 +"</div>";
+				         
+			          $(".score1").html(resultStr); //1등좋아요  
+					  $(".rankName> div").html(resultStrName); //1등 이름 
+					  $(".img-area div").html(resultStrimg); //1등은 이미지만 
+					  
+					  $(".score2").html(resultStr2); //2등좋아요
+					  $(".rankName2> div").html(resultStrName2); //2등 이름 
+					  $(".vote-rate2").html(resultStrimg2); //2등은 이미지만
+					  
+					  $(".score3").html(resultStr3); //3등좋아요
+					  $(".rankName3> div").html(resultStrName3); //3등 이름 
+					  $(".vote-rate3").html(resultStrimg3); //2등은 이미지만
 				},
 				error : function(){
 					console.log("통신실패");
@@ -202,56 +259,79 @@
 				success : function(result){
 					console.log(result)
 					console.log("연결성공");
-		/*			
-					var resultStr = "";
-						
-			resultStr += "<div>"
-			            	    +"<div>" + result[1].like + "<p ><img src='" + result[1].changeName + "' style='height: 100%; width: 100%;'></p>좋아요2등</div>"
-				                +"<div >" +result[0].like + "<p ><img src='" + result[0].changeName  + "' style='height: 100%; width: 100%;'></p>좋아요1등</div>"
-				                +"<div>" + result[2].like + "<p ><img src='" + result[2].changeName + "' style='height: 100%; width: 100%;'></p>좋아요3등</div>"
-			            +"</div>";
-// 			            charName
-			*/	
+	
 			
 			var resultStr = ""; 	 // 좋아요만
 			var resultStr2 = "";	 //좋아요만
 			var resultStr3 = "";	 //좋아요만 
 			var resultStrimg = "";   //이미지
-			var resultStrName= ""; //1등 이미지
+			var resultStrimg2 = "";   //이미지
+			var resultStrimg3 = "";   //이미지
+			var resultStrName= ""; //1등 이름
+			var resultStrName2= ""; //2등 이름
+			var resultStrName3= ""; //3등 이름
 			
 			
 			///////아래1등 좋아요만//////
+			
 			resultStr += "<div>"
 				                +"<div >" +result[0].like + "</div>"
 			            +"</div>";
 			
 			    //아래는 1등이미지         
             resultStrimg += "<div>"
-				                +"<div >" +"<p ><img src='" + result[0].changeName  + "' style='height: 100%; width: 100%;'></p>좋아요1등</div>"
+				                +"<div >" +"<p ><img src='" + result[0].changeName  + "' style='height: 100%; width: 100%;'></p>👍👍👍👍👍👍👍👍좋아요1등👍👍👍👍👍👍👍👍</div>"
 				           +"</div>";            
 			  //1등 이름
            resultStrName += "<div>"
 				                +"<div >" + result[0].charName  + "</div>"
 				           +"</div>"; 	           
 			            
-           ///////아래2등 좋아요//////
+				           
+		 //////////아래 좋아요2222222222222222222등///////		           
+  		 //////////아래 좋아요2222222222222222222등///////
+   		 //////////아래 좋아요2222222222222222222등///////
+
            resultStr2 += "<div>"
        					    +"<div>" + result[1].like + "</div>"
 			           +"</div>";
+			           
+           resultStrName2 += "<div>"
+				                +"<div >" + result[1].charName  + "</div>"
+				           +"</div>"; 
+           //아래는 2등이미지         
+            resultStrimg2 += "<div>"
+				                +"<div >" +"<img src='" + result[1].changeName  + "' style='height: 20%; width: 50%;'></div>"
+				           +"</div>";
            
-           
-           
-           //////////아래 좋아요3등///////
+		 //////////아래 좋아요33333333333333333333등///////
+		 //////////아래 좋아요33333333333333333333등///////
+         //////////아래 좋아요33333333333333333333등///////
+         
            resultStr3 += "<div>"
           				     +"<div>" + result[2].like + "</div>"
 				         +"</div>";
 				         
+         resultStrName3 += "<div>"
+				                +"<div >" + result[2].charName  + "</div>"
+				           +"</div>"; 
+          //아래는 3등이미지         
+           resultStrimg3 += "<div>"
+			                +"<div >" +"<p ><img src='" + result[2].changeName  + "' style='height: 20%; width: 50%;'></p></div>"
+			          	 +"</div>";
 				         
-					  $(".img-area").html(resultStrimg); //1등은 이미지만 
-					  $(".rankName1> div").html(resultStrName); //1등 이름 
+			          $(".score1").html(resultStr); //1등좋아요  
+					  $(".rankName> div").html(resultStrName); //1등 이름 
+					  $(".img-area div").html(resultStrimg); //1등은 이미지만 
 					  
-					  $("#allTimeLikeList2 > tbody").html(resultStr2);
-					  $("#allTimeLikeList3 > tbody").html(resultStr3);
+					  $(".score2").html(resultStr2); //2등좋아요
+					  $(".rankName2> div").html(resultStrName2); //2등 이름 
+					  
+					  $(".vote-rate2").html(resultStrimg2); //2등은 이미지만
+					  
+					  $(".score3").html(resultStr3); //3등좋아요
+					  $(".rankName3> div").html(resultStrName3); //3등 이름 
+					  $(".vote-rate3").html(resultStrimg3); //2등은 이미지만
 				},
 				error : function(){
 					console.log("통신실패");
