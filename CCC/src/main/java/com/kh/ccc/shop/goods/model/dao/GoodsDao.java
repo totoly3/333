@@ -23,9 +23,16 @@ public class GoodsDao {
 		System.out.println("dao리스트2 : "+list);
 		return list;
 	}
-
+	
+	//글쓰기
 	public int insertGoods(SqlSessionTemplate sqlSession, Object g) {
 		return sqlSession.insert("goodsMapper.insertGoods",g);
+	}
+	
+	//상세보기
+	public Goods selectBoard(SqlSessionTemplate sqlSession, int goodsNo) {
+		return sqlSession.selectOne("goodsMapper.selectBoard", goodsNo);
+
 	}
 	
 }

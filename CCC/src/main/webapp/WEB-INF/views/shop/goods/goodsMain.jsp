@@ -98,11 +98,11 @@
                        		<li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Decoration</a>
                                 <ul class="dropdown-menu">
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=1">Stiker</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="detail.go">Poster</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="navi.go">Masking tape</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=4">Gift wrapping</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=5">Badge / Wapen</a></li>
+                                      <li class="nav-item"><a class="nav-link" href="list.go?menu=sticker">Stiker</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=poster">Poster</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=masking">Masking tape</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=gift">Gift wrapping</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="detail.go">Badge / Wapen</a></li>
                                 </ul>
                             </li>
                             <!-- 다이어리 드롭다운 -->
@@ -141,8 +141,8 @@
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Fashion accessories</a>
                                 <ul class="dropdown-menu">
-                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=20">Bag</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=21">Pouch / Wallet</a></li>
+                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=20">Bag</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=22">Umbrella</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=23">Carrier</a></li>
                                 </ul>
@@ -161,8 +161,8 @@
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Beauty</a>
                                 <ul class="dropdown-menu">
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=29">Make up</a></li>
                                 	<li class="nav-item"><a class="nav-link" href="list.go?menu=28">Skin care</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=29">MAke up</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=30">Cleansing</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=31">Hair / body</a></li>
                                 </ul>

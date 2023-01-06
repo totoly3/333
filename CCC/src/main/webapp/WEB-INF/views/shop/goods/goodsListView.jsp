@@ -29,6 +29,41 @@
     <link rel="stylesheet" href="resources/css/listView/css/icomoon.css">
     <link rel="stylesheet" href="resources/css/listView/css/style.css"> -->
     
+    <!-- 폰트 -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Dongle:wght@300;400;700&family=Jua&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Single+Day&family=Stylish&display=swap" rel="stylesheet">
+ 	
+ 	<style>
+ 		#jini1{
+ 			position: relative;
+ 			right:-230px;
+ 			top : -25px;
+ 			color : rgb(196, 0, 0);
+ 		}
+ 		#jini2{
+ 			position: relative;
+ 			top : -20px;
+ 			color : black;
+ 		}
+ 		a:link {color : gray;}
+		a:hover {color : rgb(230, 127, 183);}
+		a:active {color : rgb(230, 127, 183);}
+		
+		.img img {
+		  transition: all 0.2s linear;
+		  overflow: hidden;
+		}
+		.img:hover img {
+		  transform: scale(1.1);
+		}
+		.img {
+		  overflow: hidden;
+		}
+
+ 	</style>
+ 	
+    
 </head>
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
 
@@ -38,9 +73,9 @@
  	
  	<c:if test="${not empty loginUser}">
 		<!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
-		<a class="btn btn-secondary" style="float:right;" href="insert.bo">글쓰기</a>
+		<a class="btn btn-secondary" style="float:left;" href="insert.bo">글쓰기</a>
 	</c:if>
-	<a class="btn btn-secondary" style="float:right;" href="insert.go">글쓰기</a>
+	<a class="btn btn-secondary" style="float:left;" href="insert.go">글쓰기</a>
 
 	<section class="ftco-section">
     <div class="container">
@@ -56,14 +91,18 @@
 				        <div class="col-md-6 col-lg-4 ftco-animate">
 			                <div class="project">
 			                    <div class="img">
-			                    	<a href="destination.html"><img src="${g.goodsChangeName1}" class="img-fluid" alt="${g.goodsChangeName1}"></a>
+			                    	<a href="detail.go?gno=${g.goodsNo}" id="jinimg"><img src="${g.goodsChangeName1}" class="img-fluid" alt="${g.goodsChangeName1}"></a>
 			                    </div>
 			                    
 			                    <div class="text">
+			                    
 			                        <!-- <h4 class="price"><span class="old-price mr-2">$500</span>$400</h4> -->
 			                        <span>${g.goodsCategory}</span><br>
-			                        <span>${g.goodsPrice}원</span>
-			                        <h3><a href="destination.html">${g.goodsName}</a></h3>
+			                        <span>${g.goodsBrand}</span><br>
+			                        
+			                        <h5 id="jini1"><img src="resources/css/listView/images/gift.jpg"> ${g.goodsPrice}원</h4>
+									                        																		<%-- <h4 id="jiniposition2"><a href="destination.html">${g.goodsName}</a></h4> --%>
+			                        <h4 id="jini2"><a href="destination.html">${g.goodsName}</a></h4>
 			                        <div class="star d-flex clearfix">
 			                            <div class="mr-auto float-left">
 			                                <span class="ion-ios-star"></span>
@@ -76,6 +115,7 @@
 			                                <span class="rate"><a href="#">(120)</a></span>
 			                            </div>
 			                        </div>
+			                        <br>
 			                    </div>
 			                    <a href="resources/css/listView/images/destination-1.jpg" class="icon image-popup d-flex justify-content-center align-items-center">
 			                        <span class="icon-expand"></span>

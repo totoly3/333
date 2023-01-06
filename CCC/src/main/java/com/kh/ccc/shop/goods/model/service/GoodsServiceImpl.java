@@ -32,6 +32,11 @@ import com.kh.ccc.shop.goods.model.vo.Goods;
 		public int insertGoods(Goods g) {
 			return goodsDao.insertGoods(sqlSession,g);
 		}
+
+		@Override
+		public Goods selectGoods(int gno) {
+			return goodsDao.selectBoard(sqlSession, gno);
+		}
 	
 
 }

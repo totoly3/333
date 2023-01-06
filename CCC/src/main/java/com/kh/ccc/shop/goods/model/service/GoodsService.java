@@ -15,5 +15,10 @@ public interface GoodsService {
 	
 	//굿즈 글쓰기
 	public int insertGoods(Goods g);
+	
+	//굿즈 디테일
+	public Goods selectGoods(int gno);
+	
+	
 
 }

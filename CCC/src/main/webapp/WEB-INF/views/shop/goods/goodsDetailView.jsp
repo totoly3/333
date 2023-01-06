@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <!DOCTYPE html>
 <html>
@@ -339,6 +340,17 @@ function ODPorderinfo(){
 .btnArea{
 	position:relative;
 	left : -250px;
+}
+
+#hardlogo{
+	position:relative;
+	left : -210px;
+	top : -5px;
+}
+#hardfooter{
+	position:relative;
+	left : 30px;
+	top : -40px;
 }
 
 </style>
@@ -742,7 +754,7 @@ $(function() {
 		<div id="contentWrap" class="categoryPrd">
 			
 
-			<p class="tPad10"><a href='https://www.10x10.co.kr/'>HOME</a>&nbsp;&gt;&nbsp;<a href="https://www.10x10.co.kr/shopping/category_list.asp?disp=121">가구/수납</a>&nbsp;&gt;&nbsp;<a href="https://www.10x10.co.kr/shopping/category_list.asp?disp=121115">수납/정리</a>&nbsp;&gt;&nbsp;<a href="https://www.10x10.co.kr/shopping/category_list.asp?disp=121115105">데스크수납/정리</a>&nbsp;&gt;&nbsp;<a href="https://www.10x10.co.kr/shopping/category_list.asp?disp=121115105107"><strong>책꽂이</strong></a></p>
+			<p class="tPad10"><a href='https://www.10x10.co.kr/'>HOME</a>&nbsp;&gt;&nbsp;<a href="https://www.10x10.co.kr/shopping/category_list.asp?disp=121">디자인/미술</a>&nbsp;&gt;&nbsp;<a href="https://www.10x10.co.kr/shopping/category_list.asp?disp=121115">문구/완구</a>&nbsp;&gt;&nbsp;<a href="https://www.10x10.co.kr/shopping/category_list.asp?disp=121115105">데코레이션</a>&nbsp;&gt;&nbsp;<a href="https://www.10x10.co.kr/shopping/category_list.asp?disp=121115105107"><strong>${g.goodsCategory}</strong></a></p>
 
 			
 			<p id="lyItemEventBanner" class="tPad10" style="display:none;"></p>
@@ -752,7 +764,7 @@ $(function() {
 					<div class="pdtPhotoBox">
 						<div class="photoSlideV15">
 							<p>
-								<img class="bsImage" src="http://thumbnail.10x10.co.kr/webimage/image/basic600/505/B005055471.jpg?cmd=thumb&w=500&h=500&fit=true&ws=false" thumb="http://thumbnail.10x10.co.kr/webimage/image/basic600/505/B005055471.jpg?cmd=thumb&w=40&h=40&fit=true&ws=false" data-magnify-src="http://webimage.10x10.co.kr/image/basic1000/505/B005055471.jpg" alt="심플리 화이트 5단 책꽂이 트롤리 매거진랙 이동식 책선반" />
+								<img class="bsImage" src="${g.goodsChangeName1}" alt="심플리 화이트 5단 책꽂이 트롤리 매거진랙 이동식 책선반" />
 							</p>
 						</div>
 					</div>
@@ -792,11 +804,12 @@ $(function() {
 									<a href="" id="zzimBrandCnt" onclick="TnMyBrandJJim('luxiai', 'LUXIAI'); return false;">
 									<dfn id="zzimBr_luxiai" class="">찜브랜드</dfn></a> <a href="https://www.10x10.co.kr/street/street_brand.asp?makerid=luxiai&ab=012_a_1">
 									<!-- 브랜드명 위치 -->
-									<span>LUXIAI ${g.brand}</span></a>
+									<span>${g.goodsBrand}</span></a>
 									<a href="https://www.10x10.co.kr/street/street_brand.asp?makerid=luxiai&ab=012_a_2" class="btn btnS6 btnGry2 fn lMar10" style="display:none;"><em class="whiteArr03">브랜드샵</em></a>
 									
 								</p>
-								<h2><p class="pdtName">심플리 화이트 5단 책꽂이 트롤리 매거진랙 이동식 책선반</p></h2>
+								<h2><p class="pdtName">${g.goodsName}</p></h2>
+								<!-- <h2><p class="pdtName">심플리 화이트 5단 책꽂이 트롤리 매거진랙 이동식 책선반</p></h2> -->
 								<p class="pdtDesp"></p>
 							</div>
 							<div class="detailInfoV15">
@@ -804,14 +817,14 @@ $(function() {
 									<dl class="saleInfo">
 										<dt>판매가</dt>
 										
-											<dd><strong class="cBk0V15">50,500원</strong></dd>
-										
+											<dd><strong class="cBk0V15">
+											<fmt:formatNumber value="${g.goodsPrice}" pattern="#,###" />원</strong></dd>
 									</dl>
 									
 									<dl class="saleInfo">
 										<dt>할인판매가</dt>
 										<dd><strong class="cRd0V15">
-											44,910원 [11%]
+											<fmt:formatNumber value="${g.goodsPrice*0.89}" pattern="#,###" />원  [11%]
 										</strong></dd>
 									</dl>
 									
@@ -819,7 +832,9 @@ $(function() {
 									<dt>쿠폰적용가</dt>
 									<dd>
 										
-										<strong class="cGr0V15">40,419원 [10%]</strong>&nbsp;
+										<strong class="cGr0V15">
+											<fmt:formatNumber value="${g.goodsPrice*0.89*0.9}" pattern="#,###" />원  [10%]
+										</strong>&nbsp;
 										
                                                     <a href="" onclick="goLoginPage(); return false;" class="btn btnS2 btnGrn fn btnW75"><span class="download">쿠폰다운</span></a>&nbsp;
                                                 
@@ -921,7 +936,7 @@ $(function() {
 							<div class="interactInfoV15">
 								<dl>
 									<dt>상품코드</dt>
-									<dd>5055471</dd>
+									<dd>00000${g.goodsNo}</dd>
 								</dl>
 								<dl>
 									<dt>Review</dt>
@@ -1032,12 +1047,17 @@ $(function() {
 					
 
 					<!-- (2/9) 상품설명 -------------------------------->
-					
-<h3>상품 설명</h3>
+
+<br><br>			
+<!-- <h3>상품 설명</h3> -->
 
 	<!-- <iframe id="itemPrdDetail" style="width:100%;" src="/shopping/inc_itemDescription_iframe.asp?itemid=5055471" frameborder="0" scrolling="no"></iframe> -->
 	<!-- 여기에 사진 넣기 -->
-	
+	<div style="text-align:center;">	
+		<img src="${g.goodsChangeName2}" >
+		<img src="${g.goodsChangeName3}">
+		<img src="${g.goodsChangeName4}">
+	</div>
     <script>
         (function(){
             // 브라우저 상태에 따라 iframe 높이값 조정
@@ -1063,11 +1083,11 @@ $(function() {
 			
 				<span style="display:;"><em>법의 의한 인증, 허가 확인사항</em> : 해당없음</span>
 			
-				<span style="display:;"><em>제조국 또는 원산지</em> : 중국OEM</span>
+				<span style="display:;"><em>제조국 또는 원산지</em> : KH정보교육원</span>
 			
-				<span style="display:;"><em>제조자</em> : 루시아이(LUXIAI)</span>
+				<span style="display:;"><em>제조자</em> : 어문경 강사님</span>
 			<span><em>재질</em> : 상세 내용 참조</span><span><em>사이즈</em> : 상세 내용 참조</span>
-				<span style="display:;"><em>A/S 책임자/전화번호</em> : 텐바이텐 고객행복센터 1644-6030</span>
+				<span style="display:;"><em>A/S 책임자/전화번호</em> : 하드캐릭 고객행복센터 1644-0000</span>
 			
 	</div>
 	
@@ -1227,7 +1247,7 @@ $(function() {
 		
 			<span id="lyEvalAll"><a href="" onclick="popEvalList(); return false;" class="btn btnS2 btnGry2">상품후기 전체보기</a></span>
 			
-			<a href="" onclick="chk_myeval('5055471');return false;"  class="btn btnS2 btnRed"><span class="whiteArr03">후기 작성하기</span></a>
+			<a href="review.go" onclick="chk_myeval('5055471');return false;"  class="btn btnS2 btnRed"><span class="whiteArr03">후기 작성하기</span></a>
 		</div>
 	</div>
 	<span id="lyEvalContAll">
@@ -2084,15 +2104,20 @@ $("#detail02").dblclick(function(e){
 	</div>
 	<div class="footerV18">
 		<!-- <span class="logo">HARD-CHARAC</span> -->
-		<span class="logo">HARD-CHARAC</span>
-		
-		<div class="foot-cont company">
-			<em>㈜텐바이텐</em>
-			<p>대표이사 : 하드캐릭 / 서울특별시 영등포구 선유동2로 57 이레빌딩</p>
-			<p>사업자등록번호 : 211-87-00620 / 통신판매업 신고 : 제 01-1968호 <a href="" onclick="window.open('http://www.ftc.go.kr/bizCommPop.do?wrkr_no=2118700620', 'bizCommPop', 'width=750, height=700;');return false;" class="btn-linkV18 link2 lMar05">사업자 정보확인 <span></span></a></p>
-			<p>개인정보보호책임자 : 조진희 / 소비자피해보상보험 SGI 서울보증 <a href="javascript:usafe(2118700620);" class="btn-linkV18 link2 lMar05">서비스 가입 사실 확인 <span></span></a></p>
-			<p class="tPad15">호스팅서비스:㈜하드캐릭</p>
-			<p class="copyright">COPYRIGHT &copy; HARD-CHARAC ALL RIGHTS RESERVED.</p>
+		<!-- <span class="logo">HARD-CHARAC</span> -->
+		<div id="hardlogo">
+			<img src="resources/css/gdetail/chalogo3.jpg">	
+		</div>
+		<div id="hardfooter">
+			<div class="foot-cont company">
+				<em>㈜하드캐릭</em>
+				<p>대표이사 :&nbsp&nbsp&nbsp&nbsp오상희&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp원종우&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp이재영&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp추지은&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp김병철&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp조진희 </p>
+				<p>서울특별시 영등포구 선유동2로 57 이레빌딩</p>
+				<p>사업자등록번호 : 123-45-678910 / 통신판매업 신고 : 제 01-1968호 <a href="" onclick="window.open('http://www.ftc.go.kr/bizCommPop.do?wrkr_no=2118700620', 'bizCommPop', 'width=750, height=700;');return false;" class="btn-linkV18 link2 lMar05">사업자 정보확인 <span></span></a></p>
+				<p>개인정보보호책임자 : 조진희 / 소비자피해보상보험 SGI 서울보증 <a href="javascript:usafe(2118700620);" class="btn-linkV18 link2 lMar05">서비스 가입 사실 확인 <span></span></a></p>
+				<p class="tPad15">호스팅서비스:㈜하드캐릭</p>
+				<p class="copyright">COPYRIGHT &copy; HARD-CHARAC ALL RIGHTS RESERVED.</p>
+			</div>
 		</div>
 		<div class="foot-cont cs">
 			

@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.ccc.board.charBoard.model.vo.CharAttach;
+import com.kh.ccc.board.charBoard.model.vo.CharBoard;
 import com.kh.ccc.shop.goods.model.service.GoodsService;
 import com.kh.ccc.shop.goods.model.vo.Goods;
 
@@ -52,8 +54,15 @@ public class GoodsController {
 	
 	//굿즈 디테일 페이지로 보내기
 	@RequestMapping("detail.go")
-	public String GoodsDetailPage() {
-		return "shop/goods/goodsDetailView";
+	public ModelAndView GoodsDetailPage(@RequestParam(value="gno") int gno, ModelAndView mv) {
+		//gno로 데이터 담아서 넘겨주기~~~
+		System.out.println("gno"+gno);
+		Goods g = goodsService.selectGoods(gno);
+		
+		mv.addObject("g", g).setViewName("shop/goods/goodsDetailView");
+		
+		return mv;
+		//return "shop/goods/goodsDetailView";
 	}
 		
 	//네비 페이지로 보내기
@@ -142,11 +151,11 @@ public class GoodsController {
 		public String saveFile(MultipartFile upfile, HttpSession session) {
 
 			String originName = ((MultipartFile)upfile).getOriginalFilename();										//1. 원본 파일명 뽑기
-			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());			//2. 시간 형식 뽑기 - "20221205153533"
-			String ext = originName.substring(originName.lastIndexOf("."));							//3. 확장자 추출하기
-			int ranNum = (int)(Math.random() * 90000 + 10000); 										//4. 랜덤 숫자 추출하기(5자리) // 5자리 랜덤값
-			String changeName = currentTime + ranNum + ext;											//5. 모두 이어붙이기
-			String savePath = session.getServletContext().getRealPath("/resources/goodsImg/");	//6. 파일을 업로드 할 실질적인 위치 (물리경로) 찾기
+			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());							//2. 시간 형식 뽑기 - "20221205153533"
+			String ext = originName.substring(originName.lastIndexOf("."));											//3. 확장자 추출하기
+			int ranNum = (int)(Math.random() * 90000 + 10000); 														//4. 랜덤 숫자 추출하기(5자리) // 5자리 랜덤값
+			String changeName = currentTime + ranNum + ext;															//5. 모두 이어붙이기
+			String savePath = session.getServletContext().getRealPath("/resources/goodsImg/");						s//6. 파일을 업로드 할 실질적인 위치 (물리경로) 찾기
 			
 			try {
 				((MultipartFile)upfile).transferTo(new File(savePath+changeName));									// 7. 물리 경로 + 변경이름으로 파일 생성 및 업로드
@@ -156,6 +165,13 @@ public class GoodsController {
 				e.printStackTrace();
 			}
 			return changeName;
+		}
+		
+		
+		//리뷰 작성폼으로 이동
+		@RequestMapping("review.go")
+		public String insertGoodsReview() {
+			return "shop/goods/goodsReviewForm";
 		}
 		
 }
