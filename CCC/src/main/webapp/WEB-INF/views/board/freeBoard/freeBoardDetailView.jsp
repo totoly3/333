@@ -362,23 +362,23 @@
 		} 	
     	// 댓글 삭제 
     	function deleteReply(frNo){
-    		$.ajax({
-    			url : "deleteFrReply.fr",
-    			data : {
-    				frNo : frNo,  
-				    fNo : ${fb.get(0).fNo},
-				    fWriterNo : ${ loginUser.memberNo }
-    			},
-    			success : function(result){
-    				if(result=="yes"){
-	    				console.log("통쉰성겅!");
-	    				alert("댓글을 삭제하였습니다.");
-	    				selectReplyList();
-    				}
-    				return false;
-    			},
-    		})
-    	}
+		$.ajax({
+			url : "deleteFrReply.fr",
+			data : {
+				frNo : frNo,  
+				fNo : 35
+				
+			},
+			success : function(result){
+				if(result=="yes"){
+					console.log("통쉰성겅!");
+					alert("댓글을 삭제하였습니다.");
+					selectReplyList();
+				}
+				return false;
+			},
+		});
+	}
     
     </script>
   
