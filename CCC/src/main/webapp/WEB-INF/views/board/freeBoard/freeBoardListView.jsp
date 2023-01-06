@@ -151,7 +151,7 @@
 //  			 console.log(this);
 //  		 })
  		 $(".goDetailFr").click(function(){
- 			 location.href="detail.fbo?fno="+$(this).prev().text();
+ 			 location.href="detail.fbo?fno="+$(this).prev().text()+$(this).text()+$(this).next().text();
  			 console.log(this);
  		 })
  	})
