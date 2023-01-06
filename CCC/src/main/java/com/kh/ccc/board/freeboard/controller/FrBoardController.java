@@ -39,7 +39,7 @@ public class FrBoardController {
 		public ModelAndView selectList(@RequestParam(value="currentPage",defaultValue="1")int currentPage,
 													ModelAndView  mv,HttpSession session) {
 
-			
+	//		작업중
 //			Member loginUser = (Member)session.getAttribute("loginUser");
 //			int fWriterNo =loginUser.getmNo();
 	
