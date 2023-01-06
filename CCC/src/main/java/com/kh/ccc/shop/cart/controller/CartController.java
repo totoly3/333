@@ -234,7 +234,7 @@ public class CartController {
 	// 선택한 항목 주문과 전체 주문 처리
 	@RequestMapping(value="buyManyGoods.ca")
 	public String buyManyGoods(HttpSession session, Model model, String cartNoArr) {
-		
+		//깃헙테스트주석
 		ArrayList<Integer> cnoList = new ArrayList<>();
 		String[] cnoArr = cartNoArr.split("-");
 		for(int i=0; i<cnoArr.length; i++) {
