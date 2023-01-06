@@ -21,23 +21,34 @@
     <style>
 	    <!--아래 부분은 드롭다운추가한거 -->
 	    .dropbtn {	  
-		  color: black;
 		  padding: 16px;
 		  font-size: 16px;
 		  border: none;
-		  position:relative;z-index:1
+		  position:relative;
+		  z-index:1;
+		}
+		.headerBtn{
+		  	color: white;
+			background-color: #EA4F4D;
+			border: none;
 		}
 		 
 		.dropdown {
 		  position: relative;
 		  display: inline-block;
-		  background-color: #E42525;
+		  background-color: #EA4F4D;
+		  text-decoration:none;
+		  color:rgb(255, 255, 255);
+		  font-size:12px;
+		  font-weight:600;
+		  border: none;
 		}
 		 
 		.dropdown-content {
 		  display: none;
+		  border: 0px;
 		  position: absolute;
-		  background-color: skyblue;
+		  background-color: #EA4F4D;
 		  min-width: 160px;
 		  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 		  z-index: 1;
@@ -51,7 +62,7 @@
 		  display: block;
 		  
 		}
-		.dropdown-content a:hover {background-color: #2CA93D;}
+ 		.dropdown-content a:hover {background-color: #EA004D;}
 		.dropdown:hover .dropdown-content {display: block;}
 		.dropdown:hover .dropbtn {background-color: #E42525;}
 		<!-- 윗부분은 드롭다운 추가 -->
@@ -76,7 +87,7 @@
             margin:auto;
         }
         .innerOuter {
-            border:1px solid lightgray;
+            border:1px solid blue;
             width:80%;
             margin:auto;
             padding:5% 10%;
@@ -93,7 +104,6 @@
             position: relative;
             top: -75px;
             left: 30px;
-            
         }
         #headerIconDiv>ul {width:100%; height:100%; list-style-type:none; margin:auto; padding:0;}
         #headerIconDiv>ul>li {float:left; width:4%; height:100%; line-height:55px; text-align:center;}
@@ -103,16 +113,13 @@
             position: relative;
             top: -58px;
             left: 30px;
-            
         }
         #headerIconUl{
             z-index: 6;
             position: relative;
             top: -100px;
             left: 1300px;
-            
         }
-
     </style>
 </head>
 <body>
@@ -134,7 +141,7 @@
 				<li><a href="${ pageContext.request.contextPath }">H O M E</a></li>
 				<li>
 					<div class="dropdown">
-						<button class="dropbtn">B O A R D</button>
+						<button class="dropbtn headerBtn">B O A R D</button>
 						<div class="dropdown-content">
 							<a href="list.no">N O T I C E</a>
 							<a href="list.fr">F R E E - B O A R D</a>
@@ -143,7 +150,7 @@
 					</div>
 				<li>
 					<div class="dropdown">
-						<button class="dropbtn">C H A R A C T E R</button>
+						<button class="dropbtn headerBtn">C H A R A C T E R</button>
 						<div class="dropdown-content">
 							<a href="list.ch">캐릭터 게시판</a>
 							<a href="list.alltimelistgo">역대수상작</a>
@@ -152,7 +159,7 @@
 				</li>
 				<li><a href="playground.fr">P L A Y - G R O U N D</a></li>
 				<li><a href="goodsMain.go">G O O D S</a></li>
-				<li><a href="logout.me">여기 클릭하면 로그아웃!!만들었슴다!</a></li>
+				<li><a href="logout.me">L O G O U T</a></li>
 			</ul>
 		</div>
    </div>
@@ -168,7 +175,15 @@
             		</c:otherwise>
                 </c:choose>
                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/key.png" width="25px;"></a></li>
-                <li><a href="cart.ca"><img src="./resources/header2Img/cart.png" width="22px;"></a></li>
+                <c:choose>
+            		<c:when test="${not empty loginUser }">
+                		<li><a href="cart.ca"><img src="./resources/header2Img/cart.png" width="22px;"></a></li>
+            		</c:when>
+            		<c:otherwise>
+                		<li><a href=""><img src="./resources/header2Img/cart.png" width="22px;"></a></li>
+            		</c:otherwise>
+                </c:choose>
+                
                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/menu.png" width="14px;"></a></li>
             </ul>
         </div>
