@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -163,7 +164,7 @@
                     		<c:when test="${not empty clist}">
                     			<c:forEach var="c" items="${clist}">
                     				<tr style="height: 90px; background-color: #fff;">
-			                            <td class="cart-td-center" style="text-align:left; text-align:center; border-right: none;">
+			                            <td class="cart-td-center" style="border-right: none;">
 			                                <input type="checkbox" name="checkbox" style="width:20px; height:20px;">
 			                            </td>
 			                            <td style="width: 100px; border-left: none; border-right: none;">
@@ -171,13 +172,23 @@
 			                            	<img style="margin-left:20px; width: 80%;" src="resources/css/listView/images/destination-1.jpg" alt="${c.goodsAttachFilePath } ">
 			                            </td>
 			                            <td style="width: 600px; text-align:left; padding-left: 10px; border-left: none; font-weight: bold;">${c.goodsName }</td>
-			                            <td class="cart-td-center" style="width: 100px; "><span style="padding-left: 10px;">${c.goodsPrice }</span>원</td>
-			                            <td class="cart-td-center" style="width: 70px;">
+			                            <td class="" style="width: 100px; text-align:center;">
+			                            	<span>&#8361;</span>
+			                            	<span class="priceOne" style="padding-left: 10px;">
+			                            		<fmt:formatNumber value="${c.goodsPrice }" pattern="#,###,###" />
+			                            	</span>
+			                            </td>
+			                            <td class="" style="width: 70px;">
 			                        		<input type="hidden" name="" value="${c.cartNo }">
-			                                <input type="number" style="text-align: right; width: 50px; margin-bottom: 5px;" min="1" max="99" step="1" value="${c.quantity }">
+			                                <input type="number" style="text-align: middle; width: 50px; margin-bottom: 5px;" min="1" max="99" step="1" value="${c.quantity }">
 			                                <button type="button" class="quantityBtn">변경</button>
 			                            </td>
-			                            <td class="cart-td-center trTdPrice" style="width: 100px;"><span class="trPrice">${c.goodsPrice*c.quantity}</span>원</td>
+			                            <td class="cart-td-center trTdPrice" style="width: 100px; text-align:center;">
+			                            	<span>&#8361;</span>
+			                            	<span class="trPrice">
+			                            		<fmt:formatNumber value="${c.goodsPrice*c.quantity}" pattern="#,###,###" />
+			                            	</span>
+			                            </td>
 			                            <td class="cart-td-center" style="width: 110px;">
 			                                <button type="button"  class="buyBtn">구매</button>
 			                                <button type="button"  class="addWishBtn">관심상품</button>
@@ -198,15 +209,15 @@
                     <tfoot>
                         <tr style="height: 60px;">
                             <td colspan="7" style="border-right: none; text-align: left; padding-left: 10px;">
-                            	<span>상품 금액</span>
+                            	<span>상품 금액</span><span style="margin-left:30px;">&#8361;</span>
                                 <span id="totalGoodsPrice" style="font-size:15pt; margin-right: 20px;"></span>
-                                <span>+</span>
-                                <span>배송비 </span>
-                                <span id="deliveryFee" style="font-size:15pt; margin: 0 20px 0 20px;"></span>
-                                <span> = </span>
-                                <span class="totalPrice">합계</span>&nbsp;
+                                <span style="margin:0 30px 0 30px;">+</span>
+                                <span>배송비</span><span style="margin-left:30px;">&#8361;</span>
+                                <span id="deliveryFee" style="font-size:15pt;"></span>
+                                <span style="margin:0 30px 0 30px;"> = </span>
+                                <span class="totalPrice" style="margin-right:30px;">합계</span>&nbsp;
+                                <span>&#8361;</span>
                                 <span id="totalFinalPrice" style="font-weight: bold; font-size:15pt;"></span>
-                                <span>원</span>
                             </td>
                         </tr>
                     </tfoot>
@@ -293,14 +304,18 @@
 			changeQuantity(cartNo, quantity);
 			
 			// 화면에 행 합계 표시 변경
-			var price = $(this).parent().prev().children();
-			var temp = price.text()*quantity;
-			console.log("price is " + temp);
+			var priceText = $(this).parent().prev().children(".priceOne").text();
+// 			console.log("priceText is " + priceText);
+			var price = priceText.replace(/,/g,"");	// 콤마 제거 (ex: 4,000 -> 4000)
+// 			console.log("price is " + price);
+			var result = price*quantity;
+// 			console.log("result is " + result);
 			
-			var trTotal = $(this).parent().next().find('span');
-			trTotal.html(temp);
+			var trTotalText = $(this).parent().next().find('.trPrice');	// 합계 입력할 곳 선택
+			var trTotal = result.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');	// 위에서 계산한 result에 콤마 넣기 (ex: 4000 -> 4,000)
+			trTotalText.html(trTotal);
 			
-			changeTotalPrice();	// 전체 합계 금액 변경
+			//changeTotalPrice();	// 전체 합계 금액 변경
 			changeCheckTotalPrice();	// 체크한 합계 금액 변경
 		});
 		
@@ -321,8 +336,8 @@
 				}
 			});
 		};
-		// 수량변경 버튼 클릭 --------------------------------- End
 		
+		// 수량변경 버튼 클릭 --------------------------------- End
 		$(function(){
 			// 시작하면서 계산
 // 			changeTotalPrice();	// 전체 합계 금액 변경
@@ -335,6 +350,7 @@
 		});
 		
 		// 최종 금액 변경
+		// 콤마 적용 안된 상태
 		function changeTotalPrice(){
 			var totalPrice = 0;
 			var trPriceArr = $(".trPrice");
@@ -342,6 +358,7 @@
 			for(var i=0; i<trPriceArr.length; i++){
 				totalPrice += Number(trPriceArr.eq(i).text());
 			}
+			
 			console.log(totalPrice);
 			
 			// 값 구했으니 변경하는 코드만 넣으면 됨
@@ -352,26 +369,36 @@
 		// 체크한 상품 합계 금액 변경
 		function changeCheckTotalPrice(){
 			var checkTotalPrice = 0;
+			var checkTotalPriceText = "0"; // 최종 금액에 콤마 표시하여 입력할 때 사용할 변수
 			var checkTotalFinalPrice = 0;
+			var checkTotalFinalPriceText = "0"; // 최종 합계 금액에 콤마 표시하여 입력할 때 사용할 변수
 			var deliveryFee = 2500;
 			$("input:checkbox[name=checkbox]:checked").each(function(){
-				var trPrice = $(this).parent().parent().children().eq(5).find('span').text();
-// 				console.log(trPrice);
-				checkTotalPrice += Number(trPrice);
+				var trPriceText = $(this).parent().parent().children().eq(5).find('.trPrice').text();
+// 				console.log("trPriceText" + trPriceText);
+				var priceOne = trPriceText.replace(/,/g,"");	// 콤마 제거 (ex: 4,000 -> 4000)
+// 				console.log("priceOne" + priceOne);
+				checkTotalPrice += Number(priceOne);
 			});
 			console.log("checkTotalPrice = "+checkTotalPrice);
+
+			checkTotalPriceText = checkTotalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');	// 위에서 계산한 result에 콤마 넣기 (ex: 4000 -> 4,000)
+			$("#totalGoodsPrice").html(checkTotalPriceText);
 			
-			// 값 구했으니 변경하는 코드만 넣으면 됨
-			$("#totalGoodsPrice").html(checkTotalPrice);
 			if(checkTotalPrice >= 50000){
 				checkTotalFinalPrice = Number(checkTotalPrice);
+				checkTotalFinalPriceText = checkTotalFinalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');	// 위에서 계산한 result에 콤마 넣기 (ex: 4000 -> 4,000)
+				$("#deliveryFee").html(0);
+			}
+			else if(checkTotalPrice == 0){
 				$("#deliveryFee").html(0);
 			}
 			else{
 				checkTotalFinalPrice = Number(deliveryFee)+Number(checkTotalPrice);
-				$("#deliveryFee").html(2500);
+				checkTotalFinalPriceText = checkTotalFinalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');	// 위에서 계산한 result에 콤마 넣기 (ex: 4000 -> 4,000)
+				$("#deliveryFee").html('2,500');
 			}
-			$("#totalFinalPrice").html(checkTotalFinalPrice);
+			$("#totalFinalPrice").html(checkTotalFinalPriceText);
 		}
 		
 		
@@ -534,7 +561,7 @@
 					deleteCheckGoodsInCart(chkArr);
 				}
 			}
-			changeTotalPrice();	// 전체 합계 금액 변경
+			//changeTotalPrice();	// 전체 합계 금액 변경
 			changeCheckTotalPrice();	// 체크한 합계 금액 변경
 		});
 		
@@ -586,7 +613,7 @@
 					deleteCheckGoodsInCart(chkArr);
 				}
 			}
-			changeTotalPrice();	// 전체 합계 금액 변경
+			//changeTotalPrice();	// 전체 합계 금액 변경
 			changeCheckTotalPrice();	// 체크한 합계 금액 변경
 		});
 		
