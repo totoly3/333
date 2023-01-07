@@ -39,12 +39,7 @@ public class FrBoardController {
 		public ModelAndView selectList(@RequestParam(value="currentPage",defaultValue="1")int currentPage,
 													ModelAndView  mv,HttpSession session) {
 
-			
-//			Member loginUser = (Member)session.getAttribute("loginUser");
-//			int fWriterNo =loginUser.getmNo();
-	
-		
-			
+
 			int listCount = FrBoardService.selectListCount(); //총 게시글 개수  db에서 조회해오기 .
 			
 			int pageLimit = 10;	//하단에 페이징바 갯수
@@ -238,8 +233,7 @@ public class FrBoardController {
 			
 			public ModelAndView updateFrboard(ModelAndView mv
 											 ,FrBoard fb
-											 ,@RequestParam(value="upfile"
-											 ,required=false) List<MultipartFile> upfile
+											 ,@RequestParam(value="upfile" ,required=false) List<MultipartFile> upfile
 											 ,HttpSession session) {
 				// view에서 전달받은 데이터 확인
 //			    System.out.println("update.frboen :: CTRL :: fno = " + fno);
@@ -253,15 +247,59 @@ public class FrBoardController {
 				// 아래는 게시판 글번호를 이용해서 게시글의 파일 정보를 가져온다 . 기존 글 첨부파일 
 				ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
 			    
+				//여기는아래는  병철이형 부분 
+				//여기는아래는  병철이형 부분 
+				//여기는아래는  병철이형 부분 
+				if(frba.isEmpty()) {
+					System.out.println("기존 첨부파일 없음.");
+					//글만변경
+					int result1 =FrBoardService.updateFrboard1(fb);
+					if(result1>0) {
+						mv.addObject("fb",fb);
+						//여기 아래에서 fb.getfno 를 가져가는 이유가 뭘까 ..
+						mv.setViewName("redirect:/detail.fbo?fno="+fb.getfNo());
+					}else {
+						mv.addObject("errorMsg", "게시글  글 수정 실패!").setViewName("common/errorPage");
+					}
+				}else {
+					
+					//파일이 있으면 삭제 후 insert
+					
+					//현재 남아있는것을 제외하고 첨부파일 삭제 
+					int delAttachResult = 0 ;
+					for(int k=0; k<frba.size(); k++) {
+						//아래는 만약 올린파일이 있으면 삭제 
+						if(frba.get(k).getFaOrginName()!=null) {
+							// 물리아래는  경로에서 삭제
+							new File(session.getServletContext().getRealPath(frba.get(k).getFaChangeName())).delete();
+							
+							// 아래는 DB에서 삭제
+							
+						}
+					}
+				}
+				//여기는위에는  병철이형 부분 
+				//여기는위에는는  병철이형 부분 
+				//여기는위에는  병철이형 부분 
+				
+				
+				
+				
 				// 내가올린 파일이있으면 반복문 돌려  내가 올린 파일 사이즈만큼!
 				// 그리고 지워. 기존꺼 전부 삭제
 				for(int k=0; k<frba.size(); k++) {
 					//아래는 만약 올린파일이 있으면 삭제 
 					if(frba.get(k).getFaOrginName()!=null) {
-						// 물리 경로에서 삭제
+						//아래는 물리 경로에서 삭제
 						new File(session.getServletContext().getRealPath(frba.get(k).getFaChangeName())).delete();
 						// DB에서 삭제
+						int result=FrBoardService.deleteFrFile(frba);
 						
+						if(result>0) {
+							System.out.println("db삭제 성공");
+						}else {
+							System.out.println("db삭제 실패");
+						}
 					}
 				}
 
@@ -280,7 +318,7 @@ public class FrBoardController {
 						FrBoardAttach fat = new FrBoardAttach();
 						//빈 attach 에  경로 붙여진+changename
 						fat.setfNo(fno);
-//						fat.setFaNo(frba.get(j).getFaNo());
+						fat.setFaNo(frba.get(j).getFaNo());
 						fat.setFaChangeName("resources/freeBoard/uploadFiles/"+changeName);
 						fat.setFaOrginName(upfile.get(j).getOriginalFilename());
 //						System.out.println("update.frboen :: CTRL :: 담기전 fat = : " + fat);
@@ -328,17 +366,7 @@ public class FrBoardController {
 			public String detailFrBoardReviewSelect(int fno, ModelAndView mv,HttpSession session) {
 				ArrayList<FrBoardReply> rlist=FrBoardService.detailFrBoardReviewSelect(fno);
 				System.out.println("디테일 댓글조회 : rlist는????"+rlist);
-				
 
-				//				String mId =loginUser.getmId();
-//				System.out.println("컨트롤러 mId : "+mId);
-//				String mName =loginUser.getmName();
-////						
-////	
-////				mv.addObject("mName",mName);
-//				mv.addObject("mId",mId);
-//				
-//				mv.setViewName("board/freeBoard/freeBoardDetailView");
 				return new Gson().toJson(rlist);
 			}
 			
@@ -354,11 +382,12 @@ public class FrBoardController {
 			}
 			
 			//아래는 댓글 수정 
-			@RequestMapping("updateFrReply.fr")
+			@ResponseBody
+			@RequestMapping(value="updateFrReply.fr",produces="text/html; charset=UTF-8")
 			public String frReplyModify(ModelAndView mv,FrBoardReply refb) {
-				
+				System.out.println("refb는..?? "+refb);
 				int result=FrBoardService.frReplyModify(refb);
-				
+				System.out.println("수정"+result);
 				//아래 결과가  0이면 N  , 1이면 Y 
 				return (result == 0) ? "NNNNN" : "NNNNY";
 				
@@ -372,7 +401,24 @@ public class FrBoardController {
 				
 				int result = FrBoardService.deleteClickFrboard(fNo);
 				
-				return result>0? "yes":"no";
+				return result>0 ? "yes":"no";
 				
 			}
+			
+			
+			//아래는 댓글 삭제 
+			@ResponseBody
+			@RequestMapping("deleteFrReply.fr")
+			public String deleteReply(HttpServletRequest request
+									  ,FrBoardReply refb) {
+					
+				
+				int result = FrBoardService.deleteReply(refb);
+				
+				return result>0 ? "yes":"no";
+				
+			}
+			
+			
+			
 }	

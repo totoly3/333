@@ -39,9 +39,6 @@ public class AllTimeBoardController {
 
 		ArrayList<Character> altimelist = AlltimeBoardService.allTimeSelectList();
 
-		System.out.println("altimelist는??"+altimelist);
-		System.out.println("0번째 첸지네임은?"+altimelist.get(0).getChangeName());
-		System.out.println("1번째 첸지네임은?"+altimelist.get(1).getChangeName());
 		
 		System.out.println("============여기는 리스트 뿌리기로 이동  ==========");
 
