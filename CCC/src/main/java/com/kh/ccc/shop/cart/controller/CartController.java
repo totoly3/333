@@ -27,12 +27,12 @@ public class CartController {
 	@RequestMapping("cart.ca")
 	public String goCart(HttpSession session, Model model) {
 		Member loginUser = (Member)session.getAttribute("loginUser");
-		System.out.println("cart.ca:: loginUser : " + loginUser);
+//		System.out.println("cart.ca:: loginUser : " + loginUser);
 		
 		// 해당 회원의 장바구니 조회
 		ArrayList<Cart> clist = cartService.selectCartList(loginUser.getMemberNo());
 		clist = cartService.selectCartList(loginUser.getMemberNo());
-		System.out.println("cart.ca:: clist : " + clist);
+//		System.out.println("cart.ca:: clist : " + clist);
 		
 		model.addAttribute("clist", clist);
 		
@@ -43,7 +43,7 @@ public class CartController {
 	@RequestMapping(value="changeQuantity.ca", produces="text/html; charset=UTF-8")
 	public String updateCartChangeQuantity(HttpSession session, int cartNo, int quantity) {
 		String responseData = "응답 데이터 : "+cartNo+"번 상품을 "+quantity+"개로 변경.";
-		System.out.println(responseData);
+//		System.out.println(responseData);
 		
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		
@@ -51,7 +51,7 @@ public class CartController {
 		c.setMemberNo(loginUser.getMemberNo());
 		c.setCartNo(cartNo);
 		c.setQuantity(quantity);
-		System.out.println("changeQuantity.ca:: c : " + c);
+//		System.out.println("changeQuantity.ca:: c : " + c);
 		
 		// 장바구니에서 해당 상품의 수량 변경
 		int result = cartService.updateCartChangeQuantity(c);
@@ -76,12 +76,12 @@ public class CartController {
 		
 		// 구매자 정보
 		Member loginUser = (Member)session.getAttribute("loginUser");
-		System.out.println("buyGoods:: loginUser : " + loginUser);
+//		System.out.println("buyGoods:: loginUser : " + loginUser);
 		
 		// cartNo로 구매할 굿즈번호와 수량 정보 조회
 		Cart cart = cartService.selectCart(cartNo);
 		model.addAttribute("cart", cart);
-		System.out.println("buyGoods.ca :: cart : " + cart);
+//		System.out.println("buyGoods.ca :: cart : " + cart);
 		
 		// 상품 총 합계 계산
 		int totalPrice = 0;
@@ -89,7 +89,7 @@ public class CartController {
 		totalPrice += cart.getQuantity() * cart.getGoodsPrice();
 		
 		model.addAttribute("totalPrice", totalPrice);
-		System.out.println("buyGoods.ca :: totalPrice : " + totalPrice);
+//		System.out.println("buyGoods.ca :: totalPrice : " + totalPrice);
 		
 		/* 구매한 만큼 상품 재고 갱신-> 추후 결제 완료 시 삭제하는 것으로 변경할 것
 		int resultUpdateStock = cartService.updateStock(cart);
@@ -130,7 +130,7 @@ public class CartController {
 		
 		// 관심상품 등록
 		int result = cartService.checkWish(w);
-		System.out.println("checkWish:: result : " + result);
+//		System.out.println("checkWish:: result : " + result);
 		
 		if(result > 0) {
 			return "1";
@@ -156,7 +156,7 @@ public class CartController {
 		
 		// 관심상품 등록
 		int result = cartService.insertWish(w);
-		System.out.println("addWish:: result : " + result);
+//		System.out.println("addWish:: result : " + result);
 		
 		if(result > 0) {
 			return "success";
@@ -182,7 +182,7 @@ public class CartController {
 		
 		// 관심상품 등록
 		int result = cartService.removeWish(w);
-		System.out.println("removeWish:: result : " + result);
+//		System.out.println("removeWish:: result : " + result);
 		
 		if(result > 0) {
 			return "success";
@@ -199,11 +199,11 @@ public class CartController {
 		int result = cartService.deleteGoodsInCart(cartNo);		
 		
 		if(result > 0 ) {
-			System.out.println("DB에서 장바구니 항목 삭제 성공");
+//			System.out.println("DB에서 장바구니 항목 삭제 성공");
 			return "1";
 		}
 		else {
-			System.out.println("DB에서 장바구니 항목 삭제 실패");
+//			System.out.println("DB에서 장바구니 항목 삭제 실패");
 			return "0";
 		}
 	}
@@ -222,11 +222,11 @@ public class CartController {
 		int result = cartService.deleteGoodsInCart(chkArr);
 		
 		if(result > 0 ) {
-			System.out.println("DB에서 장바구니 선택 삭제 성공");
+//			System.out.println("DB에서 장바구니 선택 삭제 성공");
 			return "1";
 		}
 		else {
-			System.out.println("DB에서 장바구니 선택 삭제 실패");
+//			System.out.println("DB에서 장바구니 선택 삭제 실패");
 			return "0";
 		}
 	}
@@ -262,7 +262,7 @@ public class CartController {
 		// cartNo로 구매할 굿즈번호와 수량 정보 조회
 		ArrayList<Cart> clist = cartService.selectCartListBycnoList(cnoList);
 		model.addAttribute("clist", clist);
-		System.out.println("buyManyGoods.ca :: clist : " + clist);
+//		System.out.println("buyManyGoods.ca :: clist : " + clist);
 		
 		// 상품 총 합계 계산
 		int totalPrice = 0;
@@ -272,7 +272,7 @@ public class CartController {
 		}
 		
 		model.addAttribute("totalPrice", totalPrice);
-		System.out.println("butManyGoods.ca :: totalPrice : " + totalPrice);
+//		System.out.println("butManyGoods.ca :: totalPrice : " + totalPrice);
 		
 		/* 구매한 만큼 상품 재고 갱신  -> 추후 최종 주문 완료 시 장바구니에서 삭제하는 것으로 변경할 것
 		int resultUpdateStock = cartService.updateStock(clist);

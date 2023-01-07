@@ -8,91 +8,124 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <!-- jQuery 라이브러리 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
     <!-- 부트스트랩에서 제공하고 있는 스타일 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
     <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!--     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
     <style>
     	#headerRaiseUp{
             z-index: 8;
             position: relative;
             top: -155px;
         }
-        /* Make the image fully responsive */
-        .carousel-inner img {
-            width: 100%;
-            height: 100%;
+        #cart-area th{
+        	border-top: 2px solid lightgray;
+            border-bottom: 2px solid lightgray;
+        }
+        #cart-area tbody td{
+            border-bottom: 1px dashed lightgray;
+        }
+        #cart-area tfoot td{
+        	border-top: 2px solid lightred;
         }
         #cart-area{
-        	border-collapse: separate;
-        	border : 0.5px solid skyblue;
-        	border-radius: 20px;
+            border-bottom: 2px solid lightgray;
         }
-        #cart-area th{
-            border-bottom: 1px solid black; 
-        }
-        #cart-area tr{
-            border: solid 1px lightgray;
-        }
+        
         #cart-td-center{
             text-align: center;
         }
         #cart-td-left{
             text-align: left;
         }
-        /*버튼*/
-        #cart-area tr button{
-        	height: 30px;
+        /*입력*/
+        #cart-area input[type='number']::-webkit-outer-spin-button,
+        #cart-area input[type='number']::-webkit-inner-spin-button{
+        	-webkit-appearance: none;
+    		margin: 0;
         }
+        #cart-area input{
+        	text-align:center;
+        	border: 1px solid lightgray;
+        }
+        #cart-area input:focus {
+        	outline: none !important;
+        	border-color: #EA4F4D;
+        	box-shadow: 0 0 5px #EA4F4D;
+        	border: 1px solid #EA4F4D;
+        }
+        
+        /*버튼*/
+        #deleteTrDiv button:hover{
+        	font-weight: bold;
+        	font-size: 13px;
+        }
+        
+        #bottomBuyBtn button:hover{
+        	font-weight: bold;
+        	font-size: 13px;
+        }
+        
+		#cart-area tr button{ 
+			height: 30px;
+        	font-size: 11px;
+		}
+		#cart-area tr button:hover{ 
+			font-weight: bold;
+			font-size: 12px;
+		}
         .addWishBtn{
         	 border-radius: 3px;
         	 width: 110px;
         	 margin-bottom: 3px;
-        	 font-size: 11px;
-        	 background-color: rgb(235, 194, 215);
+        	 background-color: coral;
+        	 color: white;
         	 border:0px;
         }
         .buyBtn{
         	 border-radius: 3px;
         	 width: 110px;
         	 margin-bottom: 3px;
-        	 font-size: 11px;
-        	 background-color: lightpink;
+/*         	 background-color: lightpink; */
+        	 background-color: #EA4F4D;
+        	 font-weight: bold;
+        	 color: white;
         	 border:0px;
         }
         .deleteBtn{
         	 border-radius: 3px;
         	 width: 110px;
         	 margin-bottom: 3px;
-        	 font-size: 11px;
-        	 background-color: rgb(236, 181, 236);
+        	 background-color: rgb(218, 209, 210);
         	 border:0px;
         }
         .quantityBtn{
         	 width: 50px;
-        	 height: 30px;
+        	 height: 15px;
         	 border-radius: 10px;
-        	 background-color: rgb(136, 181, 236);
-        	 border: 0px;
+        	 border: 1px solid lightgray;
         }
         
         /*리모콘*/
         .remoteDiv{
         	position: fixed;
-        	border: 1px solid red;
-        	width: 100px;
-        	height: 200px;
-        	right: 100px;
-        	bottom: 350px;
-			display: none;
+        	border: 1px solid lightgray;
+        	width: 150px;
+        	height: 300px;
+        	right: 50px;
+        	bottom: 400px;
+/* 			display: none; */
         }
         .categoryTag{
         	color: black;
+        	font-size: 12px;
         }
         .categoryTag:hover{
         	text-decoration:none;
-        	color: lightpink;
+        	font-size: 13px;
+        	font-weight: bold;
+        	color: #EA4F4D;
         }
     </style>
     <title>CCC::장바구니</title>
@@ -100,69 +133,7 @@
 <body>
 <jsp:include page="../common/header.jsp"/>
 <div class="container" id="headerRaiseUp">
-    <!-- CAROUSEL START -->
-    <div id="carouselId" class="carousel slide" data-ride="carousel">
-        <!-- Indicators -->
-        <ul class="carousel-indicators">
-            <li data-target="#carouselId" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselId" data-slide-to="1"></li>
-            <li data-target="#carouselId" data-slide-to="2"></li>
-            <li data-target="#carouselId" data-slide-to="3"></li>
-            <li data-target="#carouselId" data-slide-to="4"></li>
-            <li data-target="#carouselId" data-slide-to="5"></li>
-            <li data-target="#carouselId" data-slide-to="6"></li>
-            <li data-target="#carouselId" data-slide-to="7"></li>
-            <li data-target="#carouselId" data-slide-to="8"></li>
-			<li data-target="#carouselId" data-slide-to="9"></li>
-        </ul>
-        
-        <!-- The slideshow -->
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="resources/goods/image/goods01.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods02.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods03.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods04.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods05.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods06.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods07.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods08.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods09.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods10.jpg" alt="">
-            </div>
-            
-        </div>
-        
-        <!-- Left and right controls -->
-        <a class="carousel-control-prev" href="#carouselId" data-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </a>
-        <a class="carousel-control-next" href="#carouselId" data-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </a>
-    </div>
-    <!-- CAROUSEL END -->
-    
-    <br><br><br>
-    
+	<br><br>
     <!-- CART START-->
     <div class="cartDiv">
         <form action="">
@@ -206,7 +177,7 @@
 			                            <td class="cart-td-center trTdPrice" style="width: 100px;"><span class="trPrice">${c.goodsPrice*c.quantity}</span>원</td>
 			                            <td class="cart-td-center" style="width: 110px;">
 			                                <button type="button"  class="buyBtn">구매</button>
-			                                <button type="button"  class="addWishBtn">관심상품 등록</button>
+			                                <button type="button"  class="addWishBtn">관심상품</button>
 			                                <button type="button"  class="deleteBtn">삭제</button>
 			                            </td>
 			                        </tr>
@@ -238,19 +209,19 @@
                     </tfoot>
                 </table>
                 <br>
-                <div id="">
+                <div id="deleteTrDiv">
                     <button type="button"  class="btn default deleteCheckBtn" style="border-radius: 3px; width: 150px; margin-bottom: 3px; font-size: 11px; background-color: rgb(230, 171, 171); border:0px;">선택상품 삭제하기</button>
                     <button type="button"  class="btn default clearCartBtn" style="border-radius: 3px; width: 150px; margin-bottom: 3px; font-size: 11px; background-color: rgb(214, 240, 189); border:0px;">장바구니 비우기</button>
                     <span class="clearboth"></span>
                 </div>
                 <br><br>
-                <div align="center">
+                <div align="center" id="bottomBuyBtn">
                     <button type="button" class="btn default buyAllGoodsBtn" style="border-radius: 3px; width: 100px; height: 50px; margin: 0 10px 0 0; font-size: 11px; background-color: rgb(238, 161, 206); border:0px;">전체 상품주문</button>
                     <button type="button" class="btn default buyCheckGoodsBtn" style="border-radius: 3px; width: 100px; height: 50px; margin: 0 10px 0 10; 3px; font-size: 11px; background-color: rgb(236, 181, 236); border:0px;">선택 상품주문</button>
                     <button type="button" class="btn default goShopBtn" style="border-radius: 3px; width: 100px; height: 30px; margin: 0 10px 0 10; 3px; font-size: 11px; background-color: lightpink; border:0px; float: right;">쇼핑 계속하기</button>
                 </div>
                 <br><br><br>
-                <div style="border: solid 1px lightgray; padding: 10px 0; font-size: 11pt; background-color: antiquewhite; padding-left: 10px;">이용안내</div>
+                <div style="border: solid 1px lightgray; padding: 10px 0; font-size: 11pt; background-color: rgb(245, 147, 147);; padding-left: 10px;">이용안내</div>
                 <div style="border: solid 1px rgb(191, 196, 191); height: 300px; font-size: 9pt; padding-left: 10px;">
                     <br>장바구니 이용 안내
                     <ol>
@@ -274,13 +245,19 @@
     <br><br><br><br><br>
     
     <div class="remoteDiv">
-    	<span id="remoteController">리모콘쓰</span>
-    	<table>
-    		<tr><td>1번 항목</td></tr>
-    		<tr><td>2번 항목</td></tr>
-    		<tr><td>3번 항목</td></tr>
-    		<tr><td>4번 항목</td></tr>
-    	</table>
+    	<span id="remoteController">인기 굿즈</span><br>
+    	<div class="remoteItem">
+			<span class="remoteSpan">1번 항목</span><br>
+			<a href="destination.html"><img src="resources/css/listView/images/destination-1.jpg" class="img-fluid" alt="Colorlib Template"></a>
+    	</div>
+    	<div class="remoteItem">
+			<span class="remoteSpan">2번 항목</span><br>
+			<a href="destination.html"><img src="resources/css/listView/images/destination-1.jpg" class="img-fluid" alt="Colorlib Template"></a>
+    	</div>
+    	<div class="remoteItem">
+			<span class="remoteSpan">3번 항목</span><br>
+			<a href="destination.html"><img src="resources/css/listView/images/destination-1.jpg" class="img-fluid" alt="Colorlib Template"></a>
+    	</div>
     </div>
 
     <script>
@@ -436,11 +413,11 @@
 					console.log("결과는 : " + result);
 					if(result > 0){
 						removeWish(cartNo);
-						window.alert("관심상품 삭제!")
+						window.alert("관심상품 삭제!");
 					}
 					else{
 						addWish(cartNo);
-						window.alert("관심상품 등록!")
+						window.alert("관심상품 등록!");
 					}
 				},
 				error : function(){
@@ -496,6 +473,8 @@
 				// 장바구니 테이블에서 해당 굿즈 삭제
 				deleteGoodsInCart(cartNo);
 			}
+			changeTotalPrice();	// 전체 합계 금액 변경
+			changeCheckTotalPrice();	// 체크한 합계 금액 변경
 		});
 		
 		function deleteGoodsInCart(cartNo){
@@ -552,6 +531,8 @@
 					deleteCheckGoodsInCart(chkArr);
 				}
 			}
+			changeTotalPrice();	// 전체 합계 금액 변경
+			changeCheckTotalPrice();	// 체크한 합계 금액 변경
 		});
 		
 		function deleteCheckGoodsInCart(chkArr){
@@ -602,6 +583,8 @@
 					deleteCheckGoodsInCart(chkArr);
 				}
 			}
+			changeTotalPrice();	// 전체 합계 금액 변경
+			changeCheckTotalPrice();	// 체크한 합계 금액 변경
 		});
 		
 		
@@ -698,17 +681,22 @@
         
 		
 		//  리모콘
-		$(document).scroll(function(){
-			var con = $(".remoteDiv");
-			var position = $(window).scrollTop();
-			
-			if(position > 250){
-				con.fadeIn(500);
-			}
-			else if(position < 250){
-				con.fadeOut(500);
-			}
-		});
+		
+// 		$(function(){
+// 			var con = $(".remoteDiv");
+// 			con.fadeIn();
+// 		});
+// 		$(document).scroll(function(){
+// 			var con = $(".remoteDiv");
+// 			var position = $(window).scrollTop();
+// 			con.fadeIn();
+// 			if(position > 250){
+// 				con.fadeIn(500);
+// 			}
+// 			else if(position < 250){
+// 				con.fadeOut(500);
+// 			}
+// 		});
 		
 // 		$(".remoteDiv").click(function(){
 			// 클릭 시 position 500으로 이동

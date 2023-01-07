@@ -168,23 +168,27 @@
             <ul id="headerIconUl">
                 <c:choose>
             		<c:when test="${empty loginUser }">
-	                	<li><a href="loginform.me"><img src="./resources/header2Img/user1.png" width="20px;"></a></li>
+<!-- 	                	<li><a href="loginform.me"><img src="./resources/header2Img/user1.png" width="20px;"></a></li> -->
+	                	<li><a href="loginform.me">Login</a></li>
             		</c:when>
             		<c:otherwise>
-            			<li><a href="mypage.me"><img src="./resources/header2Img/user1.png" width="20px;"></a></li>
+<!--             			<li><a href="mypage.me"><img src="./resources/header2Img/user1.png" width="20px;"></a></li> -->
+            			<li><a href="mypage.me">MyPage</a></li>
             		</c:otherwise>
                 </c:choose>
-                <li><a href="mainAdmin.ad"><img src="./resources/header2Img/key.png" width="25px;"></a></li>
+<!--                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/key.png" width="25px;"></a></li> -->
                 <c:choose>
             		<c:when test="${not empty loginUser }">
-                		<li><a href="cart.ca"><img src="./resources/header2Img/cart.png" width="22px;"></a></li>
+<!--                 		<li><a href="cart.ca"><img src="./resources/header2Img/cart.png" width="22px;"></a></li> -->
+						<li><a href="cart.ca">Cart</a></li>
             		</c:when>
             		<c:otherwise>
-                		<li><a href=""><img src="./resources/header2Img/cart.png" width="22px;"></a></li>
+<!--                 		<li><a href=""><img src="./resources/header2Img/cart.png" width="22px;"></a></li> -->
+                		<li><a href="">Cart</a></li>
             		</c:otherwise>
                 </c:choose>
-                
-                <li><a href="mainAdmin.ad"><img src="./resources/header2Img/menu.png" width="14px;"></a></li>
+<!--                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/menu.png" width="14px;"></a></li> -->
+                <li><a href="mainAdmin.ad">Admin</a></li>
             </ul>
         </div>
     </div>

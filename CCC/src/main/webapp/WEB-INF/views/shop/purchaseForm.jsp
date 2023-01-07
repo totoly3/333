@@ -6,12 +6,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- jQuery 라이브러리 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- 부트스트랩에서 제공하고 있는 스타일 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!--     jQuery 라이브러리 -->
+<!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+<!--     부트스트랩에서 제공하고 있는 스타일 -->
+<!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
+<!--     부트스트랩에서 제공하고 있는 스크립트 -->
+<!--     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
     <title>CCC::구매페이지</title>
     <style>
     	#headerRaiseUp{
@@ -38,11 +38,13 @@
         }
         .purchaseNormalTb th{
             width:20%;
-            background-color: antiquewhite;
-            border-bottom: 1px solid antiquewhite;
+            background-color: rgb(255, 209, 209);
+            font-size: 13px;
+            color: black;
         }
         .purchaseNormalTb td{
-            border-bottom: 1px solid lightpink;
+            border-bottom: 2px dashed lightpink;
+            font-size: 13px;
         }
         .payType{
             margin: 10px 30px 10px 30px;
@@ -53,19 +55,27 @@
         /*배송관련버튼*/
         .changePackageBtn{
         	border: 0px;
+        	height: 40px;
+        	border-radius: 4px;
+			width: 110px;
+        	font-size: 11px;
+        	color: white;
         	vertical-align: middle;
-        	border-radius: 10px;
         }
-        
+        .changePackageBtn:hover{
+        	font-weight: bold;
+			font-size: 13px;
+        }
         /*기본배송지버튼*/
         #defaultPackageInfo{
         	margin-left: 5%;
-            background-color: lightblue;
+            background-color: rgb(78, 154, 255);
         }
+        
         /*배송지 불러오기버튼*/
         #changePackageInfo{
-			margin-left: 5%;
-            background-color: lightpink;
+			margin-left: 1%;
+            background-color: rgb(255, 104, 104);
         }
         /*배송 메세지 입력 버튼*/
         #insertComment{
@@ -75,32 +85,35 @@
         	margin-left: 5%;
         	background-color: lightgreen;
         }
-        
-        /*주문 버튼*/
         #purchaseBtn{
         	border: 0px;
+        	height: 40px;
+        	border-radius: 4px;
+			width: 110px;
+        	font-size: 11px;
+        	color: white;
         	vertical-align: middle;
-        	border-radius: 10px;
-        	background-color: lightgreen;
-        	width: 130px;
-        	height: 50px;
-        	margin-left: 250px;
+        	color: white;
+            background-color: rgb(255, 104, 104);
+            margin-left: 45%;
         }
-        
-        /*뒤로가기 버튼*/
         #goBackBtn{
         	border: 0px;
+        	height: 40px;
+        	border-radius: 4px;
+			width: 110px;
+        	font-size: 11px;
+        	color: white;
         	vertical-align: middle;
-        	border-radius: 10px;
-        	background-color: lightblue;
-        	width: 130px;
-        	height: 50px;
+        	color: white;
+            background-color: rgb(78, 154, 255);
+            float: right;
         }
-        
     </style>
 </head>
 <body>
 	<jsp:include page="../common/header.jsp"/>
+	<br><br>
     <div class="purchaseOuter container" id="headerRaiseUp">
         <span class="purchaseHeaderSpan">주문 / 결제</span>
         <hr class="purchaseHeaderHr">
@@ -109,15 +122,15 @@
 	            <div class="buyerInfo">
 	                <table id="buyerInfoBTL" class="purchaseNormalTb">
 	                    <tr align="center">
-	                        <th>이름</th>
+	                        <th>이 름</th>
 	                        <td>${loginUser.memberName }</td>
 	                    </tr>
 	                    <tr align="center">
-	                        <th>이메일</th>
+	                        <th>이 메 일</th>
 	                        <td>${loginUser.memberEmail }</td>
 	                    </tr>
 	                    <tr align="center">
-	                        <th>휴대폰 번호</th>
+	                        <th>휴 대 폰 번 호</th>
 	                        <td>${loginUser.memberPhone }</td>
 	                    </tr>
 	                </table>
@@ -126,24 +139,24 @@
 				<span class="purchaseHeaderSpan">받는 사람 정보</span>
 				<button type="button" class="changePackageBtn" id="defaultPackageInfo">기본 배송지</button>
 				<button type="button" class="changePackageBtn" id="changePackageInfo">배송지 불러오기</button>
-				<button type="button" class="insertCommentBtn" id="insertComment">배송지 불러오기</button>
+<!-- 				<button type="button" class="insertCommentBtn" id="insertComment">배송지 불러오기</button> -->
 				<hr class="purchaseHeaderHr">
 				<div class="receiverInfo">
 	                <table id="receiverInfoTBL" class="purchaseNormalTb">
 	                    <tr align="center">
-	                        <th>이름</th>
+	                        <th>이 름</th>
 	                        <td>${loginUser.memberName }</td>
 	                    </tr>
 	                    <tr align="center">
-	                        <th>배송주소</th>
+	                        <th>배 송 주 소</th>
 	                        <td>${loginUser.memberAddress }</td>
 	                    </tr>
 	                    <tr align="center">
-	                        <th>연락처</th>
+	                        <th>연 락 처</th>
 	                        <td>${loginUser.memberPhone }</td>
 	                    </tr>
 	                    <tr align="center">
-	                        <th>배송 요청사항</th>
+	                        <th>배 송 요 청 사 항</th>
 	                        <td></td>
 	                    </tr>
 	                </table>
@@ -225,6 +238,7 @@
 	                        	</c:otherwise>
 	                        </c:choose>
 	                    </tr>
+	                    <!-- 
 	                    <tr align="center">
 	                        <th>결제 방법</th>
 	                        <td align="left">
@@ -270,9 +284,10 @@
 	                            </div>
 	                        </td>
 	                    </tr>
+	                     -->
 	                </table>
 				</div>
-				<br>
+				<br><br>
 				<button type="submit" id="purchaseBtn">주문</button>
 				<button type="button" id="goBackBtn">뒤로 가기</button>
 			</form>

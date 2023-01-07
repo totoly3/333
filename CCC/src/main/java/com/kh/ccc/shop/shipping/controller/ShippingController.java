@@ -22,16 +22,16 @@ public class ShippingController {
 	
 	@RequestMapping("shipping.go")
 	public String goPopup(HttpSession session, Model model, HttpServletRequest request) {
-		System.out.println("address.sh::");
+//		System.out.println("address.sh::");
 		Member loginUser = (Member)session.getAttribute("loginUser");
 //		System.out.println("infoInsert.sh :: loginUser : " + loginUser);
 		
 		// 해당 회원의 배송지 정보를 조회
 		ArrayList<AddressInfo> aiList = shippingService.selectListAddressInfo(loginUser.getMemberNo());
-		System.out.println("shipping.go :: aiList : " + aiList);
+//		System.out.println("shipping.go :: aiList : " + aiList);
 		model.addAttribute("aiList", aiList);
 		
-		return "shop/shippingMain";
+		return "shop/shipping/shippingMain";
 	}
 	
 	@RequestMapping("infoUpdateForm.sh")
@@ -39,17 +39,17 @@ public class ShippingController {
 		System.out.println("infoUpdateForm.sh :: addressInfoNo : " + addressInfoNo);
 		
 		AddressInfo ai = shippingService.selectAddressInfoByAddrNo(addressInfoNo);
-		System.out.println("infoUpdateForm.sh :: ai : " + ai);
+//		System.out.println("infoUpdateForm.sh :: ai : " + ai);
 		model.addAttribute("ai", ai);
 		
-		return "shop/shippingUpdate";
+		return "shop/shipping/shippingUpdate";
 	}
 	
 	@RequestMapping("infoInsertForm.sh")
 	public String addressInfoInsertForm(HttpSession session, Model model) {
 //		System.out.println("infoInsertForm.sh");
 		
-		return "shop/shippingInsert";
+		return "shop/shipping/shippingInsert";
 	}
 	
 	@RequestMapping("infoInsert.sh")
