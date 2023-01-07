@@ -6,102 +6,193 @@
 <!-- jQuery 라이브러리 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <!-- 부트스트랩에서 제공하고 있는 스타일 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
 <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+<!-- DAUM 우편번호 API -->
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <title>CCC::배송지 추가</title>
 <style>
-	.addressManageHr{
-		height: 2px;
-		background-color: gray;
+	#infoTBL{
+		width:90%;
+		font-size: 13px;
 	}
-	.packageInfoSection{
-		width: 100%;
-		height: 200px;
-		border: 1px solid lightgray;
+	#infoTBL tr{
+		height:30px;
 	}
-	.positionControl{
-		margin-top: 20px;
-		pmargin-left:50px;
-	}
-	.positionControl input{
-		width: 100%;
-		height: 30px;
-	}
-	.shippingLabel{
-		border-bottom: 2px solid lightpink;
-	}
-	#basicChk{
-		width: 20px;
-		height: 20px;
-		margin: 0 0 0 20px;
-		vertical-align: middle;
-	}
-	.positionControl input{
-		border: none;
-		background-color: beige;
-		margin: auto;
-		padding: auto;
-	}
-	.addShippingInfo{
-		width: 49%;
-		height: 40px;
-		border: none;
+	#infoTBL th{
+		width: 30%;
 		background-color: lightpink;
 	}
-	.resetShippingInfo{
-		margin-top: 10px;
-		width: 49%;
-		height: 40px;
-		border: none;
-		background-color: lightgray;
+	.shippingTD input{
+		height: 100%;
+		width: 100%;
+		border: none; 
+		border-bottom: 1px dashed gray;
 	}
-	.backShipping{
-		width:100%;
-		height: 40px;
+	#resetBtn{
+		width: 100px;
+		height: 30px;
+		background-color: lightgray;
+		color: white;
 		border: none;
-		background-color: lightblue;
+		border-radius: 4px;
+		vertical-align: middle;
+		float: left;
 		margin-top: 10px;
+		margin-left: 5px;
+	}
+	#resetBtn:hover{
+		font-size: 15px;
+		font-weight: bold;
+	}
+	#submitBtn{
+		width: 100px;
+		height: 30px;
+		background-color: rgb(255, 104, 104);
+		color: white;
+		border: none;
+		border-radius: 4px;
+		vertical-align: middle;
+		float: left;
+		margin-top: 10px;
+		margin-left: 30px;
+	}
+	#submitBtn:hover{
+		font-size: 14px;
+		font-weight: bold;
+	}
+	#backBtn{
+		width: 100px;
+		height: 30px;
+		background-color: lightblue;
+		color: black;
+		border: none;
+		border-radius: 4px;
+		vertical-align: middle;
+		float: right;
+		margin-top: 40px;
+		margin-right: 30px;
+	}
+	#backBtn:hover{
+		font-size: 14px;
+		font-weight: bold;
+	}
+	#zipCodeBtn{
+		width: 120px;
+		height: 30px;
+		background-color: lightgray;
+		color: black;
+		border: none;
+		border-radius: 4px;
+		vertical-align: middle;
+	}
+	#zipCodeBtn:hover{
+		font-size: 14px;
+		font-weight: bold;
 	}
 </style>
 </head>
 <body>
-	<div class="addressInsertOuter container-fluid">
-	<br>
-	<h4 align="center">배송지 추가</h4>
-	<hr class="addressManageHr">
-	<div class="form-area">
-		<form action="infoInsert.sh">
-			<div class="packageInfoSection">
-				<div class="positionControl">
-					<label for="receiverName" class="shippingLabel">받는 사람 이름 : </label>
-					<input type="text" id="receiverName" placeholder="받는 사람 이름을 입력해 주세요." name="receiverName" required><br>
-					<label for="addressName" class="shippingLabel">받는 곳 : </label>
-					<input type="text" id="addressName" placeholder="받는 곳 이름" name="addressName" required><br>
-					<label for="address" class="shippingLabel">받는 곳 주소 : </label>
-					<input type="text" id="address" placeholder="받는 곳 주소" name="address" required><br>
-					<label for="addressDetail" class="shippingLabel">받는 곳 상세 주소 : </label>
-					<input type="text" id="addressDetail" placeholder="받는 곳 상세 주소" name="addressDetail" required><br>
-					<label for="zipCode" class="shippingLabel">우편번호 : </label>
-					<input type="text" id="zipCode" placeholder="우편번호를 입력해 주세요." name="zipCode" required><br>
-					<label for="phone" class="shippingLabel">받는 곳 전화번호 : </label>
-					<input type="text" id="phone" placeholder="ex)010-0000-0000" name="phone" required><br>
-					<label for="comment" class="shippingLabel">배송 메세지 : </label>
-					<input type="text" id="comment" placeholder="배송메세지를 입력해 주세요." name="comment"><br>
-					<label for="basicChk">기본 배송지로  선택</label>
-					<input type="checkbox" id="basicChk" name="basicChk" value="Y"><br>
-					<button type="submit" class="addShippingInfo">저장</button>
-					<button type="reset" class="resetShippingInfo">초기화</button>
-					<button type="button" class="backShipping">뒤로가기</button>
-				</div>
-			</div>
-		</form>
-	</div>
+	<div class="addressInsertOuter">
+		<h4 align="center">배송지 추가</h4>
+		<hr style="height:3px; background-color:gray;">
+		<div class="form-area">
+			<form action="infoInsert.sh" align="center" method="post">
+				<table id="infoTBL">
+					<tr>
+						<td colspan="2" style="color: coral">배송지는 최대 5개까지 저장할 수 있습니다.</td>
+					</tr>
+					<tr>
+						<th>받는 사람</th>
+						<td class="shippingTD"><input type="text" id="receiverName" placeholder="받는 사람 이름을 입력해 주세요." name="receiverName" required></td>
+					</tr>
+					<tr>
+						<th>받는 곳</th>
+						<td class="shippingTD"><input type="text" id="addressName" placeholder="받는 곳 이름을 입력해 주세요." name="addressName" required></td>
+					</tr>
+					<tr>
+						<td class="shippingTD"><input type="text" id="zipCode" name="zipCode" placeholder="우편번호"></td>
+						<td><input type="button" id="zipCodeBtn" onclick="getPostcode();" value="우편번호 찾기" style="margin-left:10px;"></td>
+					</tr>
+					<tr>
+						<td colspan="2" class="shippingTD"><input type="text" id="address" name="address" placeholder="받는 곳 주소" required></td>
+					</tr>
+					<tr>
+						<td class="shippingTD"><input type="text" id="extraAddress" placeholder="참고항목"></td>
+						<td class="shippingTD"><input type="text" id="addressDetail" name="addressDetail" placeholder="받는 곳 상세 주소" required></td>
+					</tr>
+					<tr>
+						<th>전화번호</th>
+						<td class="shippingTD"><input type="text" id="phone" placeholder="ex)010-0000-0000" name="phone" required></td>
+					</tr>
+					<tr>
+						<th>배송 메세지</th>
+						<td class="shippingTD"><input type="text" id="comment" placeholder="배송메세지를 입력해 주세요." name="comment"></td>
+					</tr>
+					<tr>
+						<th>기본 배송지</th>
+						<td>
+							<input type="checkbox" id="basicChk" name="basicChk" value="Y">
+							<span style="font-size:7px;color:coral;">체크하면 기본배송지로 추가됩니다.</span>
+						</td>
+					</tr>
+				</table>
+				<button type="submit" id="submitBtn">저장</button>
+				<button type="reset" id="resetBtn">초기화</button>
+				<button type="button" id="backBtn" onclick="location.href='shipping.go';">뒤로가기</button>
+			</form>
+		</div>
 	</div><br>
 	<script>
-		$(".backShipping").click(function(){
-			location.href="shipping.go";
-		});
+		// 우편번호 kakao API 사용
+		function getPostcode() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+	
+	                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+	                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+	                var addr = ''; // 주소 변수
+	                var extraAddr = ''; // 참고항목 변수
+	
+	                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+	
+	                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+	                if(data.userSelectedType === 'R'){
+	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                        extraAddr += data.bname;
+	                    }
+	                    // 건물명이 있고, 공동주택일 경우 추가한다.
+	                    if(data.buildingName !== '' && data.apartment === 'Y'){
+	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                    }
+	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	                    if(extraAddr !== ''){
+	                        extraAddr = ' (' + extraAddr + ')';
+	                    }
+	                    // 조합된 참고항목을 해당 필드에 넣는다.
+	                    document.getElementById("extraAddress").value = extraAddr;
+	                
+	                } else {
+	                    document.getElementById("extraAddress").value = '';
+	                }
+	
+	                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+	                document.getElementById('zipCode').value = data.zonecode;
+	                document.getElementById("address").value = addr;
+	                // 커서를 상세주소 필드로 이동한다.
+	                document.getElementById("addressDetail").focus();
+	            }
+	        }).open();
+	    }
 	</script>
 </body>
 </html>

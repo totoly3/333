@@ -166,7 +166,10 @@
 			                            <td class="cart-td-center" style="text-align:left; text-align:center; border-right: none;">
 			                                <input type="checkbox" name="checkbox" style="width:20px; height:20px;">
 			                            </td>
-			                            <td style="width: 100px; border-left: none; border-right: none;"><img style="width: 80%;" src="${c.goodsAttachChangeName}" alt="${c.goodsAttachFilePath } "></td>
+			                            <td style="width: 100px; border-left: none; border-right: none;">
+<%-- 			                            	<img style="width: 80%;" src="${c.goodsAttachChangeName}" alt="${c.goodsAttachFilePath } "> --%>
+			                            	<img style="margin-left:20px; width: 80%;" src="resources/css/listView/images/destination-1.jpg" alt="${c.goodsAttachFilePath } ">
+			                            </td>
 			                            <td style="width: 600px; text-align:left; padding-left: 10px; border-left: none; font-weight: bold;">${c.goodsName }</td>
 			                            <td class="cart-td-center" style="width: 100px; "><span style="padding-left: 10px;">${c.goodsPrice }</span>원</td>
 			                            <td class="cart-td-center" style="width: 70px;">

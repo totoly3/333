@@ -118,7 +118,7 @@
         <span class="purchaseHeaderSpan">주문 / 결제</span>
         <hr class="purchaseHeaderHr">
         <div class="purchaseForm">
-        	<form>
+        	<form action="insert.or">
 	            <div class="buyerInfo">
 	                <table id="buyerInfoBTL" class="purchaseNormalTb">
 	                    <tr align="center">
@@ -289,7 +289,7 @@
 				</div>
 				<br><br>
 				<button type="submit" id="purchaseBtn">주문</button>
-				<button type="button" id="goBackBtn">뒤로 가기</button>
+				<button type="button" id="goBackBtn" onclick="location.href='cart.ca'">뒤로 가기</button>
 			</form>
 			<!-- 구매 동의 내용 -->
 			<br><br><br>
@@ -360,6 +360,8 @@
 		$("#insertComment").click(function(){
 			console.log("insertComment is clicked");
 		});
+		
+		
     </script>
     
 </body>
