@@ -61,13 +61,25 @@ public interface FrBoardService {
 		//아래는 체크된거 삭제 
 		int deleteClickFrboard(List<String> checkBoxArr);
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
 		//첨부파일 삭제(병철이형 부분)
 		int deleteFrFile(ArrayList<FrBoardAttach> frba);
 
 		int deleteReply(FrBoardReply refb);
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
 		//글 수정  (파일 둘다있을때 ) 
 		int updateFrboard3(ArrayList<FrBoardAttach> newfrba);
+<<<<<<< HEAD
+=======
+
+>>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
 		
 		//검색어 조회결과 개수 
 		int searchCount(HashMap<String, String> map);
