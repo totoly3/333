@@ -154,6 +154,7 @@
 						<div class="dropdown-content">
 							<a href="list.ch">캐릭터 게시판</a>
 							<a href="list.alltimelistgo">역대수상작</a>
+							<a href="worldCupForm.ut">W O R L D C U P</a>
 						</div>
 					</div>
 				</li>

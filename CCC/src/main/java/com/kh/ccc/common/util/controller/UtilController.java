@@ -1,18 +1,19 @@
 package com.kh.ccc.common.util.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.ccc.common.util.model.service.UtilService;
+import com.kh.ccc.board.charBoard.model.vo.Character;
 
 @Controller
 public class UtilController {
@@ -63,6 +64,33 @@ public class UtilController {
 			}
 		}
 		return"";
+	}
+	
+	@RequestMapping(value="worldCupForm.ut")
+	public String goWorldCupForm() {
+		
+		return "board/playground/worldCupForm";
+	}
+	
+	@RequestMapping(value="worldCup.ut")
+	public String goWorldCup(HttpSession session, Model model, int no) {
+		// 랜덤으로 이미지를 N개 뽑아야 함.
+		
+		// 하지만 지금은 더미가 없으므로 임의로 데이터만 넣어서 개발
+		ArrayList<Character> clist = new ArrayList<>();
+		for(int i=0; i<no; i++) {
+			Character c = new Character();
+			c.setCharNo(i+1);
+			c.setCharName("캐릭터 이름 "+(i+1));
+			c.setCharContent("캐릭터 설명"+(i+1));
+			c.setMemberNo(i+1);
+			c.setChangeName("resources/worldCup/img/WC"+(i+1)+".png");
+			clist.add(c);
+		}
+		System.out.println("캐릭터리스트 : "+clist);
+		model.addAttribute("clist", clist);
+		
+		return "board/playground/worldCup";
 	}
 
 }
