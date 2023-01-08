@@ -3,6 +3,7 @@ package com.kh.ccc.board.freeboard.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,18 +22,25 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
+import com.kh.ccc.admin.model.vo.Admin;
 import com.kh.ccc.board.freeboard.model.service.FrBoardService;
 import com.kh.ccc.board.freeboard.model.vo.FrBoard;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardAttach;
 import com.kh.ccc.board.freeboard.model.vo.FrBoardReply;
 import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.common.template.Pagenation;
+import com.kh.ccc.member.model.vo.Member;
 
 @Controller
 public class FrBoardController {
 
 	@Autowired
 	private FrBoardService FrBoardService;
+	
+
+	
+	
+	
 	
 	//view 페이지 포워딩 
 		@RequestMapping("list.fr")
@@ -92,11 +100,72 @@ public class FrBoardController {
 		
 		
 		//아래는 게시글 등록 (사진포함)
-				@ResponseBody
+				
 				@RequestMapping("insert.frbo")
 				public ModelAndView insertFrBoard(ModelAndView mv,FrBoard fb,
 						@RequestParam(value="upfile", required=false) List<MultipartFile> upfile
 						,HttpSession session) {
+					System.out.println("fb : "+fb);
+					
+					Member loginUser = (Member)session.getAttribute("loginUser");
+					
+
+
+					
+					
+					/////////////////////////////////병철이형 부분 시작 
+					/////////////////////////////////병철이형 부분 시작 
+					/////////////////////////////////병철이형 부분 시작 
+					//ArrayList로  첨부파일들을 담음.
+					ArrayList<FrBoardAttach> falist = new ArrayList<>();
+					
+					// 파일 갯수만큼 
+					for(int i=0; i<upfile.size(); i++) {
+						//아래는 파일이 있으면 
+					if (!upfile.get(i).getOriginalFilename().equals("")) {
+						//saveFile 메소드에   올린 파일을 담아서  changename 변수에 담아준다.(saveFile을 아래 153줄 참고)
+						String changeName = saveFile(upfile.get(i),session);
+						
+						FrBoardAttach fab= new FrBoardAttach();
+						
+						fab.setFaOrginName(upfile.get(i).getOriginalFilename());
+						fab.setFaChangeName("resources/freeBoard/uploadFiles/"+changeName);
+						
+						falist.add(fab);
+						
+					}
+				}
+					
+					if(falist.isEmpty()) { //글만 작성할때
+						int result1=FrBoardService.insertFrBoardOnlyWrite(fb);
+						
+							if(result1>0) {
+								session.setAttribute("alertMsg", "게시글 등록 성공!");
+								mv.setViewName("redirect:/list.fr");
+							}else {
+								mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
+								}
+					}else {//파일두개 등록할때
+						int finalResult=FrBoardService.insertFrBoard(fb,falist);
+						
+							if(finalResult>0) {
+								session.setAttribute("alertMsg", "게시글 등록 성공!");
+								mv.setViewName("redirect:/list.fr");
+							}else {
+								mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
+							}
+						}
+					
+					/////////////////////////////////병철이형 부분 끝
+					/////////////////////////////////병철이형 부분 끝
+					/////////////////////////////////병철이형 부분 끝
+					/////////////////////////////////병철이형 부분 끝
+					
+					
+					
+					
+					/* 여기아래는 내가 했던부분  시작 
+					 * 
 					
 					//ArrayList로  첨부파일들을 담음.
 					ArrayList<FrBoardAttach> falist = new ArrayList<>();
@@ -139,9 +208,15 @@ public class FrBoardController {
 							}
 						}
 					
-				return mv;
-			}
-		
+			
+			내가한 부분 끝		 */ 
+					
+					return mv;
+				}
+					
+					
+					
+					
 		// 현재 넘어온 첨부파일 그 자체를 서버의 폴더에 저장시키는 메소드 (모듈)
 			public String saveFile(MultipartFile upfile, HttpSession session) {
 				// 1. 원본파일명 뽑기
@@ -234,12 +309,13 @@ public class FrBoardController {
 			public ModelAndView updateFrboard(ModelAndView mv
 											 ,FrBoard fb
 											 ,@RequestParam(value="upfile" ,required=false) List<MultipartFile> upfile
+											 ,@RequestParam(value="oldNa", required=false) ArrayList<Integer> oldNaList
 											 ,HttpSession session) {
 				// view에서 전달받은 데이터 확인
 //			    System.out.println("update.frboen :: CTRL :: fno = " + fno);
 //			    System.out.println("update.frboen :: CTRL :: fb = " + fb);
 //			    System.out.println("update.frboen :: CTRL :: upfile = " + upfile);
-
+//				System.out.println("update.frboen :: CTRL :: oldNa = " + oldNa);
 				int fno = fb.getfNo();
 				
 				// 해당 글의 기존 첨부파일이 있을 경우 삭제 --------------Start
@@ -279,7 +355,7 @@ public class FrBoardController {
 					}
 				}
 				//여기는위에는  병철이형 부분 
-				//여기는위에는는  병철이형 부분 
+				//여기는위에는  병철이형 부분 
 				//여기는위에는  병철이형 부분 
 				
 				
@@ -305,12 +381,9 @@ public class FrBoardController {
 
 				// 새로 올릴 파일 리스트
 				ArrayList<FrBoardAttach> newfrba = new ArrayList<>();
-				//아래는 파일이 하나일수도 두개일수도 있음..사이즈 만큼 돌려 두개면 두번 돌려
 				//아래는 이제 새로운 첨부파일 업로드 할껀데  업로드 파일 몇개야 ?
 				for(int j=0; j<upfile.size(); j++) {
-//					System.out.println("update::CTRL:: upfile의 조건전 j = " + upfile.get(j).getSize());
-					if(upfile.get(j).getSize() > 0) {
-//						System.out.println("update::CTRL:: upfile의 조건후 j = " + j);
+					if(!upfile.get(j).getOriginalFilename().equals("")) { // 비어있지않으면!
 						//새로운 첨부파일 업로드 
 						String changeName = saveFile(upfile.get(j),session);//아래에서 작업한 saveFile메소드 사용 
 						
@@ -419,6 +492,32 @@ public class FrBoardController {
 				
 			}
 			
-			
+			//아래는 검색기능 
+			@ResponseBody
+			@RequestMapping(value="search.fr",produces="application/json; charset=UTF-8")
+			public String frSearchList(HttpSession session,HttpServletRequest request
+												,@RequestParam(value="currentPage",defaultValue="1")int currentPage
+												,ModelAndView mv) {
+				String category = request.getParameter("category");
+				String keyword = request.getParameter("keyword");
+				
+				
+				//이제 키와 벨류값을 담아서 전달하자  (hashmap)
+				HashMap<String,String> map = new HashMap<>();
+				map.put("category",category);
+				map.put("keyword",keyword);
+				
+				int searchCount = FrBoardService.searchCount(map); //검색 결과의 총 개수를 알아와야함 
+				
+				int pageLimit = 10;	//하단에 페이징바 갯수
+				int boardLimit =5; //한페이지에 몇개씩 띄울껀지!
+				
+				PageInfo pi=Pagenation.getPageinfo(searchCount, currentPage, pageLimit, boardLimit);
+				
+				
+				ArrayList<FrBoard> list=FrBoardService.frSearchList(map,pi);
+				System.out.println("컨트롤러 임 searchList은 ? : "+list);
+				return new Gson().toJson(list);
+			}
 			
 }	

@@ -1,6 +1,7 @@
 package com.kh.ccc.board.freeboard.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -172,6 +173,25 @@ public class FrBoardServiceImpl implements FrBoardService{
 	public int deleteReply(FrBoardReply refb) {
 		int result=FrBoardDao.deleteReply(sqlSession,refb);
 		return result;
+	}
+
+
+	//검색어 조회 결과 갯수
+	@Override
+	public int searchCount(HashMap<String, String> map) {
+		int searchCount=FrBoardDao.searchCount(sqlSession,map);
+		System.out.println("서비스임포임 searchCount  성공했을까? :"+searchCount);
+		return searchCount;
+	}
+
+
+	//검색어를 이용한 목록 조회 + 페이징 처리 
+	@Override
+	public ArrayList<FrBoard> frSearchList(HashMap<String, String> map, PageInfo pi) {
+		ArrayList<FrBoard> searchList =FrBoardDao.frSearchList(sqlSession,map,pi);
+		
+		System.out.println("서비스 임포 임   searchList :?"+searchList);
+		return searchList;
 	}
 
 
