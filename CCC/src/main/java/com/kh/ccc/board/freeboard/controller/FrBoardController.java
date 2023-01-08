@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -109,9 +109,6 @@ public class FrBoardController {
 					
 					Member loginUser = (Member)session.getAttribute("loginUser");
 					
-
-
-					
 					
 					/////////////////////////////////병철이형 부분 시작 
 					/////////////////////////////////병철이형 부분 시작 
@@ -122,18 +119,18 @@ public class FrBoardController {
 					// 파일 갯수만큼 
 					for(int i=0; i<upfile.size(); i++) {
 						//아래는 파일이 있으면 
-					if (!upfile.get(i).getOriginalFilename().equals("")) {
-						//saveFile 메소드에   올린 파일을 담아서  changename 변수에 담아준다.(saveFile을 아래 153줄 참고)
-						String changeName = saveFile(upfile.get(i),session);
-						
-						FrBoardAttach fab= new FrBoardAttach();
-						
-						fab.setFaOrginName(upfile.get(i).getOriginalFilename());
-						fab.setFaChangeName("resources/freeBoard/uploadFiles/"+changeName);
-						
-						falist.add(fab);
-						
-					}
+						if (!upfile.get(i).getOriginalFilename().equals("")) {
+							//saveFile 메소드에   올린 파일을 담아서  changename 변수에 담아준다.(saveFile을 아래 153줄 참고)
+							String changeName = saveFile(upfile.get(i),session);
+							
+							FrBoardAttach fab= new FrBoardAttach();
+							
+							fab.setFaOrginName(upfile.get(i).getOriginalFilename());
+							fab.setFaChangeName("resources/freeBoard/uploadFiles/"+changeName);
+							
+							falist.add(fab);
+							
+						}
 				}
 					
 					if(falist.isEmpty()) { //글만 작성할때
@@ -493,11 +490,13 @@ public class FrBoardController {
 			}
 			
 			//아래는 검색기능 
-			@ResponseBody
-			@RequestMapping(value="search.fr",produces="application/json; charset=UTF-8")
-			public String frSearchList(HttpSession session,HttpServletRequest request
+//			@ResponseBody
+//			@RequestMapping(value="search.fr",produces="application/json; charset=UTF-8")
+			@RequestMapping("search.fr")
+			public ModelAndView frSearchList(HttpSession session,HttpServletRequest request
 												,@RequestParam(value="currentPage",defaultValue="1")int currentPage
-												,ModelAndView mv) {
+												,ModelAndView mv,Model mo) {
+				
 				String category = request.getParameter("category");
 				String keyword = request.getParameter("keyword");
 				
@@ -516,8 +515,11 @@ public class FrBoardController {
 				
 				
 				ArrayList<FrBoard> list=FrBoardService.frSearchList(map,pi);
+				mv.addObject("list",list);
+				mv.setViewName("board/freeBoard/freeBoardListView");
 				System.out.println("컨트롤러 임 searchList은 ? : "+list);
-				return new Gson().toJson(list);
+				return mv;
+//				return new Gson().toJson(list);
 			}
 			
 }	
