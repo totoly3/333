@@ -124,20 +124,27 @@
    				<a class="btn btn-secondary"  onclick="deleteClick()">선택회원 삭제</a>
 			</div>
             
-            <br clear="both"><br>
-            <form id="searchForm" action="" method="get" align="center">
-                <div class="select">
-                    <select class="custom-select" name="condition">
-                        <option value="writer">작성자</option>
-                        <option value="title">제목</option>
-                        <option value="content">내용</option>
-                    </select>
-                </div>
-                <div class="text">
-                    <input type="text" class="form-control" name="keyword">
-                </div>
-                <button type="submit" class="searchBtn btn btn-secondary">검색</button>
-            </form>
+         	<div id="search-area">
+					<form action="search.fr" method="get">
+						<input type="hidden" name="currentPage" value="1">
+						<select name="category">
+							<option value="writer">작성자</option>
+							<option value="title">제목</option>
+							<option value="content">내용</option>
+						</select>
+						<input type="text" name="keyword" value="${keyword }">
+						<button type="submit">검색</button>			
+					</form>
+			</div>
+			
+			<!-- 		category에 데이터가 있으면 -->
+			<c:if test="${ not empty category }">
+				<script>
+					$(function(){
+						$("#search-area option[value=${category}]").attr("selected",true);
+					})
+				</script>
+			</c:if>
             <br><br>
         </div>
         <br><br>

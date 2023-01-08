@@ -91,7 +91,7 @@
                 ,FR.F_STATUS
     FROM TB_FREE FR,TB_MEMBER M
     WHERE FR.F_STATUS='Y' 
-   	 AND M.M_NO = FR.F_WRITER
+   	AND M.M_NO = FR.F_WRITER
   	 ORDER BY FR.F_NO DESC
 	
 	</select>
@@ -331,5 +331,60 @@
 			  AND FR_NO=#{frNo}
 		
 		</update>
-	
+		
+		<!-- 아래는 검색어 갯수 조회 -->
+		<select id="searchCount" parameterType="hashmap" resultType="_int">
+		SELECT  COUNT(*)
+        FROM TB_FREE FB , TB_MEMBER M 
+        WHERE M.M_NO=FB.F_WRITER
+        AND FB.F_STATUS='Y'
+		<choose>
+			<when test="category=='writer'">
+				<!--작성자 -->
+					AND M_ID 
+			</when>
+			<when test="category=='title'">
+				<!--제목 -->
+					AND F_TITLE
+			</when>
+			<otherwise>
+				<!--내용 -->
+					AND F_CONTENT
+			</otherwise>		
+		</choose>
+		<!-- 공통적으로 사용할 수 있는 구문  -->
+		LIKE '%'||#{keyword}||'%'
+		ORDER BY F_CREATE_DATE DESC
+	</select>
+		
+		
+		
+		<!-- 여기 아래는 검색 리스트 -->
+	<select id="frSearchList" parameterType="hashmap" resultMap="frBoardResultSet">
+			SELECT F_NO
+                ,F_TITLE
+                ,M_ID as mId
+                ,F_COUNT
+                ,F_CREATE_DATE
+		FROM TB_FREE FR
+        JOIN TB_MEMBER ON (F_WRITER=M_NO)
+		WHERE F_STATUS='Y'
+		<choose>
+			<when test="category=='writer'">
+				<!--작성자 -->
+					AND M_ID 
+			</when>
+			<when test="category=='title'">
+				<!--제목 -->
+					AND F_TITLE
+			</when>
+			<otherwise>
+				<!--내용 -->
+					AND F_CONTENT
+			</otherwise>		
+		</choose>
+		<!-- 공통적으로 사용할 수 있는 구문  -->
+		LIKE '%'||#{keyword}||'%'
+		ORDER BY F_CREATE_DATE DESC
+	</select>
 </mapper>

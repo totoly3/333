@@ -1,6 +1,7 @@
 package com.kh.ccc.board.freeboard.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -167,6 +168,21 @@ public class FrBoardDao {
 		public int deleteReply(SqlSessionTemplate sqlSession, FrBoardReply refb) {
 			int result=sqlSession.update("frBoardMapper.deleteReply");
 			return result;
+		}
+		
+		//검색 결과 갯수
+		public int searchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+			return sqlSession.selectOne("frBoardMapper.searchCount", map);
+		}
+		
+		//검색 조회  리스트
+		public ArrayList<FrBoard> frSearchList(SqlSessionTemplate sqlSession, HashMap<String, String> map,
+				PageInfo pi) {
+			int limit = pi.getBoardLimit();
+			int offset = (pi.getCurrentPage()-1) * limit;
+			
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			return (ArrayList)sqlSession.selectList("frBoardMapper.frSearchList", map, rowBounds);
 		}
 
 

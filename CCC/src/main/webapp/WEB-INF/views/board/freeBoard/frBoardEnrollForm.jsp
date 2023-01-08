@@ -98,22 +98,55 @@
 <!--      글번호 히든으로 넘기기 -->
 <%--     <input type="hidden" name="fNo" value="${fb.get(0).fNo}"> --%>
     
-<!--      글번호 히든으로 넘기기 -->
+<!--      유저 번호 히든으로 넘기기 -->
     <input type="hidden" name="fWriterNo" value="${loginUser.memberNo}">
+    <!-- 여기는 병철이형 꺼 따라해본구간  시작 -->
+    <!-- 여기는 병철이형 꺼 따라해본구간  시작 -->
+    <!-- 여기는 병철이형 꺼 따라해본구간  시작 -->
+    <table>
+			<tr>
+		        <th>첨부파일</th>
+		        <td><input type="button" id="addAttachBtn" value="파일추가">최대 5개까지 가능합니다.</td>
+		    </tr>
+    </table>
     
-   	<!--  아래는 드래그  --> 
-<!--   	 <main class="container"> -->
-<!--     <label class="label" id="label" for="input"> -->
-<!--       <div class="inner" id="inner">드래그하거나 클릭해서 업로드</div> -->
-<!--     </label> -->
-<!--     <input id="input" class="input" accept="image/*" type="file" required="true" multiple="true" hidden="true"> -->
-<!--     <p class="preview-title">preview</p> -->
-<!--     <div class="preview" id="preview"></div> -->
-<!--   </main> -->
-   	<!--  위에는 드래그 --> 
+    <table algin="center" id="addAttach-table"></table>
+    <br>
+    
+    <script>
+    	var idx = 1; //현재 첨부파일 몇개가 있는지 확인해서 그다음 수를 대입하려 고 
+    	
+    	$("#addAttachBtn").click(function(){
+    		if($("#addAttach-table tr").length < 5){
+    			var addAttach = "<tr>"
+							+ "<th><label for='upfile"+idx+"'></label></th>"
+							+"<td><input type='file' id='upfile"+idx+"' class='form-control-file border' name='upfile'></td>"
+    						+"<td><a href='#this' name='delete' id='delete"+idx+"' class='btn'>삭제</a></td>";
+    			$("#addAttach-table").append(addAttach)				
+    		}
+    		
+    		$("#delete"+idx).on("click",function(e){
+    			e.preventDefault();
+    			fn_fileDelete($(this));
+    		});
+   			idx++;
+   		
+    	});
+    		//위에 눌렀을때 이벤트 실행되서  
+    	function fn_fileDelete(obj){
+    		obj.parent().parent().remove();
+    	}
+    	
+    
+    </script>
+    
+    
+  	<!-- 여기는 병철이형 꺼 따라해본구간  끝 -->
+  	<!-- 여기는 병철이형 꺼 따라해본구간  끝 -->
+  	<!-- 여기는 병철이형 꺼 따라해본구간  끝 -->
   	
-	<input type="file" id="upfile" class="form-control-file border" name="upfile">
-	<input type="file" id="upfile" class="form-control-file border" name="upfile">	    
+<!-- 	<input type="file" id="upfile" class="form-control-file border" name="upfile"> -->
+<!-- 	<input type="file" id="upfile" class="form-control-file border" name="upfile">	     -->
 	  	
     <button type="submit" class="btn btn-primary">글 등록하기</button>
   <br><br><br> <br><br><br> <br><br><br>
