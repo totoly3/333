@@ -74,4 +74,7 @@ public interface FrBoardService {
 		
 		//검색어를 이용한 목록 조회 + 페이징처리 
 		ArrayList<FrBoard> frSearchList(HashMap<String, String> map, PageInfo pi);
+
+		//리플에 답글 달기 
+		int frReReplyEnroll(FrBoardReply refb);
 	}

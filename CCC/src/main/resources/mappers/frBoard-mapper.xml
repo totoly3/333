@@ -239,12 +239,14 @@
 <!-- 			  )A -->
 			  
 			  
-			  INSERT INTO TB_FREE_ATTACH (FA_NO, F_NO, FA_ORIGIN_NAME, FA_CHANGE_NAME)
-   SELECT SEQ_FANO.NEXTVAL, SEQ_FNO.CURRVAL, A.*
-   FROM (
+	  INSERT INTO TB_FREE_ATTACH 
+			  (FA_NO, F_NO, FA_ORIGIN_NAME, FA_CHANGE_NAME)
+			  
+	  SELECT SEQ_FANO.NEXTVAL, SEQ_FNO.CURRVAL, A.*
+ 	  FROM (
         SELECT #{ faOrginName }, #{ faChangeName }
         FROM DUAL
-   ) A;
+      ) A;
 			  
 			  
 			  
@@ -387,4 +389,24 @@
 		LIKE '%'||#{keyword}||'%'
 		ORDER BY F_CREATE_DATE DESC
 	</select>
+	
+	
+	<!-- 리플달면 답글 다는곳  -->
+	<insert id="frReReplyEnroll" parameterType="FrBoardReply" >
+		INSERT INTO TB_FREE_REPLY
+					(FR_NO
+					,FR_PARENT_NO
+					,FR_CONTENT
+					,FR_WRITER
+					,F_NO
+					)
+			VALUES(
+					SEQ_FRNO.NEXTVAL
+					,#{SEQ_FRNO.CURVAL}
+					,#{frContent}
+					,#{fNo}
+					,#{fWriterNo}
+					)
+	</insert>
+	
 </mapper>
