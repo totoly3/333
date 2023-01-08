@@ -53,8 +53,8 @@
             <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
             <c:if test="${not empty loginUser}">
             	<a class="btn btn-secondary" style="float:right;" href="insert.qu">글쓰기</a>
+	            <a class="btn btn-secondary" style="float:right; margin-right:30px;" href="mylist.qu">내 글 보기</a>
             </c:if>
-            <a class="btn btn-secondary" style="float:right; margin-right:30px;" href="">내 글 보기</a>
             <!-- 관리자 로그인 시에만 보이는 체크박스 -->
             <c:if test="${ not empty loginAdmin }">
               	<button type="button" id="deleteChk" class="btn btn-secondary" style="float:right; margin-right:30px;">그룹 글삭제</button>

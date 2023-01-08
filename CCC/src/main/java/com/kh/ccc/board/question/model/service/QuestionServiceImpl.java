@@ -36,6 +36,13 @@ public class QuestionServiceImpl implements QuestionService {
 	}
 
 	@Override
+	public ArrayList<Question> selectMyList(int memberNo, PageInfo pi) {
+		ArrayList<Question> list = questionDao.selectMyList(sqlSession, memberNo, pi); 
+		
+		return list;
+	}
+
+	@Override
 	public int insertQuestion(Question q, ArrayList<QuestionAttach> qaList) {
 		int result = questionDao.insertQuestion(sqlSession, q, qaList);
 		
@@ -96,4 +103,5 @@ public class QuestionServiceImpl implements QuestionService {
 		int result = questionDao.deleteGroup(sqlSession, deleteNoArr);
 		return result;
 	}
+
 }

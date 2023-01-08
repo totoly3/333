@@ -70,6 +70,32 @@ public class QuestionController {
 	}
 	
 	
+	@RequestMapping("mylist.qu")
+	public String selectMyList(@RequestParam(value="currentPage", defaultValue="1") int currentPage
+			, Model model, HttpSession session) {
+		
+//		System.out.println("list.qu:: currentPage : "+currentPage);
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		int memberNo = loginUser.getMemberNo();
+		
+		// 총 게시글 수
+		int listCount = questionService.selectListCount();
+		int pageLimit = 5;
+		int boardLimit = 10;
+//		System.out.println("QuestionList::CTRL:: listCount : "+listCount);
+		
+		PageInfo pi = Pagenation.getPageinfo(listCount, currentPage, pageLimit, boardLimit);
+		model.addAttribute("pi", pi);
+//		System.out.println("QuestionList::CTRL:: pi : " + pi);
+		
+		ArrayList<Question> list = questionService.selectMyList(memberNo, pi);
+		model.addAttribute("list", list);
+//		System.out.println("QuestionList::CTRL:: list : " + list);
+		
+		return "board/question/questionListView";
+	}
+	
 	// EnrollForm으로 이동
 	@GetMapping("insert.qu")
 	public String insertNotice() {

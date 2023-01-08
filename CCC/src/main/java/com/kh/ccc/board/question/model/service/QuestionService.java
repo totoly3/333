@@ -17,6 +17,9 @@ public interface QuestionService {
 	// 해당 페이지의 문의 글 조회
 	ArrayList<Question> selectList(PageInfo pi);
 	
+	// 내 문의글만 조회 
+	ArrayList<Question> selectMyList(int memberNo, PageInfo pi);
+	
 	// 문의 글 추가
 	int insertQuestion(Question n, ArrayList<QuestionAttach> qaList);
 
@@ -28,7 +31,7 @@ public interface QuestionService {
 	
 	// 문의글 번호로 첨부파일 리스트 조회
 	ArrayList<QuestionAttach> selectQAList(int qno);
-
+	
 	// 첨부파일 번호로 문의글 첨부파일 하나 삭제
 	int deleteQuestionAttachByQaNo(int questionAttachNo);
 	
@@ -46,4 +49,5 @@ public interface QuestionService {
 
 	// 문의글 그룹 삭제
 	int deleteGroup(int[] deleteNoArr);
+
 }
