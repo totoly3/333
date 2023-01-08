@@ -331,5 +331,60 @@
 			  AND FR_NO=#{frNo}
 		
 		</update>
-	
+		
+		<!-- 아래는 검색어 갯수 조회 -->
+		<select id="searchCount" parameterType="hashmap" resultType="_int">
+		SELECT COUNT(*)
+		FROM TB_FREE FB
+		JOIN TB_MEMBER ON (F_WRITER=M_NO)
+		WHERE F_STATUS='Y'
+		<choose>
+			<when test="category=='writer'">
+				<!--작성자 -->
+					AND USER_ID 
+			</when>
+			<when test="category=='title'">
+				<!--제목 -->
+					AND BOARD_TITLE
+			</when>
+			<otherwise>
+				<!--내용 -->
+					AND BOARD_CONTENT
+			</otherwise>		
+		</choose>
+		<!-- 공통적으로 사용할 수 있는 구문  -->
+		LIKE '%'||#{keyword}||'%'
+		ORDER BY CREATE_DATE DESC
+	</select>
+		
+		
+		
+		<!-- 여기 아래는 검색 리스트 -->
+	<select id="frSearchList" parameterType="hashmap" resultMap="frBoardResultSet">
+			SELECT F_NO
+                ,F_TITLE
+                ,M_ID
+                ,F_COUNT
+                ,F_CREATE_DATE
+		FROM TB_FREE FR
+        JOIN TB_MEMBER ON (F_WRITER=M_NO)
+		WHERE F_STATUS='Y'
+		<choose>
+			<when test="category=='writer'">
+				<!--작성자 -->
+					AND USER_ID 
+			</when>
+			<when test="category=='title'">
+				<!--제목 -->
+					AND BOARD_TITLE
+			</when>
+			<otherwise>
+				<!--내용 -->
+					AND BOARD_CONTENT
+			</otherwise>		
+		</choose>
+		<!-- 공통적으로 사용할 수 있는 구문  -->
+		LIKE '%'||#{keyword}||'%'
+		ORDER BY CREATE_DATE DESC
+	</select>
 </mapper>

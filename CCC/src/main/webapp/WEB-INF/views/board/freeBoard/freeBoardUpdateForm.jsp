@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -118,12 +120,13 @@
 		<tr>
 			<th><label for="upfile">첨부파일</label></th>
 			<td id="na-area">
-				현재 업로드된 파일 : <br>
-                            <c:forEach var="na" items="${frba }" varStatus="var">
-                            	<div>
-                            	<a href="" id="" download="${na.faChangeName }">${na.faOrginName }</a>
-                            	<input type="hidden" id="na_${var.index }" name="oldNa" value="${na.faNo }">
-                            	<input type="button" id="deleteAttachBtn_${var.index }" value="파일삭제"><br>
+			현재 업로드된 파일 :
+			<br>
+			                <c:forEach var="fr" items="${frba }" varStatus="var">
+	           			   	   	<div>
+	                            	<a href="" id="" download="${fr.faChangeName }">${fr.faOrginName }</a>
+	                            	<input type="hidden" id="na_${var.index }" name="oldNa" value="${fr.faNo }">
+	                            	<input type="button" id="deleteAttachBtn_${var.index }" value="파일삭제"><br>
                             	</div>
                            	</c:forEach>
                            	새로 업로드할 파일 : <br>
@@ -139,38 +142,38 @@
 	<!-- ㅇ ㅟ에는 병철이형 버전으로 진행하기 !!!!-->
 	<!-- 위에는 병철이형 버전으로 진행하기 !!!!  -->
 	
-    <button type="submit" class="btn btn-primary">글 수정하기</button>
   <br><br><br> <br><br><br> <br><br><br>
+
   </form>
-</div>
-
-<script>
- <!--바로아래는  파일추가 버튼 클릭했을때  -->
- for(var i=0; i<$("#na-area a").length; i++){
- 	$("#deleteAttachBtn_"+i).click(function(){
-// 			console.log($(this).attr("id"));
-			$(this).parent().remove();
- 	});
-	};
+	<script>
+		 <!--바로아래는  파일추가 버튼 클릭했을때  -->
+		 for(var i=0; i<$("#na-area a").length; i++){
+		 	$("#deleteAttachBtn_"+i).click(function(){
+		// 			console.log($(this).attr("id"));
+					$(this).parent().remove();
+		 	});
+		};
+			
+			$("#addAttachBtn").click(function(){
+		//		console.log("addAttachBtn클릭");
+		
+				if( $("#na-area a").length  < 10){
+					var addAttach = "<div><input type='file' class='form-control-file border' name='multifile'><br>"
+		   					  + "<a href='#this' name='delete' class='btn deleteAttachBtn'>삭제</a><br><div>";
+					$("#newNa-area").append(addAttach);
+				}
+		 	
+		 	$(".deleteAttachBtn").click(function(){
+					$(this).parent().remove();
+		 	});
+		});
+		
 	
-	$("#addAttachBtn").click(function(){
-//		console.log("addAttachBtn클릭");
-
-		if( $("#na-area a").length  < 10){
-			var addAttach = "<div><input type='file' class='form-control-file border' name='multifile'><br>"
-   					  + "<a href='#this' name='delete' class='btn deleteAttachBtn'>삭제</a><br><div>";
-			$("#newNa-area").append(addAttach);
-		}
- 	
- 	$(".deleteAttachBtn").click(function(){
-			$(this).parent().remove();
- 	});
-	});
 	
-
-
-</script>
-
+	</script>
+<br><br>
+    <button type="submit" class="btn btn-primary">글 수정하기</button>
+	</div>
 
 </body>
 </html>
