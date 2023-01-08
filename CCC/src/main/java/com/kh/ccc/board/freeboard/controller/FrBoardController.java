@@ -522,4 +522,16 @@ public class FrBoardController {
 //				return new Gson().toJson(list);
 			}
 			
+			
+			//아래는 리플에  답글 기능 
+			@RequestMapping("frReReplyEnroll.fr")
+			public String frReReplyEnroll(ModelAndView mv,FrBoardReply refb) {
+				
+				int result =FrBoardService.frReReplyEnroll(refb);
+				
+				//만약 결과가 0보다 크냐?  
+				//아래 결과가  0이면 N  , 1이면 Y 
+				return (result == 0) ? "NNNNN" : "NNNNY";
+			}
+			
 }	
