@@ -44,6 +44,7 @@
 		<typeAlias type="com.kh.ccc.shop.cart.model.vo.Cart" alias="cart"/>
 		<!-- 배송 -->
 		<typeAlias type="com.kh.ccc.shop.shipping.model.vo.AddressInfo" alias="addressInfo"/>
+		<typeAlias type="com.kh.ccc.shop.shipping.model.vo.DeliveryDetail" alias="deliveryDetail" />
 		<!-- 굿즈 -->
 		<typeAlias type="com.kh.ccc.shop.goods.model.vo.Wish" alias="wish"/>
 		<typeAlias type="com.kh.ccc.shop.goods.model.vo.WishGoods" alias="wishGoods"/>
@@ -53,7 +54,7 @@
 		<typeAlias type="com.kh.ccc.shop.order.model.vo.MyOrderDetail" alias="myOrderDetail"/>
 		<typeAlias type="com.kh.ccc.shop.order.model.vo.OrderDetail" alias="orderDetail"/>
 		<typeAlias type="com.kh.ccc.shop.order.model.vo.OrderListByDate" alias="orderListByDate" />
-		<typeAlias type="com.kh.ccc.shop.shipping.model.vo.DeliveryDetail" alias="deliveryDetail" />
+		<typeAlias type="com.kh.ccc.shop.order.model.vo.InsertOrder" alias="insertOrder"/>
 	</typeAliases>
 	
 	<mappers>
@@ -73,6 +74,8 @@
 		<mapper resource="/mappers/admin-mapper.xml"/>
 
 		<mapper resource="/mappers/alltimeboard-mapper.xml"/>
+		
+		<mapper resource="/mappers/order-mapper.xml"/>
 		
 		<!--병철-->
 		<mapper resource="/mappers/notice-mapper.xml"/>

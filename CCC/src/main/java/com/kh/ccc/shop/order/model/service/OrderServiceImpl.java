@@ -1,10 +1,15 @@
 package com.kh.ccc.shop.order.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.ccc.shop.cart.model.vo.Cart;
 import com.kh.ccc.shop.order.model.dao.OrderDao;
+import com.kh.ccc.shop.order.model.vo.InsertOrder;
+import com.kh.ccc.shop.order.model.vo.Order;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -15,10 +20,11 @@ public class OrderServiceImpl implements OrderService{
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public int insertOrder() {
-		int result = orderDao.insertOrder();
-		return result;
+	public int insertOrder(InsertOrder io) {
+		return orderDao.insertOrder(sqlSession, io);
 	}
+
+	
 	
 	
 }

@@ -146,50 +146,64 @@
 			
 			// 코드 개더럽다. 이것때문에 배송지 수 제한 걸어야 함.
 			
+			// addressInfo 번호 전달
+			const aiNo = window.opener.document.getElementById("aiNo");
+				
 			if(i==0){
 				td[0].innerText = '${aiList[0].receiverName}';
 				td[1].innerText = '${aiList[0].address} ${aiList[0].addressDetail}';
 				td[2].innerText = '${aiList[0].phone}';
 				td[3].innerText = '${aiList[0].comment}';
+				
+				$(aiNo).val( ${aiList[0].addressNo} );
+				console.log(aiNo);
 			}
 			else if(i==1){
 				td[0].innerText = '${aiList[1].receiverName}';
-				td[1].innerText = '${aiList[1].address} ${aiList[0].addressDetail}';
+				td[1].innerText = '${aiList[1].address} ${aiList[1].addressDetail}';
 				td[2].innerText = '${aiList[1].phone}';
 				td[3].innerText = '${aiList[1].comment}';
+				
+				$(aiNo).val( ${aiList[1].addressNo} );
+				console.log(aiNo);
 			}
 			else if(i==2){
 				td[0].innerText = '${aiList[2].receiverName}';
-				td[1].innerText = '${aiList[2].address} ${aiList[0].addressDetail}';
+				td[1].innerText = '${aiList[2].address} ${aiList[2].addressDetail}';
 				td[2].innerText = '${aiList[2].phone}';
 				td[3].innerText = '${aiList[2].comment}';
+				
+				$(aiNo).val( ${aiList[2].addressNo} );
+				console.log(aiNo);
 			}
 			else if(i==3){
 				td[0].innerText = '${aiList[3].receiverName}';
-				td[1].innerText = '${aiList[3].address} ${aiList[0].addressDetail}';
+				td[1].innerText = '${aiList[3].address} ${aiList[3].addressDetail}';
 				td[2].innerText = '${aiList[3].phone}';
 				td[3].innerText = '${aiList[3].comment}';
+				
+				$(aiNo).val( ${aiList[3].addressNo} );
+				console.log(aiNo);
 			}
 			else if(i==4){
 				td[0].innerText = '${aiList[4].receiverName}';
-				td[1].innerText = '${aiList[4].address} ${aiList[0].addressDetail}';
+				td[1].innerText = '${aiList[4].address} ${aiList[4].addressDetail}';
 				td[2].innerText = '${aiList[4].phone}';
 				td[3].innerText = '${aiList[4].comment}';
+				
+				$(aiNo).val( ${aiList[4].addressNo} );
+				console.log(aiNo);
 			}
 			
 			window.close();
 		};
+		
 		
 		function updateAddressInfo(addressInfoNo){
 			console.log("updateAddressInfo " + addressInfoNo);
 			location.href="infoUpdateForm.sh?addressInfoNo="+addressInfoNo;
 		};
 		
-		
-// 		$(".receiverModify").click(function(){
-// 			console.log("receiverModify is clicked");
-// 			location.href="infoUpdateForm.sh?aiNo=";
-// 		});
 		
 		$(".AddAddressInfo").click(function(){
 			console.log("AddAddressInfo is clicked");

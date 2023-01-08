@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -109,6 +110,12 @@
             background-color: rgb(78, 154, 255);
             float: right;
         }
+        .passData{
+        	width: 80px;
+        	text-align:center;
+        	outline:none;
+        	border: none;
+        }
     </style>
 </head>
 <body>
@@ -118,8 +125,9 @@
         <span class="purchaseHeaderSpan">주문 / 결제</span>
         <hr class="purchaseHeaderHr">
         <div class="purchaseForm">
-        	<form action="insert.or">
+        	<form action="insert.or" method="post" commandName="order">
 	            <div class="buyerInfo">
+	            	<input type="hidden" id="memberNo" name="memberNo" value="${loginUser.memberNo}">
 	                <table id="buyerInfoBTL" class="purchaseNormalTb">
 	                    <tr align="center">
 	                        <th>이 름</th>
@@ -160,6 +168,7 @@
 	                        <td></td>
 	                    </tr>
 	                </table>
+	                <input type="hidden" id="aiNo" name="aiNo" value="0">
 				</div>
 				<br>
 				<span class="purchaseHeaderSpan">구매 목록</span>
@@ -167,30 +176,34 @@
 				<div class="goodsInfo">
 	                <table id="goodsInfoTBL" class="purchaseNormalTb">
 	                    <tr align="center">
-	                        <th>주문 상품명</th>
-	                        <th>가격</th>
-	                        <th>수량</th>
-	                        <th>옵션1</th>
-	                        <th>옵션2</th>
+	                        <th style="width:20%;">주문 상품명</th>
+	                        <th style="width:20%;">가격</th>
+	                        <th style="width:20%;">수량</th>
+	                        <th style="width:20%;">상품 합계</th>
+	                        <th style="width:10%;">옵션1</th>
+	                        <th style="width:10%;">옵션2</th>
 	                    </tr>
-	                    <!-- 개별구매했을 경우에 표시 -->
-	                	<c:if test="${not empty cart }">
-		                    <tr align="center">
-		                        <td>${cart.goodsName}</td>
-		                        <td>${cart.goodsPrice }원</td>
-		                        <td>${cart.quantity }개</td>
-		                        <td>없음</td>
-		                        <td>없음</td>
-		                    </tr>
-	                    </c:if>
 	                    <!-- 그룹구매했을 경우에 표시 -->
 	                    <c:choose>
 	                    	<c:when test="${not empty clist}">
-		                    	<c:forEach var="c" items="${clist}">
+		                    	<c:forEach var="c" items="${clist}" varStatus="status">
+			                    	<input type="hidden" id="goodsNo" name="goodsNo" value="${c.goodsNo}" readonly>
 				                    <tr align="center">
-				                        <td>${c.goodsName }</td>
-				                        <td>${c.goodsPrice }원</td>
-				                        <td>${c.quantity }개</td>
+				                        <td>
+											<input class="passData" type="text" id="goodsName" name="order[${status.index}].goodsName" value="${c.goodsName}" readonly>
+										</td>
+				                        <td>
+				                        	<span>&#8361;</span>
+				                        	<input class="passData" type="text" id="goodsPrice" name="order[${status.index}].goodsPrice" value="<fmt:formatNumber value="${c.goodsPrice }" pattern="#,###,###" />" readonly>
+				                        </td>
+				                        <td>
+					                        <input class="passData" type="text" id="quantity" name="order[${status.index}].quantity" value="${c.quantity}" readonly>
+					                        <span>개</span>
+				                        </td>
+				                        <td>
+				                        	<span>&#8361;</span>
+				                        	<fmt:formatNumber value="${c.goodsPrice * c.quantity}" pattern="#,###,###" />
+				                        </td>
 				                        <td>없음</td>
 				                        <td>없음</td>
 				                    </tr>
@@ -206,19 +219,25 @@
 	                <table id="purchaseInfoTBL" class="purchaseNormalTb">
 	                    <tr align="center">
 	                        <th>총 상품 가격</th>
-	                        <td>${totalPrice }원</td>
+	                        <td>
+	                        	<span>&#8361;</span>
+	                        	<fmt:formatNumber value="${totalPrice}" pattern="#,###,###" />
+	                        	
+	                        </td>
 	                    </tr>
 	                    <tr align="center">
 	                        <th>배송비</th>
 	                        <c:choose>
 	                        	<c:when test="${totalPrice > 50000 }">
 			                        <td>
-			                        	<span>0</span><span>원</span>
+			                        	<span>&#8361;</span>
+			                        	<span>0</span>
 			                        </td>
 	                        	</c:when>
 	                        	<c:otherwise>
 	                        		<td>
-			                        	<span>2500</span><span>원</span>
+	                        			<span>&#8361;</span>
+			                        	<span>2,500</span>
 			                        </td>
 	                        	</c:otherwise>
 	                        </c:choose>
@@ -228,12 +247,20 @@
 	                        <c:choose>
 	                        	<c:when test="${totalPrice > 50000 }">
 			                        <td>
-			                        	<span>${totalPrice}</span><span>원</span>
+			                        	<span>&#8361;</span>
+			                        	<span>
+			                        		<fmt:formatNumber value="${totalPrice}" pattern="#,###,###" />
+			                        	</span>
+		                        		<input type="hidden" id="orderFinalAmount" name="orderFinalAmount" value="${totalPrice}" readonly>
 			                        </td>
 	                        	</c:when>
 	                        	<c:otherwise>
 	                        		<td>
-			                        	<span>${totalPrice+2500}</span><span>원</span>
+	                        			<span>&#8361;</span>
+			                        	<span>
+			                        		<fmt:formatNumber value="${totalPrice+2500}" pattern="#,###,###" />
+			                        	</span>
+		                        		<input type="hidden" id="orderFinalAmount" name="orderFinalAmount" value="${totalPrice+2500}" readonly>
 			                        </td>
 	                        	</c:otherwise>
 	                        </c:choose>
@@ -288,14 +315,40 @@
 	                </table>
 				</div>
 				<br><br>
-				<button type="submit" id="purchaseBtn">주문</button>
+				
+				<button type="button" id="purchaseBtn">주문</button>
 				<button type="button" id="goBackBtn" onclick="location.href='cart.ca'">뒤로 가기</button>
 			</form>
 			<!-- 구매 동의 내용 -->
 			<br><br><br>
         </div>
     </div>
+    
     <script>
+    	$("#purchaseBtn").click(function(){
+    		// 주문 시 cartNo목록과 aiNo를 전달
+			const aiNo = $("#aiNo").val();
+//     		console.log("aiNo = " + aiNo);
+
+    		let cnoArr = new Array();
+    		<c:choose>
+    			<c:when test="${not empty clist}">
+    				<c:forEach var="c" items="${clist}" varStatus="status">
+    					cnoArr.push(${c.cartNo});
+    				</c:forEach>
+    			</c:when>
+    			<c:otherwise>
+    			</c:otherwise>
+    		</c:choose>
+//     		console.log(cnoArr);
+
+    		var cnoArrStr = cnoArr.join(",");
+//     		console.log(cnoArrStr);
+
+    		location.href="insert.or?cnoArr="+cnoArrStr+"&aiNo="+aiNo;
+    	});
+    
+    
     	// 첫 화면은 신용카드 탭 표시
 	    $(".cardTab").css("display","block");
 		$(".accountTab").css("display","none");
@@ -353,7 +406,6 @@
 			$("#receiverInfoTBL").find('td').eq(0).html('${loginUser.memberName }');
 			$("#receiverInfoTBL").find('td').eq(1).html('${loginUser.memberAddress }');
 			$("#receiverInfoTBL").find('td').eq(2).html('${loginUser.memberPhone }');
-
 		});
 		
 		// 배송메세지 모달창으로 입력하기

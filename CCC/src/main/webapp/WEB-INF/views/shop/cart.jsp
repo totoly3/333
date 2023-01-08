@@ -648,7 +648,7 @@
 						window.alert("선택된 상품이 없습니다.");
 					}
 					else{
-						var cartNoArr = chkArr.join("-");
+						var cartNoArr = chkArr.join(",");
 						console.log("cartNoJsonArr : " + cartNoArr);
 						location.href="buyManyGoods.ca?cartNoArr="+cartNoArr;	
 					}
@@ -691,7 +691,7 @@
 					window.alert("선택된 상품이 없습니다.");
 				}
 				else{
-					var cartNoArr = chkArr.join("-");
+					var cartNoArr = chkArr.join(",");
 					console.log("cartNoJsonArr : " + cartNoArr);
 					location.href="buyManyGoods.ca?cartNoArr="+cartNoArr;	
 				}
