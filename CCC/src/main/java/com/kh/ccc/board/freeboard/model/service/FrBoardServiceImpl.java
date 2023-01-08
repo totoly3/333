@@ -130,8 +130,6 @@ public class FrBoardServiceImpl implements FrBoardService{
 		return result2;
 	}
 	
-	
-	
 
 	// 파일 수정 파일 둘다 있을때 
 	@Override
