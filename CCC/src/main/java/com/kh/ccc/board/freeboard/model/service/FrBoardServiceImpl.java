@@ -31,7 +31,7 @@ public class FrBoardServiceImpl implements FrBoardService{
 		return listCount;
 	}
 	
-	
+	//
 	
 	//아래는 게시글 리스트 조회 
 	@Override

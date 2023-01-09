@@ -113,7 +113,8 @@ public class FrBoardController {
 					System.out.println("fb : "+fb);
 					
 					Member loginUser = (Member)session.getAttribute("loginUser");
-					
+					System.out.println("upfile"+upfile);
+					System.out.println("upfilet사이즈"+upfile.size());
 					
 					/////////////////////////////////병철이형 부분 시작 
 					/////////////////////////////////병철이형 부분 시작 
