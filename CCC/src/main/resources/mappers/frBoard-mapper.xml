@@ -316,20 +316,18 @@
 		
 		<!-- 아래는 기존첨부파일 삭제 병철이형 부분  -->
 		<delete id="deleteFrFile" parameterType="java.util.List">
-			DELETE FROM TB_FREE_ATTACH FRA
+			DELETE FROM TB_FREE_ATTACH
 			WHERE 
-			FA_NO = #{faNo};
+			F_NO = #{fNo};
 		
 		</delete>
 		
 		
 		<!-- 댓글 삭제  -->
-		
-		<update id="deleteReply" parameterType="FrBoardReply">
+		<update id="deleteReply" >
 			  UPDATE TB_FREE_REPLY 
 			  SET FR_STATUS ='N'			
 			  WHERE FR_STATUS = 'Y'
-			  AND F_NO=#{fNo}
 			  AND FR_NO=#{frNo}
 		
 		</update>

@@ -552,6 +552,8 @@
 		} 	
     	// 댓글 삭제 
     	function deleteReply(frNo){
+    		console.log("frNo "+frNo);
+    		console.log("아무거나 ");
     		$.ajax({
     			url : "deleteFrReply.fr",
     			data : {
