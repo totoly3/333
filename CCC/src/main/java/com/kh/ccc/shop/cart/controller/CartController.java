@@ -311,13 +311,16 @@ public class CartController {
 		System.out.println("buyGoodsDirect.go:: gno = "+gno);
 		System.out.println("buyGoodsDirect.go:: quantity = "+quantity);
 		
-//		Goods g = goodsService.selectGoods(gno);
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		Cart c = new Cart();
 		c.setGoodsNo(gno);
 		c.setQuantity(quantity);
 		c.setMemberNo(loginUser.getMemberNo());
-		int result = cartService.insertCart(c);
+		int result1 = cartService.selectCartByGnoMno(c);
+		int result = 0;
+		if(result1==0) {
+			result = cartService.insertCart(c);
+		}
 
 		c = cartService.selectCartByGoodsNo(gno);
 		System.out.println("카트 정보 : "+c);
@@ -329,5 +332,56 @@ public class CartController {
 		}
 		return "redirect:/buyGoods.ca?cartNo="+c.getCartNo();
 	}
+	
+	// 관심 상품 확인
+	@ResponseBody
+	@RequestMapping(value="addCartByGno.ca")
+	public String addCartByGno(HttpSession session, Model model
+			, @RequestParam(value="qtt", defaultValue="1") int quantity, int gno) {
 		
+		System.out.println("addCartByGno.go:: gno = "+gno);
+		System.out.println("addCartByGno.go:: quantity = "+quantity);
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		Cart c = new Cart();
+		c.setGoodsNo(gno);
+		c.setQuantity(quantity);
+		c.setMemberNo(loginUser.getMemberNo());
+		int result1 = cartService.selectCartByGnoMno(c);
+		int result = 0;
+		if(result1==0) {
+			result = cartService.insertCart(c);
+		}
+		
+		if(result > 0) {
+			System.out.println("카트에 굿즈 추가 성공");
+			return "1";
+		}
+		else {
+			System.out.println("카트에 굿즈가 이미 있음");
+			return "0";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="addWishByGno.ca")
+	public String addWishByGno(HttpSession session, Model model, int gno) {
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		
+		Wish w = new Wish();
+		w.setMemberNo(loginUser.getMemberNo());
+		w.setGoodsNo(gno);
+		
+		int checkResult = cartService.checkWish(w);
+		if(checkResult > 0) {
+			cartService.removeWish(w);
+			return "0";
+		}
+		else {
+			cartService.insertWish(w);
+			return "1";
+		}
+	}
 }

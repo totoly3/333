@@ -974,13 +974,26 @@ $(function() {
 						</div>
 					</div>
 						<br><br>
-						
 						<div class="btnArea">
 						<span style="width:190px;">
-							<a href="#" onclick="buyGoodsDirect();" class="btn btnB1 btnRed">바로구매</a>
+							<c:choose>
+								<c:when test="${not empty loginUser}">
+									<a href="#" onclick="buyGoodsDirect();" class="btn btnB1 btnRed">바로구매</a>
+								</c:when>
+								<c:otherwise>
+									<a href="#" onclick="pleaseLogin();" class="btn btnB1 btnRed">바로구매</a>			
+								</c:otherwise>
+							</c:choose>
 						</span>
 						<span class="lPad10 btnCartV15" style="width:190px;">
-							<a href="#" onclick="" id="btn_shoppingbag" onclick="appierProductFunction('product_added_to_cart');FnAddShoppingBag(true);fnGaSendCheckValue(true); branchAddToCartEventLoging();return false;" class="btn btnB1 btnWhite">장바구니</a>
+							<c:choose>
+								<c:when test="${not empty loginUser}">
+									<a href="#" onclick="addCart();" id="btn_shoppingbag" onclick="appierProductFunction('product_added_to_cart');FnAddShoppingBag(true);fnGaSendCheckValue(true); branchAddToCartEventLoging();return false;" class="btn btnB1 btnWhite">장바구니</a>
+								</c:when>
+								<c:otherwise>
+									<a href="#" onclick="pleaseLogin();" id="btn_shoppingbag" onclick="appierProductFunction('product_added_to_cart');FnAddShoppingBag(true);fnGaSendCheckValue(true); branchAddToCartEventLoging();return false;" class="btn btnB1 btnWhite">장바구니</a>			
+								</c:otherwise>
+							</c:choose>
 							<div class="alertLyrV15" style="display:none;">
 								<div class="alertBox">
 									<em class="closeBtnV15" onclick="$('.alertLyrV15').fadeOut('fast');">&times;</em>
@@ -997,9 +1010,18 @@ $(function() {
 						
 							<!-- 좋아요 -->
 							<span class="lPad10" style="*width:168px;">
-								<a href="" id="wsIco5055471" onclick="TnAddFavoritePrd(5055471);appierProductFunction('product_added_to_wishlist');return false;" class="btn btnB1 btnWhite3 ">
-									<em class="wishActionV15">1,038</em>
-								</a>
+								<c:choose>
+									<c:when test="${not empty loginUser}">
+										<a href="" id="wishBtn" onclick="addWish();" class="btn btnB1 btnWhite3 ">
+											<em class="wishActionV15">관심 상품</em>
+										</a>
+									</c:when>
+									<c:otherwise>
+										<a href="" id="wishBtn" onclick="pleaseLogin();" class="btn btnB1 btnWhite3 ">
+											<em class="wishActionV15">관심 상품</em>
+										</a>
+									</c:otherwise>
+								</c:choose>
 							</span>
 						</div>
 						
@@ -2314,10 +2336,65 @@ var NeoclickConversionInnAccountCode="6124a52c47e704b805000009";
     		var quantity = $("#itemea").val();
     		var gno = ${g.goodsNo};
 //     		console.log(ono,quantity);
-
-
-
     		location.href="buyGoodsDirect.go?gno="+gno+"&qtt="+quantity;
+    	}
+    	
+    	function addCart(){
+    		var quantity = $("#itemea").val();
+    		var gno = ${g.goodsNo};
+    		$.ajax({
+				url : "addCartByGno.ca",
+				data : {
+					gno : gno,
+					qtt : quantity
+				},
+				success : function(result){
+					console.log("결과는 : " + result);
+					if(result > 0){
+						window.alert("장바구니에 추가되었습니다!");
+						var temp = window.confirm("장바구니로 이동할까요?");
+						if(temp){
+							location.href="cart.ca";
+						}
+					}
+					else{
+						window.alert("장바구니에 이미 있습니다!");
+						var temp = window.confirm("장바구니로 이동할까요?");
+						if(temp){
+							location.href="cart.ca";
+						}
+					}
+				},
+				error : function(){
+					console.alert("checkWish 실패");
+				}
+			});
+    	};
+    	
+    	function addWish(){
+    		var gno = ${g.goodsNo};
+    		$.ajax({
+				url : "addWishByGno.ca",
+				data : {
+					gno : gno
+				},
+				success : function(result){
+					console.log("결과는 : " + result);
+					if(result > 0){
+						window.alert("관심상품 추가!");
+					}
+					else{
+						window.alert("관심상품 삭제!");
+					}
+				},
+				error : function(){
+					console.alert("checkWish 실패");
+				}
+			});
+    	};
+    	
+    	function pleaseLogin(){
+    		window.alert("로그인 후 이용가능합니다.");
     	}
     </script>
 

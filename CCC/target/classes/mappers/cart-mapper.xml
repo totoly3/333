@@ -41,6 +41,12 @@
 		WHERE CART_NO = #{cartNo}
 			AND G.G_STATUS = 'Y'
 	</select>
+	<select id="selectCartByGnoMno" resultType="_int">
+		SELECT COUNT(*)
+		FROM TB_CART C
+		WHERE M_NO = #{memberNo}
+			AND G_NO = #{goodsNo}
+	</select>
 	<select id="selectCartByGoodsNo" resultMap="cartResult">
 		SELECT CART_NO, C.M_NO, C.G_NO, C.QUANTITY, OPTION1, OPTION2, 
 		       G.G_NAME, G.G_PRICE, G.G_STOCK

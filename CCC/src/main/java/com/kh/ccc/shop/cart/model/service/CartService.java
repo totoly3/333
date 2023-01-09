@@ -26,6 +26,9 @@ public interface CartService {
 	// goodsNo로 카트 조회
 	Cart selectCartByGoodsNo(int goodsNo);
 
+	// M_NO와 G_NO로 카트 조회 
+	int selectCartByGnoMno(Cart c);
+	
 	// 장바구니에서 cartNo 삭제
 	int deleteGoodsInCart(int cartNo);
 
@@ -53,7 +56,5 @@ public interface CartService {
 	// 장바구니에 상품 추가
 	int insertCart(Cart c);
 
-	
-	
-	
+
 }
