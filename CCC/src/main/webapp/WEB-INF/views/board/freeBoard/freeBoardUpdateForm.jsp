@@ -107,20 +107,8 @@
 
 <%--   		<input type="hidden" name="originName" value="${frba.faOrginName}"> --%>
 <%--     	<input type="hidden" name="changeName" value="${frba.faChangeName}"> --%>
-    				
-<!-- 	<input type="file" id="upfile" class="form-control-file border" name="upfile"> -->
-<!-- 	<input type="file" id="upfile" class="form-control-file border" name="upfile">	     -->
-	
-	<!-- 아래는 병철이형 버전으로 진행하기 !!!! -->
-	<!-- 아래는 병철이형 버전으로 진행하기 !!!! -->
-	<!-- 아래는 병철이형 버전으로 진행하기 !!!! -->
-	<!-- 아래는 병철이형 버전으로 진행하기 !!!! -->
-	
-	<table algin="center">
-		<tr>
-			<th><label for="upfile">첨부파일</label></th>
-			<td id="na-area">
-			현재 업로드된 파일 :
+    
+    	현재 업로드된 파일 :
 			<br>
 			                <c:forEach var="fr" items="${frba }" varStatus="var">
 	           			   	   	<div>
@@ -129,11 +117,29 @@
 	                            	<input type="button" id="deleteAttachBtn_${var.index }" value="파일삭제"><br>
                             	</div>
                            	</c:forEach>
+                           	<br><br>
+    				
+	<input type="file" id="upfile" class="form-control-file border" name="upfile">
+	<input type="file" id="upfile" class="form-control-file border" name="upfile">	   
+	<input type="file" id="upfile" class="form-control-file border" name="upfile">
+	<input type="file" id="upfile" class="form-control-file border" name="upfile">	
+	<input type="file" id="upfile" class="form-control-file border" name="upfile">
+	
+	<!-- 아래는 병철이형 버전으로 진행하기 !!!! -->
+	<!-- 아래는 병철이형 버전으로 진행하기 !!!! -->
+	<!-- 아래는 병철이형 버전으로 진행하기 !!!! -->
+	<!-- 아래는 병철이형 버전으로 진행하기 !!!! -->
+	<br><br><br>
+	<table algin="center">
+		<tr>
+			<th><label for="upfile">첨부파일</label></th>
+			<td id="na-area">
+		
                            	<br><br><br>
                            	
                            	새로 업로드할 파일 : <br>
-							<input type="button" id="addAttachBtn" value="파일추가"><br>
-		      				<div id="newNa-area">   </div>
+							<input type="button" id="addAttachBtn" value="파일추가" disabled><br>
+		      				<div id="newNa-area" name="upfile">   </div>
 	        </td>
 		</tr>
 	 </table> 	
