@@ -25,6 +25,16 @@ public class QuestionDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		return (ArrayList)sqlSession.selectList("questionMapper.selectList", null, rowBounds);
 	}
+	
+	public ArrayList<Question> selectMyList(SqlSessionTemplate sqlSession, int memberNo, PageInfo pi) {
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1) * limit;
+//		System.out.println("BoardList::Dao:: pi : " + pi);
+//		System.out.println("QuestionList::Dao:: limit : " + limit);
+//		System.out.println("QuestionList::Dao:: offset : " + offset);
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		return (ArrayList)sqlSession.selectList("questionMapper.selectMyList", memberNo, rowBounds);
+	}
 
 	public int insertQuestion(SqlSessionTemplate sqlSession, Question q, ArrayList<QuestionAttach> qaList) {
 		int qResult = sqlSession.insert("questionMapper.insertQuestion", q);
@@ -92,4 +102,5 @@ public class QuestionDao {
 		
 		return result;
 	}
+
 }

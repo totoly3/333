@@ -35,3 +35,4 @@ public class Goods {
 	private	String goodsStatus;			//	G_STATUS	VARCHAR2(1 BYTE)
 	
 }
+

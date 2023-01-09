@@ -34,7 +34,7 @@
 <body>
 
     <!--================ Start header Top Area =================-->
-    <section class="header-top">
+    <section class="header-top" style="height:80px;">
         <div class="container">
             <div class="row align-items-center justify-content-between">
                 <div class="col-6 col-lg-4">
@@ -60,7 +60,7 @@
                     <div class="right-button">
                         <ul>
                             <li><a id="search" href="javascript:void(0)"><i class="fas fa-search"></i></a></li>
-                            <li><a href="">Cart</a></li>
+                            <li><a href="cart.ca">Cart</a></li>
                             <li><a href="loginform.me">Login</a></li>
                             <li><a href="">Wish</a></li>
                         </ul>
@@ -99,10 +99,10 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Decoration</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=sticker">Stiker</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="detail.go">Poster</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=poster">Poster</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=masking">Masking tape</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=gift">Gift wrapping</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=badge">Badge / Wapen</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="detail.go">Badge / Wapen</a></li>
                                 </ul>
                             </li>
                             <!-- 다이어리 드롭다운 -->
@@ -141,8 +141,8 @@
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Fashion accessories</a>
                                 <ul class="dropdown-menu">
-                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=bag">Bag</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=pouch">Pouch / Wallet</a></li>
+                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=bag">Bag</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=umbrella">Umbrella</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=carrier">Carrier</a></li>
                                 </ul>
@@ -161,8 +161,8 @@
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Beauty</a>
                                 <ul class="dropdown-menu">
-                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=skin">Skin care</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=make">Make up</a></li>
+                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=skin">Skin care</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=cleansing">Cleansing</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=hair">Hair / body</a></li>
                                 </ul>
@@ -175,9 +175,6 @@
         </div>
     </header>
     <!-- End header MEnu Area -->
-
-    
-    <br>
 
     <!--================Fullwidth block Area =================-->
 

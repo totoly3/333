@@ -27,7 +27,7 @@
 <body>
 
     <!--================ Start header Top Area =================-->
-    <section class="header-top">
+    <section class="header-top" style="height:80px;">
         <div class="container">
             <div class="row align-items-center justify-content-between">
                 <div class="col-6 col-lg-4">
@@ -55,14 +55,14 @@
                            <!-- <li><a id="search" href="javascript:void(0)"><i class="fas fa-search"></i></a></li> -->
                             <li><a id="search" href="javascript:void(0)"><i class="fas fa-search"></i></a></li>
                             <li><a href="cart.ca">Cart</a></li>
-                            <li><a href="">Login</a></li>
+                            <li><a href="loginform.me">Login</a></li>
                             <li><a href="">Wish</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="search_input" id="search_input_box">
+        <!-- <div class="search_input" id="search_input_box">
             <div class="container">
                 <form class="d-flex justify-content-between search-inner">
                     <input type="text" class="form-control" id="search_input" placeholder="Search Here">
@@ -70,7 +70,7 @@
                     <span class="ti-close" id="close_search" title="Close Search"></span>
                 </form>
             </div>
-        </div>
+        </div> -->
     </section>
     
     <script>
@@ -103,10 +103,10 @@
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Decoration</a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=sticker">Stiker</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="detail.go">Poster</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=poster">Poster</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=masking">Masking tape</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=gift">Gift wrapping</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="list.go?menu=badge">Badge / Wapen</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="detail.go">Badge / Wapen</a></li>
                                 </ul>
                             </li>
                             <!-- 다이어리 드롭다운 -->
@@ -145,8 +145,8 @@
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Fashion accessories</a>
                                 <ul class="dropdown-menu">
-                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=bag">Bag</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=pouch">Pouch / Wallet</a></li>
+                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=bag">Bag</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=umbrella">Umbrella</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=carrier">Carrier</a></li>
                                 </ul>
@@ -165,8 +165,8 @@
                             <li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Beauty</a>
                                 <ul class="dropdown-menu">
-                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=skin">Skin care</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=make">Make up</a></li>
+                                	<li class="nav-item"><a class="nav-link" href="list.go?menu=skin">Skin care</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=cleansing">Cleansing</a></li>
                                     <li class="nav-item"><a class="nav-link" href="list.go?menu=hair">Hair / body</a></li>
                                 </ul>
@@ -183,7 +183,7 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="resources/css/goods/js/jquery-2.2.4.min.js"></script>
+<!-- <script src="resources/css/goods/js/jquery-2.2.4.min.js"></script>
 <script src="resources/css/goods/js/popper.js"></script>
 <script src="resources/css/goods/js/bootstrap.min.js"></script>
 <script src="resources/css/goods/js/stellar.js"></script>
@@ -195,6 +195,6 @@
 <script src="resources/css/goods/js/jquery.form.js"></script>
 <script src="resources/css/goods/js/jquery.validate.min.js"></script>
 <script src="resources/css/goods/js/mail-script.js"></script>
-<script src="resources/css/goods/js/theme.js"></script>
+<script src="resources/css/goods/js/theme.js"></script> -->
 </body>
 </html>

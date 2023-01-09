@@ -203,6 +203,4 @@ public class FrBoardServiceImpl implements FrBoardService{
 
 
 
-
-
 }

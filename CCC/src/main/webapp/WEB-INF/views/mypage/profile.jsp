@@ -199,13 +199,13 @@ Coded by www.creative-tim.com
                 <div class="button-container">
                   <div class="row">
                     <div class="col-lg-3 col-md-6 col-6 ml-auto">
-                      <h5>12<br><small>Files</small></h5>
+                      <h5>12<br><small>n회 수상</small></h5>
                     </div>
                     <div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
-                      <h5>2GB<br><small>Used</small></h5>
+                      <h5>2GB<br><small>등록캐릭터 개수</small></h5>
                     </div>
                     <div class="col-lg-3 mr-auto">
-                      <h5>24,6$<br><small>Spent</small></h5>
+                      <h5>24,6$<br><small>1위 캐릭터</small></h5>
                     </div>
                   </div>
                 </div>
@@ -213,7 +213,7 @@ Coded by www.creative-tim.com
             </div>
             <div class="card">
               <div class="card-header">
-                <h4 class="card-title">Team Members</h4>
+                <h4 class="card-title">내 캐릭터 TOP3</h4>
               </div>
               <div class="card-body">
                 <ul class="list-unstyled team-members">

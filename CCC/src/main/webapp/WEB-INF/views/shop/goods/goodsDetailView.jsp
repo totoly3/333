@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
     
 <!DOCTYPE html>
 <html>
@@ -10,22 +11,7 @@
 <meta charset="utf-8" />
 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="description" id="meta_og_description" content="생활감성채널 10x10(텐바이텐)은 디자인소품, 아이디어상품, 독특한 인테리어 및 패션 상품 등으로 고객에게 즐거운 경험을 주는 디자인전문 쇼핑몰 입니다." />
-	<meta name="keywords" content="10x10, 텐바이텐, 감성, 디자인, 심플리 화이트 5단 책꽂이 트롤리 매거진랙 이동식 책선반, LUXIAI, 루시아이" />
-	<meta name="classification" content="비즈니스와 경제, 쇼핑과 서비스(B2C, C2C), 선물, 특별상품" />
-	<meta name="application-name" content="텐바이텐" />
-	<meta name="msapplication-task" content="name=텐바이텐;action-uri=http://www.10x10.co.kr/;icon-uri=/icons/10x10_140616.ico" />
-	<meta name="msapplication-tooltip" content="생활감성채널 텐바이텐" />
-	<meta name="msapplication-navbutton-color" content="#FFFFFF" />
-	<meta name="msapplication-TileImage" content="/lib/ico/mstileLogo144.png"/>
-	<meta name="msapplication-TileColor" content="#c91314"/>
-	<meta name="msapplication-starturl" content="/" />
-	<meta name="format-detection" content="telephone=no" />
-	<meta property="og:title" id="meta_og_title" content="텐바이텐 10X10 : 심플리 화이트 5단 책꽂이 트롤리 매거진랙 이동식 책선반" />
-	<meta property="og:type" content="website" />
-	<meta property="og:url" content="http://10x10.co.kr/shopping/category_prd.asp?itemid=5055471" />
-	<meta property="og:image" id="meta_og_image" content="http://webimage.10x10.co.kr/image/basic/505/B005055471.jpg" />
-	
+
 	<link rel="stylesheet" href="resources/css/gdetail/gdetail.css">
 	
 	<link rel="image_src" href="http://webimage.10x10.co.kr/image/basic/505/B005055471.jpg" />
@@ -340,6 +326,36 @@ function ODPorderinfo(){
 	position:relative;
 	left : -250px;
 }
+
+#hardlogo{
+	position:relative;
+	left : -210px;
+	top : -5px;
+}
+#hardfooter{
+	position:relative;
+	left : 30px;
+	top : -40px;
+}
+
+#chaThumb img {
+  transition: all 0.2s linear;
+  overflow: hidden;
+}
+#chaThumb:hover img {
+  transform: scale(1.1);
+}
+#chaThumb {
+  overflow: hidden;
+}
+#preview{
+				z-index: 9999;
+				position:absolute;
+				border:0px;
+				padding:1px;
+				display:none;
+				color:#fff;
+			}
 
 </style>
 <script>
@@ -742,7 +758,7 @@ $(function() {
 		<div id="contentWrap" class="categoryPrd">
 			
 
-			<p class="tPad10"><a href='https://www.10x10.co.kr/'>HOME</a>&nbsp;&gt;&nbsp;<a href="https://www.10x10.co.kr/shopping/category_list.asp?disp=121">가구/수납</a>&nbsp;&gt;&nbsp;<a href="https://www.10x10.co.kr/shopping/category_list.asp?disp=121115">수납/정리</a>&nbsp;&gt;&nbsp;<a href="https://www.10x10.co.kr/shopping/category_list.asp?disp=121115105">데스크수납/정리</a>&nbsp;&gt;&nbsp;<a href="https://www.10x10.co.kr/shopping/category_list.asp?disp=121115105107"><strong>책꽂이</strong></a></p>
+			<p class="tPad10"><a href='https://www.10x10.co.kr/'>HOME</a>&nbsp;&gt;&nbsp;<a href="https://www.10x10.co.kr/shopping/category_list.asp?disp=121">디자인/미술</a>&nbsp;&gt;&nbsp;<a href="https://www.10x10.co.kr/shopping/category_list.asp?disp=121115">문구/완구</a>&nbsp;&gt;&nbsp;<a href="https://www.10x10.co.kr/shopping/category_list.asp?disp=121115105">데코레이션</a>&nbsp;&gt;&nbsp;<a href="https://www.10x10.co.kr/shopping/category_list.asp?disp=121115105107"><strong>${g.goodsCategory}</strong></a></p>
 
 			
 			<p id="lyItemEventBanner" class="tPad10" style="display:none;"></p>
@@ -751,14 +767,11 @@ $(function() {
 				<div class="pdtPhotoWrap">
 					<div class="pdtPhotoBox">
 						<div class="photoSlideV15">
-							<p>
-								<img class="bsImage" src="http://thumbnail.10x10.co.kr/webimage/image/basic600/505/B005055471.jpg?cmd=thumb&w=500&h=500&fit=true&ws=false" thumb="http://thumbnail.10x10.co.kr/webimage/image/basic600/505/B005055471.jpg?cmd=thumb&w=40&h=40&fit=true&ws=false" data-magnify-src="http://webimage.10x10.co.kr/image/basic1000/505/B005055471.jpg" alt="심플리 화이트 5단 책꽂이 트롤리 매거진랙 이동식 책선반" />
+							<p id="chaThumb">
+								<img class="bsImage" src="${g.goodsChangeName1}" alt="심플리 화이트 5단 책꽂이 트롤리 매거진랙 이동식 책선반" />
 							</p>
 						</div>
 					</div>
-					
-					<!-- 맛있는 정기세일 -->
-					
 				</div>
 				<div class="pdtDetailWrap">
 				
@@ -792,11 +805,12 @@ $(function() {
 									<a href="" id="zzimBrandCnt" onclick="TnMyBrandJJim('luxiai', 'LUXIAI'); return false;">
 									<dfn id="zzimBr_luxiai" class="">찜브랜드</dfn></a> <a href="https://www.10x10.co.kr/street/street_brand.asp?makerid=luxiai&ab=012_a_1">
 									<!-- 브랜드명 위치 -->
-									<span>LUXIAI ${g.brand}</span></a>
+									<span>${g.goodsBrand}</span></a>
 									<a href="https://www.10x10.co.kr/street/street_brand.asp?makerid=luxiai&ab=012_a_2" class="btn btnS6 btnGry2 fn lMar10" style="display:none;"><em class="whiteArr03">브랜드샵</em></a>
 									
 								</p>
-								<h2><p class="pdtName">심플리 화이트 5단 책꽂이 트롤리 매거진랙 이동식 책선반</p></h2>
+								<h2><p class="pdtName">${g.goodsName}</p></h2>
+								<!-- <h2><p class="pdtName">심플리 화이트 5단 책꽂이 트롤리 매거진랙 이동식 책선반</p></h2> -->
 								<p class="pdtDesp"></p>
 							</div>
 							<div class="detailInfoV15">
@@ -804,14 +818,14 @@ $(function() {
 									<dl class="saleInfo">
 										<dt>판매가</dt>
 										
-											<dd><strong class="cBk0V15">50,500원</strong></dd>
-										
+											<dd><strong class="cBk0V15">
+											<fmt:formatNumber value="${g.goodsPrice}" pattern="#,###" />원</strong></dd>
 									</dl>
 									
 									<dl class="saleInfo">
 										<dt>할인판매가</dt>
 										<dd><strong class="cRd0V15">
-											44,910원 [11%]
+											<fmt:formatNumber value="${g.goodsPrice*0.89}" pattern="#,###" />원  [11%]
 										</strong></dd>
 									</dl>
 									
@@ -819,7 +833,9 @@ $(function() {
 									<dt>쿠폰적용가</dt>
 									<dd>
 										
-										<strong class="cGr0V15">40,419원 [10%]</strong>&nbsp;
+										<strong class="cGr0V15">
+											<fmt:formatNumber value="${g.goodsPrice*0.89*0.9}" pattern="#,###" />원  [10%]
+										</strong>&nbsp;
 										
                                                     <a href="" onclick="goLoginPage(); return false;" class="btn btnS2 btnGrn fn btnW75"><span class="download">쿠폰다운</span></a>&nbsp;
                                                 
@@ -921,7 +937,7 @@ $(function() {
 							<div class="interactInfoV15">
 								<dl>
 									<dt>상품코드</dt>
-									<dd>5055471</dd>
+									<dd>#0000${g.goodsNo}</dd>
 								</dl>
 								<dl>
 									<dt>Review</dt>
@@ -957,14 +973,14 @@ $(function() {
 							</div>
 						</div>
 					</div>
-					
+						<br><br>
+						
 						<div class="btnArea">
 						<span style="width:190px;">
 							<a href="#" onclick="appierProductFunction('click_directorder_in_product', 'normal');FnAddShoppingBag();fnGaSendCheckValue(); branchAddToCartEventLoging();return false;" class="btn btnB1 btnRed">바로구매</a>
 						</span>
 						<span class="lPad10 btnCartV15" style="width:190px;">
 							<a href="#" id="btn_shoppingbag" onclick="appierProductFunction('product_added_to_cart');FnAddShoppingBag(true);fnGaSendCheckValue(true); branchAddToCartEventLoging();return false;" class="btn btnB1 btnWhite">장바구니</a>
-						
 							<div class="alertLyrV15" style="display:none;">
 								<div class="alertBox">
 									<em class="closeBtnV15" onclick="$('.alertLyrV15').fadeOut('fast');">&times;</em>
@@ -978,8 +994,22 @@ $(function() {
 								</div>
 							</div>
 						</span>
-							    <span class="lPad10" style="*width:168px;"><a href="" id="wsIco5055471" onclick="TnAddFavoritePrd(5055471);appierProductFunction('product_added_to_wishlist');return false;" class="btn btnB1 btnWhite3 "><em class="wishActionV15">1,038</em></a></span>
+						
+							<!-- 좋아요 -->
+							<span class="lPad10" style="*width:168px;">
+								<a href="" id="wsIco5055471" onclick="TnAddFavoritePrd(5055471);appierProductFunction('product_added_to_wishlist');return false;" class="btn btnB1 btnWhite3 ">
+									<em class="wishActionV15">1,038</em>
+								</a>
+							</span>
 						</div>
+						
+						
+						
+				
+						
+						
+						
+						
 					
 
 					<div class="evtSnsV17a">
@@ -1032,12 +1062,17 @@ $(function() {
 					
 
 					<!-- (2/9) 상품설명 -------------------------------->
-					
-<h3>상품 설명</h3>
+
+<br><br>			
+<!-- <h3>상품 설명</h3> -->
 
 	<!-- <iframe id="itemPrdDetail" style="width:100%;" src="/shopping/inc_itemDescription_iframe.asp?itemid=5055471" frameborder="0" scrolling="no"></iframe> -->
 	<!-- 여기에 사진 넣기 -->
-	
+	<div style="text-align:center;">	
+		<img src="${g.goodsChangeName2}" >
+		<img src="${g.goodsChangeName3}">
+		<img src="${g.goodsChangeName4}">
+	</div>
     <script>
         (function(){
             // 브라우저 상태에 따라 iframe 높이값 조정
@@ -1063,11 +1098,11 @@ $(function() {
 			
 				<span style="display:;"><em>법의 의한 인증, 허가 확인사항</em> : 해당없음</span>
 			
-				<span style="display:;"><em>제조국 또는 원산지</em> : 중국OEM</span>
+				<span style="display:;"><em>제조국 또는 원산지</em> : KH정보교육원</span>
 			
-				<span style="display:;"><em>제조자</em> : 루시아이(LUXIAI)</span>
+				<span style="display:;"><em>제조자</em> : 어문경 강사님</span>
 			<span><em>재질</em> : 상세 내용 참조</span><span><em>사이즈</em> : 상세 내용 참조</span>
-				<span style="display:;"><em>A/S 책임자/전화번호</em> : 텐바이텐 고객행복센터 1644-6030</span>
+				<span style="display:;"><em>A/S 책임자/전화번호</em> : 하드캐릭 고객행복센터 1644-0000</span>
 			
 	</div>
 	
@@ -1161,8 +1196,8 @@ $(function() {
 		popEvaluate('5055471',$("#sortMethod").val());
 	}
 
-	
-	function chk_myeval(v){
+	/*삭제 가능*/
+	/* function chk_myeval(v){
 		$.ajax({
 			type: "POST",
 			url:"/shopping/act_myEval.asp?itemid="+v,
@@ -1197,7 +1232,7 @@ $(function() {
 				}
 	        }
 		});
-	}
+	} */
 </script>
 <div class="section review pdtReviewV15" id="detail02">
 	<h3>상품 후기 </h3>
@@ -1227,7 +1262,7 @@ $(function() {
 		
 			<span id="lyEvalAll"><a href="" onclick="popEvalList(); return false;" class="btn btnS2 btnGry2">상품후기 전체보기</a></span>
 			
-			<a href="" onclick="chk_myeval('5055471');return false;"  class="btn btnS2 btnRed"><span class="whiteArr03">후기 작성하기</span></a>
+			<a href="reviewForm.go?gno=${g.goodsNo}" class="btn btnS2 btnRed"><span class="whiteArr03">후기 작성하기</span></a>
 		</div>
 	</div>
 	<span id="lyEvalContAll">
@@ -1248,192 +1283,56 @@ $(function() {
 			</thead>
 			<tbody>
 			
-			<tr>
-				<td><img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" alt="별5개" /></td>
-				<td class="lt">
-					
-					<a href="" onclick="return false;" class="talkShort">파는 제품들 중에 이게 좀 비싸긴해도 외형이 제일 깔끔하고 예뻐보여서 샀어요 거의 완성된 ... <img src="http://fiximage.10x10.co.kr/web2013/common/ico_photo.gif" alt="포토" /></a>
-				</td>
-				<td>2023/01/04</td>
-				<td>eunji00**</td>
-				<td>
-					<p class="badgeView tPad01"> <span><img src="http://fiximage.10x10.co.kr/web2015/common/badge/badge15_09.png" title="컬러홀릭" /></span> <span><img src="http://fiximage.10x10.co.kr/web2015/common/badge/badge15_10.png" title="텐텐 트윅스" /></span> <span><img src="http://fiximage.10x10.co.kr/web2015/common/badge/badge15_03.png" title="위시 메이커" /></span></p>
-				</td>
-			</tr>
-			<tr class="talkMore">
-				<td colspan="5">
-					<div class="customerReview">
-						<div class="rating">
-							
-							<ul>
-								
-								<li><span>기능</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								<li><span>디자인</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								<li><span>가격</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								<li><span>만족도</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								
-							</ul>
-							
-						</div>
-						<div class="comment">
-							
-							<div class="textArea"><p>파는 제품들 중에 이게 좀 비싸긴해도 외형이 제일 깔끔하고 예뻐보여서 샀어요 거의 완성된 채로 와서 설치가 편했어요 색감도 화면과 똑같고 예뻐요 다꾸용품 트롤리로 샀는데 딱 좋네요</p></div>
-							
-							<div class="imgArea"><img src="http://imgstatic.10x10.co.kr/goodsimage/505/A_5DC398A57F7145A385E297C3B1D7AEEA_5055471.jpg/10x10/thumbnail/550%3E/quality/80/" alt="file10" /></div>
-							
-						</div>
-					</div>
-				</td>
-			</tr>
 			
-			<tr>
-				<td><img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" alt="별5개" /></td>
-				<td class="lt">
-					
-					<a href="" onclick="return false;" class="talkShort">깔끔하고 자리 차지도 많지않아서 실용적이예요. 조립식 아니고 거의 완제품형식이라서 튼튼하네... <img src="http://fiximage.10x10.co.kr/web2013/common/ico_photo.gif" alt="포토" /></a>
-				</td>
-				<td>2022/12/31</td>
-				<td>pmh2**</td>
-				<td>
-					<p class="badgeView tPad01"> <span><img src="http://fiximage.10x10.co.kr/web2015/common/badge/badge15_09.png" title="컬러홀릭" /></span> <span><img src="http://fiximage.10x10.co.kr/web2015/common/badge/badge15_04.png" title="포토 코멘터" /></span> <span><img src="http://fiximage.10x10.co.kr/web2015/common/badge/badge15_07.png" title="세일헌터" /></span></p>
-				</td>
-			</tr>
-			<tr class="talkMore">
-				<td colspan="5">
-					<div class="customerReview">
-						<div class="rating">
-							
-							<ul>
-								
-								<li><span>기능</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								<li><span>디자인</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								<li><span>가격</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								<li><span>만족도</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								
-							</ul>
-							
-						</div>
-						<div class="comment">
-							
-							<div class="textArea"><p>깔끔하고 자리 차지도 많지않아서 실용적이예요. 조립식 아니고 거의 완제품형식이라서 튼튼하네요</p></div>
-							
-							<div class="imgArea"><img src="http://imgstatic.10x10.co.kr/goodsimage/505/A_32BB5C977DCD4BAB917C7BF3DE887A44_5055471.jpg/10x10/thumbnail/550%3E/quality/80/" alt="file11" /></div>
-							
-						</div>
-					</div>
-				</td>
-			</tr>
+			<c:forEach var="r" items="${list}">
+				<tr>
+					<td><img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" alt="별5개" /></td>
+					<td class="lt">
+						
+						<a href="" onclick="return false;" class="talkShort"><img src="${r.changeName }" alt="포토" style="width:100px;" class="thumbnailjini"/>&nbsp;&nbsp;&nbsp;&nbsp; ${r.grContent }</a>
+					</td>
+					<td>${r.grCreateDate}</td>
+					<td>${r.memberName}</td>
+					<td>
+						<p class="badgeView tPad01"> <span><img src="http://fiximage.10x10.co.kr/web2015/common/badge/badge15_09.png" title="컬러홀릭" /></span> <span><img src="http://fiximage.10x10.co.kr/web2015/common/badge/badge15_10.png" title="텐텐 트윅스" /></span> <span><img src="http://fiximage.10x10.co.kr/web2015/common/badge/badge15_03.png" title="위시 메이커" /></span></p>
+					</td>
+				</tr>
+			</c:forEach>
 			
-			<tr>
-				<td><img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" alt="별5개" /></td>
-				<td class="lt">
-					
-					<a href="" onclick="return false;" class="talkShort">??????????????????</a>
-				</td>
-				<td>2022/12/23</td>
-				<td>tnalsu8**</td>
-				<td>
-					<p class="badgeView tPad01"> <span><img src="http://fiximage.10x10.co.kr/web2015/common/badge/badge15_07.png" title="세일헌터" /></span> <span><img src="http://fiximage.10x10.co.kr/web2015/common/badge/badge15_01.png" title="슈퍼 코멘터" /></span> <span><img src="http://fiximage.10x10.co.kr/web2015/common/badge/badge15_03.png" title="위시 메이커" /></span></p>
-				</td>
-			</tr>
-			<tr class="talkMore">
-				<td colspan="5">
-					<div class="customerReview">
-						<div class="rating">
-							
-							<ul>
-								
-								<li><span>기능</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								<li><span>디자인</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								<li><span>가격</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								<li><span>만족도</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								
-							</ul>
-							
-						</div>
-						<div class="comment">
-							
-							<div class="textArea"><p>??????????????????</p></div>
-							
-						</div>
-					</div>
-				</td>
-			</tr>
 			
-			<tr>
-				<td><img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" alt="별5개" /></td>
-				<td class="lt">
-					
-					<a href="" onclick="return false;" class="talkShort">딱 제가 원하던 폭 높이에요~ 
-이뻐요 넓찍넓찍한 트롤리는 아이책 정리하기 애미했는데 이...</a>
-				</td>
-				<td>2022/12/22</td>
-				<td>fjdrb4**</td>
-				<td>
-					<p class="badgeView tPad01"> <span><img src="http://fiximage.10x10.co.kr/web2015/common/badge/badge15_01.png" title="슈퍼 코멘터" /></span></p>
-				</td>
-			</tr>
-			<tr class="talkMore">
-				<td colspan="5">
-					<div class="customerReview">
-						<div class="rating">
-							
-							<ul>
-								
-								<li><span>기능</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								<li><span>디자인</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								<li><span>가격</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								<li><span>만족도</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								
-							</ul>
-							
-						</div>
-						<div class="comment">
-							
-							<div class="textArea"><p>딱 제가 원하던 폭 높이에요~ <br />이뻐요 넓찍넓찍한 트롤리는 아이책 정리하기 애미했는데 이건 세로로 꼽을수있어 훨나아요<br /></p></div>
-							
-						</div>
-					</div>
-				</td>
-			</tr>
 			
-			<tr>
-				<td><img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" alt="별5개" /></td>
-				<td class="lt">
+		
+			
+			
+			<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                 
+                var xOffset = 10;
+                var yOffset = 30;
+
+                $(document).on("mouseover",".thumbnailjini",function(e){ //마우스 오버시
 					
-					<a href="" onclick="return false;" class="talkShort">밑에 바퀴가 달려 있어서 이동하기도 좋구, 수납도 많이 되어서 좋아요:)  <img src="http://fiximage.10x10.co.kr/web2013/common/ico_photo.gif" alt="포토" /></a>
-				</td>
-				<td>2022/12/21</td>
-				<td>happiamo**</td>
-				<td>
-					<p class="badgeView tPad01"> <span><img src="http://fiximage.10x10.co.kr/web2015/common/badge/badge15_07.png" title="세일헌터" /></span> <span><img src="http://fiximage.10x10.co.kr/web2015/common/badge/badge15_01.png" title="슈퍼 코멘터" /></span> <span><img src="http://fiximage.10x10.co.kr/web2015/common/badge/badge15_09.png" title="컬러홀릭" /></span></p>
-				</td>
-			</tr>
-			<tr class="talkMore">
-				<td colspan="5">
-					<div class="customerReview">
-						<div class="rating">
-							
-							<ul>
-								
-								<li><span>기능</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								<li><span>디자인</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								<li><span>가격</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								<li><span>만족도</span> <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" class="pngFix" alt="별5개" /></li>
-								
-							</ul>
-							
-						</div>
-						<div class="comment">
-							
-							<div class="textArea"><p>밑에 바퀴가 달려 있어서 이동하기도 좋구, 수납도 많이 되어서 좋아요:) </p></div>
-							
-							<div class="imgArea"><img src="http://imgstatic.10x10.co.kr/goodsimage/505/SB20221221195744.jpeg/10x10/thumbnail/550%3E/quality/80/" alt="file14" /></div>
-							
-						</div>
-					</div>
-				</td>
-			</tr>
+					$("body").append("<p id='preview'><img src='"+ $(this).attr("src") +"' width='400px' /></p>"); //보여줄 이미지를 선언						 
+					$("#preview")
+						.css("top",(e.pageY - xOffset) + "px")
+						.css("left",(e.pageX + yOffset) + "px")
+						.fadeIn("fast"); //미리보기 화면 설정 셋팅
+				});
+				
+				$(document).on("mousemove",".thumbnailjini",function(e){ //마우스 이동시
+					$("#preview")
+						.css("top",(e.pageY - xOffset) + "px")
+						.css("left",(e.pageX + yOffset) + "px");
+				});
+				
+				$(document).on("mouseout",".thumbnailjini",function(){ //마우스 아웃시
+					$("#preview").remove();
+				});
+                 
+            });
+        </script>
+        
 			
 			</tbody>
 		</table>
@@ -2052,7 +1951,7 @@ $("#detail02").dblclick(function(e){
 			});
 		} else {
 			$('.photoSlideV15 p img').css({"width":500,"height":500});
-			$('.photoSlideV15').append('<ul class="slidesjs-pagination"><li><a href="" class="active" onclick="return false;"><span></span></a></li></ul>');
+			/* $('.photoSlideV15').append('<ul class="slidesjs-pagination"><li><a href="" class="active" onclick="return false;"><span></span></a></li></ul>'); */
 			$('.photoSlideV15 .slidesjs-pagination > li').css('background-image', 'url('+$('.photoSlideV15 p img').attr("thumb")+')');
 		}
 	});
@@ -2084,15 +1983,20 @@ $("#detail02").dblclick(function(e){
 	</div>
 	<div class="footerV18">
 		<!-- <span class="logo">HARD-CHARAC</span> -->
-		<span class="logo">HARD-CHARAC</span>
-		
-		<div class="foot-cont company">
-			<em>㈜텐바이텐</em>
-			<p>대표이사 : 하드캐릭 / 서울특별시 영등포구 선유동2로 57 이레빌딩</p>
-			<p>사업자등록번호 : 211-87-00620 / 통신판매업 신고 : 제 01-1968호 <a href="" onclick="window.open('http://www.ftc.go.kr/bizCommPop.do?wrkr_no=2118700620', 'bizCommPop', 'width=750, height=700;');return false;" class="btn-linkV18 link2 lMar05">사업자 정보확인 <span></span></a></p>
-			<p>개인정보보호책임자 : 조진희 / 소비자피해보상보험 SGI 서울보증 <a href="javascript:usafe(2118700620);" class="btn-linkV18 link2 lMar05">서비스 가입 사실 확인 <span></span></a></p>
-			<p class="tPad15">호스팅서비스:㈜하드캐릭</p>
-			<p class="copyright">COPYRIGHT &copy; HARD-CHARAC ALL RIGHTS RESERVED.</p>
+		<!-- <span class="logo">HARD-CHARAC</span> -->
+		<div id="hardlogo">
+			<img src="resources/css/gdetail/chalogo3.jpg">	
+		</div>
+		<div id="hardfooter">
+			<div class="foot-cont company">
+				<em>㈜하드캐릭</em>
+				<p>대표이사 :&nbsp&nbsp&nbsp&nbsp오상희&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp원종우&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp이재영&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp추지은&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp김병철&nbsp&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp&nbsp조진희 </p>
+				<p>서울특별시 영등포구 선유동2로 57 이레빌딩</p>
+				<p>사업자등록번호 : 123-45-678910 / 통신판매업 신고 : 제 01-1968호 <a href="" onclick="window.open('http://www.ftc.go.kr/bizCommPop.do?wrkr_no=2118700620', 'bizCommPop', 'width=750, height=700;');return false;" class="btn-linkV18 link2 lMar05">사업자 정보확인 <span></span></a></p>
+				<p>개인정보보호책임자 : 조진희 / 소비자피해보상보험 SGI 서울보증 <a href="javascript:usafe(2118700620);" class="btn-linkV18 link2 lMar05">서비스 가입 사실 확인 <span></span></a></p>
+				<p class="tPad15">호스팅서비스:㈜하드캐릭</p>
+				<p class="copyright">COPYRIGHT &copy; HARD-CHARAC ALL RIGHTS RESERVED.</p>
+			</div>
 		</div>
 		<div class="foot-cont cs">
 			

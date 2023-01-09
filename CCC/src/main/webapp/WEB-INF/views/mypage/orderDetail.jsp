@@ -84,6 +84,7 @@
 	                       <!-- 배송이 진행중일때만 보여줌 -->
 	                       <!-- 상품번호/상세번호 넘기기-->
 	                       <div> <a class="btn btn-primary" id="delivery" onclick="location.href='delivery.my?'">배송조회</a></div>
+	                       <div> <a class="btn btn-primary" id="delivery" onclick="location.href='orderDelete.my?'">주문취소</a></div>
                          </td>
 	                   </tr>
 	                   
@@ -94,7 +95,7 @@
 	                   <tr>
 	                    <td colspan="4">
 	                     <p style="height:50px;">사진명: ${o.goodsOriginName}:</p>
-	                     <img alt="" src="${o.goodsFilePath}||${o.goodsFilePath}" width="100" height="100"> 
+	                     <img alt="" src="${o.goodsFilePath}||${o.goodsChangeName}" width="100" height="100"> 
 	                    </td>
                       </tr>
 	                  <tr>

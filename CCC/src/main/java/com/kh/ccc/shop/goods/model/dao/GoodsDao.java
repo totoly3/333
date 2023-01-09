@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.ccc.shop.goods.model.vo.Goods;
+import com.kh.ccc.shop.goods.model.vo.GoodsReview;
 
 @Repository
 public class GoodsDao {
@@ -18,14 +19,30 @@ public class GoodsDao {
 	}
 	
 	//리스트 출력
-	public ArrayList<Goods> selectList2(SqlSessionTemplate sqlSession, String category) {
+	public ArrayList<Goods> selectList(SqlSessionTemplate sqlSession, String category) {
 		ArrayList<Goods> list = (ArrayList)sqlSession.selectList("goodsMapper.selectList",category);
 		System.out.println("dao리스트2 : "+list);
 		return list;
 	}
-
+	
+	//글쓰기
 	public int insertGoods(SqlSessionTemplate sqlSession, Object g) {
 		return sqlSession.insert("goodsMapper.insertGoods",g);
+	}
+	
+	//상세보기
+	public Goods selectBoard(SqlSessionTemplate sqlSession, int goodsNo) {
+		return sqlSession.selectOne("goodsMapper.selectBoard", goodsNo);
+	}
+	
+	//리뷰 등록
+	public int insertReview(SqlSessionTemplate sqlSession, GoodsReview gr) {
+		return sqlSession.insert("goodsMapper.insertReview", gr);
+	}
+	
+	//리뷰 조회
+	public ArrayList<GoodsReview> selectReviewList(SqlSessionTemplate sqlSession, int goodsNo) {
+		return (ArrayList)sqlSession.selectList("goodsMapper.selectReviewList", goodsNo);
 	}
 	
 }

@@ -69,7 +69,6 @@ public interface FrBoardService {
 		//글 수정  (파일 둘다있을때 ) 
 		int updateFrboard3(ArrayList<FrBoardAttach> newfrba);
 
-		
 		//검색어 조회결과 개수 
 		int searchCount(HashMap<String, String> map);
 		

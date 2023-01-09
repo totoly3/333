@@ -33,6 +33,7 @@
     </div>
     
     <br clear="both">
-    
+    <!-- 더미추가용 버튼 -->
+    <button id="createFileDummy" onclick="location.href='createFileDummy.do'">파일 더미를 만들자</button>
 </body>
 </html>

@@ -3,7 +3,9 @@ import java.util.ArrayList;
 
 import com.kh.ccc.mypage.model.vo.MyCharacter;
 import com.kh.ccc.mypage.model.vo.MyCharacterAttach;
+import com.kh.ccc.mypage.model.vo.MyCharacterData;
 import com.kh.ccc.shop.cart.model.vo.Cart;
+import com.kh.ccc.shop.goods.model.vo.Wish;
 import com.kh.ccc.shop.goods.model.vo.WishGoods;
 import com.kh.ccc.shop.order.model.vo.MyOrderDetail;
 import com.kh.ccc.shop.order.model.vo.Order;
@@ -13,6 +15,9 @@ import com.kh.ccc.shop.shipping.model.vo.DeliveryDetail;
 
 public interface MyPageService {
 
+	//마이페이지 들어갈때 주문목록조회
+	ArrayList<MyOrderDetail> selectOrderListView(int memberNo);
+	
 	//마이캐릭터 목록조회
 	ArrayList<MyCharacter> selectchaList(int memberNo);
 	
@@ -53,7 +58,19 @@ public interface MyPageService {
 	//장바구니 조회
 	ArrayList<Cart> selectCartList(int memberNo);
 
+	//캐릭터별 좋아요 데이터 조회
+	ArrayList<MyCharacterData> dataSelect(int memberNo);
+
 	//찜한 위시리스트 조회
 	ArrayList<WishGoods> selectWishList(int memberNo);
+
+	//찜한리스트 삭제
+	int deleteWishList(Wish wish);
+
+	//장바구니 추가1. 카트에 상품 이미 있는지 확인작업
+	boolean findCartGoods(Cart cart);
+
+	//장바구니 추가2. 장바구니에 상품없었을 때에 실제 추가작업
+	void addCartGoods(Cart cart);
 	
 }

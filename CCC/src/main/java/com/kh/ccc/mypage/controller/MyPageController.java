@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +19,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.ccc.member.model.vo.Member;
 import com.kh.ccc.mypage.model.service.MyPageService;
 import com.kh.ccc.mypage.model.vo.MyCharacter;
 import com.kh.ccc.mypage.model.vo.MyCharacterAttach;
+import com.kh.ccc.mypage.model.vo.MyCharacterData;
 import com.kh.ccc.shop.cart.model.vo.Cart;
+import com.kh.ccc.shop.goods.model.vo.Wish;
 import com.kh.ccc.shop.goods.model.vo.WishGoods;
 import com.kh.ccc.shop.order.model.vo.MyOrderDetail;
 import com.kh.ccc.shop.order.model.vo.Order;
@@ -38,7 +42,17 @@ public class MyPageController {
 
 	// 마이페이지 조회
 	@RequestMapping("mypage.me")
-	public String myPage() {
+	public String myPage(HttpSession session,Model model) {
+		
+		Member loginUser=(Member)session.getAttribute("loginUser");
+		int memberNo=loginUser.getMemberNo();
+		
+		ArrayList<MyOrderDetail> realoList = mypageService.selectOrderListView(memberNo);
+		
+		//System.out.println("돌?"+realoList);
+		
+		model.addAttribute("realoList",realoList);
+		
 		return "mypage/mypage";
 	}
 	
@@ -46,25 +60,47 @@ public class MyPageController {
 	// 마이페이지 내정보 조회
 	@RequestMapping("profileEnroll.me")
 	public String profile() {
+		
+		//내 캐릭터정보도 가져와서 뿌려줌
 		return "mypage/profile";
 	}
 	
-
-	//////////////////////////////내 캐릭터영역
-	// 내 캐릭터 목록조회
-	@RequestMapping("list.mychar")
+		//////////////////////////////기존 내 캐릭터영역
+		// 내 캐릭터 목록조회
+	//	@RequestMapping("list.mychar")
+	//	public ModelAndView selectMychaList(HttpSession session, ModelAndView mv) {
+	//
+	//		System.out.println("11111");
+	//		
+	//		// 사용자번호를 가지고 내캐릭터 목록조회
+	//		Member loginUser = (Member) session.getAttribute("loginUser");
+	//		int mNo = loginUser.getMemberNo();
+	//
+	//		// ~글리스트,파일리스트 join해서 조회
+	//		ArrayList<MyCharacter> chalist = mypageService.selectchaList(mNo);
+	//
+	//		// <<리스트
+	//		mv.addObject("chalist",chalist).setViewName("mypage/myCharList2");
+	//		System.out.println(chalist);
+	//
+	//		return mv;
+	//	}
+	
+	//내 캐릭터 영역----------------------------------------------------------------------------------------------
+	//내 캐릭터 목록조회
+	@RequestMapping("list.mychar2")
 	public ModelAndView selectMychaList(HttpSession session, ModelAndView mv) {
-
+		
 		// 사용자번호를 가지고 내캐릭터 목록조회
 		Member loginUser = (Member) session.getAttribute("loginUser");
 		int mNo = loginUser.getMemberNo();
-
+		
 		// ~글리스트,파일리스트 join해서 조회
 		ArrayList<MyCharacter> chalist = mypageService.selectchaList(mNo);
-
+		
 		// <<리스트
-		mv.addObject("chalist",chalist).setViewName("mypage/myCharList");
-
+		mv.addObject("chalist",chalist).addObject("loginUser",loginUser).setViewName("mypage/myCharList2");
+		System.out.println(chalist);
 		return mv;
 	}
 	
@@ -72,6 +108,7 @@ public class MyPageController {
 	// 마이캐릭터 업로드폼으로 이동
 	@RequestMapping("enrollForm.mychar")
 	public String myCharpage3() {
+		
 		return "mypage/myCharEnrollForm";
 	}
 
@@ -80,70 +117,70 @@ public class MyPageController {
 	@RequestMapping("insert.mychar")
 	public ModelAndView mycharInsert(MyCharacter cha, ModelAndView mv, MultipartFile titleImg,
 			@RequestParam(value = "upfileList", required = false) List<MultipartFile> upfileList, HttpSession session) {
-
+	
 		Member loginUser = (Member) session.getAttribute("loginUser");
 		int mNo = loginUser.getMemberNo(); 
-
+		
 		ArrayList<MyCharacterAttach> mchalist = new ArrayList<>(); // 담아줄 파일 ArrayList
-
+		
 		//썸네일 첨부파일
 		if (!titleImg.getOriginalFilename().equals("")) {// 파일 업로드가 되었다면
-
+		
 			// 아래에서 모듈화 시킨 saveFile 메소드 활용
 			String titleChangeName = saveFile(titleImg, session);
 			MyCharacterAttach mca = new MyCharacterAttach();
-
+		
 			// 원본명,서버에 업로드한 경로를 기존객체에 담아주기
 			mca.setOriginName(titleImg.getOriginalFilename());
 			mca.setChangeName("resources/myPage/myChar/" + titleChangeName);
 			mca.setMyCharAttachLevel(1);// 레벨1로 처리
 			mchalist.add(mca);
 		}
-
+		
 		// 일반첨부파일 처리과정
 		for (int i = 0; i < upfileList.size(); i++) {
 			if (!upfileList.get(i).getOriginalFilename().equals("")) { // 만약 올라오는 파일이 있다면
-
+		
 				// System.out.println("파일리스트 원본명 출력"+upfileList.get(i).getOriginalFilename());
-
 				String changeName = saveFile(upfileList.get(i), session); // 수정명 모듈화 메소드로 구해줌
-
+		
 				// 파일객체 생성(원본명,수정명,파일레벨 설정해준다.)
 				MyCharacterAttach mca = new MyCharacterAttach();
-
+		
 				mca.setOriginName(upfileList.get(i).getOriginalFilename()); // 원본명
 				mca.setChangeName("resources/myPage/myChar/" + changeName); // 파일경로=실제경로+수정
 				mca.setMyCharAttachLevel(2); // 일반첨부파일
 				mchalist.add(mca); // 리스트에 담아서 가져가준다.
 			}
 		}
+		
 		cha.setMemberNo(loginUser.getMemberNo());
-
-		// ~게시물과 파일리스트를 가지고 요청처리(INSERT)
+		
+		//게시물과 파일리스트를 가지고 요청처리(INSERT)
 		int result = mypageService.mycharInsert(cha, mchalist);
-
+		
 		if (result > 0) {
-
+		
 			session.setAttribute("alsertMsg", "내 캐릭터 등록완료");
-
+		
 			//멤버번호로 파일리스트조회
 			ArrayList<MyCharacter> chalist = mypageService.selectchaList(mNo);
-
-			mv.addObject("chalist", chalist).setViewName("mypage/myCharList"); // 내캐릭터 페이지로 보내줌
-
+		
+			mv.addObject("chalist", chalist).setViewName("mypage/myCharList2"); // 내캐릭터 페이지로 보내줌
+		
 		} else {
 			mv.addObject("errorMsg", "문의글 등록실패").setViewName("common/errorPage");
 		}
-
+		
 		return mv;
 	}
 
 	// 상세보기
-	// 목록에서 특정캐릭터를 누르면 캐릭터번호를 가지고 조회수 증가후에
-	// 게시글 정보와 파일정보ArrayList를 가져와준다.
+	// 목록에서 특정캐릭터를 누르면 캐릭터번호를 가지고 조회수 증가후에 게시글 정보와 파일정보ArrayList를 가져와준다.
 	@RequestMapping("chardetail.my")
-	public ModelAndView detailMyChar(@RequestParam(value = "cNo") int characterNo, ModelAndView mv) {
+	public ModelAndView detailMyChar(@RequestParam(value = "characterNo") int characterNo, ModelAndView mv) {
 
+		//System.out.println("번호"+characterNo);
 		MyCharacter cha = mypageService.selecectMyChar(characterNo); //게시글조회
 
 		ArrayList<MyCharacterAttach> mchalist = mypageService.selectChaList(characterNo); // 게시글 파일리스트조회
@@ -309,17 +346,16 @@ public class MyPageController {
 	}
 	
 	
-	/////////////////////////////////////////////////////주문영역
-	
-	// 기간별주문내역 조회(좀더 고민) 마이페이지 들어갈때 뿌려줌
+	//주문영역------------------------------------------------------------------------------------------------------
+	//기간별주문내역 조회
 	@ResponseBody
 	@RequestMapping(value="selectoListbyDate.my",produces = "application/json;charset=UTF-8" )
 	public ModelAndView selectoListbyDate(HttpSession session,int startDay, ModelAndView mv) {
 		
-	  System.out.println("startDay시작일"+startDay);	//확인
+	  //System.out.println("startDay시작일"+startDay);	
 		
-	  Member loginUser=(Member)session.getAttribute("loginUser");
-	  int mNo=loginUser.getMemberNo(); //mNo나중에 memberNumber로 바꿔주기
+	   Member loginUser=(Member)session.getAttribute("loginUser");
+	   int mNo=loginUser.getMemberNo(); //mNo나중에 memberNumber로 바꿔주기
 	  
 		final int TODAY = 1;           // 오늘
 	    final int ONE_WEEK = 2;        // 일주일 전
@@ -374,7 +410,6 @@ public class MyPageController {
 				
 			    realoList= mypageService.selectRealOrderListView(oNo);
 			    
-			    System.out.println("진짜주문리스트정말돌??"+realoList);
 			    mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");				
 				break;
 				
@@ -478,17 +513,16 @@ public class MyPageController {
 				 System.out.println("잘못입력");
 				 break;
 		 }
-		
 		 return mv;
-	  }
+	}
 	
 	// 상세 주문내역SELECT 
 	@RequestMapping("orderDetail.my")
 	public ModelAndView orderDetail(int oNo, HttpSession session, ModelAndView mv) {
-
+	
 		// 로그인유저
 		Member loginUser = (Member) session.getAttribute("loginUser");
-
+		
 		//~상세주문리스트가져옴(SELECT)
 		ArrayList<OrderDetail> orderDetail= mypageService.orderDetail(oNo);
 		
@@ -497,11 +531,11 @@ public class MyPageController {
 		
 		// 로그인이 되어있다면
 		if (loginUser != null) {
-
+		
 			mv.addObject("myOrderDetail",myOrderDetail).addObject("loginUser",loginUser).addObject("orderDetail", orderDetail).setViewName("mypage/orderDetail");
 			
 		} else {
-
+		
 			session.setAttribute("alertMsg", "로그인후 사용할 수 있습니다.");
 		
 		}
@@ -515,24 +549,41 @@ public class MyPageController {
 	public String deliveryDetail(HttpSession session,Model model) {
 	
 		//상품 상세번호,주문번호odNo 1, oNo 1>> 임의로 넣음
-        int odNo=1;
-        int oNo=1;
-        
-        OrderDetail od=new OrderDetail();
-        od.setOrderDetailNo(odNo);
-        od.setOrderNo(oNo);
-        
-		//상세번호,번호 주문객체에 담아서 가져가자 
-        //~배송정보()
-        DeliveryDetail deliInfo=mypageService.selectDeliveryDetail(od);
-        
-        //<<배송정보 객체
-        model.addAttribute("deliInfo", deliInfo);
-        
-        return "mypage/deliveryDetail";
+		int odNo=1;
+		int oNo=1;
 		
-	  }
+		OrderDetail od=new OrderDetail();
+		od.setOrderDetailNo(odNo);
+		od.setOrderNo(oNo);
+		
+		//상세번호,번호 주문객체에 담아서 가져가자 
+		//~배송정보()
+		DeliveryDetail deliInfo=mypageService.selectDeliveryDetail(od);
+		
+		//<<배송정보 객체
+		model.addAttribute("deliInfo", deliInfo);
+		
+		return "mypage/deliveryDetail";
+		
+	}
 	
+    
+	//캐릭터별 좋아요 데이터 가져옴
+	@ResponseBody
+	@RequestMapping(value="dataSelect.my", produces ="application/json;charset=UTF-8")
+	public String dataSelect(HttpSession session){
+		
+		Member loginUser=(Member)session.getAttribute("loginUser");
+		int memberNo=loginUser.getMemberNo();
+		
+		//요청처리
+		ArrayList<MyCharacterData> cDataList=mypageService.dataSelect(memberNo);
+		
+		return new Gson().toJson(cDataList);
+		
+	}
+
+	//찜하기 영역-----------------------------------------------------------------------------------------------------
 	//찜한 리스트 조회	
 	@RequestMapping("wishList.my")
 	public String selectWishList(HttpSession session, Model model){
@@ -540,43 +591,123 @@ public class MyPageController {
 		Member loginUser=(Member)session.getAttribute("loginUser");
 		int mNo= loginUser.getMemberNo();
 		
+		//~멤버번호를 가지고 찜한 리스트 조회
 		ArrayList<WishGoods> wList=mypageService.selectWishList(mNo);
-//		System.out.println("WishGoodsList : " + wList);
 		model.addAttribute("wList", wList);
 		
 		return "mypage/wish";	
-		 
-    }  
+	}
 	
-    //장바구니 리스트 조회
+	//찜한리스트 체크박스 삭제
+	@ResponseBody
+	@RequestMapping(value="deleteWishList.my", produces ="application/json;charset=UTF-8")
+	public String deleteWishList(HttpServletRequest request,HttpSession session) {
+		
+		String[] deleteWishList=request.getParameterValues("valueArr");
+		
+		Wish wish=new Wish();//굿즈번호와 멤버번호 담아갈 wish객체
+		Member loginUser=(Member)session.getAttribute("loginUser");
+		int memberNo=loginUser.getMemberNo();
+		
+		int goodsNo=0;
+		int result=0;
+		
+		if (deleteWishList!=null) {
+			for (int i = 0; i < deleteWishList.length; i++) {
+			    goodsNo=Integer.parseInt(deleteWishList[i]);
+			    wish.setMemberNo(memberNo);
+			    wish.setGoodsNo(goodsNo);
+			    result=mypageService.deleteWishList(wish);
+			}
+		}
+		
+		return result+"";
+	}
+	
+	//찜한 리스트 버튼삭제
+	@RequestMapping("deleteOk.my")
+	public void deleteOk(@RequestParam(value = "goodsNo") int goodsNo,HttpSession session){
+		
+		Member loginUser=(Member)session.getAttribute("loginUser");
+		int memberNo=loginUser.getMemberNo();
+		
+		//굿즈번호와 위시번호를 담아서 가져간다
+		Wish wish=new Wish();//굿즈번호와 멤버번호 담아갈 wish객체
+		wish.setMemberNo(memberNo);
+		wish.setGoodsNo(goodsNo);
+		
+		mypageService.deleteWishList(wish);
+		 
+	}
+	
+	//장바구니 영역--------------------------------------------------------------------------------------------------
+	//장바구니 추가
+	@ResponseBody
+	@RequestMapping(value="findCartGoods.my", produces ="application/text;charset=utf8")
+	public String cartInsert(@RequestParam("goodsNo") int goodsNo, HttpSession session) {
+		 
+		 //회원번호,굿즈번호를 가지고 와야됨
+		 Member loginUser=(Member)session.getAttribute("loginUser");
+		 int memberNo=loginUser.getMemberNo() ;
+		 //System.out.println("굿즈번호 들어오니"+goodsNo);
+		 //System.out.println("멤버번호 들어오니"+memberNo);
+	
+		 //카트객체에 회원번호,굿즈번호 담아준다
+		 Cart cart=new Cart();
+		 cart.setMemberNo(memberNo);
+		 cart.setGoodsNo(goodsNo);	
+		 
+		 //~해당 상품이 카트에 존재하는지 확인
+		 boolean findCart=mypageService.findCartGoods(cart);
+		 //System.out.println("결과 돌?"+cartAlreadyExisted);
+		 
+		  if (findCart) {
+			 //카트에 이미 있다면 
+			 return "already";
+		  } else {
+			 //카트에 없다면 카트객체를 가지고 INSERT
+			mypageService.addCartGoods(cart);  
+			return "add";
+		  }
+	}
+	
+	//장바구니 리스트 조회
 	@RequestMapping("cartList.my")
 	public String selectCartList(HttpSession session,Model model){
+				
+		Member loginUser=(Member)session.getAttribute("loginUser");
+		int mNo= loginUser.getMemberNo();
 		
-	 Member loginUser=(Member)session.getAttribute("loginUser");
-	 int mNo= loginUser.getMemberNo();
-
-	 ArrayList<Cart> cList=mypageService.selectCartList(mNo);
-	 
+		ArrayList<Cart> cList=mypageService.selectCartList(mNo);
+		 
 		 if (cList!=null) {
 			 model.addAttribute("cList",cList);
-			 
 		 } else {
 			session.setAttribute("errorMsg", "장바구니 불러오기 실패");
 		 }
-	 
-     return "mypage/cartList";
-   
+		 
+		return "mypage/cartList";
+	   
 	}
 
-	//-----------------대회참가영역------------------------------------------------
-	//기간별 작품참가내역 조회
-	//참가한 작품정보(순위변동그래프,현재포인트 현재순위등)
-	@RequestMapping("contest.my")
-	public String contest() {
+	//내가 만든 버전 장바구니 리스트2 조회-----cartList2
+	@RequestMapping("cartList2.my")
+	public String selectCartList2(HttpSession session,Model model){
 		
- 	  return "mypage/contest";
+		Member loginUser=(Member)session.getAttribute("loginUser");
+		int mNo= loginUser.getMemberNo();
 		
-	} 
+		ArrayList<Cart> cList=mypageService.selectCartList(mNo);
+		 
+		 if (cList!=null) {
+			 model.addAttribute("cList",cList);
+		 } else {
+			session.setAttribute("errorMsg", "장바구니 불러오기 실패");
+		 }
+		
+		return "mypage/cartList2";
 	
-		
+	}
+	
+	
 }

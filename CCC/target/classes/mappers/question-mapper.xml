@@ -27,6 +27,14 @@
 		WHERE Q.Q_STATUS = 'Y'
 		ORDER BY Q.Q_CREATE_DATE DESC
 	</select>
+	<select id="selectMyList" resultMap="questionResult" parameterType="question">
+		SELECT Q_NO, Q_LEVEL, M_NAME, Q_TYPE, Q_TITLE, Q_CONTENT, Q_RESPONSE, Q_COUNT, Q_CREATE_DATE, Q_UPDATE_DATE, Q_DELETE_DATE, Q_STATUS
+		FROM TB_QUESTION Q
+		JOIN TB_MEMBER M ON (Q.Q_WRITER = M.M_NO)
+		WHERE Q.Q_STATUS = 'Y'
+			AND Q.Q_WRITER = #{memberNo}
+		ORDER BY Q.Q_CREATE_DATE DESC
+	</select>
 	<insert id="insertQuestion" parameterType="question">
 		INSERT INTO TB_QUESTION(Q_NO,Q_WRITER,Q_TYPE,Q_TITLE,Q_CONTENT)
 		VALUES(SEQ_QNO.NEXTVAL,#{questionWriterNo},#{questionTypeNo},#{questionTitle},#{questionContent})

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>     
 <!--
 =========================================================
 * Paper Dashboard 2 - v2.0.1
@@ -36,8 +37,7 @@ Coded by www.creative-tim.com
   <link href="resources/paper-dashboard-master/assets/demo/demo.css" rel="stylesheet" />
 </head>
 
-<body class="">
- <!--제이쿼리 라이브러리-->
+<!--제이쿼리 라이브러리-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
@@ -49,7 +49,7 @@ Coded by www.creative-tim.com
           <!-- <p>CT</p> -->
         </a>
         <a href="https://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
+          ${loginUser.memberName}님 마이페이지
           <!-- <div class="logo-image-big">
             <img src="../assets/img/logo-big.png">
           </div> -->
@@ -66,7 +66,7 @@ Coded by www.creative-tim.com
           <li>
             <a href="cartList.my ">
               <i class="nc-icon nc-diamond"></i>
-              <p>장바구니조회</p>
+              <p>ㅇ</p>
             </a>
           </li>
           <li>
@@ -76,9 +76,9 @@ Coded by www.creative-tim.com
             </a>
           </li>
           <li>
-            <a href="./notifications.html">
+            <a href="cartList2.my">
               <i class="nc-icon nc-bell-55"></i>
-               <p></p>
+               <p>장바2</p>
             </a>
           </li>
           <li>
@@ -189,7 +189,7 @@ Coded by www.creative-tim.com
                   <div class="col-7 col-md-8" onclick="location.href='profileEnroll.me'">
                     <div class="numbers">
                       <p class="card-category">회원정보</p>
-                      <p class="card-title">150GB
+                      <p class="card-title">
                       <p>
                     </div>
                   </div>
@@ -213,10 +213,10 @@ Coded by www.creative-tim.com
                       <i class="nc-icon nc-money-coins text-success"></i>
                     </div>
                   </div>
-                  <div class="col-7 col-md-8" onclick="location.href='contest.my'">
+                  <div class="col-7 col-md-8" onclick="location.href='orderDetail.my?oNo=1'">
                     <div class="numbers">
-                         <p class="card-category">대회참가내역</p>
-                      <p class="card-title">$ 1,345
+                         <p class="card-category">주문내역</p>
+                      <p class="card-title">
                       <p>
                     </div>
                   </div>
@@ -240,10 +240,10 @@ Coded by www.creative-tim.com
                       <i class="nc-icon nc-vector text-danger"></i>
                     </div>
                   </div>
-                  <div class="col-7 col-md-8" onclick="location.href='list.mychar'">
+                  <div class="col-7 col-md-8" onclick="location.href='list.mychar2'">
                     <div class="numbers">
-                        <p class="card-category">내 캐릭터</p>
-                      <p class="card-title">23
+                      <p class="card-category">내 캐릭터</p>
+                      <p class="card-title">
                       <p>
                     </div>
                   </div>
@@ -270,8 +270,7 @@ Coded by www.creative-tim.com
                   <div class="col-7 col-md-8">
                     <div class="numbers">
                       <p class="card-category">관심내역</p>
-                      <p class="card-title">+45K
-                      <p>
+                      <p class="card-title">
                     </div>
                   </div>
                 </div>
@@ -288,155 +287,216 @@ Coded by www.creative-tim.com
         </div>
         <div class="row">
           <div class="col-md-12">
-            
-            <div class="card ">
-            
-             <br>
-             <h3 style="color:green;">주문내역</h3>
-              
-                <table class="table">
-				  <thead>
-				    <tr>
-				      <th scope="col">#</th>
-				      <th scope="col">주문번호</th>
-				      <th scope="col">주문상품</th>
-				      <th scope="col">Handle</th>
-				      <th>하하</th>
-				    </tr>
-				  </thead>
-				  <tbody>
-                    <tr>
-                       <th scope="row">1</th>
-                       <td>1</td>
-                       <td>가가굿즈</td>
-                       <td>3개</td>
-                       <td>우와</td>
-                    </tr>
-                    <tr>
-                       <th scope="row">2</th>
-                       <td>2</td>
-                       <td>나나굿즈</td>
-                       <td>4개</td>
-                       <td>우와</td>
-                    </tr>
-                    <tr>
-                       <th scope="row">3</th>
-                       <td>3</td>
-                       <td>다다굿즈</td>
-                       <td>5개</td>
-                       <td>우와</td>
-                    </tr>
-                  </tbody>
-				</table>
-            </div>
-            
-            <script>
-                $("#orderList>tbody tr").click(function () {
-                    //alert('클릭됨?');
-                    //console.log("들어옴?");
-                    //var a=$(this).childeren().eq(1).text()
-                    //console.log(a);
-                    //location.href="orderDetail.my?oNo="+$(this).childeren().eq(0).text();
-                    location.href = "orderDetail.my?oNo=" + $(this).children().eq(1).text();
-                })
-            </script>
-          
              <div class="card ">
-	             <h3 style="color:green;">영역1-1</h3>
-	             
+	             <h3 style="color:black;margin-left: 50px;margin-top:30px;">주문목록</h3>
 	              <div class="orderList button" align="center">
-	                <a class="btn btn-primary" id="today-order" href="#" role="button">오늘</a>
-	                <a class="btn btn-primary" id="week-order" href="#" role="button">일주일</a>
-	                <a class="btn btn-primary" id="month-order" href="#" role="button">한달</a>
-	                <a class="btn btn-primary" id="month3-order" href="#" role="button">세달</a>
-	                <a class="btn btn-primary" id="month6-order" href="#" role="button">여섯달</a>
-	             </div>
-	             
-	               <br>
-	               <br>
+	                <a class="btn btn-primary" id="today-order" href="#" role="button" style="margin-left: 20px; background-color:black;">오늘</a>
+	                <a class="btn btn-primary" id="week-order" href="#" role="button" style="margin-left: 20px;background-color:black;">일주일</a>
+	                <a class="btn btn-primary" id="month-order" href="#" role="button" style="margin-left: 20px;background-color:black;">한달</a>
+	                <a class="btn btn-primary" id="month3-order" href="#" role="button" style="margin-left: 20px;background-color:black;">세달</a>
+	                <a class="btn btn-primary" id="month6-order" href="#" role="button" style="margin-left: 20px;background-color:black;">여섯달</a>
+	              </div>
+                  <br>
+                  <br>
 	             
 				 <table class="table" id="orderListArea">
-				  <!-- 여기가 ajax 뿌려지는 곳 -->
+				    <!-- 여기가 ajax 뿌려지는 곳 -->
+					 <tr style="background-color:#EA4F4D;">
+					    <th></th>
+					    <th>주문번호</th>
+					    <th>굿즈명</th>
+					    <th>굿즈이미지</th>
+					    <th>굿즈가격</th>
+					  </tr>
+					 <c:forEach var="ro" items="${realoList}" >
+					  <tr>
+					    <td></td>
+					    <td>${ro.orderNo}</td>
+					    <td>${ro.goodsName}</td>
+					    <td>${ro.goodsFilePath}||${ro.goodsChangeName}</td>
+					    <td>${ro.goodsPrice}</td>
+					  </tr>
+					 </c:forEach >
 				 </table>
-            </div>
-            
-            <div class="card ">
-             <br>
-             <h3 style="color:green;">영역1-2</h3>
-              <div class="card-header ">
-                <br>
-                <br>
-                <br>
+             </div>
+                 <script>
+                       $(function () {
+                           // startDate는 시작일자를 언제로 설정할지를 결정하는 변수로
+                           // startDate값에 따라 컨트롤러에서 시작일을 변경하도록 되어 있음
+                           var startDay = 0;
+                           $("#today-order").click(function () {
+                               startDay = 1; // 오늘 날짜
+                               console.log(startDay);
+                               selectOrderList(startDay);
+                           });
+                           $("#week-order").click(function () {
+                               startDay = 2;  // 일주일 전
+                               selectOrderList(startDay);
+                           });
+                           $("#month-order").click(function () {
+                               startDay = 3;  // 한 달 전
+                               selectOrderList(startDay);
+                           });
+                           $("#month3-order").click(function () {
+                               startDay = 4;  // 세 달 전
+                               selectOrderList(startDay);
+                           });
+                           $("#month6-order").click(function () {
+                               startDay = 5;  // 여섯 달 전
+                               selectOrderList(startDay);
+                           });
+                       })
+
+                       var selectOrderList = function (startDay) {
+                           console.log("startDay : " + startDay);
+
+                           $.ajax({
+                               url: "selectoListbyDate.my",
+                               data: {
+                                   startDay: startDay
+                               },
+                               type: "post",
+                               success: function (realoList) {
+                                   console.log("통신성공");
+                                   console.log("realoList : " + realoList);
+
+                                   $("#orderListArea").html(realoList);
+
+                                   /* str += "<tr><td colspan='3' align='center'><h3>조회된 결과가 없습니다.</h3></td></tr>";
+                                   $("#orderListArea").html(str);*/
+                               },
+                               error: function () {
+                                   console.log("통신실패");
+                               }
+                           })
+                       }
+                  </script>
+                   
+            <div class="card">
+              <br>
+              <h3 style="color:black; margin-left:3%; margin-top:2%;">캐릭터별 좋아요 순위</h3>
+              <div class="card-header" style="width:80%;">
+                 <!--차트가 그려질 부분-->
+				 <canvas id="myChart" style="margin-left:15%; margin-bottom:15%; width=400vh height=100vw" ></canvas>
               </div>
-              <div class="card-body ">
+              <div class="card-body">
                
               </div>
-              <div class="card-footer ">
+              <div class="card-footer">
                 <hr>
                 <div class="stats">
                 </div>
               </div>
             </div>
             
-                  <script>
-                        $(function () {
-                            // startDate는 시작일자를 언제로 설정할지를 결정하는 변수로
-                            // startDate값에 따라 컨트롤러에서 시작일을 변경하도록 되어 있음
-                            var startDay = 0;
-                            $("#today-order").click(function () {
-                                startDay = 1; // 오늘 날짜
-                                console.log(startDay);
-                                selectOrderList(startDay);
-                            });
-                            $("#week-order").click(function () {
-                                startDay = 2;  // 일주일 전
-                                selectOrderList(startDay);
-                            });
-                            $("#month-order").click(function () {
-                                startDay = 3;  // 한 달 전
-                                selectOrderList(startDay);
-                            });
-                            $("#month3-order").click(function () {
-                                startDay = 4;  // 세 달 전
-                                selectOrderList(startDay);
-                            });
-                            $("#month6-order").click(function () {
-                                startDay = 5;  // 여섯 달 전
-                                selectOrderList(startDay);
-                            });
-                        })
-
-                        var selectOrderList = function (startDay) {
-                            console.log("startDay : " + startDay);
-
-                            $.ajax({
-                                url: "selectoListbyDate.my",
-                                data: {
-                                    startDay: startDay
-                                },
-                                type: "post",
-                                success: function (realoList) {
-                                    console.log("통신성공");
-                                    console.log("realoList : " + realoList);
-
-                                    $("#orderListArea").html(realoList);
-
-                                    /*   str += "<tr><td colspan='3' align='center'><h3>조회된 결과가 없습니다.</h3></td></tr>";
-                                        $("#orderListArea").html(str);   */
-                                },
-                                error: function () {
-                                    console.log("통신실패");
-                                }
-                            })
-                        }
-                   </script>
+			<script type="text/javascript">
+				//페이지 로드되면 그래프가져오는 함수실행	
+				$(document).ready(function(){ 
+			 		  getGraph();
+			 	});
+					
+				//ajax로 json방식의 데이터를 받습니다 
+				function getGraph() {
+					//캐릭터명 charName x축 데이터값 담을 곳 
+					let charName = [];
+					//캐릭터좋아요 charLike y축 데이터값 담을 곳 
+					let charLike = [];
+			
+			    	 $.ajax({
+			    		url: "dataSelect.my",
+			    		type:"get",
+			    		success: function(data) {
+				   			
+			    			 for (let i = 0; i<Object.keys(data).length;i++){
+		    				      //console.log(data[i]); //객체하나씩 출력
+		    				      //console.log((data)[i].charName); //x축에 넣음
+		    				      //console.log((data)[i].charLike); //y축에 넣을 값
+		 	    				  charName.push((data)[i].charName);  //x축 데이터 담을 곳에 넣어줌   				  
+			    				  charLike.push(data[i].charLike); //y축 데이터 담을 곳에 넣어줌
+			    			  }
+			    			  //createGraph(); //그래프 생성함수 호출
+			    			  createGraph(charName,charLike);
+			    		 },
+			    		 error: function() {
+							console.log("통신실패");
+						}
+			    	 })
+				}
+					
+			//그래프 생성함수
+			function createGraph(charName,charLike) {
+			   //변수명
+			   var context = document.getElementById('myChart').getContext('2d');
+			   var myChart = new Chart(context, {
+			       type: 'bar', // 차트의 형태
+			       data: { // 차트에 들어갈 데이터
+					   labels:charName,
+			           datasets: [
+			               {   //데이터
+			                   label: '캐릭터별 좋아요 순위', //차트 제목
+			                   fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+			                   //x축 label에 대응되는 데이터 값
+			                   data:charLike,
+			                   backgroundColor: [
+			                       //색상
+			                       'rgba(255, 99, 132, 0.2)',
+			                       'rgba(54, 162, 235, 0.2)',
+			                       'rgba(255, 206, 86, 0.2)',
+			                       'rgba(75, 192, 192, 0.2)',
+			                       'rgba(153, 102, 255, 0.2)',
+			                       'rgba(255, 159, 64, 0.2)',
+			                       'rgba(255, 99, 132, 0.2)',
+			                       'rgba(54, 162, 235, 0.2)',
+			                       'rgba(255, 206, 86, 0.2)',
+			                       'rgba(75, 192, 192, 0.2)',
+			                       'rgba(153, 102, 255, 0.2)',
+			                       'rgba(255, 159, 64, 0.2)'
+			                   ],
+			                   borderColor: [
+			                       //경계선 색상
+			                       'rgba(255, 99, 132, 1)',
+			                       'rgba(54, 162, 235, 1)',
+			                       'rgba(255, 206, 86, 1)',
+			                       'rgba(75, 192, 192, 1)',
+			                       'rgba(153, 102, 255, 1)',
+			                       'rgba(255, 159, 64, 1)'
+			                   ],
+			                   borderWidth: 1 //경계선 굵기
+			               }/* ,
+			               {
+			                   label: 'test2',
+			                   fill: false,
+			                   data: [
+			                       8, 34, 12, 24
+			                   ],
+			                   backgroundColor: 'rgb(157, 109, 12)',
+			                   borderColor: 'rgb(157, 109, 12)'
+			               } */
+			           ]
+			       },
+			       options: {
+			           scales: {
+			               yAxes: [
+			                   {
+			                       ticks: {
+			                           beginAtZero: true
+			                       }
+			                   }
+			               ]
+			           }
+			       }
+			   });
+			   console.log(myChart);
+			  }
+		    </script>
           </div>
         </div>
+        
         <div class="row">
           <div class="col-md-4">
             <div class="card ">
               <div class="card-header ">
-                <h5 class="card-title" style="color:blue" >영역2</h5>
+                <h5 class="card-title" style="color:blue"></h5>
               </div>
               <div class="card-body ">
                 <canvas id="chartEmail"></canvas>
@@ -473,7 +533,7 @@ Coded by www.creative-tim.com
           <div class="row">
             <nav class="footer-nav">
               <ul>
-                <li><a href="https://www.creative-tim.com" target="_blank">Creative Tim</a></li>
+                <li><a href="https://www.creative-tim.com" target="_blank">${loginUser.memberName}</a></li>
                 <li><a href="https://www.creative-tim.com/blog" target="_blank">Blog</a></li>
                 <li><a href="https://www.creative-tim.com/license" target="_blank">Licenses</a></li>
               </ul>
@@ -510,5 +570,4 @@ Coded by www.creative-tim.com
     });
   </script>
 </body>
-
 </html>

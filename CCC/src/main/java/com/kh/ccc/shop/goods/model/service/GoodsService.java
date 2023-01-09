@@ -2,8 +2,8 @@ package com.kh.ccc.shop.goods.model.service;
 
 import java.util.ArrayList;
 
-import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.shop.goods.model.vo.Goods;
+import com.kh.ccc.shop.goods.model.vo.GoodsReview;
 
 public interface GoodsService {
 	
@@ -15,5 +15,14 @@ public interface GoodsService {
 	
 	//굿즈 글쓰기
 	public int insertGoods(Goods g);
-
+	
+	//굿즈 디테일
+	public Goods selectGoods(int gno);
+	
+	//리뷰 등록
+	public int insertReview(GoodsReview gr);
+	
+	//리뷰 조회
+	public ArrayList<GoodsReview> selectReviewList(int gno);
+	
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,91 +9,124 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <!-- jQuery 라이브러리 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!--     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
     <!-- 부트스트랩에서 제공하고 있는 스타일 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
     <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!--     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
     <style>
     	#headerRaiseUp{
             z-index: 8;
             position: relative;
             top: -155px;
         }
-        /* Make the image fully responsive */
-        .carousel-inner img {
-            width: 100%;
-            height: 100%;
+        #cart-area th{
+        	border-top: 2px solid lightgray;
+            border-bottom: 2px solid lightgray;
+        }
+        #cart-area tbody td{
+            border-bottom: 1px dashed lightgray;
+        }
+        #cart-area tfoot td{
+        	border-top: 2px solid lightred;
         }
         #cart-area{
-        	border-collapse: separate;
-        	border : 0.5px solid skyblue;
-        	border-radius: 20px;
+            border-bottom: 2px solid lightgray;
         }
-        #cart-area th{
-            border-bottom: 1px solid black; 
-        }
-        #cart-area tr{
-            border: solid 1px lightgray;
-        }
+        
         #cart-td-center{
             text-align: center;
         }
         #cart-td-left{
             text-align: left;
         }
-        /*버튼*/
-        #cart-area tr button{
-        	height: 30px;
+        /*입력*/
+        #cart-area input[type='number']::-webkit-outer-spin-button,
+        #cart-area input[type='number']::-webkit-inner-spin-button{
+        	-webkit-appearance: none;
+    		margin: 0;
         }
+        #cart-area input{
+        	text-align:center;
+        	border: 1px solid lightgray;
+        }
+        #cart-area input:focus {
+        	outline: none !important;
+        	border-color: #EA4F4D;
+        	box-shadow: 0 0 5px #EA4F4D;
+        	border: 1px solid #EA4F4D;
+        }
+        
+        /*버튼*/
+        #deleteTrDiv button:hover{
+        	font-weight: bold;
+        	font-size: 13px;
+        }
+        
+        #bottomBuyBtn button:hover{
+        	font-weight: bold;
+        	font-size: 13px;
+        }
+        
+		#cart-area tr button{ 
+			height: 30px;
+        	font-size: 11px;
+		}
+		#cart-area tr button:hover{ 
+			font-weight: bold;
+			font-size: 12px;
+		}
         .addWishBtn{
         	 border-radius: 3px;
         	 width: 110px;
         	 margin-bottom: 3px;
-        	 font-size: 11px;
-        	 background-color: rgb(235, 194, 215);
+        	 background-color: coral;
+        	 color: white;
         	 border:0px;
         }
         .buyBtn{
         	 border-radius: 3px;
         	 width: 110px;
         	 margin-bottom: 3px;
-        	 font-size: 11px;
-        	 background-color: lightpink;
+/*         	 background-color: lightpink; */
+        	 background-color: #EA4F4D;
+        	 font-weight: bold;
+        	 color: white;
         	 border:0px;
         }
         .deleteBtn{
         	 border-radius: 3px;
         	 width: 110px;
         	 margin-bottom: 3px;
-        	 font-size: 11px;
-        	 background-color: rgb(236, 181, 236);
+        	 background-color: rgb(218, 209, 210);
         	 border:0px;
         }
         .quantityBtn{
         	 width: 50px;
-        	 height: 30px;
+        	 height: 15px;
         	 border-radius: 10px;
-        	 background-color: rgb(136, 181, 236);
-        	 border: 0px;
+        	 border: 1px solid lightgray;
         }
         
         /*리모콘*/
         .remoteDiv{
         	position: fixed;
-        	border: 1px solid red;
-        	width: 100px;
-        	height: 200px;
-        	right: 100px;
-        	bottom: 350px;
-			display: none;
+        	border: 1px solid lightgray;
+        	width: 150px;
+        	height: 300px;
+        	right: 50px;
+        	bottom: 400px;
+/* 			display: none; */
         }
         .categoryTag{
         	color: black;
+        	font-size: 12px;
         }
         .categoryTag:hover{
         	text-decoration:none;
-        	color: lightpink;
+        	font-size: 13px;
+        	font-weight: bold;
+        	color: #EA4F4D;
         }
     </style>
     <title>CCC::장바구니</title>
@@ -100,69 +134,7 @@
 <body>
 <jsp:include page="../common/header.jsp"/>
 <div class="container" id="headerRaiseUp">
-    <!-- CAROUSEL START -->
-    <div id="carouselId" class="carousel slide" data-ride="carousel">
-        <!-- Indicators -->
-        <ul class="carousel-indicators">
-            <li data-target="#carouselId" data-slide-to="0" class="active"></li>
-            <li data-target="#carouselId" data-slide-to="1"></li>
-            <li data-target="#carouselId" data-slide-to="2"></li>
-            <li data-target="#carouselId" data-slide-to="3"></li>
-            <li data-target="#carouselId" data-slide-to="4"></li>
-            <li data-target="#carouselId" data-slide-to="5"></li>
-            <li data-target="#carouselId" data-slide-to="6"></li>
-            <li data-target="#carouselId" data-slide-to="7"></li>
-            <li data-target="#carouselId" data-slide-to="8"></li>
-			<li data-target="#carouselId" data-slide-to="9"></li>
-        </ul>
-        
-        <!-- The slideshow -->
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="resources/goods/image/goods01.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods02.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods03.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods04.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods05.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods06.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods07.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods08.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods09.jpg" alt="">
-            </div>
-            <div class="carousel-item">
-                <img src="resources/goods/image/goods10.jpg" alt="">
-            </div>
-            
-        </div>
-        
-        <!-- Left and right controls -->
-        <a class="carousel-control-prev" href="#carouselId" data-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </a>
-        <a class="carousel-control-next" href="#carouselId" data-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </a>
-    </div>
-    <!-- CAROUSEL END -->
-    
-    <br><br><br>
-    
+	<br><br>
     <!-- CART START-->
     <div class="cartDiv">
         <form action="">
@@ -192,21 +164,34 @@
                     		<c:when test="${not empty clist}">
                     			<c:forEach var="c" items="${clist}">
                     				<tr style="height: 90px; background-color: #fff;">
-			                            <td class="cart-td-center" style="text-align:left; text-align:center; border-right: none;">
+			                            <td class="cart-td-center" style="border-right: none;">
 			                                <input type="checkbox" name="checkbox" style="width:20px; height:20px;">
 			                            </td>
-			                            <td style="width: 100px; border-left: none; border-right: none;"><img style="width: 80%;" src="${c.goodsAttachChangeName}" alt="${c.goodsAttachFilePath } "></td>
+			                            <td style="width: 100px; border-left: none; border-right: none;">
+<%-- 			                            	<img style="width: 80%;" src="${c.goodsAttachChangeName}" alt="${c.goodsAttachFilePath } "> --%>
+			                            	<img style="margin-left:20px; width: 80%;" src="resources/css/listView/images/destination-1.jpg" alt="${c.goodsAttachFilePath } ">
+			                            </td>
 			                            <td style="width: 600px; text-align:left; padding-left: 10px; border-left: none; font-weight: bold;">${c.goodsName }</td>
-			                            <td class="cart-td-center" style="width: 100px; "><span style="padding-left: 10px;">${c.goodsPrice }</span>원</td>
-			                            <td class="cart-td-center" style="width: 70px;">
+			                            <td class="" style="width: 100px; text-align:center;">
+			                            	<span>&#8361;</span>
+			                            	<span class="priceOne" style="padding-left: 10px;">
+			                            		<fmt:formatNumber value="${c.goodsPrice }" pattern="#,###,###" />
+			                            	</span>
+			                            </td>
+			                            <td class="" style="width: 70px;">
 			                        		<input type="hidden" name="" value="${c.cartNo }">
-			                                <input type="number" style="text-align: right; width: 50px; margin-bottom: 5px;" min="1" max="99" step="1" value="${c.quantity }">
+			                                <input type="number" style="text-align: middle; width: 50px; margin-bottom: 5px;" min="1" max="99" step="1" value="${c.quantity }">
 			                                <button type="button" class="quantityBtn">변경</button>
 			                            </td>
-			                            <td class="cart-td-center trTdPrice" style="width: 100px;"><span class="trPrice">${c.goodsPrice*c.quantity}</span>원</td>
+			                            <td class="cart-td-center trTdPrice" style="width: 100px; text-align:center;">
+			                            	<span>&#8361;</span>
+			                            	<span class="trPrice">
+			                            		<fmt:formatNumber value="${c.goodsPrice*c.quantity}" pattern="#,###,###" />
+			                            	</span>
+			                            </td>
 			                            <td class="cart-td-center" style="width: 110px;">
 			                                <button type="button"  class="buyBtn">구매</button>
-			                                <button type="button"  class="addWishBtn">관심상품 등록</button>
+			                                <button type="button"  class="addWishBtn">관심상품</button>
 			                                <button type="button"  class="deleteBtn">삭제</button>
 			                            </td>
 			                        </tr>
@@ -224,33 +209,33 @@
                     <tfoot>
                         <tr style="height: 60px;">
                             <td colspan="7" style="border-right: none; text-align: left; padding-left: 10px;">
-                            	<span>상품 금액</span>
+                            	<span>상품 금액</span><span style="margin-left:30px;">&#8361;</span>
                                 <span id="totalGoodsPrice" style="font-size:15pt; margin-right: 20px;"></span>
-                                <span>+</span>
-                                <span>배송비 </span>
-                                <span id="deliveryFee" style="font-size:15pt; margin: 0 20px 0 20px;"></span>
-                                <span> = </span>
-                                <span class="totalPrice">합계</span>&nbsp;
+                                <span style="margin:0 30px 0 30px;">+</span>
+                                <span>배송비</span><span style="margin-left:30px;">&#8361;</span>
+                                <span id="deliveryFee" style="font-size:15pt;"></span>
+                                <span style="margin:0 30px 0 30px;"> = </span>
+                                <span class="totalPrice" style="margin-right:30px;">합계</span>&nbsp;
+                                <span>&#8361;</span>
                                 <span id="totalFinalPrice" style="font-weight: bold; font-size:15pt;"></span>
-                                <span>원</span>
                             </td>
                         </tr>
                     </tfoot>
                 </table>
                 <br>
-                <div id="">
+                <div id="deleteTrDiv">
                     <button type="button"  class="btn default deleteCheckBtn" style="border-radius: 3px; width: 150px; margin-bottom: 3px; font-size: 11px; background-color: rgb(230, 171, 171); border:0px;">선택상품 삭제하기</button>
                     <button type="button"  class="btn default clearCartBtn" style="border-radius: 3px; width: 150px; margin-bottom: 3px; font-size: 11px; background-color: rgb(214, 240, 189); border:0px;">장바구니 비우기</button>
                     <span class="clearboth"></span>
                 </div>
                 <br><br>
-                <div align="center">
+                <div align="center" id="bottomBuyBtn">
                     <button type="button" class="btn default buyAllGoodsBtn" style="border-radius: 3px; width: 100px; height: 50px; margin: 0 10px 0 0; font-size: 11px; background-color: rgb(238, 161, 206); border:0px;">전체 상품주문</button>
                     <button type="button" class="btn default buyCheckGoodsBtn" style="border-radius: 3px; width: 100px; height: 50px; margin: 0 10px 0 10; 3px; font-size: 11px; background-color: rgb(236, 181, 236); border:0px;">선택 상품주문</button>
                     <button type="button" class="btn default goShopBtn" style="border-radius: 3px; width: 100px; height: 30px; margin: 0 10px 0 10; 3px; font-size: 11px; background-color: lightpink; border:0px; float: right;">쇼핑 계속하기</button>
                 </div>
                 <br><br><br>
-                <div style="border: solid 1px lightgray; padding: 10px 0; font-size: 11pt; background-color: antiquewhite; padding-left: 10px;">이용안내</div>
+                <div style="border: solid 1px lightgray; padding: 10px 0; font-size: 11pt; background-color: rgb(245, 147, 147);; padding-left: 10px;">이용안내</div>
                 <div style="border: solid 1px rgb(191, 196, 191); height: 300px; font-size: 9pt; padding-left: 10px;">
                     <br>장바구니 이용 안내
                     <ol>
@@ -274,13 +259,19 @@
     <br><br><br><br><br>
     
     <div class="remoteDiv">
-    	<span id="remoteController">리모콘쓰</span>
-    	<table>
-    		<tr><td>1번 항목</td></tr>
-    		<tr><td>2번 항목</td></tr>
-    		<tr><td>3번 항목</td></tr>
-    		<tr><td>4번 항목</td></tr>
-    	</table>
+    	<span id="remoteController">인기 굿즈</span><br>
+    	<div class="remoteItem">
+			<span class="remoteSpan">1번 항목</span><br>
+			<a href="destination.html"><img src="resources/css/listView/images/destination-1.jpg" class="img-fluid" alt="Colorlib Template"></a>
+    	</div>
+    	<div class="remoteItem">
+			<span class="remoteSpan">2번 항목</span><br>
+			<a href="destination.html"><img src="resources/css/listView/images/destination-1.jpg" class="img-fluid" alt="Colorlib Template"></a>
+    	</div>
+    	<div class="remoteItem">
+			<span class="remoteSpan">3번 항목</span><br>
+			<a href="destination.html"><img src="resources/css/listView/images/destination-1.jpg" class="img-fluid" alt="Colorlib Template"></a>
+    	</div>
     </div>
 
     <script>
@@ -313,14 +304,18 @@
 			changeQuantity(cartNo, quantity);
 			
 			// 화면에 행 합계 표시 변경
-			var price = $(this).parent().prev().children();
-			var temp = price.text()*quantity;
-			console.log("price is " + temp);
+			var priceText = $(this).parent().prev().children(".priceOne").text();
+// 			console.log("priceText is " + priceText);
+			var price = priceText.replace(/,/g,"");	// 콤마 제거 (ex: 4,000 -> 4000)
+// 			console.log("price is " + price);
+			var result = price*quantity;
+// 			console.log("result is " + result);
 			
-			var trTotal = $(this).parent().next().find('span');
-			trTotal.html(temp);
+			var trTotalText = $(this).parent().next().find('.trPrice');	// 합계 입력할 곳 선택
+			var trTotal = result.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');	// 위에서 계산한 result에 콤마 넣기 (ex: 4000 -> 4,000)
+			trTotalText.html(trTotal);
 			
-			changeTotalPrice();	// 전체 합계 금액 변경
+			//changeTotalPrice();	// 전체 합계 금액 변경
 			changeCheckTotalPrice();	// 체크한 합계 금액 변경
 		});
 		
@@ -341,8 +336,8 @@
 				}
 			});
 		};
-		// 수량변경 버튼 클릭 --------------------------------- End
 		
+		// 수량변경 버튼 클릭 --------------------------------- End
 		$(function(){
 			// 시작하면서 계산
 // 			changeTotalPrice();	// 전체 합계 금액 변경
@@ -355,6 +350,7 @@
 		});
 		
 		// 최종 금액 변경
+		// 콤마 적용 안된 상태
 		function changeTotalPrice(){
 			var totalPrice = 0;
 			var trPriceArr = $(".trPrice");
@@ -362,6 +358,7 @@
 			for(var i=0; i<trPriceArr.length; i++){
 				totalPrice += Number(trPriceArr.eq(i).text());
 			}
+			
 			console.log(totalPrice);
 			
 			// 값 구했으니 변경하는 코드만 넣으면 됨
@@ -372,26 +369,36 @@
 		// 체크한 상품 합계 금액 변경
 		function changeCheckTotalPrice(){
 			var checkTotalPrice = 0;
+			var checkTotalPriceText = "0"; // 최종 금액에 콤마 표시하여 입력할 때 사용할 변수
 			var checkTotalFinalPrice = 0;
+			var checkTotalFinalPriceText = "0"; // 최종 합계 금액에 콤마 표시하여 입력할 때 사용할 변수
 			var deliveryFee = 2500;
 			$("input:checkbox[name=checkbox]:checked").each(function(){
-				var trPrice = $(this).parent().parent().children().eq(5).find('span').text();
-// 				console.log(trPrice);
-				checkTotalPrice += Number(trPrice);
+				var trPriceText = $(this).parent().parent().children().eq(5).find('.trPrice').text();
+// 				console.log("trPriceText" + trPriceText);
+				var priceOne = trPriceText.replace(/,/g,"");	// 콤마 제거 (ex: 4,000 -> 4000)
+// 				console.log("priceOne" + priceOne);
+				checkTotalPrice += Number(priceOne);
 			});
 			console.log("checkTotalPrice = "+checkTotalPrice);
+
+			checkTotalPriceText = checkTotalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');	// 위에서 계산한 result에 콤마 넣기 (ex: 4000 -> 4,000)
+			$("#totalGoodsPrice").html(checkTotalPriceText);
 			
-			// 값 구했으니 변경하는 코드만 넣으면 됨
-			$("#totalGoodsPrice").html(checkTotalPrice);
 			if(checkTotalPrice >= 50000){
 				checkTotalFinalPrice = Number(checkTotalPrice);
+				checkTotalFinalPriceText = checkTotalFinalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');	// 위에서 계산한 result에 콤마 넣기 (ex: 4000 -> 4,000)
+				$("#deliveryFee").html(0);
+			}
+			else if(checkTotalPrice == 0){
 				$("#deliveryFee").html(0);
 			}
 			else{
 				checkTotalFinalPrice = Number(deliveryFee)+Number(checkTotalPrice);
-				$("#deliveryFee").html(2500);
+				checkTotalFinalPriceText = checkTotalFinalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');	// 위에서 계산한 result에 콤마 넣기 (ex: 4000 -> 4,000)
+				$("#deliveryFee").html('2,500');
 			}
-			$("#totalFinalPrice").html(checkTotalFinalPrice);
+			$("#totalFinalPrice").html(checkTotalFinalPriceText);
 		}
 		
 		
@@ -436,11 +443,11 @@
 					console.log("결과는 : " + result);
 					if(result > 0){
 						removeWish(cartNo);
-						window.alert("관심상품 삭제!")
+						window.alert("관심상품 삭제!");
 					}
 					else{
 						addWish(cartNo);
-						window.alert("관심상품 등록!")
+						window.alert("관심상품 등록!");
 					}
 				},
 				error : function(){
@@ -496,6 +503,8 @@
 				// 장바구니 테이블에서 해당 굿즈 삭제
 				deleteGoodsInCart(cartNo);
 			}
+			changeTotalPrice();	// 전체 합계 금액 변경
+			changeCheckTotalPrice();	// 체크한 합계 금액 변경
 		});
 		
 		function deleteGoodsInCart(cartNo){
@@ -552,6 +561,8 @@
 					deleteCheckGoodsInCart(chkArr);
 				}
 			}
+			//changeTotalPrice();	// 전체 합계 금액 변경
+			changeCheckTotalPrice();	// 체크한 합계 금액 변경
 		});
 		
 		function deleteCheckGoodsInCart(chkArr){
@@ -602,6 +613,8 @@
 					deleteCheckGoodsInCart(chkArr);
 				}
 			}
+			//changeTotalPrice();	// 전체 합계 금액 변경
+			changeCheckTotalPrice();	// 체크한 합계 금액 변경
 		});
 		
 		
@@ -635,7 +648,7 @@
 						window.alert("선택된 상품이 없습니다.");
 					}
 					else{
-						var cartNoArr = chkArr.join("-");
+						var cartNoArr = chkArr.join(",");
 						console.log("cartNoJsonArr : " + cartNoArr);
 						location.href="buyManyGoods.ca?cartNoArr="+cartNoArr;	
 					}
@@ -678,7 +691,7 @@
 					window.alert("선택된 상품이 없습니다.");
 				}
 				else{
-					var cartNoArr = chkArr.join("-");
+					var cartNoArr = chkArr.join(",");
 					console.log("cartNoJsonArr : " + cartNoArr);
 					location.href="buyManyGoods.ca?cartNoArr="+cartNoArr;	
 				}
@@ -698,17 +711,22 @@
         
 		
 		//  리모콘
-		$(document).scroll(function(){
-			var con = $(".remoteDiv");
-			var position = $(window).scrollTop();
-			
-			if(position > 250){
-				con.fadeIn(500);
-			}
-			else if(position < 250){
-				con.fadeOut(500);
-			}
-		});
+		
+// 		$(function(){
+// 			var con = $(".remoteDiv");
+// 			con.fadeIn();
+// 		});
+// 		$(document).scroll(function(){
+// 			var con = $(".remoteDiv");
+// 			var position = $(window).scrollTop();
+// 			con.fadeIn();
+// 			if(position > 250){
+// 				con.fadeIn(500);
+// 			}
+// 			else if(position < 250){
+// 				con.fadeOut(500);
+// 			}
+// 		});
 		
 // 		$(".remoteDiv").click(function(){
 			// 클릭 시 position 500으로 이동
