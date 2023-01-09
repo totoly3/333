@@ -86,6 +86,9 @@
 		 <c:if test="${frba.size()==0}">
    			 	비어있음
        	 </c:if>
+       	 
+       	 
+       	 
  			<!-- 아래는 frba list가  1이면  -->
           <c:if test="${frba.size()==1}">
 		    	<c:choose>
@@ -100,7 +103,10 @@
 	              	</c:when>
 	          	</c:choose>
           </c:if> 	
-   
+          
+          
+          
+   	<!-- 아래는 frba list가  1이면  -->
         <c:if test="${frba.size()==2}">
 		    	<c:choose>
                 	<c:when test="${!frba.get(0).faChangeName.isEmpty()}">
@@ -127,6 +133,141 @@
           </c:if> 	
 
 	         
+	       <!-- 아래는 이미지 3개일때  -->  
+	        <c:if test="${frba.size()==3}">
+		    	<c:choose>
+                	<c:when test="${!frba.get(0).faChangeName.isEmpty()}">
+         	              <tr>
+			              	<td class="attitle">
+			            		  	<input type="checkbox" name="all" onclick='selectAll(this)'/>전체선택 <br>
+			               		<p style="height:150px;">
+			               			<input type="checkbox" name="all"><img src="${frba.get(0).faChangeName }">
+			               		</p>
+			              	</td>
+			              </tr>
+	              	</c:when>
+	          	</c:choose>
+	          
+         	<c:if test="${!frba.get(1).faChangeName.isEmpty() }">
+			               <tr>
+			                	<td class="attitle">
+			                		<p style="height:150px;">
+			                			<input type="checkbox" name="all"><img src="${frba.get(1).faChangeName }">
+			                		</p>
+			                	</td>
+			                </tr>
+	          	</c:if>
+	          	<c:if test="${!frba.get(2).faChangeName.isEmpty() }">
+				               <tr>
+				                	<td class="attitle">
+				                		<p style="height:150px;">
+				                			<input type="checkbox" name="all"><img src="${frba.get(2).faChangeName }">
+				                		</p>
+				                	</td>
+				                </tr>
+	          	</c:if>
+          </c:if> 	
+        	
+	       <!-- 아래는 이미지 4개일때  -->  
+	    
+	        <c:if test="${frba.size()==4}">
+		    	<c:choose>
+                	<c:when test="${!frba.get(0).faChangeName.isEmpty()}">
+         	              <tr>
+			              	<td class="attitle">
+			            		  	<input type="checkbox" name="all" onclick='selectAll(this)'/>전체선택 <br>
+			               		<p style="height:150px;">
+			               			<input type="checkbox" name="all"><img src="${frba.get(0).faChangeName }">
+			               		</p>
+			              	</td>
+			              </tr>
+	              	</c:when>
+	          	</c:choose>
+	          
+         	<c:if test="${!frba.get(1).faChangeName.isEmpty() }">
+			               <tr>
+			                	<td class="attitle">
+			                		<p style="height:150px;">
+			                			<input type="checkbox" name="all"><img src="${frba.get(1).faChangeName }">
+			                		</p>
+			                	</td>
+			                </tr>
+	          	</c:if>
+	          	<c:if test="${!frba.get(2).faChangeName.isEmpty() }">
+				               <tr>
+				                	<td class="attitle">
+				                		<p style="height:150px;">
+				                			<input type="checkbox" name="all"><img src="${frba.get(2).faChangeName }">
+				                		</p>
+				                	</td>
+				                </tr>
+	          	</c:if>
+	          	
+	          	<c:if test="${!frba.get(3).faChangeName.isEmpty() }">
+				               <tr>
+				                	<td class="attitle">
+				                		<p style="height:150px;">
+				                			<input type="checkbox" name="all"><img src="${frba.get(3).faChangeName }">
+				                		</p>
+				                	</td>
+				                </tr>
+	          	</c:if>
+          </c:if> 	 
+	         
+	      <!--  이미지 5개 일때  -->   
+	       <c:if test="${frba.size()==5}">
+		    	<c:choose>
+                	<c:when test="${!frba.get(0).faChangeName.isEmpty()}">
+         	              <tr>
+			              	<td class="attitle">
+			            		  	<input type="checkbox" name="all" onclick='selectAll(this)'/>전체선택 <br>
+			               		<p style="height:150px;">
+			               			<input type="checkbox" name="all"><img src="${frba.get(0).faChangeName }">
+			               		</p>
+			              	</td>
+			              </tr>
+	              	</c:when>
+	          	</c:choose>
+	          
+       	 	<c:if test="${!frba.get(1).faChangeName.isEmpty() }">
+			               <tr>
+			                	<td class="attitle">
+			                		<p style="height:150px;">
+			                			<input type="checkbox" name="all"><img src="${frba.get(1).faChangeName }">
+			                		</p>
+			                	</td>
+			                </tr>
+	          	</c:if>
+	          	<c:if test="${!frba.get(2).faChangeName.isEmpty() }">
+				               <tr>
+				                	<td class="attitle">
+				                		<p style="height:150px;">
+				                			<input type="checkbox" name="all"><img src="${frba.get(2).faChangeName }">
+				                		</p>
+				                	</td>
+				                </tr>
+	          	</c:if>
+	          	
+	          	<c:if test="${!frba.get(3).faChangeName.isEmpty() }">
+				               <tr>
+				                	<td class="attitle">
+				                		<p style="height:150px;">
+				                			<input type="checkbox" name="all"><img src="${frba.get(3).faChangeName }">
+				                		</p>
+				                	</td>
+				                </tr>
+	          	</c:if>
+          	 	<c:if test="${!frba.get(4).faChangeName.isEmpty() }">
+			               <tr>
+			                	<td class="attitle">
+			                		<p style="height:150px;">
+			                			<input type="checkbox" name="all"><img src="${frba.get(4).faChangeName }">
+			                		</p>
+			                	</td>
+			                </tr>
+          		</c:if>
+          </c:if> 	   
+	         
                  <tr>
                     <th>첨부파일</th>
               	      <td colspan="3">
@@ -134,7 +275,7 @@
 				   			<c:if test="${frba.size()==0}">
 				   			 	비어있음
 				         	 </c:if>
-   			 
+   			 				<!-- 파일 1개일때  -->
 		          			 <c:if test="${frba.size()==1}">
 				  			 	<c:choose>
 				                	<c:when test="${!frba.get(0).faOrginName.isEmpty()}">
@@ -142,7 +283,7 @@
 				               	 	</c:when>
 					          	</c:choose>
 				          	</c:if>
-
+							<!-- 파일 2개일때  -->
 				          	<c:if test="${frba.size()==2}">
 				               	<c:if test="${!frba.get(1).faOrginName.isEmpty() }">
 				               			<a href="${frba.get(0).faChangeName }" download="${frba.get(0).faOrginName}">${frba.get(0).faOrginName}</a><br><br>
@@ -150,7 +291,45 @@
 			                 			<a href="${frba.get(1).faChangeName }" download="${frba.get(1).faOrginName}">${frba.get(1).faOrginName}</a>
 				               	</c:if>
 			               	</c:if>
-      
+      						
+      						<!-- 파일 3개일때  -->
+      						<c:if test="${frba.size()==3}">
+				               	<c:if test="${!frba.get(1).faOrginName.isEmpty() }">
+				               			<a href="${frba.get(0).faChangeName }" download="${frba.get(0).faOrginName}">${frba.get(0).faOrginName}</a><br><br>
+			                 			<a href="${frba.get(1).faChangeName }" download="${frba.get(1).faOrginName}">${frba.get(1).faOrginName}</a>
+			                 			<a href="${frba.get(2).faChangeName }" download="${frba.get(2).faOrginName}">${frba.get(2).faOrginName}</a>
+				               	</c:if>
+			               	</c:if>
+			               	
+			               	<!-- 파일 4개일때  -->
+      						<c:if test="${frba.size()==4}">
+				               	<c:if test="${!frba.get(1).faOrginName.isEmpty() }">
+				               			<a href="${frba.get(0).faChangeName }" download="${frba.get(0).faOrginName}">${frba.get(0).faOrginName}</a><br><br>
+			                 			<a href="${frba.get(1).faChangeName }" download="${frba.get(1).faOrginName}">${frba.get(1).faOrginName}</a>
+			                 			<a href="${frba.get(2).faChangeName }" download="${frba.get(2).faOrginName}">${frba.get(2).faOrginName}</a>
+				               			<a href="${frba.get(3).faChangeName }" download="${frba.get(3).faOrginName}">${frba.get(3).faOrginName}</a>
+				               	
+				               	</c:if>
+			               	</c:if>
+			               	
+			               	
+			               		<!-- 파일 5개일때  -->
+      						<c:if test="${frba.size()==5}">
+				               	<c:if test="${!frba.get(1).faOrginName.isEmpty() }">
+				               			<a href="${frba.get(0).faChangeName }" download="${frba.get(0).faOrginName}">${frba.get(0).faOrginName}</a><br><br>
+			                 			<a href="${frba.get(1).faChangeName }" download="${frba.get(1).faOrginName}">${frba.get(1).faOrginName}</a>
+			                 			<a href="${frba.get(2).faChangeName }" download="${frba.get(2).faOrginName}">${frba.get(2).faOrginName}</a>
+   			                 			<a href="${frba.get(3).faChangeName }" download="${frba.get(3).faOrginName}">${frba.get(3).faOrginName}</a>
+   			                 			<a href="${frba.get(4).faChangeName }" download="${frba.get(4).faOrginName}">${frba.get(4).faOrginName}</a>
+				               
+				               	</c:if>
+			               	</c:if>
+			               	
+			               	
+			               	
+			               	
+			               	
+			               	
 	                    </td>
 	                </tr>
       
@@ -158,10 +337,10 @@
             <br>
             <hr>
             <!--아래는 로그인 유저의 아이디가 글작성자와 일치한다면 수정하기 삭제하기 버튼이 보이게 끔 !  -->
-	         <div align="center" border='1'>
+	         <div align="center" border="1">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-                <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
-                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
+                <a class="btn btn-primary" onclick="postFormSubmit1();">수정하기</a>
+                <a class="btn btn-danger" onclick="postFormSubmit2();">삭제하기</a>
             </div>
             <br><br>
             
@@ -209,29 +388,6 @@
                 
             </table>
             
-           <!-- 댓글에 대한 답글 모달 -->
-       <div class="modal fade" id="frReReply" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-       <div class="modal-dialog" role="document">
-         <div class="modal-content">
-           <div class="modal-header">
-             <h5 class="modal-title" id="exampleModalLabel">답글 내용을 입력해주세요!</h5>
-             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-               <span aria-hidden="true">&times;</span>
-             </button>
-           </div>
-           <div class="modal-body">
-             <textarea id="frReReContent" rows="2" cols="49.8" style="resize: none;"></textarea>
-             <div id="reply_cnt">(0 / 50)</div>
-           </div>
-           <div class="modal-footer">
-             <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-             <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="frReReplyEnroll();">답글 등록하기</button>
-           </div>
-         </div>
-       </div>
-     </div>        
-            
-            
    <!-- 댓글 수정 모달 -->
 		<div class="modal fade" id="updateReply" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
@@ -254,6 +410,7 @@
 		    </div>
 		  </div>
 		</div>
+   
    </div>
    
 
@@ -261,16 +418,26 @@
 
    
      <script >
-
-	     function postFormSubmit(num){
-				console.log(num);
-			//action에 속성값을 넣고 submit을 진행하면 된다.
-	 		if(num ==1){ //수정하기 버튼 클릭시 1이 넘어온다
-	     		$("#postForm").attr("action","update.frbo").submit();
-	 		}else{ //삭제하기 버튼 클릭시 
-	 			$("#postForm").attr("action","delete.frbo").submit();
-	 		}
-	 	}
+	//아래부분  위에서  주석처리해놨음 
+// 	     function postFormSubmit(num){
+// 				console.log(num);
+// 			//action에 속성값을 넣고 submit을 진행하면 된다.
+// 	 		if(num ==1){ //수정하기 버튼 클릭시 1이 넘어온다
+// 	     		$("#postForm").attr("action","update.frbo").submit();
+// 	 		}else{ //삭제하기 버튼 클릭시 
+// 	 			$("#postForm").attr("action","delete.frbo").submit();
+// 	 		}
+// 	 	}
+	// 아래는 수정하기 
+	function postFormSubmit1(){
+		console.log("수정버튼 눌렀나..?");
+		$("#postForm").attr("action","update.frbo").submit();
+	}
+	//아래는 삭제하기 
+	function postFormSubmit2(){
+		console.log("삭제버튼 눌렀나..?");
+		$("#postForm").attr("action","delete.frbo").submit();
+	}
 	    
 	     //아래는 댓글
 	   let frReUpdateNo;  
@@ -279,7 +446,7 @@
     		selectReplyList(); //dom 요소 생성 후 맨처음에(페이지 구성될때 댓글리스트 조회해오기) 
     	})
     	
- 	$(document).on("click","table #frReUpdateNo",function(){
+    	$(document).on("click","table #frReUpdateNo",function(){
     		frReUpdateNo = $(this).val();
     	})
     	
@@ -303,21 +470,8 @@
 									+"<td>"
 									+ "<button class='btn btn-outline-primary' data-toggle='modal' data-target='#updateReply'" //data-target을 사용하면 뒤에오는 값을 사용한
       							    + "id='frReUpdateNo' value=+"+result[i].frNo+">수정</button>"
-      							 	+ "<button onclick='return deleteReply("+result[i].frNo+")' class='btn btn-outline-danger'>삭제</button></td>" 
-      							 	
-      							 	"<td><button class='btn btn-outline-primary' data-toggle='modal' data-target='#frReReply' 
-      							 	id='frReReply' value='"+result[i].frNo+"'>답글 달기</button></td>"
-      							 	+"</tr>";
-      							 	
-      							 	
-      							 	if(result[i].frParentNo != null ){
-      							 		"<br>"
-      							 	
-      							 		"<tr>"
-	      							 		+"<td>"+result[i].mId+"</td>"
-	      							 		+"<td>"+result[i].frContent+"</td>"
-      							 		+"</tr>";
-      							 	}
+      							 	+ "<button onclick='return deleteReply("+result[i].frNo+")' class='btn btn-outline-danger'>삭제</button></td>"     							   
+									+"</tr>";
 							}	
 					
 					$("#replyArea > tbody").html(resultStr);
@@ -331,6 +485,7 @@
     	
    		//아래는 댓글 등록 
     
+    	
     	function addFrReply(){
     		console.log(`${loginUser.memberNo}`);
     		console.log(`${loginUser.memberId}`);
@@ -360,8 +515,8 @@
 		    			},
 		    			error : function(){
 		    				console.log("통신실패");
-		    			}
-			    		});
+		    			},
+			    		})
    					}else{
    						alert("로그인좀 하십쇼 ");
    					}
@@ -397,74 +552,23 @@
 		} 	
     	// 댓글 삭제 
     	function deleteReply(frNo){
-		$.ajax({
-			url : "deleteFrReply.fr",
-			data : {
-				frNo : frNo,  
-<<<<<<< HEAD
-				fNo : 35
-				
-			},
-			success : function(result){
-				if(result=="yes"){
-					console.log("통쉰성겅!");
-					alert("댓글을 삭제하였습니다.");
-					selectReplyList();
-				}
-				return false;
-			},
-		});
-	}
-=======
-				 fNo : ${fb.get(0).fNo} 
-				
-			},
-			success : function(result){
-				if(result=="yes"){
-					console.log("통쉰성겅!");
-					alert("댓글을 삭제하였습니다.");
-					selectReplyList();
-				}
-				return false;
-			},
-			error : function(){
-				console.log("댓글삭제 통신실패");
-			}
-		});
-	}
-    
-    	
-    //아래는 답글 달기 
-    
-
-
-    //답글달기 등록하면 나오는부분
-    function frReReplyEnroll(){
-    	
- 	var $frvali = $("#frReReContent");
-		if($loginUser !=""){
-		    	$.ajax({
-		    		url : "frReReplyEnroll.fr",
-		    		data : {
-		    			frNo : frNo,   			//자유게시판 댓글번호
-						 fNo : ${fb.get(0).fNo} //자유게시판 글번호(참조번호)
-					},
-					type : "post",
-					success : function(result){
-						console.log(result);
-						if(result =="NNNNY"){
-				    		$frvali.val("");
-				    		selectReplyList();
-					},
-					error : function(){
-						console.log("답글 달기 통신실패");
-					}
-		    	})
-		   	
-	    }
-	}
-    
->>>>>>> refs/heads/main
+    		$.ajax({
+    			url : "deleteFrReply.fr",
+    			data : {
+    				frNo : frNo,  
+				    fNo : ${fb.get(0).fNo},
+				    fWriterNo : ${ loginUser.memberNo }
+    			},
+    			success : function(result){
+    				if(result=="yes"){
+	    				console.log("통쉰성겅!");
+	    				alert("댓글을 삭제하였습니다.");
+	    				selectReplyList();
+    				}
+    				return false;
+    			},
+    		})
+    	}
     
     </script>
   
