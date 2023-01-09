@@ -209,6 +209,29 @@
                 
             </table>
             
+           <!-- 댓글에 대한 답글 모달 -->
+       <div class="modal fade" id="frReReply" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+       <div class="modal-dialog" role="document">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h5 class="modal-title" id="exampleModalLabel">답글 내용을 입력해주세요!</h5>
+             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+             </button>
+           </div>
+           <div class="modal-body">
+             <textarea id="frReReContent" rows="2" cols="49.8" style="resize: none;"></textarea>
+             <div id="reply_cnt">(0 / 50)</div>
+           </div>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+             <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="frReReplyEnroll();">답글 등록하기</button>
+           </div>
+         </div>
+       </div>
+     </div>        
+            
+            
    <!-- 댓글 수정 모달 -->
 		<div class="modal fade" id="updateReply" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
@@ -231,7 +254,6 @@
 		    </div>
 		  </div>
 		</div>
-   
    </div>
    
 
@@ -257,7 +279,7 @@
     		selectReplyList(); //dom 요소 생성 후 맨처음에(페이지 구성될때 댓글리스트 조회해오기) 
     	})
     	
-    	$(document).on("click","table #frReUpdateNo",function(){
+ 	$(document).on("click","table #frReUpdateNo",function(){
     		frReUpdateNo = $(this).val();
     	})
     	
@@ -281,8 +303,21 @@
 									+"<td>"
 									+ "<button class='btn btn-outline-primary' data-toggle='modal' data-target='#updateReply'" //data-target을 사용하면 뒤에오는 값을 사용한
       							    + "id='frReUpdateNo' value=+"+result[i].frNo+">수정</button>"
-      							 	+ "<button onclick='return deleteReply("+result[i].frNo+")' class='btn btn-outline-danger'>삭제</button></td>"     							   
-									+"</tr>";
+      							 	+ "<button onclick='return deleteReply("+result[i].frNo+")' class='btn btn-outline-danger'>삭제</button></td>" 
+      							 	
+      							 	"<td><button class='btn btn-outline-primary' data-toggle='modal' data-target='#frReReply' 
+      							 	id='frReReply' value='"+result[i].frNo+"'>답글 달기</button></td>"
+      							 	+"</tr>";
+      							 	
+      							 	
+      							 	if(result[i].frParentNo != null ){
+      							 		"<br>"
+      							 		"<hr>"
+      							 		"<tr>"
+	      							 		+"<td>"+result[i].mId+"</td>"
+	      							 		+"<td>"+result[i].frContent+"</td>"
+      							 		+"</tr>";
+      							 	}
 							}	
 					
 					$("#replyArea > tbody").html(resultStr);
@@ -366,6 +401,7 @@
 			url : "deleteFrReply.fr",
 			data : {
 				frNo : frNo,  
+<<<<<<< HEAD
 				fNo : 35
 				
 			},
@@ -379,6 +415,56 @@
 			},
 		});
 	}
+=======
+				 fNo : ${fb.get(0).fNo} 
+				
+			},
+			success : function(result){
+				if(result=="yes"){
+					console.log("통쉰성겅!");
+					alert("댓글을 삭제하였습니다.");
+					selectReplyList();
+				}
+				return false;
+			},
+			error : function(){
+				console.log("댓글삭제 통신실패");
+			}
+		});
+	}
+    
+    	
+    //아래는 답글 달기 
+    
+
+
+    //답글달기 등록하면 나오는부분
+    function frReReplyEnroll(){
+    	
+ 	var $frvali = $("#frReReContent");
+		if($loginUser !=""){
+		    	$.ajax({
+		    		url : "frReReplyEnroll.fr",
+		    		data : {
+		    			frNo : frNo,   			//자유게시판 댓글번호
+						 fNo : ${fb.get(0).fNo} //자유게시판 글번호(참조번호)
+					},
+					type : "post",
+					success : function(result){
+						console.log(result);
+						if(result =="NNNNY"){
+				    		$frvali.val("");
+				    		selectReplyList();
+					},
+					error : function(){
+						console.log("답글 달기 통신실패");
+					}
+		    	})
+		   	}
+	    }
+	}
+    
+>>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
     
     </script>
   

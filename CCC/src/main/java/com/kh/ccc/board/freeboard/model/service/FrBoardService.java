@@ -1,6 +1,7 @@
 package com.kh.ccc.board.freeboard.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -61,14 +62,31 @@ public interface FrBoardService {
 		int deleteClickFrboard(List<String> checkBoxArr);
 
 <<<<<<< HEAD
+=======
+
+>>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
 		//첨부파일 삭제(병철이형 부분)
 		int deleteFrFile(ArrayList<FrBoardAttach> frba);
 
-		//댓글 삭제 
 		int deleteReply(FrBoardReply refb);
+<<<<<<< HEAD
+		
 =======
+
+>>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
 		//글 수정  (파일 둘다있을때 ) 
 		int updateFrboard3(ArrayList<FrBoardAttach> newfrba);
+<<<<<<< HEAD
+=======
+
 >>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
 		
+		//검색어 조회결과 개수 
+		int searchCount(HashMap<String, String> map);
+		
+		//검색어를 이용한 목록 조회 + 페이징처리 
+		ArrayList<FrBoard> frSearchList(HashMap<String, String> map, PageInfo pi);
+
+		//리플에 답글 달기 
+		int frReReplyEnroll(FrBoardReply refb);
 	}

@@ -51,9 +51,9 @@
 		  display: block;
 		  
 		}
-		.dropdown-content a:hover {background-color: #2CA93D;}
+		.dropdown-content a:hover {background-color: #ce1913;}
 		.dropdown:hover .dropdown-content {display: block;}
-		.dropdown:hover .dropbtn {background-color: #E42525;}
+		.dropdown:hover .dropbtn {background-color: #EA4F4D;}
 		<!-- 윗부분은 드롭다운 추가 -->
 
         div {box-sizing:border-box;}
@@ -67,7 +67,7 @@
         #header_2 {height:60%;}
         #header_2>ul {width:100%; height:100%; list-style-type:none; margin:auto; padding:0;}
         #header_2>ul>li {float:left; width:10%; height:100%; line-height:55px; text-align:center;}
-        #header_2>ul>li a {text-decoration:none; color:rgb(255, 255, 255); font-size:12px; font-weight:600;}
+        #header_2>ul>li a {text-decoration:none; color:#fdfdfd; font-size:12px; font-weight:600;}
         
         /* 세부페이지마다 공통적으로 유지할 style */
         .content {
