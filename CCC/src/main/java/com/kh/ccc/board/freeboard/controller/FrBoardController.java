@@ -386,24 +386,23 @@ public class FrBoardController {
 				// 내가올린 파일이있으면 반복문 돌려  내가 올린 파일 사이즈만큼!
 				// 그리고 지워. 기존꺼 전부 삭제
 				
-				System.out.println("올린파일 삭제하러 왔어?1");
 					for(int k=0; k<frba.size(); k++) {
 						//아래는 만약 올린파일이 있으면 삭제 
 						if(frba.get(k).getFaOrginName()!=null) {
 							//아래는 물리 경로에서 삭제
 							new File(session.getServletContext().getRealPath(frba.get(k).getFaChangeName())).delete();
 							// DB에서 삭제
-							System.out.println("올린파일 삭제하러 왔어?2");
-							int result=FrBoardService.deleteFrFile(frba);
+							System.out.println("frba에 fNo 있는지 확인"+frba);
 							
-							if(result>0) {
-								System.out.println("db삭제 성공");
-							}else {
-								System.out.println("db삭제 실패");
-							}
 						}
 					}
+					int result=FrBoardService.deleteFrFile(frba.get(0).getfNo());
 				
+					if(result>0) {
+						System.out.println("db삭제 성공");
+					}else {
+						System.out.println("db삭제 실패");
+					}
 					
 					//아래는 이제 새로운 첨부파일 업로드 할껀데  업로드 파일 몇개야 ?
 					for(int j=0; j<upfile.size(); j++) {
@@ -512,7 +511,7 @@ public class FrBoardController {
 			public String deleteReply(HttpServletRequest request
 									  ,FrBoardReply refb) {
 					
-				System.out.println("refb는?"+refb);
+				System.out.println("refb"+refb);
 				
 				int result = FrBoardService.deleteReply(refb);
 				System.out.println("댓글 삭제 컨트롤러 result"+result);

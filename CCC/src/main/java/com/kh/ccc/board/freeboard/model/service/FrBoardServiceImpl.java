@@ -157,13 +157,13 @@ public class FrBoardServiceImpl implements FrBoardService{
 	}
 
 
-	//기존첨부파일 진짜 삭제 (병철이형 부분)
-	@Override
-	public int deleteFrFile(ArrayList<FrBoardAttach> frba) {
-		int result=FrBoardDao.deleteFrFile(sqlSession,frba);
-		
-		return result;
-	}
+//	//기존첨부파일 진짜 삭제 (병철이형 부분)
+//	@Override
+//	public int deleteFrFile(ArrayList<FrBoardAttach> frba) {
+//		int result=FrBoardDao.deleteFrFile(sqlSession,frba);
+//		
+//		return result;
+//	}
 
 
 	//댓글 삭제 
@@ -198,6 +198,15 @@ public class FrBoardServiceImpl implements FrBoardService{
 	public int frReReplyEnroll(FrBoardReply refb) {
 		int result =FrBoardDao.frReReplyEnroll(sqlSession,refb);
 		System.out.println("답글 달기 성공했냐? : "+result);
+		return result;
+	}
+
+	
+	
+	////기존첨부파일 진짜 삭제 (병철이형 부분)
+	@Override
+	public int deleteFrFile(int getfNo) {
+		int result=FrBoardDao.deleteFrFile(sqlSession,getfNo);
 		return result;
 	}
 

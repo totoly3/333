@@ -62,7 +62,7 @@ public interface FrBoardService {
 		int deleteClickFrboard(List<String> checkBoxArr);
 
 		//첨부파일 삭제(병철이형 부분)
-		int deleteFrFile(ArrayList<FrBoardAttach> frba);
+//		int deleteFrFile(ArrayList<FrBoardAttach> frba);
 
 		int deleteReply(FrBoardReply refb);
 
@@ -77,4 +77,7 @@ public interface FrBoardService {
 
 		//리플에 답글 달기 
 		int frReReplyEnroll(FrBoardReply refb);
+
+		//첨부파일 삭제(병철이형 부분)
+		int deleteFrFile(int getfNo);
 	}
