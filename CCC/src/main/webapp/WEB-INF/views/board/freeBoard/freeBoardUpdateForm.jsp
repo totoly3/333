@@ -125,10 +125,12 @@
 			                <c:forEach var="fr" items="${frba }" varStatus="var">
 	           			   	   	<div>
 	                            	<a href="" id="" download="${fr.faChangeName }">${fr.faOrginName }</a>
-	                            	<input type="hidden" id="na_${var.index }" name="oldNa" value="${fr.faNo }">
+<%-- 	                            	<input type="hidden" id="na_${var.index }" name="oldNa" value="${fr.faNo }"> --%>
 	                            	<input type="button" id="deleteAttachBtn_${var.index }" value="파일삭제"><br>
                             	</div>
                            	</c:forEach>
+                           	<br><br><br>
+                           	
                            	새로 업로드할 파일 : <br>
 							<input type="button" id="addAttachBtn" value="파일추가"><br>
 		      				<div id="newNa-area">   </div>
@@ -143,8 +145,10 @@
 	<!-- 위에는 병철이형 버전으로 진행하기 !!!!  -->
 	
   <br><br><br> <br><br><br> <br><br><br>
-
+	
+    <button type="submit" class="btn btn-primary">글 수정하기</button>
   </form>
+	</div>
 	<script>
 		 <!--바로아래는  파일추가 버튼 클릭했을때  -->
 		 for(var i=0; i<$("#na-area a").length; i++){
@@ -157,7 +161,7 @@
 			$("#addAttachBtn").click(function(){
 		//		console.log("addAttachBtn클릭");
 		
-				if( $("#na-area a").length  < 10){
+				if( $("#na-area a").length  < 6){
 					var addAttach = "<div><input type='file' class='form-control-file border' name='multifile'><br>"
 		   					  + "<a href='#this' name='delete' class='btn deleteAttachBtn'>삭제</a><br><div>";
 					$("#newNa-area").append(addAttach);
@@ -171,9 +175,7 @@
 	
 	
 	</script>
-<br><br>
-    <button type="submit" class="btn btn-primary">글 수정하기</button>
-	</div>
+
 
 </body>
 </html>

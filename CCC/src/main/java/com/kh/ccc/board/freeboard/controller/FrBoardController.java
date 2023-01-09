@@ -114,14 +114,13 @@ public class FrBoardController {
 					
 					Member loginUser = (Member)session.getAttribute("loginUser");
 					System.out.println("upfile"+upfile);
-					System.out.println("upfilet사이즈"+upfile.size());
 					
 					/////////////////////////////////병철이형 부분 시작 
 					/////////////////////////////////병철이형 부분 시작 
 					/////////////////////////////////병철이형 부분 시작 
 					//ArrayList로  첨부파일들을 담음.
 					ArrayList<FrBoardAttach> falist = new ArrayList<>();
-					
+					if(!falist.isEmpty()) {
 					// 파일 갯수만큼 
 					for(int i=0; i<upfile.size(); i++) {
 						//아래는 파일이 있으면 
@@ -135,10 +134,9 @@ public class FrBoardController {
 							fab.setFaChangeName("resources/freeBoard/uploadFiles/"+changeName);
 							
 							falist.add(fab);
-							
+							}
 						}
-				}
-					
+					}
 					if(falist.isEmpty()) { //글만 작성할때
 						int result1=FrBoardService.insertFrBoardOnlyWrite(fb);
 						
@@ -290,7 +288,7 @@ public class FrBoardController {
 		
 			@RequestMapping(value="update.frbo")
 			public ModelAndView updateFrboardForm(int fno,ModelAndView mv) {
-			
+				
 				//아래는 글번호로 가져온 fb들 
 				ArrayList<FrBoard> fb=FrBoardService.frboardDetailView(fno);
 				
@@ -315,23 +313,24 @@ public class FrBoardController {
 											 ,@RequestParam(value="oldNa", required=false) ArrayList<Integer> oldNaList
 											 ,HttpSession session) {
 				// view에서 전달받은 데이터 확인
-//			    System.out.println("update.frboen :: CTRL :: fno = " + fno);
-//			    System.out.println("update.frboen :: CTRL :: fb = " + fb);
-//			    System.out.println("update.frboen :: CTRL :: upfile = " + upfile);
-//				System.out.println("update.frboen :: CTRL :: oldNa = " + oldNa);
+			    System.out.println("update.frboen :: CTRL :: fb = " + fb);
+			    System.out.println("update.frboen :: CTRL :: upfile = " + upfile);
 				int fno = fb.getfNo();
 				
 				// 해당 글의 기존 첨부파일이 있을 경우 삭제 --------------Start
 				
 				// 아래는 게시판 글번호를 이용해서 게시글의 파일 정보를 가져온다 . 기존 글 첨부파일 
 				ArrayList<FrBoardAttach> frba= FrBoardService.frboardAttDetailView(fno);
-			    
+			
+				// 새로 올릴 파일 리스트
+				ArrayList<FrBoardAttach> newfrba = new ArrayList<>();
 				//여기는아래는  병철이형 부분 
 				//여기는아래는  병철이형 부분 
 				//여기는아래는  병철이형 부분 
+				// 기존 첨부파일이 비어있으면 
 				if(frba.isEmpty()) {
 					System.out.println("기존 첨부파일 없음.");
-					//글만변경
+					
 					int result1 =FrBoardService.updateFrboard1(fb);
 					if(result1>0) {
 						mv.addObject("fb",fb);
@@ -340,10 +339,26 @@ public class FrBoardController {
 					}else {
 						mv.addObject("errorMsg", "게시글  글 수정 실패!").setViewName("common/errorPage");
 					}
-				}else {
 					
+					
+					for(int j=0; j<upfile.size(); j++) {
+						if(!upfile.get(j).getOriginalFilename().equals("")) { // 비어있지않으면!
+							//새로운 첨부파일 업로드 
+							String changeName = saveFile(upfile.get(j),session);//아래에서 작업한 saveFile메소드 사용 
+							//아래는 attach 빈거 하나 만들고 ! 
+							FrBoardAttach fat = new FrBoardAttach();
+							//빈 attach 에  경로 붙여진+changename
+							fat.setfNo(fno);
+							fat.setFaNo(frba.get(j).getFaNo());
+							fat.setFaChangeName("resources/freeBoard/uploadFiles/"+changeName);
+							fat.setFaOrginName(upfile.get(j).getOriginalFilename());
+	//						System.out.println("update.frboen :: CTRL :: 담기전 fat = : " + fat);
+							newfrba.add(fat);
+						}
+					}
+					
+				}else if(!frba.isEmpty()){
 					//파일이 있으면 삭제 후 insert
-					
 					//현재 남아있는것을 제외하고 첨부파일 삭제 
 					int delAttachResult = 0 ;
 					for(int k=0; k<frba.size(); k++) {
@@ -356,7 +371,7 @@ public class FrBoardController {
 							
 						}
 					}
-				}
+				
 				//여기는위에는  병철이형 부분 
 				//여기는위에는  병철이형 부분 
 				//여기는위에는  병철이형 부분 
@@ -366,70 +381,71 @@ public class FrBoardController {
 				
 				// 내가올린 파일이있으면 반복문 돌려  내가 올린 파일 사이즈만큼!
 				// 그리고 지워. 기존꺼 전부 삭제
-				for(int k=0; k<frba.size(); k++) {
-					//아래는 만약 올린파일이 있으면 삭제 
-					if(frba.get(k).getFaOrginName()!=null) {
-						//아래는 물리 경로에서 삭제
-						new File(session.getServletContext().getRealPath(frba.get(k).getFaChangeName())).delete();
-						// DB에서 삭제
-						int result=FrBoardService.deleteFrFile(frba);
-						
-						if(result>0) {
-							System.out.println("db삭제 성공");
-						}else {
-							System.out.println("db삭제 실패");
+					for(int k=0; k<frba.size(); k++) {
+						//아래는 만약 올린파일이 있으면 삭제 
+						if(frba.get(k).getFaOrginName()!=null) {
+							//아래는 물리 경로에서 삭제
+							new File(session.getServletContext().getRealPath(frba.get(k).getFaChangeName())).delete();
+							// DB에서 삭제
+							int result=FrBoardService.deleteFrFile(frba);
+							
+							if(result>0) {
+								System.out.println("db삭제 성공");
+							}else {
+								System.out.println("db삭제 실패");
+							}
 						}
 					}
-				}
-
-				// 새로 올릴 파일 리스트
-				ArrayList<FrBoardAttach> newfrba = new ArrayList<>();
-				//아래는 이제 새로운 첨부파일 업로드 할껀데  업로드 파일 몇개야 ?
-				for(int j=0; j<upfile.size(); j++) {
-					if(!upfile.get(j).getOriginalFilename().equals("")) { // 비어있지않으면!
-						//새로운 첨부파일 업로드 
-						String changeName = saveFile(upfile.get(j),session);//아래에서 작업한 saveFile메소드 사용 
-						
-						//아래는 attach 빈거 하나 만들고 ! 
-						FrBoardAttach fat = new FrBoardAttach();
-						//빈 attach 에  경로 붙여진+changename
-						fat.setfNo(fno);
-						fat.setFaNo(frba.get(j).getFaNo());
-						fat.setFaChangeName("resources/freeBoard/uploadFiles/"+changeName);
-						fat.setFaOrginName(upfile.get(j).getOriginalFilename());
-//						System.out.println("update.frboen :: CTRL :: 담기전 fat = : " + fat);
-						newfrba.add(fat);
-					}
-				}
-//				System.out.println("update.frboen :: 파일삭제 후. 글 수정 전");
-				//파일이 있으면
-				if(!frba.isEmpty()) {
-					//아래는 글만 변경 (첨부파일은 없고) 
-					int result1 =FrBoardService.updateFrboard1(fb);
-					//아래는 첨부파일만 변경
-					// 새 첨부파일 insert
-					int result2 = FrBoardService.updateFrboard2(newfrba);
-					int result3=result1+result2;
+				
 					
-					if(result3>0) {
-						mv.addObject("fb",fb);
-						mv.addObject("frba",newfrba);
-						
-						//여기 아래에서 fb.getfno 를 가져가는 이유가 뭘까 ..
-						mv.setViewName("redirect:/detail.fbo?fno="+fb.getfNo());
-					}else {
-						mv.addObject("errorMsg", "게시글 글,첨부 수정 실패!").setViewName("common/errorPage");
+					//아래는 이제 새로운 첨부파일 업로드 할껀데  업로드 파일 몇개야 ?
+					for(int j=0; j<upfile.size(); j++) {
+						if(!upfile.get(j).getOriginalFilename().equals("")) { // 비어있지않으면!
+							//새로운 첨부파일 업로드 
+							String changeName = saveFile(upfile.get(j),session);//아래에서 작업한 saveFile메소드 사용 
+							
+							//아래는 attach 빈거 하나 만들고 ! 
+							FrBoardAttach fat = new FrBoardAttach();
+							//빈 attach 에  경로 붙여진+changename
+							fat.setfNo(fno);
+							fat.setFaNo(frba.get(j).getFaNo());
+							fat.setFaChangeName("resources/freeBoard/uploadFiles/"+changeName);
+							fat.setFaOrginName(upfile.get(j).getOriginalFilename());
+	//						System.out.println("update.frboen :: CTRL :: 담기전 fat = : " + fat);
+							newfrba.add(fat);
+						}
 					}
-					
-				}else {
-					//글만변경
-					int result1 =FrBoardService.updateFrboard1(fb);
-					if(result1>0) {
-						mv.addObject("fb",fb);
-						//여기 아래에서 fb.getfno 를 가져가는 이유가 뭘까 ..
-						mv.setViewName("redirect:/detail.fbo?fno="+fb.getfNo());
+				
+	//				System.out.println("update.frboen :: 파일삭제 후. 글 수정 전");
+					//파일이 있으면
+					if(!frba.isEmpty()) {
+						//아래는 글만 변경 (첨부파일은 없고) 
+						int result1 =FrBoardService.updateFrboard1(fb);
+						//아래는 첨부파일만 변경
+						// 새 첨부파일 insert
+						int result2 = FrBoardService.updateFrboard2(newfrba);
+						int result3=result1+result2;
+						
+						if(result3>0) {
+							mv.addObject("fb",fb);
+							mv.addObject("frba",newfrba);
+							
+							//여기 아래에서 fb.getfno 를 가져가는 이유가 뭘까 ..
+							mv.setViewName("redirect:/detail.fbo?fno="+fb.getfNo());
+						}else {
+							mv.addObject("errorMsg", "게시글 글,첨부 수정 실패!").setViewName("common/errorPage");
+						}
+						
 					}else {
-						mv.addObject("errorMsg", "게시글  글 수정 실패!").setViewName("common/errorPage");
+						//글만변경
+						int result1 =FrBoardService.updateFrboard1(fb);
+						if(result1>0) {
+							mv.addObject("fb",fb);
+							//여기 아래에서 fb.getfno 를 가져가는 이유가 뭘까 ..
+							mv.setViewName("redirect:/detail.fbo?fno="+fb.getfNo());
+						}else {
+							mv.addObject("errorMsg", "게시글  글 수정 실패!").setViewName("common/errorPage");
+						}
 					}
 				}
 				//상세보기로 이동
