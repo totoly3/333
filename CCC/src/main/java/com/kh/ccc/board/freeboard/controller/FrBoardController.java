@@ -47,20 +47,12 @@ public class FrBoardController {
 		public ModelAndView selectList(@RequestParam(value="currentPage",defaultValue="1")int currentPage,
 													ModelAndView  mv,HttpSession session) {
 
-<<<<<<< HEAD
 
-=======
-<<<<<<< HEAD
-
-=======
 	//		작업중
 //			Member loginUser = (Member)session.getAttribute("loginUser");
 //			int fWriterNo =loginUser.getmNo();
 	
 		
-			
->>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
->>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
 			int listCount = FrBoardService.selectListCount(); //총 게시글 개수  db에서 조회해오기 .
 			
 			int pageLimit = 10;	//하단에 페이징바 갯수
@@ -319,10 +311,7 @@ public class FrBoardController {
 			public ModelAndView updateFrboard(ModelAndView mv
 											 ,FrBoard fb
 											 ,@RequestParam(value="upfile" ,required=false) List<MultipartFile> upfile
-<<<<<<< HEAD
-=======
 											 ,@RequestParam(value="oldNa", required=false) ArrayList<Integer> oldNaList
->>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
 											 ,HttpSession session) {
 				// view에서 전달받은 데이터 확인
 //			    System.out.println("update.frboen :: CTRL :: fno = " + fno);
@@ -368,11 +357,7 @@ public class FrBoardController {
 					}
 				}
 				//여기는위에는  병철이형 부분 
-<<<<<<< HEAD
-				//여기는위에는는  병철이형 부분 
-=======
 				//여기는위에는  병철이형 부분 
->>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
 				//여기는위에는  병철이형 부분 
 				
 				
@@ -509,9 +494,6 @@ public class FrBoardController {
 				
 			}
 			
-<<<<<<< HEAD
-			
-=======
 			//아래는 검색기능 
 //			@ResponseBody
 //			@RequestMapping(value="search.fr",produces="application/json; charset=UTF-8")
@@ -556,6 +538,5 @@ public class FrBoardController {
 				//아래 결과가  0이면 N  , 1이면 Y 
 				return (result == 0) ? "NNNNN" : "NNNNY";
 			}
->>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
 			
 }	

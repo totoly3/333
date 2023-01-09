@@ -312,7 +312,7 @@
       							 	
       							 	if(result[i].frParentNo != null ){
       							 		"<br>"
-      							 		"<hr>"
+      							 	
       							 		"<tr>"
 	      							 		+"<td>"+result[i].mId+"</td>"
 	      							 		+"<td>"+result[i].frContent+"</td>"
@@ -401,21 +401,6 @@
 			url : "deleteFrReply.fr",
 			data : {
 				frNo : frNo,  
-<<<<<<< HEAD
-				fNo : 35
-				
-			},
-			success : function(result){
-				if(result=="yes"){
-					console.log("통쉰성겅!");
-					alert("댓글을 삭제하였습니다.");
-					selectReplyList();
-				}
-				return false;
-			},
-		});
-	}
-=======
 				 fNo : ${fb.get(0).fNo} 
 				
 			},
@@ -464,7 +449,6 @@
 	    }
 	}
     
->>>>>>> branch 'haha' of https://github.com/totoly3/CCC.git
     
     </script>
   
