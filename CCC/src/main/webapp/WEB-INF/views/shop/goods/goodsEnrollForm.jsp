@@ -43,7 +43,6 @@
                         <th><label for="goodsName">글 제목</label></th>
                         <td colspan="5"><input type="text" id="goodsName" class="form-control" name="goodsName" required></td>
                    </tr>
-                   
                    <tr>
                         <th width="100px;"><label for="goodsBrand">브랜드명</label></th>
                         <td colspan="2"><input type="text" id="goodsBrand" class="form-control" name="goodsBrand" required></td>

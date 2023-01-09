@@ -26,8 +26,10 @@ public class UtilController {
 		
 		System.out.println("파일 생성 시작");
 		
-		String originPath = "D:\\spring-w\\git\\CCC\\CCC\\src\\main\\webapp\\resources\\dummy\\origin";
-		String changePath = "D:\\spring-w\\git\\CCC\\CCC\\src\\main\\webapp\\resources\\dummy\\change\\";
+//		String originPath = "D:\\spring-w\\git\\CCC\\CCC\\src\\main\\webapp\\resources\\dummy\\origin";
+		String originPath = "D:\\final-workspace\\git\\CCC\\CCC\\src\\main\\webapp\\resources\\dummy\\origin";
+//		String changePath = "D:\\spring-w\\git\\CCC\\CCC\\src\\main\\webapp\\resources\\dummy\\change\\";
+		String changePath = "D:\\final-workspace\\git\\CCC\\CCC\\src\\main\\webapp\\resources\\dummy\\change\\";
 		File rw = new File(originPath);
 		File[] fList = rw.listFiles();
 		
