@@ -107,17 +107,6 @@
 
 <%--   		<input type="hidden" name="originName" value="${frba.faOrginName}"> --%>
 <%--     	<input type="hidden" name="changeName" value="${frba.faChangeName}"> --%>
-    
-    	현재 업로드된 파일 :
-			<br>
-			                <c:forEach var="fr" items="${frba }" varStatus="var">
-	           			   	   	<div>
-	                            	<a href="" id="" download="${fr.faChangeName }">${fr.faOrginName }</a>
-<%-- 	                            	<input type="hidden" id="na_${var.index }" name="oldNa" value="${fr.faNo }"> --%>
-	                            	<input type="button" id="deleteAttachBtn_${var.index }" value="파일삭제"><br>
-                            	</div>
-                           	</c:forEach>
-                           	<br><br>
     				
 	<input type="file" id="upfile" class="form-control-file border" name="upfile">
 	<input type="file" id="upfile" class="form-control-file border" name="upfile">	   
@@ -134,7 +123,15 @@
 		<tr>
 			<th><label for="upfile">첨부파일</label></th>
 			<td id="na-area">
-		
+			현재 업로드된 파일 :
+			<br>
+			                <c:forEach var="fr" items="${frba }" varStatus="var">
+	           			   	   	<div>
+	                            	<a href="" id="" download="${fr.faChangeName }">${fr.faOrginName }</a>
+<%-- 	                            	<input type="hidden" id="na_${var.index }" name="oldNa" value="${fr.faNo }"> --%>
+	                            	<input type="button" id="deleteAttachBtn_${var.index }" value="파일삭제"><br>
+                            	</div>
+                           	</c:forEach>
                            	<br><br><br>
                            	
                            	새로 업로드할 파일 : <br>

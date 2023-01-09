@@ -107,9 +107,40 @@ public class FrBoardDao {
 			System.out.println("여기는 dao 에 파일 수정 newfrba:"+newfrba);
 			int result2=1;
 			
-			for(int i=0; i<newfrba.size(); i++) {
-				result2*=sqlSession.update("frBoardMapper.updateFrboard2",newfrba.get(i));
+			if(newfrba.size()==1) {
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_1",newfrba.get(1));
 			}
+			
+			if(newfrba.size()==2) {
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_2",newfrba.get(1));
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_2",newfrba.get(2));
+			}
+			
+			if(newfrba.size()==3) {
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_3",newfrba.get(1));
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_3",newfrba.get(2));
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_3",newfrba.get(3));
+			}
+			
+			if(newfrba.size()==4) {
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_4",newfrba.get(1));
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_4",newfrba.get(2));
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_4",newfrba.get(3));
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_4",newfrba.get(4));
+			}
+			
+			if(newfrba.size()==5) {
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_5",newfrba.get(1));
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_5",newfrba.get(2));
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_5",newfrba.get(3));
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_5",newfrba.get(4));
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_5",newfrba.get(5));
+			}
+			
+			
+//			for(int i=0; i<newfrba.size(); i++) {
+//				result2*=sqlSession.update("frBoardMapper.updateFrboard2",newfrba.get(i));
+//			}
 			
 //			result2*=sqlSession.update("frBoardMapper.updateFrboard2",frba.get(i));
 			
@@ -157,12 +188,12 @@ public class FrBoardDao {
 		}
 		
 
-		//기존파일 삭제 (병철이형 부분)
-		public int deleteFrFile(SqlSessionTemplate sqlSession, ArrayList<FrBoardAttach> frba) {
-			int result=sqlSession.delete("frBoardMapper.deleteFrFile",frba);
-			System.out.println("기존파일 삭제 되었으면을까?: "+result);
-			return result;
-		}
+//		//기존파일 삭제 (병철이형 부분)
+//		public int deleteFrFile(SqlSessionTemplate sqlSession, ArrayList<FrBoardAttach> frba) {
+//			int result=(int)sqlSession.delete("frBoardMapper.deleteFrFile",frba);
+//			System.out.println("기존파일 삭제 되었으면을까?: "+result);
+//			return result;
+//		}
 		
 		//댓글 삭제 
 		public int deleteReply(SqlSessionTemplate sqlSession, FrBoardReply refb) {
@@ -190,6 +221,13 @@ public class FrBoardDao {
 		public int frReReplyEnroll(SqlSessionTemplate sqlSession, FrBoardReply refb) {
 			
 			return sqlSession.insert("frBoardMapper.frReReplyEnroll",refb);
+		}
+		
+		//기존 첨부파일 삭제 
+		public int deleteFrFile(SqlSessionTemplate sqlSession, int getfNo) {
+			int result=sqlSession.delete("frBoardMapper.deleteFrFile",getfNo);
+			System.out.println("기존파일 삭제 되었으면을까?: "+result);
+			return result;
 		}
 
 
