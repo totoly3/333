@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>캐릭터 게시판 글 등록 페이지</title>
+	<title>캐캐캐::캐릭터 게시판</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -22,7 +22,6 @@
             padding:5% 10%;
             background-color:white;
         }
-
         #enrollForm>table {width:100%;}
         #enrollForm>table * {margin:5px;}
         #addAttach-area {width:100%;}
@@ -39,50 +38,44 @@
         <div class="innerOuter">
             <h2>게시글 작성하기</h2>
             <br>
-
-        <form action="insert.ch" id="enroll-form" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="boardWriterNo" value="${ loginUser.memberNo }">
-			<table align="center">
-				<tr>
-					<th><label for="boardTitle">제목</label></th>
-					<td><input type="text" id="boardTitle" class="form-control" name="boardTitle" required></td>
-				</tr>
-				<tr>
-					<th><label for="boardWriter">작성자</label></th>
-					<td><input type="text" id="boardWriter" class="form-control" name="boardWriter" value="${ loginUser.memberId }" readonly></td>
-				</tr>
-				<tr>
-					<th><label for="charName">캐릭터 이름</label></th>
-					<td><input type="text" id="charName" class="form-control" name="charName" required></td>
-				</tr>
-				<tr>
-					<th><label for="boardContent">캐릭터 설명</label></th>
-					<td><textarea id="boardContent" class="form-control" rows="10" style="resize:none;" name="boardContent" required></textarea></td>
-				</tr>
-				<tr>
-					<th>첨부파일</th>
-					<td><input type="button" id="addAttachBtn" value="캐릭터 이미지 추가">최대 4장까지 가능합니다. (2장필수)</td>
-				</tr>
-			</table>
-			
-			<table align="center" id="addAttach-table">
-				<tr>
-					<th><label for="upfile"></label></th>
-					<td><input type="file" id="upfile" class='form-control-file border' name='multifile' required></td>
-				</tr>
-			</table>
-			<br>
-			
-			<script>
+	        <form action="insert.ch" id="enroll-form" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="boardWriterNo" value="${ loginUser.memberNo }">
+				<table align="center">
+					<tr>
+						<th><label for="boardTitle">제목</label></th>
+						<td><input type="text" id="boardTitle" class="form-control" name="boardTitle"></td>
+					</tr>
+					<tr>
+						<th><label for="boardWriter">작성자</label></th>
+						<td><input type="text" id="boardWriter" class="form-control" name="boardWriter" value="${ loginUser.memberId }" readonly></td>
+					</tr>
+					<tr>
+						<th><label for="charName">캐릭터 이름</label></th>
+						<td><input type="text" id="charName" class="form-control" name="charName"></td>
+					</tr>
+					<tr>
+						<th><label for="boardContent">캐릭터 설명</label></th>
+						<td><textarea id="boardContent" class="form-control" rows="10" style="resize:none;" name="boardContent"></textarea></td>
+					</tr>
+					<tr>
+						<th>첨부파일</th>
+						<td><input type="button" id="addAttachBtn" value="캐릭터 이미지 추가"> 최대 4장까지 가능합니다. (1장필수)</td>
+					</tr>
+				</table>
 				
-			</script>
-
-			<div align="center">
-				<button type="button" id="gogo" class="searchBtn btn btn-secondary" onclick="return badLanguage();">등록하기</button>
-			</div>
-		</form>
-        <br><br>
-
+				<table align="center" id="addAttach-table">
+					<tr>
+						<th><label for="upfile"></label></th>
+						<td><input type="file" id="upfile" class='form-control-file border' name='multifile'></td>
+					</tr>
+				</table>
+				<br>
+				<div align="center">
+					<button type="button" id="gogo" class="searchBtn btn btn-secondary" onclick="return badLanguage();">등록하기</button>
+				</div>
+			</form>
+	        <br><br>
+		</div>
     </div>
     
     <script>
@@ -112,12 +105,26 @@
 // 			console.log("삭제 file idx : "+obj.parent().prev().children().attr("id")); //id확인
 			obj.parent().parent().remove();
 		}
-		
+	    
     	//게시글 등록하기 버튼을 누르면 실행되는 함수
     	function badLanguage(){
-    		//파일선택 영역이 2개 이하일 경우 등록 불가
-    		if( $("#addAttach-table tr").length < 2 ){
-    			alert("캐릭터 이미지는 두장 이상 등록해주셔야 합니다!");
+    		//게시글 제목,캐릭터 이름,게시글 내용,첨부파일이 작성되었는지 체크
+    		let checkFile = $("#upfile").val();
+    		let checkTitle = $("#boardTitle").val();
+    		let checkCharName = $("#charName").val();
+    		let checkContent = $("#boardContent").val();
+    		
+    		if( !checkFile ){
+    			alert("캐릭터 이미지는 한장 이상 등록해주셔야합니다!");
+    			return false;
+    		}else if( !checkTitle ){
+    			alert("게시글 제목을 입력해 주세요!");
+    			return false;
+    		}else if( !checkCharName ){
+    			alert("캐릭터 이름도 지어주세요!");    			
+    			return false;
+    		}else if( !checkContent ){
+    			alert("게시글 내용을 입력해 주세요!");
     			return false;
     		}
     		//금지어 필터링
@@ -153,6 +160,5 @@
     		})	
     	}
     </script>
-    
 </body>
 </html>

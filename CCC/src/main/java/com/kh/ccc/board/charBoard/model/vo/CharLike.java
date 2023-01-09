@@ -11,7 +11,7 @@ public class CharLike {
 
 	private int 	memberNo;	//회원 번호
 	private int 	charNo;		//캐릭터 번호
-	private int		refBno;		//참조게시글 번호 (테이블에 없음)
+	private int		refBno;		//참조게시글 번호 (테이블에는 없음)
 	private int 	charLike;	//좋아요 유무
 	
 }

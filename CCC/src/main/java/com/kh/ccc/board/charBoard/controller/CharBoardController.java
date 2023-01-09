@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -25,13 +26,13 @@ import com.google.gson.Gson;
 import com.kh.ccc.board.charBoard.model.service.CharBoardService;
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
-import com.kh.ccc.board.charBoard.model.vo.CharBoardSearch;
 import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.common.model.vo.Ward;
 import com.kh.ccc.common.template.Pagenation;
+import com.kh.ccc.member.model.vo.Member;
 
 @Controller
 public class CharBoardController {
@@ -41,23 +42,49 @@ public class CharBoardController {
 	
 	//캐릭터 게시판 view로 이동
 	@RequestMapping("list.ch")
-	public String selectList(@RequestParam(value="currentPage",defaultValue="1") int currentPage
-							,Model model) {
-		//페이징 처리는 아직 구현 안함
+	public String selectList(@RequestParam(value="currentPage",defaultValue="1") int currentPage,
+							 Model model,HttpSession session) {
+		
 		//캐릭터 게시판 총 게시글 수 가져오기
 		int listCount = boardService.selectListCount();
 		int pageLimit = 10; //하단에 보여질 페이징바의 최대 개수
 		int boardLimit = 6; //한 페이지에 보여질 게시글의 개수
 		
 		PageInfo pi = Pagenation.getPageinfo(listCount, currentPage, pageLimit, boardLimit);
-		
+				
 		//게시글 리스트 조회
 		ArrayList<CharBoard> list = boardService.selectList(pi);
 		
-		model.addAttribute("list", list);
-		model.addAttribute("pi", pi);
+		Member loginUser = (Member)session.getAttribute("loginUser");
 		
-		return "board/charBoard/charBoardListView";
+		//로그인 유저가 있다면
+		if( loginUser != null ) {
+			int memberNo = loginUser.getMemberNo();
+			//로그인 유저가 좋아요한 목록 조회
+			ArrayList<CharLike> loginUserCheckLikeList = boardService.checkLikeList(memberNo);
+			
+			//조회해온 게시글 리스트와 로그인 유저가 좋아요한 목록의 좋아요 유무를 비교하고 (list의 게시글 번호 == loginUserCheckLikeList의 캐릭터 번호)
+			//list에 좋아요 유무를 담아주는 로직
+			for(int i=0; i<list.size(); i++) {
+			    for(int j=0; j<loginUserCheckLikeList.size(); j++) {
+			        if( list.get(i).getBoardNo() == loginUserCheckLikeList.get(j).getCharNo() ) {
+			            list.get(i).setMemberLike(1);
+			            break;
+			        }
+			    }
+			}
+			model.addAttribute("list", list);
+			model.addAttribute("pi", pi);
+			
+			return "board/charBoard/charBoardListView";	
+			
+		}//로그인 유저가 없다면
+		else {
+			model.addAttribute("list", list);
+			model.addAttribute("pi", pi);
+			
+			return "board/charBoard/charBoardListView";			
+		}
 	}
 	
 	//캐릭터 게시판 글 등록 view로 이동
@@ -104,7 +131,6 @@ public class CharBoardController {
 				caList.add(ca);	
 			}
 		}
-		
 		//게시글 데이터,첨부파일 데이터,캐릭터 데이터 등록
 		int result = boardService.insertCharBoard(cb,caList,c);
 		
@@ -370,12 +396,10 @@ public class CharBoardController {
 	@ResponseBody
 	@RequestMapping(value="insertLike.ch",produces="text/html; charset=UTF-8")
 	public String insertLike(CharLike cl) {
-		
-		System.out.println(cl);
 	
 		//좋아요 데이터가 있는지 조회
 		CharLike clSelect = boardService.selectLike(cl);
-		
+			
 		//좋아요가 없다면 좋아요 등록
 		if((clSelect.getCharLike() == 0)) {
 			//TB_CHARACTER_LIKE / TB_CHARACTER 테이블에 좋아요 추가
@@ -389,18 +413,6 @@ public class CharBoardController {
 			
 			return deleteResult != 0 ? "NNNNN" : "NNNNY";
 		}
-	}
-	
-	//캐릭터 리스트 좋아요 조회
-	@ResponseBody
-	@RequestMapping(value="listLike.ch",produces="text/html; charset=UTF-8")
-	public String selectListLike(@RequestParam(value="cbList[]") ArrayList<CharBoard> cbList,int memberNo) {
-		
-		System.out.println(cbList);
-		System.out.println(memberNo);
-		
-		return "야호";
-		
 	}
 	
 	//게시판 리스트에서 좋아요/취소 (캐릭터)
@@ -424,7 +436,6 @@ public class CharBoardController {
 			
 			return deleteResult != 0 ? "NNNNN" : "NNNNY";
 		}
-		
 	}
 	
 	//댓글 등록
@@ -510,7 +521,6 @@ public class CharBoardController {
 			cr.setReStep(reStep); 	 //기본 댓글에는 0으로 세팅
 			cr.setReLevel(reLevel);  //기본 댓글에는 0으로 세팅
 		}
-		
 		cr.setReContent(reContent); 	//댓글 내용 담기
 		cr.setReNo(number);				//새로 생성한 댓글의 번호 담기
 		cr.setRefBno(refBno); 			//댓글이 작성된 게시글 번호 담기
@@ -528,6 +538,8 @@ public class CharBoardController {
 		
 		int result = boardService.deleteReply(cr);
 		
+		System.out.println("댓글의 삭제 데이터 : "+ cr);
+			
 		return (result != 0) ? "NNNNY" : "NNNNN";
 	}
 	
@@ -552,15 +564,27 @@ public class CharBoardController {
 
 	//캐릭터 게시판  리스트 검색기능
 	@RequestMapping("search.ch")
-	public String searchList(String condition, String keyword) {
-		
-		CharBoardSearch s = new CharBoardSearch();
-		s.setCondition(condition);
-		s.setKeyword(keyword);
+	public ModelAndView searchList(@RequestParam(value="currentPage",defaultValue="1") int currentPage,
+							 String condition, String keyword, ModelAndView mv) {
 	
-		ArrayList<CharBoard> searchList = boardService.charBoardSearch(s); 
+		HashMap<String,String> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
 		
-		return "";
+		//검색 결과의 총 개수를 조회하는 메소드
+		int searchCount = boardService.searchCount(map);
+		int pageLimit = 10;
+		int boardLimit = 6;
+		
+		PageInfo pi = Pagenation.getPageinfo(searchCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<CharBoard> searchList = boardService.charBoardSearch(map,pi);
+		
+		mv.addObject("list", searchList).addObject("pi", pi);
+		mv.addObject("condition", condition).addObject("keyword", keyword);
+		mv.setViewName("board/charBoard/charBoardListView");
+		
+		return mv;
 	}
 	
 	//검색어 자동완성 기능
