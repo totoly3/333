@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ccc.admin.model.dao.AdminDao;
 import com.kh.ccc.admin.model.vo.Admin;
+import com.kh.ccc.admin.model.vo.AdminAttach;
 import com.kh.ccc.member.model.vo.Member;
 
 
@@ -54,6 +55,16 @@ public class AdminServiceImpl implements AdminService{
 		return aList;
 	}
 
+	
+	//관리자 사진조회
+	@Override
+	public ArrayList<AdminAttach> adminAttachmentList() {
+		
+		ArrayList<AdminAttach> adList = adminDao.adminAttachmentList(sqlSession);
+		
+		return adList;
+		
+	}
 
 
 	//관리자 상세조회 (특수관리자페이지)
@@ -65,7 +76,17 @@ public class AdminServiceImpl implements AdminService{
 		return a;
 	}
 
-
+	
+	//첨부상세
+	@Override
+	public ArrayList<AdminAttach> selectATList(int ano) {
+		
+		ArrayList<AdminAttach> at = adminDao.selectATList(sqlSession, ano);
+		
+		return at;
+	}
+	
+	
 	//일반회원 check회원들 차단삭제
 	@Override
 	public int deleteMemberList(List<String> checkBoxArr) {
@@ -76,6 +97,62 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 
+	//회원상세보기
+	@Override
+	public Member detailMember(int mno) {
+		
+		Member m = adminDao.detailMember(sqlSession,mno);
+
+		return m;
+	}
+
+
+	
+	//차트 올해
+	@Override
+	public ArrayList<String> thisYearChart(ArrayList<Integer> yearList) {
+		
+		ArrayList<String> countList = adminDao.thisYearChart(sqlSession, yearList);
+		
+		return countList;
+	}
+	
+	//차트지난달
+	@Override
+	public ArrayList<String> monthChart(ArrayList<String> monthList) {
+		
+		ArrayList<String> countMonthList = adminDao.monthChart(sqlSession,monthList);
+		
+		return countMonthList;
+	}
+
+
+
+	//관리자등록(첨부파일)
+	@Override
+	public int insertAdmin(Admin a, ArrayList<AdminAttach> adminAttach) {
+		
+		int result = adminDao.insertAdmin(sqlSession,a,adminAttach);
+
+		return result;
+	}
+
+
+
+	//로그인
+	@Override
+	public Admin loginAdmin(String aId) {
+
+		Admin loginAdmin = adminDao.loginAdmin(sqlSession,aId);
+		return loginAdmin;
+	}
+
+
+
+
+
+
+	
 
 	
 

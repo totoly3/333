@@ -187,7 +187,7 @@
             		</c:otherwise>
                 </c:choose>
 <!--                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/menu.png" width="14px;"></a></li> -->
-                <li><a href="mainAdmin.ad">Admin</a></li>
+                <li><a href="login.ad">Admin</a></li>
             </ul>
         </div>
     </div>

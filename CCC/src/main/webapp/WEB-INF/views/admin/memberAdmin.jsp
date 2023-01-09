@@ -2,6 +2,9 @@
     pageEncoding="UTF-8"%>
 
   <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+  <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+  
+  
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,9 +36,20 @@
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
     </head>
     <body class="sb-nav-fixed">
+    
+    
+    	<!-- 알람 메세지 영역 -->
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alert("${ alertMsg }");
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+	</c:if>
+
+    
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">손석구님, 환영합니다</a>
+            <a class="navbar-brand ps-3" href="index.html">오상희님, 환영합니다!</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -53,7 +67,7 @@
                         <li><a class="dropdown-item" href="#!">Settings</a></li>
                         <li><a class="dropdown-item" href="#!">Activity Log</a></li>
                         <li><hr class="dropdown-divider" /></li>
-                        <li><a class="dropdown-item" href="#!">Logout</a></li>
+                        <li><a class="dropdown-item" href="logout.ad">Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -71,7 +85,7 @@
             <!-- menu profile quick info -->
             <div class="profile clearfix">
               <div class="profile_pic">
-                <img src="resources/memberAdmin/assets/img/son3.jpg" alt="..." class="img-circle profile_img">
+                &ensp;&ensp;<img src="resources/memberAdmin/assets/img/song2.jpg" alt="..." class="img-circle profile_img">
 
               </div>
             </div>
@@ -80,7 +94,7 @@
                             
                             
                             
-                            <a class="nav-link" href="member.ad">
+                            <a class="nav-link" href="mainAdmin.ad">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                                	관리자 HOME
                             </a>
@@ -93,7 +107,7 @@
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
                                     <a class="nav-link" href="adminList.ad">관리자조회</a>
-                                    <a class="nav-link" href="layout-sidenav-light.html">관리자등록</a>
+                                    <a class="nav-link" href="insert.ad">관리자등록</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -147,9 +161,9 @@
             <div id="layoutSidenav_content">
                 <main>
                     <div class="container-fluid px-4">
-                        <h1 class="mt-4">회원관리</h1>
+                        <h1 class="mt-4">TODAY</h1>
                         <ol class="breadcrumb mb-4">
-                            <li class="breadcrumb-item active">회원조회</li>
+                          <li class="breadcrumb-item active">&emsp;회원관리</li>
                         </ol>
                        
 
@@ -198,24 +212,23 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-s font-weight-bold text-success text-uppercase mb-1">Tasks
+                                            <div class="text-s font-weight-bold text-success text-uppercase mb-1">목표 대비 달성률 (캐릭터수)
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">&ensp;50%</div>
+
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">&ensp;<fmt:formatNumber value="${listCount/60}" type="percent"/><br/></div>
                                                 </div>
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
                                                         <div class="progress-bar bg-success" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                                            style="width: ${listCount/60*100}%" aria-valuenow="50" aria-valuemin="0"
                                                             aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -228,8 +241,8 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-s font-weight-bold text-info text-uppercase mb-1">
-                                                 &ensp;Earnings (Annual)</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">&ensp;$215,000</div>
+                                                 &ensp;불법게시물 신고</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">&ensp;17건</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -241,15 +254,12 @@
                     </div>
 
 
-
-
-
                         <div class="row">
                             <div class="col-xl-6">
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-area me-1"></i>
-                                        	월별 가입자수
+                                        	연도별 가입자수   		
                                     </div>
                                     <div class="card-body"><canvas id="myAreaChart" width="100%" height="40"></canvas></div>
                                 </div>
@@ -258,7 +268,7 @@
                                 <div class="card mb-4">
                                     <div class="card-header">
                                         <i class="fas fa-chart-bar me-1"></i>
-                                    	   월별 캐릭터수 or 굿즈판매량
+                                    	   월별 캐릭터수
                                     </div>
                                     <div class="card-body"><canvas id="myBarChart" width="100%" height="40"></canvas></div>
                                 </div>
@@ -292,6 +302,7 @@
 	                                            <th>회원등급</th>
 	                                            <th>회원점수</th>
 	                                            <th>가입일</th>
+	                                            <th>상세보기</th>
 	                                        </tr>
 	                                    </thead>
 	          			   
@@ -299,33 +310,39 @@
 			          			<tbody>	
 				                   <c:forEach var="m" items="${mList}">
 										<tr>
-											<td><input type="checkbox" name="check" id="multiCheck" value="${m.mName }"></td> 
-											<td>${m.mNo }</td>
-											<td>${m.mId }</td>
-											<td>${m.mName }</td>
-											<td>${m.mGender }</td>
-											<td>${m.mAge }</td>	
-											<td>${m.mEmail }</td>
+											<td><input type="checkbox" name="check" id="multiCheck" value="${m.memberName }"></td> 
+											<td>${m.memberNo }</td>
+											<td>${m.memberId }</td>
+											<td>${m.memberName }</td>
+											<td>${m.memberGender }</td>
+											<td>${m.memberAge }</td>	
+											<td>${m.memberEmail }</td>
 											
 											<c:choose>
-												<c:when test="${m.mgNo eq 1}">
-													<td>${m.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-danger'>V.I.P</span></td>
+												<c:when test="${m.memberGradeNo eq 1}">
+													<td>${m.memberGradeNo }&emsp;&ensp;<span class='badge badge-pill badge-danger'>V.I.P</span></td>
 												</c:when>
 												
-												<c:when test="${m.mgNo eq 2}">
-													<td>${m.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-warning'>Gold</span></td>
+												<c:when test="${m.memberGradeNo eq 2}">
+													<td>${m.memberGradeNo }&emsp;&ensp;<span class='badge badge-pill badge-warning'>Gold</span></td>
 												</c:when>
 												
-												<c:when test="${m.mgNo eq 3}">
-													<td>${m.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-info'>Silver</span></td>
+												<c:when test="${m.memberGradeNo eq 3}">
+													<td>${m.memberGradeNo }&emsp;&ensp;<span class='badge badge-pill badge-info'>Silver</span></td>
 												</c:when>
+												
+												<c:when test="${m.memberGradeNo eq 4}">
+													<td>${m.memberGradeNo }&emsp;&ensp;<span class='badge badge-pill badge-secondary'>Bronze</span></td>
+												</c:when>
+												
 					                			<c:otherwise>
-					                   				<td>${m.mgNo }&emsp;&ensp;<span class='badge badge-pill badge-secondary'>Bronze</span></td>
+					                   				<td>${m.memberGradeNo }&emsp;&ensp;<span class='badge badge-pill badge-secondary'>Stone</span></td>
 					                			</c:otherwise>
 											</c:choose>
 											
-											<td>${m.mPoint }</td>
-											<td>${m.mCreateDate }</td>
+											<td>${m.memberPoint }</td>
+											<td>${m.memberCreateDate }</td>
+											<td align="center"><button type="button" id="detailMemberBtn" class="btn btn-outline-success btn-sm">상세보기</button></td> 
 										</tr>
 									</c:forEach>
 			         			</tbody>
@@ -340,7 +357,7 @@
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-between small">
-                            <div class="text-muted">Copyright &copy; Your Website 2022</div>
+                            <div class="text-muted">Copyright &copy; Your Website 2023</div>
                             <div>
                                 <a href="#">Privacy Policy</a>
                                 &middot;
@@ -352,6 +369,7 @@
 
             </div>
         </div>
+
         
 
         
@@ -366,7 +384,7 @@
         
         <script>
         
-     	//체크박스 선택 후 삭제 버튼 클릭시 이벤트 (회원차단기능)
+     	//회원삭제
         function deleteClick(){
     	 
 			var checkBoxArr = []; 
@@ -418,57 +436,23 @@
         });
      
       
+      	
+      	
+      	//회원상세보기
+		$(function(){
+			$("#datatablesSimple>tbody>tr>td>button").click(function(){
+			console.log($(this).parents().eq(1).children().eq(1).text());
+			location.href="memberDetail.ad?mno="+$(this).parents().eq(1).children().eq(1).text();
+			})
+		})
       
-      
-      
-      
-      
-      	//체크박스 선택 후 정보변경(포인트변경)
-        function updateClick(){
-       	 
-			var checkBoxArr = []; 
-			$("input:checkbox[name='check']:checked").each(function() {
-				checkBoxArr.push($(this).val());     // 체크된 것만 값을 뽑아서 배열에 push
-          		console.log(checkBoxArr);
-          		console.log(checkBoxArr.push($(this).parent().parent().children().eq(7).text()));
-			});
-			
-			//ajax 이용
-			var updateConfirm=confirm("선택한 회원의 정보를 변경하시겠습니까?");
-
-					if(updateConfirm==true){
-			
-			
-	          $.ajax({
-		              url: "updateClickMember.ad",
-		              data: {checkBoxArr : checkBoxArr}, 
-		              success: function(result){
-		              	console.log(result);
-		          
-		              	if(result == "yes"){
-	    					alert("회원 정보가 변경되었습니다");
-	    					$("#multiCheck").val("");
-		    				location.href="member.ad";
-	    					
-	    				}else{
-	    					alert("회원 정보 변경 실패하였습니다");
-	    				}
-		              	
-		              },
-		              error: function() {
-		            	  console.log("통신실패");
-		              }  
-	           });
-        
-			}
-     }
-      
-      
-      
-      
-        
         </script>
         
+
+
+        
+
+     
         
     </body>
 </html>
