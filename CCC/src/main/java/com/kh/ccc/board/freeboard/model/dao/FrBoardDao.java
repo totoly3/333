@@ -166,7 +166,8 @@ public class FrBoardDao {
 		
 		//댓글 삭제 
 		public int deleteReply(SqlSessionTemplate sqlSession, FrBoardReply refb) {
-			int result=sqlSession.update("frBoardMapper.deleteReply");
+			int result=sqlSession.update("frBoardMapper.deleteReply",refb);
+			System.out.println("deleteReplyDao : "+result );
 			return result;
 		}
 		
