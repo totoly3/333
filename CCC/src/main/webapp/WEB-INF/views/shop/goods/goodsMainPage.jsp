@@ -27,12 +27,39 @@
     <!-- css 링크 -->
     <%-- <link href="${pageContext.request.contextPath}/resources/css/goods/css/bootstrap.css" rel="stylesheet">
     <link href="${pageContext.request.contextPath}/resources/css/goods/css/bootstrap.css" rel="stylesheet"> --%>
-
+	
+	<style>
+		.remoteDiv{
+         	position: absolute;
+/*         	border: 1px solid lightgray; */
+        	right: 350px;
+        	top: 20px;
+        	font-size: 10px;
+/* 			display: none; */
+			color: black;
+			float: right;
+			z-index:100;
+        }
+	</style>
 	
 </head>
 
 <body>
-
+	<c:choose>
+		<c:when test="${not empty loginUser}">
+			<div class="remoteDiv">
+				<span id="remoteSpan1">Welcome </span>
+				<span id="remoteSpan2">${loginUser.memberName}</span>
+				<span id="remoteSpan3">님!</span>
+			</div>
+		</c:when>
+	</c:choose>
+	
+	<!-- 팝업 -->
+<%-- 	<jsp:include page="popup1.jsp"/> --%>
+	<jsp:include page="popup2.jsp"/>
+	
+	
     <!--================ Start header Top Area =================-->
     <section class="header-top" style="height:80px;">
         <div class="container">
@@ -60,9 +87,31 @@
                     <div class="right-button">
                         <ul>
                             <li><a id="search" href="javascript:void(0)"><i class="fas fa-search"></i></a></li>
-                            <li><a href="cart.ca">Cart</a></li>
-                            <li><a href="loginform.me">Login</a></li>
-                            <li><a href="">Wish</a></li>
+                            <c:choose>
+			            		<c:when test="${not empty loginUser }">
+									<li><a href="cart.ca">Cart</a></li>
+			            		</c:when>
+			            		<c:otherwise>
+			                		<li><a href="#" onclick="pleaseLogin();">Cart</a></li>
+			            		</c:otherwise>
+			                </c:choose>
+			                <c:choose>
+			            		<c:when test="${empty loginUser }">
+									<li><a href="loginform.me">Login</a></li>
+			            		</c:when>
+			            		<c:otherwise>
+			                		<li><a href="mypage.me">MyPage</a></li>
+			            		</c:otherwise>
+			                </c:choose>
+                             <c:choose>
+			            		<c:when test="${not empty loginUser }">
+									<li><a href="">Wish</a></li>
+			            		</c:when>
+			            		<c:otherwise>
+			                		<li><a href="#" onclick="pleaseLogin();">Wish</a></li>
+			            		</c:otherwise>
+			                </c:choose>
+                            
                         </ul>
                     </div>
                 </div>
@@ -93,7 +142,7 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                         <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
-                        	<li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                        	<li class="nav-item active"><a class="nav-link" href="${ pageContext.request.contextPath }">Home</a></li>
                         	<!-- 데코 드롭다운 -->
                        		<li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Decoration</a>
@@ -175,7 +224,13 @@
         </div>
     </header>
     <!-- End header MEnu Area -->
-
+	
+	<script>
+		function pleaseLogin(){
+			window.alert("로그인 후 이용가능합니다.");
+		}	
+	</script>
+	
     <!--================Fullwidth block Area =================-->
 
     <section class="fullwidth-block area-padding-bottom">

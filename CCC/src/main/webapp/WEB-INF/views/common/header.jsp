@@ -118,10 +118,29 @@
             top: -100px;
             left: 1300px;
         }
+        /*리모콘*/
+        .remoteDiv{
+         	position: absolute;
+/*         	border: 1px solid lightgray; */
+        	right: 230px;
+        	top: 60px;
+        	font-size: 10px;
+/* 			display: none; */
+			color: black;
+			float: right;
+			z-index:100;
+        }
     </style>
 </head>
 <body>
-	
+	<c:choose>
+		<c:when test="${not empty loginUser}">
+			<div class="remoteDiv">
+				<span id="remoteSpan1">${loginUser.memberName}</span>
+				<span id="remoteSpan2">님 환영합니다!</span>
+			</div>
+		</c:when>
+	</c:choose>
 	<!-- 알람 메세지 영역 -->
 	<c:if test="${ not empty alertMsg }">
 		<script>
@@ -178,12 +197,10 @@
 <!--                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/key.png" width="25px;"></a></li> -->
                 <c:choose>
             		<c:when test="${not empty loginUser }">
-<!--                 		<li><a href="cart.ca"><img src="./resources/header2Img/cart.png" width="22px;"></a></li> -->
 						<li><a href="cart.ca">Cart</a></li>
             		</c:when>
             		<c:otherwise>
-<!--                 		<li><a href=""><img src="./resources/header2Img/cart.png" width="22px;"></a></li> -->
-                		<li><a href="">Cart</a></li>
+                		<li><a href="#" onclick="pleaseLogin();">Cart</a></li>
             		</c:otherwise>
                 </c:choose>
 <!--                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/menu.png" width="14px;"></a></li> -->
@@ -192,5 +209,10 @@
         </div>
     </div>
     <br clear="both">
+    <script>
+	    function pleaseLogin(){
+			window.alert("로그인 후 이용가능합니다.");
+		}
+    </script>
 </body>
 </html>
