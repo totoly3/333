@@ -43,12 +43,12 @@
                 <table algin="center">
                     <tr>
 		            	<!-- 글번호 히든으로 넘기기 -->
-                        <th><label for="title">제목</label></th>
-                        <td><input type="text" id="title" class="form-control" value="${ cb.boardTitle }" name="boardTitle" required></td>
+                        <th><label for="boardTitle">제목</label></th>
+                        <td><input type="text" id="boardTitle" class="form-control" value="${ cb.boardTitle }" name="boardTitle"></td>
                     </tr>
                     <tr>
                         <th><label for="charName">캐릭터 이름</label></th>
-                        <td><input type="text" id="charName" class="form-control" value="${ cb.charName }" name="charName" required></td>
+                        <td><input type="text" id="charName" class="form-control" value="${ cb.charName }" name="charName"></td>
                     </tr>
                     <tr>
                         <th><label for="boardWriterName">작성자</label></th>
@@ -56,7 +56,7 @@
                     </tr>
                     <tr>
                         <th><label for="boardContent">캐릭터 설명</label></th>
-                        <td><textarea id="boardContent" class="form-control" rows="10" style="resize:none;" name="boardContent" required>${ cb.boardContent }</textarea></td>
+                        <td><textarea id="boardContent" class="form-control" rows="10" style="resize:none;" name="boardContent">${ cb.boardContent }</textarea></td>
                     </tr>
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
@@ -83,7 +83,7 @@
                 <script>
                 	//해당 페이지가 실행되면 첨부파일의 개수를 체크
 					$(document).ready(function(){
-						if( $("#ca-area a").length == 4){
+						if( $("#ca-area a").length == 4 ){
                 			$("#addAttachBtn").attr("value","추가불가");
                 		}
 					});
@@ -111,7 +111,7 @@
 	            	//파일추가 버튼을 누르면 실행되는 메소드
                 	$("#addAttachBtn").click(function(){
                 		//id=ca-area안의 a태그 수만큼 반복하는 반복문 (첨부파일 총 개수가 4개보다 적으면 파일첨부 버튼 생성)
-						if( $("#ca-area a").length < 4){
+						if( $("#ca-area a").length < 4 ){
 							
 							var addAttach = "<div><label for='upfile'></label><br>"
 			          					  + ($("#ca-area a").length+1)+"번째 첨부파일"+"<input type='file' id='upfile' class='form-control-file border' name='multifile'><br>"
@@ -122,7 +122,6 @@
 							if( $("#ca-area a").length == 4 ){
 								$("#addAttachBtn").attr("value","추가불가");
 								$("#addAttachBtn").css("disabled","disabled");
-								
 							}
 						}
 		            	$(("#deleteNewAttachBtn"+idx)).on("click",function(){
@@ -138,7 +137,7 @@
                 </script>
 
                 <div align="center">
-                    <button type="submit" class="btn btn-primary" onclick="return test();">수정하기</button>
+                    <button type="submit" class="btn btn-primary" onclick="return badLanguage();">수정하기</button>
                     <button type="button" class="btn btn-danger" onclick="javascript:history.go(-1);">이전으로</button>
                 </div>
             </form>
@@ -148,16 +147,66 @@
     </div>
     
     <script>
-    	//수정 시 첨부파일이 하나도 없을 경우 알람을 띄워준다.
-    	function test(){
+    	//수정내용체크
+    	function badLanguage(){
+    		//게시글 제목,캐릭터 이름,게시글 내용,첨부파일이 작성되었는지 체크
+    		let checkFile = $("#upfile").val();
+    		let checkTitle = $("#boardTitle").val();
+    		let checkCharName = $("#charName").val();
+    		let checkContent = $("#boardContent").val();
+    		
+    		//첨부파일 개수 체크
     		if($("#ca-area a").length == 0){
     			alert("첨부파일은 한개 이상 등록해주셔야 합니다.");
     			return false;
     		}
-    		let updateResult = confirm("게시글을 수정하시겠습니까?");
-    		if(updateResult){
-    			$("#updateForm").submit();
+
+//     		if( !checkFile ){
+//     			alert("캐릭터 이미지는 한장 이상 등록해주셔야합니다!");
+//     			return false;
+//     		}else 
+    		
+    		if( !checkTitle ){
+    			alert("게시글 제목을 입력해 주세요!");
+    			return false;
+    		}else if( !checkCharName ){
+    			alert("캐릭터 이름도 지어주세요!");    			
+    			return false;
+    		}else if( !checkContent ){
+    			alert("게시글 내용을 입력해 주세요!");
+    			return false;
     		}
+    		
+    		//금지어 필터링
+    		$.ajax({
+    			url : "badLanguage.ch",
+    			data : {
+    				boardTitle : $("#boardTitle").val(),
+    				charName : $("#charName").val(),
+    				boardContent : $("#boardContent").val()
+    			},
+    			success : function(result){
+    				if(result == "NNNNY"){ //비속어가 있는 경우
+	    				alert("비속어가 있어요! 다시 입력해주세요!");
+	    				$("#boardTitle").val("");
+	    				$("#charName").val("");
+	    				$("#boardContent").val("");
+	    				return false;
+    				}else{ //비속어가 없는 경우
+			    		//최종 수정 컨펌
+			    		let updateResult = confirm("게시글을 수정하시겠습니까?");
+			    		if(updateResult){
+			    			$("#updateForm").submit();
+			    		}else{
+			    			return false;
+			    		}
+    				}
+    			},
+    			error : function(){
+    				console.log("통신실패..");    				
+    			}
+    		})	
+    		
     	}
     </script>
     

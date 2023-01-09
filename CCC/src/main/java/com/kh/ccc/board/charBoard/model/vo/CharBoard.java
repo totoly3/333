@@ -20,6 +20,7 @@ public class CharBoard {
 	private String 	boardContent;		//캐릭터 설명
 	private int 	views;				//조회수
 	private int 	like;				//좋아요
+	private int		memberLike;			//로그인유저 좋아요 유무 (테이블에는 없음)
 	private Date	createDate;			//작성날짜
 	private String  changeName;			//바뀐 파일명 + 경로 (테이블에는 없음)
 	private String 	status;				//상태값(Y/N)
