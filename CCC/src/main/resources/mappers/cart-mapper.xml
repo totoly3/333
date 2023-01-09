@@ -41,6 +41,16 @@
 		WHERE CART_NO = #{cartNo}
 			AND G.G_STATUS = 'Y'
 	</select>
+	<select id="selectCartByGoodsNo" resultMap="cartResult">
+		SELECT CART_NO, C.M_NO, C.G_NO, C.QUANTITY, OPTION1, OPTION2, 
+		       G.G_NAME, G.G_PRICE, G.G_STOCK
+		FROM TB_CART C
+		JOIN TB_GOODS G ON(C.G_NO = G.G_NO)
+		WHERE G.G_NO = #{goodsNo}
+			AND G.G_STATUS = 'Y'
+	</select>
+	
+	
 	<delete id="deleteGoodsInCart">
 		DELETE FROM TB_CART WHERE CART_NO = #{cartNo}
 	</delete>
@@ -82,5 +92,8 @@
 		SET G_STOCK = G_STOCK - #{quantity}
 		WHERE G_NO = #{goodsNo}
 	</update>
-	
+	<insert id="insertCart">
+		INSERT INTO TB_CART (CART_NO, M_NO, G_NO, QUANTITY, OPTION1, OPTION2)
+		VALUES( SEQ_CARTNO.NEXTVAL, #{memberNo}, #{goodsNo}, #{quantity}, #{option1}, #{option2} )
+	</insert>
 </mapper>

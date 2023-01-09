@@ -977,10 +977,10 @@ $(function() {
 						
 						<div class="btnArea">
 						<span style="width:190px;">
-							<a href="#" onclick="appierProductFunction('click_directorder_in_product', 'normal');FnAddShoppingBag();fnGaSendCheckValue(); branchAddToCartEventLoging();return false;" class="btn btnB1 btnRed">바로구매</a>
+							<a href="#" onclick="buyGoodsDirect();" class="btn btnB1 btnRed">바로구매</a>
 						</span>
 						<span class="lPad10 btnCartV15" style="width:190px;">
-							<a href="#" id="btn_shoppingbag" onclick="appierProductFunction('product_added_to_cart');FnAddShoppingBag(true);fnGaSendCheckValue(true); branchAddToCartEventLoging();return false;" class="btn btnB1 btnWhite">장바구니</a>
+							<a href="#" onclick="" id="btn_shoppingbag" onclick="appierProductFunction('product_added_to_cart');FnAddShoppingBag(true);fnGaSendCheckValue(true); branchAddToCartEventLoging();return false;" class="btn btnB1 btnWhite">장바구니</a>
 							<div class="alertLyrV15" style="display:none;">
 								<div class="alertBox">
 									<em class="closeBtnV15" onclick="$('.alertLyrV15').fadeOut('fast');">&times;</em>
@@ -2308,6 +2308,17 @@ var NeoclickConversionInnAccountCode="6124a52c47e704b805000009";
             "reviewCount": "5"
         }
     }
+    </script>
+    <script>
+    	function buyGoodsDirect(){
+    		var quantity = $("#itemea").val();
+    		var gno = ${g.goodsNo};
+//     		console.log(ono,quantity);
+
+
+
+    		location.href="buyGoodsDirect.go?gno="+gno+"&qtt="+quantity;
+    	}
     </script>
 
 </body>

@@ -36,6 +36,11 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
+	public Cart selectCartByGoodsNo(int goodsNo) {
+		return cartDao.selectCartByGoodsNo(sqlSession, goodsNo);
+	}
+
+	@Override
 	public int deleteGoodsInCart(int cartNo) {
 		return cartDao.deleteGoodsInCart(sqlSession, cartNo);
 	}
@@ -79,6 +84,12 @@ public class CartServiceImpl implements CartService {
 	public int updateStock(ArrayList<Cart> clist) {
 		return cartDao.updateStock(sqlSession, clist);
 	}
+
+	@Override
+	public int insertCart(Cart c) {
+		return cartDao.insertCart(sqlSession, c);
+	}
+
 
 
 }

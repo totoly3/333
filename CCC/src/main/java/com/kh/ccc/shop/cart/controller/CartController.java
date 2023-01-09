@@ -3,7 +3,6 @@ package com.kh.ccc.shop.cart.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.kh.ccc.member.model.vo.Member;
 import com.kh.ccc.shop.cart.model.service.CartService;
 import com.kh.ccc.shop.cart.model.vo.Cart;
+import com.kh.ccc.shop.goods.model.service.GoodsService;
+import com.kh.ccc.shop.goods.model.vo.Goods;
 import com.kh.ccc.shop.goods.model.vo.Wish;
 
 @Controller
@@ -23,6 +24,9 @@ public class CartController {
 	
 	@Autowired
 	private CartService cartService;
+	
+	@Autowired 
+	private GoodsService goodsService;
 
 	@RequestMapping("cart.ca")
 	public String goCart(HttpSession session, Model model) {
@@ -299,5 +303,31 @@ public class CartController {
 		
 		return "shop/purchaseForm";
 	}
-	
+
+	@RequestMapping(value="buyGoodsDirect.go")
+	public String buyGoodsDirect(HttpSession session, Model model
+			, @RequestParam(value="qtt", defaultValue="1") int quantity, int gno) {
+		
+		System.out.println("buyGoodsDirect.go:: gno = "+gno);
+		System.out.println("buyGoodsDirect.go:: quantity = "+quantity);
+		
+//		Goods g = goodsService.selectGoods(gno);
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		Cart c = new Cart();
+		c.setGoodsNo(gno);
+		c.setQuantity(quantity);
+		c.setMemberNo(loginUser.getMemberNo());
+		int result = cartService.insertCart(c);
+
+		c = cartService.selectCartByGoodsNo(gno);
+		System.out.println("카트 정보 : "+c);
+		if(result > 0) {
+			System.out.println("구매할 굿즈 장바구니 등록 성공");
+		}
+		else {
+			System.out.println("구매할 굿즈 장바구니 등록 실패");
+		}
+		return "redirect:/buyGoods.ca?cartNo="+c.getCartNo();
+	}
+		
 }

@@ -22,6 +22,9 @@ public interface CartService {
 	
 	// cartNo로 굿즈번호와 수량 조회
 	Cart selectCart(int cartNo);
+	
+	// goodsNo로 카트 조회
+	Cart selectCartByGoodsNo(int goodsNo);
 
 	// 장바구니에서 cartNo 삭제
 	int deleteGoodsInCart(int cartNo);
@@ -47,7 +50,10 @@ public interface CartService {
 	// 여러 항목 구매 시 재고 업데이트
 	int updateStock(ArrayList<Cart> clist);
 
+	// 장바구니에 상품 추가
+	int insertCart(Cart c);
 
+	
 	
 	
 }

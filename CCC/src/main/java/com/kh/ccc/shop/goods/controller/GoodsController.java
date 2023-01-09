@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.ccc.board.charBoard.model.vo.CharAttach;
-import com.kh.ccc.board.charBoard.model.vo.CharBoard;
 import com.kh.ccc.member.model.vo.Member;
+import com.kh.ccc.shop.cart.model.service.CartService;
+import com.kh.ccc.shop.cart.model.vo.Cart;
 import com.kh.ccc.shop.goods.model.service.GoodsService;
 import com.kh.ccc.shop.goods.model.vo.Goods;
 import com.kh.ccc.shop.goods.model.vo.GoodsReview;
@@ -30,6 +29,8 @@ import com.kh.ccc.shop.goods.model.vo.GoodsReview;
 public class GoodsController {
 	
 	@Autowired private GoodsService goodsService;
+	
+	@Autowired private CartService cartService;
 	
 	//굿즈 메인 페이지로 보내기
 	@RequestMapping("goodsMain.go")
@@ -228,5 +229,5 @@ public class GoodsController {
 		mv.setViewName("redirect:/detail.go?gno="+gr.getGoodsNo());
 		return mv;
 	}
-		
+	
 }
