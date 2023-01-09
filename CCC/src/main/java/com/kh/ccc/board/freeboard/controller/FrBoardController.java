@@ -48,6 +48,11 @@ public class FrBoardController {
 													ModelAndView  mv,HttpSession session) {
 
 
+	//		작업중
+//			Member loginUser = (Member)session.getAttribute("loginUser");
+//			int fWriterNo =loginUser.getmNo();
+	
+		
 			int listCount = FrBoardService.selectListCount(); //총 게시글 개수  db에서 조회해오기 .
 			
 			int pageLimit = 10;	//하단에 페이징바 갯수

@@ -279,7 +279,7 @@
     		selectReplyList(); //dom 요소 생성 후 맨처음에(페이지 구성될때 댓글리스트 조회해오기) 
     	})
     	
-    	$(document).on("click","table #frReUpdateNo",function(){
+ 	$(document).on("click","table #frReUpdateNo",function(){
     		frReUpdateNo = $(this).val();
     	})
     	
@@ -312,7 +312,7 @@
       							 	
       							 	if(result[i].frParentNo != null ){
       							 		"<br>"
-      							 		"<hr>"
+      							 	
       							 		"<tr>"
 	      							 		+"<td>"+result[i].mId+"</td>"
 	      							 		+"<td>"+result[i].frContent+"</td>"
