@@ -11,7 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Agency - Start Bootstrap Theme</title>
+        <title>관리자 메인페이지</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="resources/mainAdmin/assets/favicon.ico" />
         <!-- Font Awesome icons (free version)-->
@@ -21,12 +21,25 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="resources/mainAdmin/css/styles.css" rel="stylesheet" />
+        
+        
+        <style>
+       		#btnbtn{
+       		position : relative;
+       		left : 600px;
+       		}
+
+        </style>
+        
+        
+        
+        
     </head>
     <body id="page-top">
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
             <div class="container">
-                <a class="navbar-brand" href="#page-top"><img src="resources/mainAdmin/assets/img/navbar-logo.svg" alt="..." /></a>
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars ms-1"></i>
@@ -68,22 +81,22 @@
                             </a>
                             <div class="portfolio-caption">
                                 <div class="portfolio-caption-heading">회원관리</div>
-                                <div class="portfolio-caption-subheading text-muted">회원조회/정보변경</div>
+                                <div class="portfolio-caption-subheading text-muted">MAIN/회원조회/정보변경</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-6 mb-4">
                         <!-- Portfolio item 2-->
                         <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="board.ad">
+                            <a class="portfolio-link" href="list.ch">
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
                                 <img class="img-fluid" src="resources/mainAdmin/assets/img/portfolio/6.jpg" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">게시판관리</div>
-                                <div class="portfolio-caption-subheading text-muted">게시판조회/금지어차단</div>
+                                <div class="portfolio-caption-heading">캐릭터관리</div>
+                                <div class="portfolio-caption-subheading text-muted">캐릭터게시판/대회관리/글등록/수정삭제</div>
                             </div>
                         </div>
                     </div>
@@ -97,8 +110,8 @@
                                 <img class="img-fluid" src="resources/mainAdmin/assets/img/portfolio/1.jpg" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">캐릭터관리</div>
-                                <div class="portfolio-caption-subheading text-muted">캐릭터조회/수상작등록</div>
+                                <div class="portfolio-caption-heading">1:1문의</div>
+                                <div class="portfolio-caption-subheading text-muted">문의게시판/글등록/수정삭제</div>
                             </div>
                         </div>
                     </div>
@@ -112,8 +125,8 @@
                                 <img class="img-fluid" src="resources/mainAdmin/assets/img/portfolio/5.jpg" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">수상작관리</div>
-                                <div class="portfolio-caption-subheading text-muted">역대수상작 조회/등록/변경</div>
+                                <div class="portfolio-caption-heading">자료실</div>
+                                <div class="portfolio-caption-subheading text-muted">Tip게시판/역대수상작 조회/등록/변경</div>
                             </div>
                         </div>
                     </div>
@@ -127,8 +140,8 @@
                                 <img class="img-fluid" src="resources/mainAdmin/assets/img/portfolio/6.jpg" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">대회관리</div>
-                                <div class="portfolio-caption-subheading text-muted">참가신청/결과발표</div>
+                                <div class="portfolio-caption-heading">공지사항</div>
+                                <div class="portfolio-caption-subheading text-muted">글등록/수정삭제</div>
                             </div>
                         </div>
                     </div>
@@ -147,33 +160,15 @@
                             </div>
                         </div>
                     </div>
+                    
+                    
                 </div>
+               <br><br><a href="${ pageContext.request.contextPath }" id="btnbtn"  class="btn btn-danger align-self-center">CCC Main</a>
             </div>
         </section>
        
        
        
-       
-     
-     
-     
-        <!-- Footer-->
-        <footer class="footer py-4">
-            <div class="container">
-                <div class="row align-items-center">
-                    <div class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2022</div>
-                    <div class="col-lg-4 my-3 my-lg-0">
-                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    <div class="col-lg-4 text-lg-end">
-                        <a class="link-dark text-decoration-none me-3" href="#!">Privacy Policy</a>
-                        <a class="link-dark text-decoration-none" href="#!">Terms of Use</a>
-                    </div>
-                </div>
-            </div>
-        </footer>
         <!-- Portfolio Modals-->
         <!-- Portfolio item 1 modal popup-->
         <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
@@ -394,5 +389,8 @@
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        
+        
+        
     </body>
 </html>

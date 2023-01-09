@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   <mapper namespace="adminMapper">
+  	
   	<resultMap type="admin" id="adminResultSet">
 		<result column="A_NO" property="aNo" />
 		<result column="AG_NO" property="aGno" />
@@ -19,6 +20,20 @@
 	</resultMap>
 	
 	
+	
+	
+	<resultMap type="adminAttach" id="atResultSet">
+		<result column="AD_NO" property="adminNo" />
+		<result column="A_NO" property="aNo" />
+		<result column="AD_ORIGIN_NAME" property="adminOriginName" />
+		<result column="AD_CHANGE_NAME" property="adminChangeName" />
+		<result column="AD_CHANGE_FILE" property="adminChangeFile" />
+		<result column="AD_LEVEL" property="adminLevel" />
+		<result column="AD_CREATE_DATE" property="adminCreateDate" />
+		<result column="AD_STATUS" property="adminStatus" />
+	</resultMap>
+	
+	
 	<!-- 일반관리자리스트 조회 (특수관리자페이지) -->
 	<select id="adminList" resultMap="adminResultSet">
 	
@@ -28,6 +43,18 @@
 		ORDER BY A_NO ASC
 	
 	</select>
+	
+	
+	<!-- 관리자 사진조회 -->
+	<select id="adminAttachmentList" resultMap="atResultSet">
+	
+		SELECT *
+		FROM TB_ADMIN_ATTACH
+		WHERE AD_LEVEL='1'
+		ORDER BY A_NO ASC
+	
+	</select>
+	
 	
 	
 	
@@ -40,6 +67,71 @@
 		AND A_STATUS='Y'
 	
 	</select>
+	
+	
+	<!-- 관리자상세조회(첨부0) -->
+	<select id="selectATList" resultMap="atResultSet">
+		SELECT *
+		FROM TB_ADMIN_ATTACH
+		WHERE A_NO=#{aNo}
+		AND AD_LEVEL='1'
+
+	</select>
+	
+
+	<!-- 올해 차트 (특수관리자페이지) 
+	<select id="thisYearChart" resultType="_int">
+	SELECT COUNT(*)
+	FROM TB_MEMBER
+	WHERE SUBSTR(M_CREATE_DATE,1,2)= #{year}
+	</select>  -->
+	
+	
+	<!-- 올해 -->
+	<select id="thisYearChart" parameterType="java.util.List" resultType="String">
+		<foreach collection="list" item="yearList" open="(" close=")" separator="union all">
+		SELECT COUNT(*) as count
+		FROM TB_MEMBER
+		WHERE SUBSTR(M_CREATE_DATE,1,2) = #{yearList}
+		AND M_STATUS='Y'
+		</foreach>
+	</select>
+	
+	<!-- 지난달 -->
+	<select id="monthChart" parameterType="java.util.List" resultType="String">
+		<foreach collection="list" item="monthList" open="(" close=")" separator="union all">
+		SELECT COUNT(*) as count
+		FROM TB_CHARACTER
+		WHERE SUBSTR(C_CREATE_DATE,4,2) = #{monthList}
+		AND C_STATUS='Y'
+		</foreach>
+	</select>
+	
+	
+	<!-- 관리자등록(첨부x) -->
+	<insert id="insertAdmin" parameterType="admin">
+	INSERT INTO TB_ADMIN (A_NO,AG_NO,A_ID,A_PWD,A_NAME,A_EMAIL,A_HIRE_DATE)
+	VALUES (SEQ_ANO.NEXTVAL,#{aGno},#{aId},#{aPwd},#{aName},#{aEmail},#{aHireDate})
+	</insert>
+	
+	
+	<!-- 관리자등록(첨부0) -->
+	<insert id="insertAttach" parameterType="adminAttach">
+	INSERT INTO TB_ADMIN_ATTACH (AD_NO,A_NO,AD_ORIGIN_NAME,AD_CHANGE_NAME,AD_CHANGE_FILE,AD_LEVEL)
+	VALUES (SEQ_ATNO.NEXTVAL,SEQ_ANO.CURRVAL,#{adminOriginName},#{adminChangeName},#{adminChangeFile},#{adminLevel})
+	</insert>
+	
+	
+	<!-- 로그인 -->
+	<select id="loginAdmin" resultMap="adminResultSet">
+		SELECT *
+		FROM TB_ADMIN
+		WHERE A_ID = #{aId}
+		AND A_STATUS = 'Y'
+	</select>
+
+	
+	
 	
 	
   </mapper>
