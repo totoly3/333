@@ -40,7 +40,7 @@ font-size:16px; font-weight:600; width: 40px; height : 30px;color:black; float: 
 <body>
 <div class="layerPopup" id="layer_popup" style="visibility: visible;">
     <div class="layerBox">
-        <h1 class="title">★☆★☆★☆★☆★☆★☆여기는 광고 ★☆★☆★☆★☆★☆★☆</h1>
+        <h1 class="title">★☆★☆★☆★☆여기는 상희 누나의 거묵목을 위한 광고 Time~ ★☆★☆★☆★</h1>
         <div class="cont">
             <p>
            <a href="https://siape.veta.naver.com/fxclick?eu=EU10041893&amp;calp=1&amp;oj=ZagUyei1lSi1sz%2FmQHaEPGQnwj3rKsbt%2F0NVVeCeJY73NSIJBlfTKYRCvKvkZTDeU4aI6X226aRegwtn7vjn6pDa%2BNUuE6p%2B5aQl4tLKFQ5WJZA2pPA1%2FfW1YEqVwubmAQMCMuhPEN1eKWECU5F7ncXB9pACWL46G%2Bp0aDnjKnP6Q03gbIO7AU9SANRnAatvwry52r%2Fy5bW%2Fm%2FXR9pmVJcUx5CllgxRZl2sG4o3tArfV7uTRyOLzvk3UTytQsTyLR9%2FpxBXquhg&amp;ac=8702301&amp;src=6264566&amp;br=4110257&amp;evtcd=P901&amp;x_ti=1350&amp;tb=&amp;oid=&amp;sid1=&amp;sid2=&amp;rk=a5f2d659b25e5139e8c326ed2d82cbb8&amp;eltts=ELqDgh8gEBizpBYd7ow6ew%3D%3D&amp;lu=&amp;brs=Y&amp;" class="rbp_player_wrap_link" target="_blank" aria-label="[광고]말도 안되는 사상최초 1&amp;1 OPEN"><video class="rbp_video" data-role="innerVideo" width="350" height="200" poster="https://ssl.pstatic.net/melona/libs/1429/1429481/96f7f01a5cacc8f6600d_20221229185423389.jpg"><source class="rbp_video_source" src="https://tvetamovie.pstatic.net/libs/1429/1429481/efca293161c7b1df3a0f_20221205165107363.mp4-pHIGH-v0-f190559-20221229185433977.mp4" type="video/mp4"></video></a>

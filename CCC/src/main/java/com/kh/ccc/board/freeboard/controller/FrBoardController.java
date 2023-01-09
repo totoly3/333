@@ -120,7 +120,7 @@ public class FrBoardController {
 					/////////////////////////////////병철이형 부분 시작 
 					//ArrayList로  첨부파일들을 담음.
 					ArrayList<FrBoardAttach> falist = new ArrayList<>();
-					if(!falist.isEmpty()) {
+				
 					// 파일 갯수만큼 
 					for(int i=0; i<upfile.size(); i++) {
 						//아래는 파일이 있으면 
@@ -136,7 +136,7 @@ public class FrBoardController {
 							falist.add(fab);
 							}
 						}
-					}
+				
 					if(falist.isEmpty()) { //글만 작성할때
 						int result1=FrBoardService.insertFrBoardOnlyWrite(fb);
 						
@@ -148,10 +148,11 @@ public class FrBoardController {
 								}
 					}else {//파일두개 등록할때
 						int finalResult=FrBoardService.insertFrBoard(fb,falist);
-						
 							if(finalResult>0) {
+								System.out.println("finalResult"+finalResult);
 								session.setAttribute("alertMsg", "게시글 등록 성공!");
 								mv.setViewName("redirect:/list.fr");
+								
 							}else {
 								mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
 							}
