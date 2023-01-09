@@ -13,6 +13,8 @@
 <!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
 <!--     부트스트랩에서 제공하고 있는 스크립트 -->
 <!--     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+	<!-- iamport 라이브러리 -->
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <title>CCC::구매페이지</title>
     <style>
     	#headerRaiseUp{

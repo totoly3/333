@@ -24,6 +24,14 @@ public class CartDao {
 		return sqlSession.selectOne("cartMapper.selectCart", cartNo);
 	}
 
+	public Cart selectCartByGoodsNo(SqlSessionTemplate sqlSession, int goodsNo) {
+		return sqlSession.selectOne("cartMapper.selectCartByGoodsNo", goodsNo);
+	}
+	
+	public int selectCartByGnoMno(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.selectOne("cartMapper.selectCartByGnoMno", c);
+	}
+	
 	public int deleteGoodsInCart(SqlSessionTemplate sqlSession, int cartNo) {
 		return sqlSession.delete("cartMapper.deleteGoodsInCart", cartNo);
 	}
@@ -78,5 +86,11 @@ public class CartDao {
 		}
 		return result;
 	}
+
+	public int insertCart(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.insert("cartMapper.insertCart", c);
+	}
+
+
 
 }
