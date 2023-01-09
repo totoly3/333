@@ -114,49 +114,49 @@ public class FrBoardController {
 					
 					Member loginUser = (Member)session.getAttribute("loginUser");
 					System.out.println("upfile"+upfile);
-					
-					/////////////////////////////////병철이형 부분 시작 
-					/////////////////////////////////병철이형 부분 시작 
-					/////////////////////////////////병철이형 부분 시작 
 					//ArrayList로  첨부파일들을 담음.
 					ArrayList<FrBoardAttach> falist = new ArrayList<>();
-				
-					// 파일 갯수만큼 
-					for(int i=0; i<upfile.size(); i++) {
-						//아래는 파일이 있으면 
-						if (!upfile.get(i).getOriginalFilename().equals("")) {
-							//saveFile 메소드에   올린 파일을 담아서  changename 변수에 담아준다.(saveFile을 아래 153줄 참고)
-							String changeName = saveFile(upfile.get(i),session);
-							
-							FrBoardAttach fab= new FrBoardAttach();
-							
-							fab.setFaOrginName(upfile.get(i).getOriginalFilename());
-							fab.setFaChangeName("resources/freeBoard/uploadFiles/"+changeName);
-							
-							falist.add(fab);
-							}
-						}
-				
-					if(falist.isEmpty()) { //글만 작성할때
-						int result1=FrBoardService.insertFrBoardOnlyWrite(fb);
-						
-							if(result1>0) {
-								session.setAttribute("alertMsg", "게시글 등록 성공!");
-								mv.setViewName("redirect:/list.fr");
-							}else {
-								mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
-								}
-					}else {//파일두개 등록할때
-						int finalResult=FrBoardService.insertFrBoard(fb,falist);
-							if(finalResult>0) {
-								System.out.println("finalResult"+finalResult);
-								session.setAttribute("alertMsg", "게시글 등록 성공!");
-								mv.setViewName("redirect:/list.fr");
-								
-							}else {
-								mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
-							}
-						}
+					
+					
+					/////////////////////////////////병철이형 부분 시작 
+					/////////////////////////////////병철이형 부분 시작 
+					/////////////////////////////////병철이형 부분 시작 
+//					// 파일 갯수만큼 
+//					for(int i=0; i<upfile.size(); i++) {
+//						//아래는 파일이 있으면 
+//						if (!upfile.get(i).getOriginalFilename().equals("")) {
+//							//saveFile 메소드에   올린 파일을 담아서  changename 변수에 담아준다.(saveFile을 아래 153줄 참고)
+//							String changeName = saveFile(upfile.get(i),session);
+//							
+//							FrBoardAttach fab= new FrBoardAttach();
+//							
+//							fab.setFaOrginName(upfile.get(i).getOriginalFilename());
+//							fab.setFaChangeName("resources/freeBoard/uploadFiles/"+changeName);
+//							
+//							falist.add(fab);
+//							}
+//						}
+//				
+//					if(falist.isEmpty()) { //글만 작성할때
+//						int result1=FrBoardService.insertFrBoardOnlyWrite(fb);
+//						
+//							if(result1>0) {
+//								session.setAttribute("alertMsg", "게시글 등록 성공!");
+//								mv.setViewName("redirect:/list.fr");
+//							}else {
+//								mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
+//								}
+//					}else {//파일두개 등록할때
+//						int finalResult=FrBoardService.insertFrBoard(fb,falist);
+//							if(finalResult>0) {
+//								System.out.println("finalResult"+finalResult);
+//								session.setAttribute("alertMsg", "게시글 등록 성공!");
+//								mv.setViewName("redirect:/list.fr");
+//								
+//							}else {
+//								mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
+//							}
+//						}
 					
 					/////////////////////////////////병철이형 부분 끝
 					/////////////////////////////////병철이형 부분 끝
@@ -166,11 +166,9 @@ public class FrBoardController {
 					
 					
 					
-					/* 여기아래는 내가 했던부분  시작 
-					 * 
+					// 여기아래는 내가 했던부분  시작 
+					// * 
 					
-					//ArrayList로  첨부파일들을 담음.
-					ArrayList<FrBoardAttach> falist = new ArrayList<>();
 			
 					
 					//아래는 파일 갯수만큼  반복문을 돌려줌
@@ -186,7 +184,7 @@ public class FrBoardController {
 							fab.setFaChangeName("resources/freeBoard/uploadFiles/"+changeName);
 							
 							falist.add(fab);
-							
+							System.out.println("컨트롤러 falist 는 ? "+falist);
 						}
 					}
 				
@@ -209,9 +207,6 @@ public class FrBoardController {
 								mv.addObject("errorMsg", "게시글 등록 실패!").setViewName("common/errorPage");
 							}
 						}
-					
-			
-			내가한 부분 끝		 */ 
 					
 					return mv;
 				}
@@ -253,38 +248,38 @@ public class FrBoardController {
 			@RequestMapping("delete.frbo")
 			public String frboardDelete(int fno, String filePath, ModelAndView mv, HttpSession session) {
 
-					int result = FrBoardService.frboardDelete(fno);
-	
-					if (result > 0) {
-						if (!filePath.equals("")) {
-							// 파일이 있는경우 삭제
-							// 물리적인 경로 찾기
-							String realPath = session.getServletContext().getRealPath(filePath);
-	
-							// 해당 경로와 연결시켜 파일객체 생성후 삭제 메소드(해당 파일 삭제)
-							new File(realPath).delete();
-							
-							//DB에 DATA 도 삭제 
-							int deResult=FrBoardService.frboardDbDelete(fno);
-							if(deResult>0) {
-								session.setAttribute("alertMsg", "삭제성공!");
-								mv.setViewName("freeBoard/freeBoardListView");
-							}else {
-								session.setAttribute("alertMsg", "삭제실패!");
-							}
-							session.setAttribute("alertMsg", "삭제성공!");
-							mv.setViewName("freeBoard/freeBoardListView");
-					}else {
-						//파일이 비어있으면
-						mv.setViewName("freeBoard/freeBoardListView");
-					}
-			}else { //물리경로 삭제 실패했으면
-				session.setAttribute("alertMsg", "삭제실패!");
-				mv.setViewName("common/errorPage");
-		}
-					return "redirect:/list.fr";
-	}
+							int result = FrBoardService.frboardDelete(fno);
 			
+							if (result > 0) {
+								if (!filePath.equals("")) {
+									// 파일이 있는경우 삭제
+									// 물리적인 경로 찾기
+									String realPath = session.getServletContext().getRealPath(filePath);
+			
+									// 해당 경로와 연결시켜 파일객체 생성후 삭제 메소드(해당 파일 삭제)
+									new File(realPath).delete();
+									
+									//DB에 DATA 도 삭제 
+									int deResult=FrBoardService.frboardDbDelete(fno);
+									if(deResult>0) {
+										session.setAttribute("alertMsg", "삭제성공!");
+										mv.setViewName("freeBoard/freeBoardListView");
+									}else {
+										session.setAttribute("alertMsg", "삭제실패!");
+									}
+									session.setAttribute("alertMsg", "삭제성공!");
+									mv.setViewName("freeBoard/freeBoardListView");
+							}else {
+								//파일이 비어있으면
+								mv.setViewName("freeBoard/freeBoardListView");
+							}
+					}else { //물리경로 삭제 실패했으면
+						session.setAttribute("alertMsg", "삭제실패!");
+						mv.setViewName("common/errorPage");
+				}
+							return "redirect:/list.fr";
+			}
+					
 			//아래는 수정하기 누르면 폼으로 가는거
 		
 			@RequestMapping(value="update.frbo")
@@ -325,10 +320,18 @@ public class FrBoardController {
 			
 				// 새로 올릴 파일 리스트
 				ArrayList<FrBoardAttach> newfrba = new ArrayList<>();
+				
+				
+				
+				
+				
+				
 				//여기는아래는  병철이형 부분 
 				//여기는아래는  병철이형 부분 
 				//여기는아래는  병철이형 부분 
 				// 기존 첨부파일이 비어있으면 
+				
+				/*
 				if(frba.isEmpty()) {
 					System.out.println("기존 첨부파일 없음.");
 					
@@ -377,27 +380,29 @@ public class FrBoardController {
 				//여기는위에는  병철이형 부분 
 				//여기는위에는  병철이형 부분 
 				
-				
+				*/
 				
 				
 				// 내가올린 파일이있으면 반복문 돌려  내가 올린 파일 사이즈만큼!
 				// 그리고 지워. 기존꺼 전부 삭제
+				
 					for(int k=0; k<frba.size(); k++) {
 						//아래는 만약 올린파일이 있으면 삭제 
 						if(frba.get(k).getFaOrginName()!=null) {
 							//아래는 물리 경로에서 삭제
 							new File(session.getServletContext().getRealPath(frba.get(k).getFaChangeName())).delete();
 							// DB에서 삭제
-							int result=FrBoardService.deleteFrFile(frba);
+							System.out.println("frba에 fNo 있는지 확인"+frba);
 							
-							if(result>0) {
-								System.out.println("db삭제 성공");
-							}else {
-								System.out.println("db삭제 실패");
-							}
 						}
 					}
+					int result=FrBoardService.deleteFrFile(frba.get(0).getfNo());
 				
+					if(result>0) {
+						System.out.println("db삭제 성공");
+					}else {
+						System.out.println("db삭제 실패");
+					}
 					
 					//아래는 이제 새로운 첨부파일 업로드 할껀데  업로드 파일 몇개야 ?
 					for(int j=0; j<upfile.size(); j++) {
@@ -414,10 +419,11 @@ public class FrBoardController {
 							fat.setFaOrginName(upfile.get(j).getOriginalFilename());
 	//						System.out.println("update.frboen :: CTRL :: 담기전 fat = : " + fat);
 							newfrba.add(fat);
+							System.out.println("newfrba?????????"+newfrba);
 						}
 					}
 				
-	//				System.out.println("update.frboen :: 파일삭제 후. 글 수정 전");
+					System.out.println("update.frboen :: 파일삭제 후. 글 수정 전");
 					//파일이 있으면
 					if(!frba.isEmpty()) {
 						//아래는 글만 변경 (첨부파일은 없고) 
@@ -431,7 +437,7 @@ public class FrBoardController {
 							mv.addObject("fb",fb);
 							mv.addObject("frba",newfrba);
 							
-							//여기 아래에서 fb.getfno 를 가져가는 이유가 뭘까 ..
+			
 							mv.setViewName("redirect:/detail.fbo?fno="+fb.getfNo());
 						}else {
 							mv.addObject("errorMsg", "게시글 글,첨부 수정 실패!").setViewName("common/errorPage");
@@ -448,10 +454,10 @@ public class FrBoardController {
 							mv.addObject("errorMsg", "게시글  글 수정 실패!").setViewName("common/errorPage");
 						}
 					}
+					//상세보기로 이동
+					return mv;
 				}
-				//상세보기로 이동
-				return mv;
-			}
+		
 			
 			//아래는 게시판 detail 뷰 댓글 전체조회 
 			@ResponseBody
@@ -505,9 +511,10 @@ public class FrBoardController {
 			public String deleteReply(HttpServletRequest request
 									  ,FrBoardReply refb) {
 					
+				System.out.println("refb"+refb);
 				
 				int result = FrBoardService.deleteReply(refb);
-				
+				System.out.println("댓글 삭제 컨트롤러 result"+result);
 				return result>0 ? "yes":"no";
 				
 			}
