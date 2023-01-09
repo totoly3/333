@@ -66,7 +66,6 @@
 		.dropdown:hover .dropdown-content {display: block;}
 		.dropdown:hover .dropbtn {background-color: #E42525;}
 		<!-- 윗부분은 드롭다운 추가 -->
-
         div {box-sizing:border-box;}
         #header {
             width:80%;
@@ -98,7 +97,6 @@
             width:100%;
             z-index: 1;
         }
-
         #header_2{
             z-index: 5;
             position: relative;
@@ -193,6 +191,6 @@
             </ul>
         </div>
     </div>
-
+    <br clear="both">
 </body>
 </html>
