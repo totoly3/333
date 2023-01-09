@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>캐릭터 게시판 게시글 상세보기 페이지</title>
+<title>캐캐캐::캐릭터 게시판</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -25,6 +25,13 @@
 
         table * {margin:5px;}
         table {width:100%;}
+        #likeBtn {
+        	width:30px;
+        	height:30px;
+        }
+        #likeBtn:hover { cursor : pointer; }
+        .likeFont { font-weight : bold; }
+        .reArea { text-align : right; }
     </style>
 </head>
 <body>
@@ -42,14 +49,14 @@
 
             <table id="contentArea" algin="center" class="table">
                 <tr>
-                    <th width="100">제목</th>
+                    <th width="130">제목</th>
                     <td colspan="3">${ cb.boardTitle }</td>
                 </tr>
                 <tr>
                     <th>작성자</th>
-                    <td colspan="1">${ cb.boardWriterName }</td>
+                    <td>${ cb.boardWriterName }</td>
                     <th>작성일</th>
-                    <td width="120">${ cb.createDate }</td>
+                    <td>${ cb.createDate }</td>
                 </tr>
                 <tr>
                     <th>첨부파일</th>
@@ -62,20 +69,15 @@
 		                    </td>
 	                    </c:when>
 	                    <c:otherwise>
-	                    	<td colspan="3">
+	                    	<td colspan="4">
 	                    		조회된 첨부파일이 없습니다.
 	                    	</td>
 	                    </c:otherwise>
                     </c:choose>
                 </tr>
                 <tr>
-                    <th width="120">캐릭터 이름</th>
+                    <th>캐릭터 이름</th>
                     <td colspan="3">${ cb.charName }</td>
-                    <!-- 좋아요 버튼은 로그인 유저만 가능하도록 -->
-                    <c:if test="${ not empty loginUser }">
-	                	<th style="text-align:center;"></th>
-	                	<td width="150"><button id="likeBtn" onclick="likeGo();" class="btn btn-success">좋아요</button></td>
-                    </c:if>
                 </tr>
                 <tr>
                     <th>캐릭터 설명</th>
@@ -85,19 +87,25 @@
                     <td colspan="4"><p style="height:150px;">${ cb.boardContent }</p></td>
                 </tr>
                 <tr>
-                	<th width="130">캐릭터 이미지</th>
-                	<td colspan="1"></td>
+                	<th>캐릭터 이미지</th>
+                	<td colspan="3">
+	                    <!-- 좋아요 버튼은 로그인 유저만 가능하도록 -->
+	                    <c:if test="${ not empty loginUser }">
+		                	
+		                	<span class="likeFont">좋아요</span><img class="likeBtn" id="likeBtn" onclick="likeGo();" src="${ pageContext.request.contentType }resources/character/likeImg/free-icon-heart-true.png" title="heart icons"></a>
+	                    </c:if>                	
+                	</td>
                 </tr>
                 <c:choose>
                 	<c:when test="${ not empty caList }">
-	               		<td colspan="3">
+	               		<td colspan="4">
 	               			<c:forEach var="c" items="${ caList }">
-	                				<img style="margin: auto;" alt="" src="${ c.changeName }" width="400px" height="300px">
+	                			<img style="margin: auto;" alt="" src="${ c.changeName }" width="400px" height="300px">
 	               			</c:forEach>
 	               		</td>      		                			
                 	</c:when>
                 	<c:otherwise>
-                		<td colspan="3">
+                		<td colspan="4">
                 			조회된 첨부파일이 없습니다.
 	                    </td>
                 	</c:otherwise>
@@ -164,13 +172,13 @@
 	            <table id="replyArea" class="table" align="center">
 	                <thead>
 	                    <tr>
-	                        <th colspan="5">
+	                        <th colspan="4">
 	                            <textarea class="form-control" name="reContent" id="reContent" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
 	                        </th>
 	                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="insertReply();">등록하기</button></th>
 	                    </tr>
 	                    <tr>
-	                        <td colspan="5">댓글(<span id="rcount">0</span>)</td>
+	                        <td colspan="4">댓글(<span id="rcount">0</span>)</td>
 	                    </tr>
 	                </thead>
 	                
@@ -252,9 +260,9 @@
    				success : function(result){
    					
    					if(result == "NNNNY"){
-   						$("#likeBtn").attr("class","btn btn-danger");
+   						$("#likeBtn").attr("src","${ pageContext.request.contentType }resources/character/likeImg/free-icon-heart-true.png");
    					}else{
-   						$("#likeBtn").attr("class","btn btn-success");     						
+   						$("#likeBtn").attr("src","${ pageContext.request.contentType }resources/character/likeImg/free-icon-heart-false.png");     						
    					}
    					
    				},
@@ -276,9 +284,9 @@
        				console.log("통신성공!");
        				
        				if(result == "NNNNY"){
-       					$("#likeBtn").attr("class","btn btn-danger");
+       					$("#likeBtn").attr("src","${ pageContext.request.contentType }resources/character/likeImg/free-icon-heart-true.png");
        				}else{
-       					$("#likeBtn").attr("class","btn btn-success");        					
+       					$("#likeBtn").attr("src","${ pageContext.request.contentType }resources/character/likeImg/free-icon-heart-false.png");        					
        				}
        			},
        			error : function(){
@@ -336,11 +344,11 @@
        				let resultStr = "";
        				
        				for(var i=0; i<reList.length; i++){
-       					resultStr += "<tr>"
-       							   + "<th>"+reList[i].reWriterName+"</th>"
-       							   + "<td>"+reList[i].reContent+"</td>"
+       					resultStr += "<tr class='reArea'>"
+       							   + "<th style='text-align:left;'>"+reList[i].reWriterName+"</th>"
+       							   + "<td style='text-align:left;'>"+reList[i].reContent+"</td>"
        							   + "<td>"+reList[i].reCreateDate+"</td>"
-       							   + "<td><button class='btn btn-outline-success' data-toggle='modal' data-target='#reReply'"
+       							   + "<td colspan='2'><button class='btn btn-outline-success' data-toggle='modal' data-target='#reReply'"
        							   + "id='reUpdateNo' value=+"+reList[i].reNo+">답글</button>"
        							   + "<button class='btn btn-outline-primary' data-toggle='modal' data-target='#updateReply'"
        							   + "id='reUpdateNo'"+reList[i].reNo+" value=+"+reList[i].reNo+">수정</button>"

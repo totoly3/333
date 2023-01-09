@@ -1,6 +1,7 @@
 package com.kh.ccc.board.charBoard.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,11 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.kh.ccc.board.charBoard.model.dao.CharBoardDao;
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
-import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
-import com.kh.ccc.board.charBoard.model.vo.CharBoardSearch;
 import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
+import com.kh.ccc.board.charBoard.model.vo.Character;
 import com.kh.ccc.common.model.vo.PageInfo;
 import com.kh.ccc.common.model.vo.Ward;
 
@@ -186,11 +186,7 @@ public class CharBoardServiceImpl implements CharBoardService {
 		int updateCbResult = boardDao.updateCb(sqlSession, updateCb);
 		int updateCharacterResult = boardDao.updateCharacter(sqlSession, updateCharacter);
 		int updateCaListResult = boardDao.updateCaList(sqlSession, updateCaList);
-		
-		System.out.println("updateCbResult"+ updateCbResult);
-		System.out.println("updateCharacterResult"+ updateCharacterResult);
-		System.out.println("updateCaListResult"+ updateCaListResult);
-		
+			
 		return updateCbResult * updateCharacterResult * updateCaListResult > 0 ? 1 : 0;
 	}
 	
@@ -201,20 +197,31 @@ public class CharBoardServiceImpl implements CharBoardService {
 		int updateCbResult = boardDao.updateCb(sqlSession, updateCb);
 		int updateCharacterResult = boardDao.updateCharacter(sqlSession, updateCharacter);
 
-		System.out.println("updateCbResult"+ updateCbResult);
-		System.out.println("updateCharacterResult"+ updateCharacterResult);
-		
 		return updateCbResult * updateCharacterResult > 0 ? 1 : 0;
 	}
+	
 	//4.게시글 수정 (기존 첨부파일 모두 삭제하는 경우)
 	@Override
 	public int deleteAllOldAttach(int boardNo) {
 		return boardDao.deleteAllOldAttach(sqlSession,boardNo);
 	}
-	//게시글 검색
+	
+	//로그인 유저가 좋아요한 목록 조회
 	@Override
-	public ArrayList<CharBoard> charBoardSearch(CharBoardSearch c) {
-		return boardDao.charBoardSearch(sqlSession, c);
+	public ArrayList<CharLike> checkLikeList(int memberNo) {
+		return boardDao.checkLikeList(sqlSession, memberNo);
+	}
+	
+	//1.검색 게시글의 총 개수 반환
+	@Override
+	public int searchCount(HashMap<String, String> map) {
+		return boardDao.searchCount(sqlSession, map);
+	}
+	
+	//2.검색 게시글의 리스트 반환
+	@Override
+	public ArrayList<CharBoard> charBoardSearch(HashMap<String, String> map,PageInfo pi) {
+		return boardDao.charBoardSearch(sqlSession, map, pi);
 	}
 
 }

@@ -1,6 +1,7 @@
 package com.kh.ccc.board.charBoard.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
-import com.kh.ccc.board.charBoard.model.vo.CharBoardSearch;
 import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.board.charBoard.model.vo.Character;
@@ -159,14 +159,26 @@ public class CharBoardDao {
 	//4.게시글 수정 (기존 첨부파일 모두 삭제하는 경우)
 	public int deleteAllOldAttach(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.delete("charBoardMapper.deleteAllOldAttach", boardNo);
+	}	
+	//1.검색 게시글의 총 개수 반환
+	public int searchCount(SqlSessionTemplate sqlSession, HashMap<String,String> map) {
+		return sqlSession.selectOne("charBoardMapper.searchCount", map);
 	}
-	//게시글 검색
-	public ArrayList<CharBoard> charBoardSearch(SqlSessionTemplate sqlSession, CharBoardSearch c) {
-		return (ArrayList)sqlSession.selectList("charBoardMapper.charBoardSearch", c);
+	//2.검색 게시글의 리스트 반환
+	public ArrayList<CharBoard> charBoardSearch(SqlSessionTemplate sqlSession, HashMap<String,String> map, PageInfo pi) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage()-1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("charBoardMapper.charBoardSearch", map, rowBounds);
 	}
 	
-	
-	
+	//로그인 유저가 좋아요한 목록 조회
+	public ArrayList<CharLike> checkLikeList(SqlSessionTemplate sqlSession, int memberNo){
+		return (ArrayList)sqlSession.selectList("charBoardMapper.checkLikeList", memberNo);
+	}
 	
 	
 	

@@ -101,11 +101,67 @@
 		ORDER BY CA_LEVEL ASC
 	</select>
 	
-	
 	<!-- 전체 개시글 수 반환 -->
 	<select id="selectListCount" resultType="_int">
 		SELECT COUNT(*)
 		FROM TB_CHARACTER_BOARD
+	</select>
+	
+	<!-- 1.검색 게시글 수 반환 -->
+	<select id="searchCount" resultType="_int" parameterType="hashMap">
+		SELECT COUNT(*)
+		FROM TB_CHARACTER_BOARD
+		JOIN TB_MEMBER ON(CB_WRITER = M_NO)
+		WHERE CB_STATUS = 'Y'
+		<choose>
+			<when test="condition == 'writer'">
+				<!-- 창작자 -->
+				AND M_ID
+			</when>
+			<when test="condition == 'title'">
+				<!-- 캐릭터이름 -->
+				AND C_NAME
+			</when>
+			<otherwise>
+				<!-- 캐릭터 설명 -->
+				AND CB_CONTENT
+			</otherwise>
+		</choose>
+		<!-- 공통 구문 -->
+		LIKE '%'||#{ keyword }||'%'
+	</select>
+	
+	<!-- 2.검색 게시글의 리스트 반환 -->
+	<select id="charBoardSearch" resultMap="charBoardResultSet" parameterType="hashMap">
+		SELECT CB_NO
+		      ,M_ID AS CB_WRITER_NAME
+		      ,C_NAME
+		      ,CB_TITLE
+		      ,CB_CONTENT
+		      ,CA_CHANGE_NAME
+		      ,CA_LEVEL
+		      ,CB_VIEWS
+		      ,CB_LIKE
+		      ,CB_CREATE_DATE
+		FROM TB_CHARACTER_BOARD
+		JOIN TB_CHARACTER_ATTACH USING(CB_NO)
+		JOIN TB_MEMBER ON(CB_WRITER = M_NO)
+		WHERE CB_STATUS = 'Y'
+		AND CA_STATUS = 'Y'
+		AND CA_LEVEL = 1
+		<choose>
+			<when test="condition == 'writer'">
+				AND M_ID		
+			</when>
+			<when test="condition == 'title'">
+				AND C_NAME
+			</when>
+			<otherwise>
+				AND CB_CONTENT
+			</otherwise>
+		</choose>
+		LIKE '%'||#{ keyword }||'%'
+		ORDER BY CB_CREATE_DATE DESC
 	</select>
 	
 	<!-- 게시글 리스트 조회 -->
@@ -128,6 +184,13 @@
 		ORDER BY CB_CREATE_DATE DESC
 	</select>
 	
+	<!-- 로그인 유저가 좋아요한 목록 조회 -->
+	<select id="checkLikeList" resultMap="charLikeResultSet" parameterType="_int">
+		SELECT C_NO, C_LIKE
+		FROM TB_CHARACTER_LIKE
+		WHERE M_NO = #{ boardNo }
+	</select>
+		
 	<!-- 게시글 등록 (글) -->
 	<insert id="insertBoard" parameterType="charBoard">
 		INSERT INTO TB_CHARACTER_BOARD(
@@ -243,40 +306,11 @@
 			WHERE CB_NO = #{ bno }
 	</delete>
 	
-	<!-- 게시글 검색 -->
-	<select id="charBoardSearch" resultMap="charBoardResultSet" parameterType="charBoardSearch">
-		SELECT CB_NO
-		      ,CB_WRITER
-		      ,C_NAME
-		      ,CB_TITLE
-		      ,CB_CONTENT
-		      ,CB_VIEWS
-		      ,CB_LIKE
-		      ,CB_CREATE_DATE
-		FROM TB_CHARACTER_BOARD
-		WHERE CB_STATUS = 'Y'
-		<choose>
-			<when test="condition == 'writer'">
-				AND CB_WRITER
-			</when>
-			<when test="condition == 'title'">
-				AND C_NAME
-			</when>
-			<!-- 캐릭터 설명 -->
-			<otherwise>
-				AND CB_CONTENT
-			</otherwise>
-		</choose>
-		<!-- 공통적으로 사용하는 구문 -->
-		LIKE '%'||#{ keyword }||'%'
-		ORDER BY CB_CREATE_DATE DESC
-	</select>
-	
 	<!-- 좋아요 조회 (TB_CHARACTER_LIKE) -->
 	<select id="selectLike" resultMap="charLikeResultSet" parameterType="charLike">
 		SELECT COUNT(C_LIKE) AS C_LIKE
 		FROM TB_CHARACTER_LIKE
-		WHERE C_NO = #{ charNo }
+		WHERE C_NO = #{ refBno }
 		AND M_NO = #{ memberNo }
 	</select>
 	
@@ -288,7 +322,7 @@
 									 ,C_LIKE)
 					VALUES(
 						   #{ memberNo },
-						   #{ charNo },
+						   #{ refBno },
 						   1)
 	</insert>
 	
@@ -296,7 +330,7 @@
 	<update id="insertTbChar" parameterType="charLike">
 		UPDATE TB_CHARACTER
 		SET C_LIKE = C_LIKE + 1
-		WHERE C_NO = #{ charNo }
+		WHERE C_NO = #{ refBno }
 	</update>
 	
 	<!-- 좋아요 추가 (TB_CHARACTER) -->
@@ -310,14 +344,14 @@
 	<delete id="deleteTbCharLike" parameterType="charLike">
 		DELETE FROM TB_CHARACTER_LIKE
 		WHERE M_NO = #{ memberNo }
-		AND C_NO = #{ charNo }
+		AND C_NO = #{ refBno }
 	</delete>
 	
 	<!-- 좋아요 삭제 (TB_CHARACTER) -->
 	<update id="deleteTbChar" parameterType="charLike">
 		UPDATE TB_CHARACTER
 		SET C_LIKE = C_LIKE - 1
-		WHERE C_NO = #{ charNo }
+		WHERE C_NO = #{ refBno }
 	</update>
 	
 	<!-- 좋아요 삭제 (TB_CHARACTER_BOARD) -->
@@ -425,5 +459,5 @@
 		SELECT W_NO, W_NAME
 		FROM TB_WARD
 	</select>
-
+	
 </mapper>
