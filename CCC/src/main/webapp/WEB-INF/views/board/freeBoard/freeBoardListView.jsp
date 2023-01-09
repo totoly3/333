@@ -121,7 +121,7 @@
           	<div id="deleteKey" style="float:right">
    				<a class="btn btn-outline-dark"  id="checkAll">전체선택</a>
    				<a class="btn btn-outline-dark"  id="unCheckAll">전체해제</a>
-   				<a class="btn btn-secondary"  onclick="deleteClick()">선택회원 삭제</a>
+   				<a class="btn btn-secondary"  onclick="deleteClick()">선택된 글 삭제</a>
 			</div>
             
          	<div id="search-area">

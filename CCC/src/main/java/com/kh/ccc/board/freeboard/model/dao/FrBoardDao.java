@@ -184,6 +184,12 @@ public class FrBoardDao {
 			RowBounds rowBounds = new RowBounds(offset, limit);
 			return (ArrayList)sqlSession.selectList("frBoardMapper.frSearchList", map, rowBounds);
 		}
+		
+		//아래는 리플에 답글 달기 
+		public int frReReplyEnroll(SqlSessionTemplate sqlSession, FrBoardReply refb) {
+			
+			return sqlSession.insert("frBoardMapper.frReReplyEnroll",refb);
+		}
 
 
 

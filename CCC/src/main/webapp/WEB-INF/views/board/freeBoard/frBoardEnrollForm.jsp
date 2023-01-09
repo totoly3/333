@@ -96,7 +96,7 @@
       <input type="text" class="form-control" id="frcontent" name="fContent">
     </div>
 <!--      글번호 히든으로 넘기기 -->
-<%--     <input type="hidden" name="fNo" value="${fb.get(0).fNo}"> --%>
+<%--      <input type="hidden" name="fNo" value="${fb.get(0).fNo}">  --%>
     
 <!--      유저 번호 히든으로 넘기기 -->
     <input type="hidden" name="fWriterNo" value="${loginUser.memberNo}">

@@ -48,6 +48,9 @@ public class FrBoardController {
 													ModelAndView  mv,HttpSession session) {
 
 
+//			Member loginUser = (Member)session.getAttribute("loginUser");
+//			int fWriterNo =loginUser.getmNo();
+	
 			int listCount = FrBoardService.selectListCount(); //총 게시글 개수  db에서 조회해오기 .
 			
 			int pageLimit = 10;	//하단에 페이징바 갯수
@@ -108,7 +111,9 @@ public class FrBoardController {
 					System.out.println("fb : "+fb);
 					
 					Member loginUser = (Member)session.getAttribute("loginUser");
-					
+
+					System.out.println("upfile"+upfile);
+					System.out.println("upfilet사이즈"+upfile.size());
 					
 					/////////////////////////////////병철이형 부분 시작 
 					/////////////////////////////////병철이형 부분 시작 
@@ -521,7 +526,7 @@ public class FrBoardController {
 				return mv;
 //				return new Gson().toJson(list);
 			}
-			
+
 			//아래는 리플에  답글 기능 
 			@RequestMapping("frReReplyEnroll.fr")
 			public String frReReplyEnroll(ModelAndView mv,FrBoardReply refb) {

@@ -31,7 +31,7 @@ public class FrBoardServiceImpl implements FrBoardService{
 		return listCount;
 	}
 	
-	
+	//
 	
 	//아래는 게시글 리스트 조회 
 	@Override
@@ -193,6 +193,13 @@ public class FrBoardServiceImpl implements FrBoardService{
 	}
 
 
+	//아래는 리플에 답글 달기 
+	@Override
+	public int frReReplyEnroll(FrBoardReply refb) {
+		int result =FrBoardDao.frReReplyEnroll(sqlSession,refb);
+		System.out.println("답글 달기 성공했냐? : "+result);
+		return result;
+	}
 
 
 
