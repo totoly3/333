@@ -7,7 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.ccc.mypage.model.vo.MyCharacter;
 import com.kh.ccc.mypage.model.vo.MyCharacterAttach;
+import com.kh.ccc.mypage.model.vo.MyCharacterData;
 import com.kh.ccc.shop.cart.model.vo.Cart;
+import com.kh.ccc.shop.goods.model.vo.Wish;
 import com.kh.ccc.shop.goods.model.vo.WishGoods;
 import com.kh.ccc.shop.order.model.vo.MyOrderDetail;
 import com.kh.ccc.shop.order.model.vo.Order;
@@ -18,6 +20,12 @@ import com.kh.ccc.shop.shipping.model.vo.DeliveryDetail;
 @Repository
 public class MyPageDao {
 
+	
+	//마이페이지 들어갈때 주문 목록조회
+	public ArrayList<MyOrderDetail> selectOrderListView(SqlSessionTemplate sqlSession, int memberNo) {
+		return (ArrayList)sqlSession.selectList("myPageMapper.MypageSelectOrderListView",memberNo);
+	}
+	
 	
 	//목록조회
 	public ArrayList<MyCharacter> selectchaList(SqlSessionTemplate sqlSession, int memberNo) {
@@ -46,10 +54,10 @@ public class MyPageDao {
 
 	
 	//조회수 증가
-//	public int increaseCount(SqlSessionTemplate sqlSession, int characterNo) {
-//		return sqlSession.update("myPageMapper.increaseCount",characterNo);
-//		
-//	}
+//		public int increaseCount(SqlSessionTemplate sqlSession, int characterNo) {
+//			return sqlSession.update("myPageMapper.increaseCount",characterNo);
+//			
+//		}
 
 	//글 select
 	public MyCharacter selecectMyChar(SqlSessionTemplate sqlSession, int characterNo) {
@@ -151,7 +159,37 @@ public class MyPageDao {
 	
 	//찜하기 조회
 	public ArrayList<WishGoods> selectWishList(SqlSessionTemplate sqlSession, int memberNo) {
+		
 		return (ArrayList)sqlSession.selectList("myPageMapper.selectWishList",memberNo);
+	
+	}
+
+	//찜하기 삭제
+	public int deleteWishList(SqlSessionTemplate sqlSession, Wish wish) {
+		
+		return sqlSession.delete("myPageMapper.deleteWishList",wish);
+		
+	}
+
+	//캐릭터별 좋아요 데이터
+	public ArrayList<MyCharacterData> dataSelect(SqlSessionTemplate sqlSession, int memberNo) {
+		
+		return (ArrayList)sqlSession.selectList("myPageMapper.selectDataList",memberNo);
+	
+	}
+
+	//1. 카트 상품 추가: 카트에 상품있는지 확인
+	public boolean findCartGoods(SqlSessionTemplate sqlSession, Cart cart) {
+		
+		 String result=sqlSession.selectOne("myPageMapper.findCartGoods",cart) ;
+		 
+		 return Boolean.parseBoolean(result);
+		 
+	}
+
+	//2. 카트 상품추가:실제 INSERT
+	public void addCartGoods(SqlSessionTemplate sqlSession, Cart cart) {
+		sqlSession.insert("myPageMapper.addCartGoods",cart) ;
 	}
 	
 	
