@@ -45,7 +45,7 @@
         .remoteDiv{
          	position: absolute;
 /*         	border: 1px solid lightgray; */
-        	right: 350px;
+        	right: 300px;
         	top: 20px;
         	font-size: 10px;
 /* 			display: none; */
@@ -89,6 +89,11 @@
 		  width: 240px;
 		  padding: 0 6px;
 		}
+		#logOutBtn{
+        	border: none;
+        	background-color:lightpink;
+        	border-radius: 5px;
+        }
 	</style>
 </head>
 
@@ -98,10 +103,16 @@
 			<div class="remoteDiv">
 				<span id="remoteSpan1">Welcome </span>
 				<span id="remoteSpan2">${loginUser.memberName}</span>
-				<span id="remoteSpan3">님!</span>
+				<span id="remoteSpan3">님! </span>
+				<button id="logOutBtn" onclick="logOut();"> 로그아웃</button>
 			</div>
 		</c:when>
 	</c:choose>
+	<script>
+		function logOut(){
+			location.href="logout.me";
+		}
+	</script>
     <!-- 팝업 -->
     <%-- 	<jsp:include page="popup1.jsp"/> --%>
     <jsp:include page="popup2.jsp"/>
