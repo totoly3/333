@@ -159,4 +159,25 @@
 		AND G_NO = #{goodsNo}
 		ORDER BY GR_CREATE_DATE DESC
 	</select>
+	
+	
+	<!-- 검색 조회 -->
+	<select id="searchList" resultMap="goodsResultSet">
+		SELECT G_NO
+			   ,G_BRAND
+			   ,G_NAME
+			   ,G_CATEGORY
+			   ,G_STOCK
+			   ,G_PRICE
+			   ,G_CONTENT
+			   ,G_ORIGIN_NAME1
+			   ,G_CHANGE_NAME1
+			   ,G_FILE_PATH
+			   ,G_STATUS
+		FROM TB_GOODS
+		WHERE G_STATUS='Y'
+			AND G_NAME like '%' || #{keyword}||'%'
+		ORDER BY G_NO DESC
+	</select>
+	
 </mapper>
