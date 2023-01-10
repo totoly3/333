@@ -213,7 +213,7 @@ public class GoodsController {
 			gr.setChangeName("resources/goodsImg/"+changeName);
 		}
 		
-		int result = goodsService.insertReview(gr);
+		int result =  goodsService.insertReview(gr);
 		
 		if(result > 0) {
 			System.out.println("굿즈리뷰 등록 성공");

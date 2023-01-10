@@ -105,10 +105,17 @@
                 <tr>
                 	<!-- 선택체크박스 --> 
                     <td><input type="checkbox" name="RowCheck" value="${w.goodsNo}" style="zoom:1.3;"></td>
-                    <td><img src="${w.goodsFilePath}||${w.goodsChangeName1}" alt="img" class="wishimg"></td>
+                    <td><img src="${w.goodsChangeName1}" alt="${w.goodsChangeName1}" class="wishimg"></td>
                     <td>
                         <div>
-                                            무료배송: 
+                        <c:choose>
+                        	<c:when test="${w.goodsPrice < 50000 }">
+                                           배송비 : 2500원  	
+                        	</c:when>
+                        	<c:otherwise>
+                                            배송비 : 무료
+                        	</c:otherwise>
+                        </c:choose>
                         </div>
                         <div>
                                             상품명: ${w.goodsName}
