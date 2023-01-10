@@ -47,7 +47,7 @@ Coded by www.creative-tim.com
           <!-- <p>CT</p> -->
         </a>
         <a href="https://www.creative-tim.com" class="simple-text logo-normal">
-          Creative Tim
+          ${loginUser.memberName}
           <!-- <div class="logo-image-big">
             <img src="../assets/img/logo-big.png">
           </div> -->
@@ -174,24 +174,22 @@ Coded by www.creative-tim.com
       <div class="content">
         <div class="row">
           <div class="col-md-4">
-            <div class="card card-user">
-              <div class="image">
+            <div class="card card-user" style="border-radius: 20px 20px 20px 20px;">
+              <div class="image" style="background-color: pink;">
                 <img src="resources/paper-dashboard-master/assets/img/pink.png" alt="...">
               </div>
-              <div class="card-body">
+              <div class="card-body" style="background-color: pink;">
                 <div class="author">
                   <a href="#">
                     <img class="avatar border-gray" src="resources/paper-dashboard-master/assets/img/peko.jfif" alt="...">
                     <h5 class="title" style="color:#EA4F4D">램프요정</h5>
                   </a>
-                  <p class="description">
+                  <p class="description" style="color: white;font-weight: bold; font-size: 21px;" >
                                                       지니
                   </p>
                 </div>
-                <p class="description text-center">
-                  "I like the way you work it <br>
-                  No diggity <br>
-                  I wanna bag it up"
+                <p class="description text-center" style="color: white; font-size: 19px;">
+                     "대회 우승은 나의 것!"
                 </p>
               </div>
               <div class="card-footer">
@@ -199,13 +197,13 @@ Coded by www.creative-tim.com
                 <div class="button-container">
                   <div class="row">
                     <div class="col-lg-3 col-md-6 col-6 ml-auto">
-                      <h5>12<br><small>n회 수상</small></h5>
+                      <h5>수상회수<br><small>1회</small></h5>
                     </div>
                     <div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
-                      <h5>2GB<br><small>등록캐릭터 개수</small></h5>
+                      <h5>등록캐릭터 개수<br><small>7개</small></h5>
                     </div>
                     <div class="col-lg-3 mr-auto">
-                      <h5>24,6$<br><small>1위 캐릭터</small></h5>
+                      <h5>1위 캐릭터<br><small>지니</small></h5>
                     </div>
                   </div>
                 </div>
@@ -225,9 +223,9 @@ Coded by www.creative-tim.com
                         </div>
                       </div>
                       <div class="col-md-7 col-7">
-                        DJ Khaled
+                                               지니
                         <br />
-                        <span class="text-muted"><small>Offline</small></span>
+                        <span class="text-muted"><small></small>3위</span>
                       </div>
                       <div class="col-md-3 col-3 text-right">
                         <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></btn>
@@ -242,9 +240,9 @@ Coded by www.creative-tim.com
                         </div>
                       </div>
                       <div class="col-md-7 col-7">
-                        ${m.memberName}
-                        <br />
-                        <span class="text-success"><small>Available</small></span>
+                        		가나다
+                        <br/>
+                        <span class="text-success"><small>5위</small></span>
                       </div>
                       <div class="col-md-3 col-3 text-right">
                         <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></btn>
@@ -259,9 +257,9 @@ Coded by www.creative-tim.com
                         </div>
                       </div>
                       <div class="col-ms-7 col-7">
-                        Flume
+                                                  당근이
                         <br />
-                        <span class="text-danger"><small>Busy</small></span>
+                        <span class="text-danger"><small>7위</small></span>
                       </div>
                       <div class="col-md-3 col-3 text-right">
                         <btn class="btn btn-sm btn-outline-success btn-round btn-icon"><i class="fa fa-envelope"></i></btn>
@@ -275,7 +273,7 @@ Coded by www.creative-tim.com
           <div class="col-md-8">
             <div class="card card-user">
               <div class="card-header">
-                <h5 class="card-title">Edit Profile</h5>
+                <h5 class="card-title">내 프로필</h5>
               </div>
               <div class="card-body">
                 <form>
@@ -365,10 +363,10 @@ Coded by www.creative-tim.com
         <div class="container-fluid">
           <div class="row">
             <nav class="footer-nav">
-              <ul>
-                <li><a href="https://www.creative-tim.com" target="_blank">Creative Tim</a></li>
-                <li><a href="https://www.creative-tim.com/blog" target="_blank">Blog</a></li>
-                <li><a href="https://www.creative-tim.com/license" target="_blank">Licenses</a></li>
+              <ul align="center";>
+                <li><a href="https://www.creative-tim.com" target="_blank" style="color: white;font-size: 16px;">Create</a></li>
+                <li><a href="https://www.creative-tim.com/blog" target="_blank" style="color: white;font-size: 16px;">Challenge</a></li>
+                <li><a href="https://www.creative-tim.com/license" target="_blank" style="color: white;font-size: 16px;">Choose</a></li>
               </ul>
             </nav>
             <div class="credits ml-auto">

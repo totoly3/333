@@ -128,8 +128,15 @@ table th {
 			                    </div>
 		                    </td>
 		                    <td>
-		                                               몇개:${c.quantity}개
-		                                               
+		                       <input type="text" id="inputquantity" value="${c.quantity}" style="width:40px;" size="3">
+		                       <div class="countbuttonarea">
+		                         <div>
+<%-- 		                         <input type="button" onclick="plusbtn('${c.quantity}');" class="quantity_btn plus_btn" value="+" style="width:20px;"> --%>
+		                         <button onclick="plusbtn('${c.quantity}','${c.cartNo}');">+</button>
+		                         <button onclick="minusbtn('${c.quantity}','${c.cartNo}');">-</button>
+<%-- 		                         <input type="button" onclick="minusbtn('${c.quantity}');" class="quantity_btn minus_btn" value="-" style="width:20px;">  --%>
+<%-- 		                         <input type="button" onclick="updateCount('${c.cartNo}','${c.quantity}');" value="수량변경" >  --%>
+		                       </div>
 		                    </td>
 		                    <td>
 		                                               합계: <span><fmt:formatNumber value="${c.goodsPrice*c.quantity}" pattern="#,###원" /></span>  
@@ -179,18 +186,32 @@ table th {
         
         <br><br>
         <div id="buttonarea" align="center">
-           <button class="wishview" style="margin-bottom: 10px;background-color:#EA4F4D;width:120px;">주문하기</button>
-           <button class="wishview" style="margin-bottom: 10px;background-color:#EA4F4D;width:120px;">쇼핑계속하기</button>
+           <button class="wishview" style="margin-bottom: 10px;background-color:#EA4F4D; width:120px;">주문하기</button>
+           <button class="wishview" style="margin-bottom: 10px;background-color:#EA4F4D; width:120px;">쇼핑계속하기</button>
         </div>
         
         <script type="text/javascript">
         
+             function plusbtn(quantity,cartNo) {
+				console.log(quantity);
+				console.log(cartNo);
+            	 
+				//let plusquantity+=parseInt('quantity'+1);
+				//console.log(plusquantity);
+			 }
+             
+             
+             function minusbtn() {
+				
+			}
+        
+
 	         $(document).ready(function(){
 	        	
-	           //장바구니 총계산영역 
-			   setTotalInfo();
+	            //장바구니 총계산영역 
+			    setTotalInfo();
 			  
-	         };
+	         });
 	         
 	         /*체크여부 변화에 따른 종합정보 변화*/
 	         $(".individual_cart_checkbox").on("change", function(){
@@ -200,7 +221,26 @@ table th {
 	        	setTotalInfo($(".cart_info_td")); 
 	        	 
 	         });
-        	  
+	         
+	         /*전체체크박스에 따른 변화*/
+	         $(".all_check_input").on("click",function(){
+		    	  
+		    	   /* 체크박스 체크/해제 */
+		    		if($(".all_check_input").prop("checked")){
+		    			
+		    			$(".individual_cart_checkbox").attr("checked", true);
+		    			
+		    		} else{
+		    			
+		    			$(".individual_cart_checkbox").attr("checked", false);
+		    		}
+		    	   
+		    	    //총 주문정보 세팅
+		    		setTotalInfo($(".cart_info_td"));	
+		    	   
+		       });  
+	         
+	         
 	         /*체크여부에 따른 정보 변화 */
         	 function setTotalInfo() {
         		 
@@ -211,8 +251,6 @@ table th {
 	           	  let finalTotalPrice=0; //최종가격(총가격+배송비)
 	           	  
 	           	  //cart_info_td식별자를 통해 td태그에 접근하여 find메소드로 정보가 저장된 input hidden태그에 접근한다.
-	           	  //상품수만큼 여러개의 td태그가 상품수만큼 존재하고 있기때문에 제이쿼리의 each(index,element)메소드를 통해서 객체의 수만큼 순회할 수 있다. 
-	           	  //hidden으로 상품정보가 담긴 <td>태그를 순회
 	           	  //총가격 총개수 구함
 	           	  //td태그를 순회하는 코드
 	           	  $(".cart_info_td").each(function(index,element) {
@@ -221,10 +259,10 @@ table th {
 	           			  
 	           			 //td태그를 순회해서 얻은 총개수
 		           		 totalCount+=parseInt($(element).find(".individual_count_input").val());
-		           		  
+	           		     
 		           		 //td태그를 순회해서 얻은 총가격(input태그의 값을 얻어오면 string타입으로 인식되기 때문에 parseInt로 int타입으로 변경해줌)
 		           		 totalPrice+=parseInt($(element).find(".individual_totalPrice_input").val());
-						 
+		           		 
 					  }
 	           		  
 	   			  });
@@ -260,44 +298,26 @@ table th {
         		 
 			  }
 	         
-	         
-	       $(".all_check_input").on("click",function(){
-	    	  
-	    	   /* 체크박스 체크/해제 */
-	    		if($(".all_check_input").prop("checked")){
-	    			$(".individual_cart_checkbox").attr("checked", true);
-	    		} else{
-	    			$(".individual_cart_checkbox").attr("checked", false);
-	    		}
-	    	   
-	    	    //총 주문정보 세팅
-	    		setTotalInfo($(".cart_info_td"));	
-	    	   
-	       });  
-			  
-		
           
           //체크박스 설정
-          $(function() {
-        	   
-			 var chkObj=document.getElementsByName("RowCheck"); //개별선택 체크박스   
-			 var rowCnt=chkObj.length; //개별선택 체크박스 개수
-			
-			 $("input[name='allCheck']").click(function() {//전체선택 체크박스를 선택했을때
-				var chk_listArr=$("input[name='RowCheck']"); //개별체크박스 배열 []
-				for(var i=0; i< chk_listArr.length; i++){ //개별체크박스 배열의 길이만큼, 선택된 개별체크박스를 체크상태로 만들어준다. 
-					chk_listArr[i].checked=this.checked;
-				}
-			  });
+//           $(function() {
+// 			 var chkObj=document.getElementsByName("RowCheck"); //개별선택 체크박스   
+// 			 var rowCnt=chkObj.length; //개별선택 체크박스 개수
+// 			 $("input[name='allCheck']").click(function() {//전체선택 체크박스를 선택했을때
+// 				var chk_listArr=$("input[name='RowCheck']"); //개별체크박스 배열 []
+// 				for(var i=0; i< chk_listArr.length; i++){ //개별체크박스 배열의 길이만큼, 선택된 개별체크박스를 체크상태로 만들어준다. 
+// 					chk_listArr[i].checked=this.checked;
+// 				}
+// 			  });
 			 
-			 $("input[name='RowCheck']").click(function() {
-				if ($("input[name='RowCheck']:checked").length==rowCnt){
-					$("input[name='allCheck']")[0].checked=true;
-				}else {
-					$("input[name='allCheck']")[0].checked=false;
-				}
-			 });
-		   });
+// 			 $("input[name='RowCheck']").click(function() {
+// 				if ($("input[name='RowCheck']:checked").length==rowCnt){
+// 					$("input[name='allCheck']")[0].checked=true;
+// 				}else {
+// 					$("input[name='allCheck']")[0].checked=false;
+// 				}
+// 			 });
+// 		   });
         
         </script>
         

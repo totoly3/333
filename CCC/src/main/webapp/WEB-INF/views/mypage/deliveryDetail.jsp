@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,10 +40,18 @@
             <br><br>
             
 	            <p>주문자: ${loginUser.memberName}님</p>
-	            <c:choose>
-		            <c:when test="${deliInfo.orderDeliveryStatus}=='Y'">
+	            
+<%-- 	            ${deliInfo} --%>
+	      
+<%-- 	            ${deliInfo.orderDeliveryStatus} --%>
+	            
+	            <!-- 배송상태를 나타내는 div영역 -->
+	            <div style="background-color: pink; width: 900px; height: 200px;">
+	               <c:choose>
+		            <c:when test="${deliInfo.orderDeliveryStatus}=='N'">
 			            <!-- 배송상태에 따라 다르게 출력한다. -->
 		                <!-- if 만약 도착했다면? -->
+		                <h3>나오남?</h3>
 		                <p>날짜 도착완료</p>
 		                <p>고객님이 주문하신 상품이 배송완료 되었습니다.</p>
 		            </c:when>
@@ -51,11 +59,11 @@
 		               <!-- if 만약 도착하지 않았다면 -->
 		               <p>배송중</p>
 		            </c:otherwise>
-	            </c:choose>
-            
+	               </c:choose>
+	            </div>
 	            <br>
 	            <br>
-            
+	            
 	            <!--한 상품에 대한 테이블영역 -->
 	           <h3>받는사람 정보</h3> 
 	           <table id="contentArea" algin="center" class="table">
@@ -68,8 +76,8 @@
 	             <tr>
 	              <td>받는 주소</td>
 	              <td>우편번호: ${deliInfo.orderZipCode}</td>
-	              <td>주소: ${deliInfo.orderAddress}</td>
-	              <td>상세주소: ${deliInfo.orderAddressDetail}</td>
+	              <td colspan="1">주소: ${deliInfo.orderAddress} ${deliInfo.orderAddressDetail}</td>
+	              <td></td>
 	             </tr>
 	             <tr>
 	              <td>배송요청사항</td>
@@ -84,7 +92,7 @@
 	              <td></td>
 	             </tr>
 	             <tr>
-	              <td>ㅇ</td>
+	              <td></td>
 	              <td></td>
 	              <td></td>
 	              <td></td>
@@ -102,18 +110,18 @@
 	             <tr>
 	              <td>배송비</td>
 	              <td></td>
-	              <td>${deliInfo.deliveryFee}</td>
+	              <td><fmt:formatNumber  value="${deliInfo.deliveryFee}" pattern="#,###원"/>
+	              </td>
 	             </tr>
 	            <tr>
+	              <td>택배회사</td>
 	              <td></td>
-	              <td></td>
-	              <td></td>
+	              <td>${deliInfo.orderPackage}</td>
 	             </tr>
 		       </table>
 		       
-		       
+		       <br><br>
 		       <h4>시간되면 배송API영역</h4>
-		       
 		       <br>
 		       <br>
 		       

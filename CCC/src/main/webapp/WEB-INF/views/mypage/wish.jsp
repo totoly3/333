@@ -141,7 +141,7 @@
         		success:function(result){
         			console.log("통신성공");
         			if (result=='already') {
-						
+        				
         				alert("이미 장바구니에 존재하는 상품입니다.");
         				
 					} else if(result=='add') {

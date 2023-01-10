@@ -48,8 +48,7 @@ public class MyPageController {
 		int memberNo=loginUser.getMemberNo();
 		
 		ArrayList<MyOrderDetail> realoList = mypageService.selectOrderListView(memberNo);
-		
-		//System.out.println("돌?"+realoList);
+		//System.out.println("ddd"+realoList);
 		
 		model.addAttribute("realoList",realoList);
 		
@@ -347,7 +346,24 @@ public class MyPageController {
 	
 	
 	//주문영역------------------------------------------------------------------------------------------------------
-	//기간별주문내역 조회
+	
+	//기간별 주문내역 조회 단순이동
+	@RequestMapping(value="selectoListbyDate2.my")
+	public String selectoListbyDate2(HttpSession session,Model model) {
+		
+		Member loginUser=(Member)session.getAttribute("loginUser");
+		int memberNo=loginUser.getMemberNo();
+		
+		ArrayList<MyOrderDetail> realoList = mypageService.selectOrderListView(memberNo);
+		//System.out.println("ddd"+realoList);
+		model.addAttribute("realoList",realoList);	
+		
+	    return "mypage/selectoListbyDate2";
+		
+	 }
+	
+	
+	//기간별주문내역 조회기능(버튼클릭시 날짜별로 출력)
 	@ResponseBody
 	@RequestMapping(value="selectoListbyDate.my",produces = "application/json;charset=UTF-8" )
 	public ModelAndView selectoListbyDate(HttpSession session,int startDay, ModelAndView mv) {
@@ -505,8 +521,9 @@ public class MyPageController {
 	             
 	             //oNo뽑는 부분??
 	             realoList= mypageService.selectRealOrderListView(oNo);
-				 mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");
-				 
+				 //mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");
+	             mv.addObject("realoList", realoList).setViewName("mypage/selectOrderListbyDate2");
+	             
 	        	 break;
 	         
 			 default:
@@ -546,15 +563,11 @@ public class MyPageController {
 	
 	//배송조회 >>상세번호
 	@RequestMapping("delivery.my")
-	public String deliveryDetail(HttpSession session,Model model) {
+	public String deliveryDetail(String orderDetailNo,int orderNo,HttpSession session,Model model) {
 	
-		//상품 상세번호,주문번호odNo 1, oNo 1>> 임의로 넣음
-		int odNo=1;
-		int oNo=1;
-		
 		OrderDetail od=new OrderDetail();
-		od.setOrderDetailNo(odNo);
-		od.setOrderNo(oNo);
+		od.setOrderDetailNo(Integer.parseInt(orderDetailNo));
+		od.setOrderNo(orderNo);
 		
 		//상세번호,번호 주문객체에 담아서 가져가자 
 		//~배송정보()
@@ -690,14 +703,14 @@ public class MyPageController {
 	   
 	}
 
-	//내가 만든 버전 장바구니 리스트2 조회-----cartList2
+	//내가 만든 버전 장바구니 리스트2 조회--------------------------------------------------------------------------------cartList2
 	@RequestMapping("cartList2.my")
 	public String selectCartList2(HttpSession session,Model model){
 		
 		Member loginUser=(Member)session.getAttribute("loginUser");
 		int mNo= loginUser.getMemberNo();
 		
-		ArrayList<Cart> cList=mypageService.selectCartList(mNo);
+		ArrayList<Cart> cList= mypageService.selectCartList(mNo);
 		 
 		 if (cList!=null) {
 			 model.addAttribute("cList",cList);
@@ -705,7 +718,7 @@ public class MyPageController {
 			session.setAttribute("errorMsg", "장바구니 불러오기 실패");
 		 }
 		
-		return "mypage/cartList2";
+		return "mypage/cartList3";
 	
 	}
 	
