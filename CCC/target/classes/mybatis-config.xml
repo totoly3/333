@@ -70,10 +70,6 @@
 		<mapper resource="/mappers/member-mapper.xml"/>
 		<mapper resource="/mappers/myPage-mapper.xml"/>
 
-		<mapper resource="/mappers/admin-mapper.xml"/>
-
-		<mapper resource="/mappers/alltimeboard-mapper.xml"/>
-		
 		<mapper resource="/mappers/order-mapper.xml"/>
 		
 		<mapper resource="/mappers/notice-mapper.xml"/>

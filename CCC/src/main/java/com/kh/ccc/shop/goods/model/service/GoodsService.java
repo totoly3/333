@@ -24,5 +24,7 @@ public interface GoodsService {
 	
 	//리뷰 조회
 	public ArrayList<GoodsReview> selectReviewList(int gno);
-	
+
+	//검색 기능
+	public ArrayList<Goods> searchList(String keyword);
 }
