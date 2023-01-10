@@ -54,12 +54,12 @@
 		<result property="orderDeliveryStatus" column="O_DELIVERY_STATUS"/>
 		<result property="orderStatus" column="O_STATUS"/>
 		
-<!-- 		<result property="orderDetailNo" column="OD_NO"/> -->
-<!-- 		<result property="goodsNo" column="G_NO"/> -->
-<!-- 		<result property="goodsPrice" column="G_PRICE"/> -->
-<!-- 		<result property="quantity" column="QUANTITY"/> -->
-<!-- 		<result property="option1" column="OPTION1"/> -->
-<!-- 		<result property="option2" column="OPTION2"/>		 -->
+		<result property="orderDetailNo" column="OD_NO"/>
+		<result property="goodsNo" column="G_NO"/>
+		<result property="goodsPrice" column="G_PRICE"/>
+		<result property="quantity" column="QUANTITY"/>
+		<result property="option1" column="OPTION1"/>
+		<result property="option2" column="OPTION2"/>		
 		
 		<result property="goodsName" column="G_NAME"/>
 		<result property="goodsOriginName" column="G_ORIGIN_NAME1"/>
@@ -352,7 +352,7 @@
    <select id="MypageSelectOrderListView" resultMap="myOrderDetailResultSet" parameterType="_int">
       <![CDATA[
         SELECT A.*
-        FROM(SELECT O_NO,G_NAME,G_ORIGIN_NAME1,G_CHANGE_NAME1,G_FILE_PATH,G.G_PRICE
+        FROM(SELECT G_NO,O_DATE, O_NO,G_NAME,G_ORIGIN_NAME1,G_CHANGE_NAME1,G_FILE_PATH,G.G_PRICE
 		FROM TB_GOODS G
 		JOIN TB_ORDER_DETAIL OD USING(G_NO)
 		JOIN TB_ORDER O USING(O_NO)
@@ -364,25 +364,25 @@
    </select>
    
     <!-- 위시리스트 조회 -->
-	<select id="selectWishList" resultMap="WishListResultSet" >   		
-	SELECT G_NO,G_NAME,G_PRICE,G_ORIGIN_NAME1,G_CHANGE_NAME1,G_FILE_PATH
-	FROM TB_GOODS
-	JOIN TB_WISH USING(G_NO)
-	WHERE M_NO=#{memberNo}
-	AND G_STATUS='Y'
+	<select id="selectWishList" resultMap="WishListResultSet" >
+		SELECT G_NO,G_NAME,G_PRICE,G_ORIGIN_NAME1,G_CHANGE_NAME1,G_FILE_PATH
+		FROM TB_GOODS
+		JOIN TB_WISH USING(G_NO)
+		WHERE M_NO=#{memberNo}
+		AND G_STATUS='Y'
 	</select>
 	
 	<!-- 위시리스트 삭제 -->
 	<delete id="deleteWishList" parameterType="wish">
-	 DELETE FROM TB_WISH
-	 WHERE G_NO=#{goodsNo}
-	 AND M_NO=#{memberNo}
+		 DELETE FROM TB_WISH
+		 WHERE G_NO=#{goodsNo}
+		 AND M_NO=#{memberNo}
 	</delete >
 	
    <!--캐릭터별 좋아요 조회 일단 상위5위까지 select-->
    <select id="selectDataList" resultMap="selectDataListResult">
 	   <![CDATA[
-	    SELECT A.*
+		SELECT A.*
 		FROM(SELECT C_NAME,C_LIKE
 		FROM TB_CHARACTER
 		WHERE M_NO=#{memberNo}
@@ -392,12 +392,12 @@
    </select>
    
    <!-- 카트리스트 조회-->
-   <select id="selectCartList" resultMap="wishGoodsResultSet" parameterType="_int" >
-      	SELECT * FROM TB_CART
+	<select id="selectCartList" resultMap="wishGoodsResultSet" parameterType="_int" >
+		SELECT * FROM TB_CART
 		JOIN TB_GOODS USING(G_NO)
 		WHERE M_NO=#{memberNo}
 		AND G_STATUS='Y'
-   </select>   
+	</select>   
 
    <!--1. 카트리스트 추가 -->
    <select id="findCartGoods"  resultType="String" parameterType="cart">
@@ -412,7 +412,5 @@
    	    INSERT INTO TB_CART(CART_NO,M_NO,G_NO)
    	    VALUES(SEQ_CARTNO.NEXTVAL,#{memberNo},#{goodsNo})
    </insert>
-   
-   
    
 </mapper>
