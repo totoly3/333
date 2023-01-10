@@ -540,6 +540,7 @@
 			    	console.log("통신성공");
 			    	if(result =="NNNNY"){
 			    		$("#frContent").val("");
+			    		$("#reply_cnt").html("(0 / 10)");
 			    		selectReplyList();
 			    	}else{
 			    		alert("댓글수정에 실패하였삼");
@@ -550,6 +551,17 @@
 				}
 			})
 		} 	
+    	
+    	//댓글 수정 글자 수 10자 제한 
+    	$('#frContent').on('keyup',function(){
+			$('#reply_cnt').html("("+$(this).val().length+" / 10)");
+			
+			if($(this).val().length > 10){
+				$(this).val($(this).val().substring(0, 10));
+				$('#reply_cnt').html("(10 / 10)");
+			}
+		});
+    	
     	// 댓글 삭제 
     	function deleteReply(frNo){
     		console.log("frNo "+frNo);
