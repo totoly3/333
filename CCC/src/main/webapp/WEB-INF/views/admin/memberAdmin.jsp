@@ -449,10 +449,166 @@
         </script>
         
 
+	<script type="text/javascript">
+		
+            var context = document.getElementById('myAreaChart').getContext('2d');
+            var pie = document.getElementById('myBarChart').getContext('2d');
 
-        
 
-     
+            let today=new Date();
+    		var year=today.getFullYear();
+    		
+            var myChart = new Chart(context, {
+                type: 'bar', // 차트의 형태
+                data: { // 차트에 들어갈 데이터
+                	
+                    labels: [
+                        //x 축
+                        year-5,year-4,year-3,year-2,year-1,year
+                    ],
+                    datasets: [
+                        { //데이터
+                            label: 'test1', //차트 제목
+                            fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                            
+                            data: [
+                               // ${iList[0]}  x축 label에 대응되는 데이터 값
+                               //13,25,39,58,43,20
+                               ${countList[0]},${countList[1]},${countList[2]},${countList[3]},${countList[4]},${countList[5]}
+
+                            ], 
+                            backgroundColor: [
+                                //색상
+                                'rgb(59, 174, 218)', //파
+                                'rgb(255, 99, 132)', //빨
+                                'rgb(255, 127, 0)', //주
+                                'rgb(255, 212, 0)', //노
+                                'rgb(153, 102, 255)',//보
+                                'rgb(0, 239, 145)' //초
+                            ],
+                            borderColor: [
+                                //경계선 색상
+                                'rgba(59, 174, 218, 1)', //파
+                                'rgba(255, 99, 132, 1)', //빨
+                                'rgba(255, 127, 0, 1)', //주
+                                'rgba(255, 212, 0, 1)', //노
+                                'rgba(153, 102, 255, 1)',//보
+                                'rgba(0, 239, 145, 1)' //초
+                            ],
+                            borderWidth: 1 //경계선 굵기
+                        }
+                    ]
+                },
+                options: {
+                	   legend: {display: false},
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+            
+            
+            
+            let now=new Date();
+    		var month=now.getMonth()+1;
+    		
+    		//월
+    		var arr = ${monthList};
+			console.log(arr.join(','));
+			
+			//값
+			var arr2 = ${countMonthList};
+			console.log(arr2.join(','));
+			
+			
+            var myChart = new Chart(pie, {
+                type: 'line', // 차트의 형태
+                data: { // 차트에 들어갈 데이터
+                	
+                     //labels: [
+                         //x 축
+                        //'JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'
+                        //1,2,3,4,5,6,7,8,9,10,11,12
+                   // ],
+						
+					labels:arr,
+                    datasets: [
+                        { //데이터
+                            label: 'test1', //차트 제목
+                            fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                            
+                            data: [
+                               //x축 label에 대응되는 데이터 값
+                               //13,25,39,58,43,20,36,47,50,60,62,70
+                               ${countMonthList[0]},${countMonthList[1]},${countMonthList[2]},${countMonthList[3]},${countMonthList[4]}
+                               ,${countMonthList[5]},${countMonthList[6]},${countMonthList[7]},${countMonthList[8]},${countMonthList[9]}
+                               ,${countMonthList[10]},${countMonthList[11]}
+				
+                            	
+
+                            ], 
+                            backgroundColor: [
+                              //색상
+              			 	 'rgba(255, 0, 0, 0.3)' //빨
+              			 	 //'rgba(0, 255, 0, 0.3)' //초
+              			 	 //'rgba(0, 0, 255, 0.3)'//파
+              			  
+
+                            ],
+                            borderColor: [
+                            	//경계선 색상
+							'rgba(255, 0, 0, 0.3)' //빨
+                          
+
+                            ],
+                          pointRadius:0,
+                            fill:true,
+                            borderWidth: 5 //경계선 굵기
+       
+                        }/* ,
+                        {
+                            label: 'test2',
+                            fill: false,
+                            data: [
+                                8, 34, 12, 24
+                            ],
+                            backgroundColor: 'rgb(157, 109, 12)',
+                            borderColor: 'rgb(157, 109, 12)'
+                        } */
+                    ]
+                },
+                options: {
+                	   legend: {display: false},
+                    scales: {
+
+                        yAxes: [
+	
+                            {
+                                ticks: {
+                            
+                                    beginAtZero: true
+                                }
+ 
+                                
+                                
+                            }
+                        ]
+
+   
+                    }
+                }
+            });
+ 
+            
+
+        </script>
+
         
     </body>
 </html>
