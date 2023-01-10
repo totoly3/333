@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -80,8 +80,8 @@
                                 <img class="img-fluid" src="resources/mainAdmin/assets/img/portfolio/5.jpg" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">회원관리</div>
-                                <div class="portfolio-caption-subheading text-muted">MAIN/회원조회/정보변경</div>
+                                <div class="portfolio-caption-heading">관리자/회원 관리</div>
+                                <div class="portfolio-caption-subheading text-muted">관리자조회/회원조회/정보변경</div>
                             </div>
                         </div>
                     </div>
@@ -95,19 +95,34 @@
                                 <img class="img-fluid" src="resources/mainAdmin/assets/img/portfolio/6.jpg" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">캐릭터관리</div>
-                                <div class="portfolio-caption-subheading text-muted">캐릭터게시판/대회관리/글등록/수정삭제</div>
+                                <div class="portfolio-caption-heading">캐릭터 관리</div>
+                                <div class="portfolio-caption-subheading text-muted">캐릭터게시판/글등록/수정삭제</div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-4 col-sm-6 mb-4">
                         <!-- Portfolio item 3-->
                         <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="charc.ad">
+                            <a class="portfolio-link" href="goodsMain.go">
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
                                 <img class="img-fluid" src="resources/mainAdmin/assets/img/portfolio/1.jpg" alt="..." />
+                            </a>
+                            <div class="portfolio-caption">
+                                <div class="portfolio-caption-heading">굿즈관리</div>
+                                <div class="portfolio-caption-subheading text-muted">굿즈등록/변경/삭제</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
+                        <!-- Portfolio item 4-->
+                        <div class="portfolio-item">
+                            <a class="portfolio-link" href="list.qu">
+                                <div class="portfolio-hover">
+                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                                </div>
+                                <img class="img-fluid" src="resources/mainAdmin/assets/img/portfolio/5.jpg" alt="..." />
                             </a>
                             <div class="portfolio-caption">
                                 <div class="portfolio-caption-heading">1:1문의</div>
@@ -115,25 +130,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
-                        <!-- Portfolio item 4-->
-                        <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="prize.ad">
-                                <div class="portfolio-hover">
-                                    <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
-                                </div>
-                                <img class="img-fluid" src="resources/mainAdmin/assets/img/portfolio/5.jpg" alt="..." />
-                            </a>
-                            <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">자료실</div>
-                                <div class="portfolio-caption-subheading text-muted">Tip게시판/역대수상작 조회/등록/변경</div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="col-lg-4 col-sm-6 mb-4 mb-sm-0">
                         <!-- Portfolio item 5-->
                         <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="champion.ad">
+                            <a class="portfolio-link" href="list.no">
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
@@ -148,15 +148,15 @@
                     <div class="col-lg-4 col-sm-6">
                         <!-- Portfolio item 6-->
                         <div class="portfolio-item">
-                            <a class="portfolio-link" data-bs-toggle="modal" href="goods.ad">
+                            <a class="portfolio-link" href="list.alltimelistgo">
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
                                 <img class="img-fluid" src="resources/mainAdmin/assets/img/portfolio/1.jpg" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">굿즈관리</div>
-                                <div class="portfolio-caption-subheading text-muted">굿즈등록/변경/삭제</div>
+                                <div class="portfolio-caption-heading">역대수상작</div>
+                                <div class="portfolio-caption-subheading text-muted">대회/역대수상</div>
                             </div>
                         </div>
                     </div>

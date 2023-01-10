@@ -204,7 +204,15 @@
             		</c:otherwise>
                 </c:choose>
 <!--                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/menu.png" width="14px;"></a></li> -->
-                <li><a href="login.ad">Admin</a></li>
+                
+                <c:choose>
+            		<c:when test="${not empty loginAdmin }">
+						<li><a href="mainAdmin.ad">Admin</a></li>
+            		</c:when>
+            		<c:otherwise>
+                		<li><a href="member.ad">Admin</a></li>
+            		</c:otherwise>
+                </c:choose>
             </ul>
         </div>
     </div>
