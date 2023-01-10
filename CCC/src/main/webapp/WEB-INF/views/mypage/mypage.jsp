@@ -64,15 +64,15 @@ Coded by www.creative-tim.com
             </a>
           </li>
           <li>
-            <a href="cartList.my ">
+            <a href="selectoListbyDate2.my">
               <i class="nc-icon nc-diamond"></i>
-              <p>ㅇ</p>
+              <p>기간별주문목록</p>
             </a>
           </li>
           <li>
             <a href = "orderDetail.my?oNo=1">
               <i class="nc-icon nc-pin-3"></i>
-              <p>주문목록</p>
+              <p>상세주문목록</p>
             </a>
           </li>
           <li>
@@ -181,11 +181,11 @@ Coded by www.creative-tim.com
             <div class="card card-stats">
               <div class="card-body ">
                 <div class="row">
-                  <div class="col-5 col-md-4">
-                    <div class="icon-big text-center icon-warning">
-                      <i class="nc-icon nc-globe text-warning"></i>
-                    </div>
-                  </div>
+<!--                   <div class="col-5 col-md-4"> -->
+<!--                     <div class="icon-big text-center icon-warning"> -->
+<!--                       <i class="nc-icon nc-globe text-warning"></i> -->
+<!--                     </div> -->
+<!--                   </div> -->
                   <div class="col-7 col-md-8" onclick="location.href='profileEnroll.me'">
                     <div class="numbers">
                       <p class="card-category">회원정보</p>
@@ -199,7 +199,6 @@ Coded by www.creative-tim.com
                 <hr>
                 <div class="stats">
                   <i class="fa fa-refresh"></i>
-                  Update Now
                 </div>
               </div>
             </div>
@@ -213,9 +212,9 @@ Coded by www.creative-tim.com
                       <i class="nc-icon nc-money-coins text-success"></i>
                     </div>
                   </div>
-                  <div class="col-7 col-md-8" onclick="location.href='orderDetail.my?oNo=1'">
+                  <div class="col-7 col-md-8" onclick="location.href='cartList2.my'">
                     <div class="numbers">
-                         <p class="card-category">주문내역</p>
+                         <p class="card-category">장바구니</p>
                       <p class="card-title">
                       <p>
                     </div>
@@ -226,7 +225,6 @@ Coded by www.creative-tim.com
                 <hr>
                 <div class="stats">
                   <i class="fa fa-calendar-o"></i>
-                  Last day
                 </div>
               </div>
             </div>
@@ -253,7 +251,6 @@ Coded by www.creative-tim.com
                 <hr>
                 <div class="stats">
                   <i class="fa fa-clock-o"></i>
-                  In the last hour
                 </div>
               </div>
             </div>
@@ -288,90 +285,39 @@ Coded by www.creative-tim.com
         <div class="row">
           <div class="col-md-12">
              <div class="card ">
-	             <h3 style="color:black;margin-left: 50px;margin-top:30px;">주문목록</h3>
-	              <div class="orderList button" align="center">
-	                <a class="btn btn-primary" id="today-order" href="#" role="button" style="margin-left: 20px; background-color:black;">오늘</a>
-	                <a class="btn btn-primary" id="week-order" href="#" role="button" style="margin-left: 20px;background-color:black;">일주일</a>
-	                <a class="btn btn-primary" id="month-order" href="#" role="button" style="margin-left: 20px;background-color:black;">한달</a>
-	                <a class="btn btn-primary" id="month3-order" href="#" role="button" style="margin-left: 20px;background-color:black;">세달</a>
-	                <a class="btn btn-primary" id="month6-order" href="#" role="button" style="margin-left: 20px;background-color:black;">여섯달</a>
-	              </div>
+	             <h3 style="font-size:25px;font-weight:bold;black;margin-left: 40px;margin-top:30px;">최근 주문 내역</h3>
+	              <div><span><a href="selectoListbyDate2.my" style="float:right; margin-right: 200px;font-size: 20px;">더보기</a></span></div>
                   <br>
-                  <br>
-	             
-				 <table class="table" id="orderListArea">
-				    <!-- 여기가 ajax 뿌려지는 곳 -->
-					 <tr style="background-color:#EA4F4D;">
+				 
+				 <table class="table" id="orderListArea" style="margin-left:60px ;width:90%; text-align: center;">
+					 <tr  style="background-color:#EA4F4D;">
 					    <th></th>
-					    <th>주문번호</th>
+					    <th style="width:80px;">주문번호</th>
+					    <th style="width:75px;">주문일자</th>
 					    <th>굿즈명</th>
-					    <th>굿즈이미지</th>
+					    <th style="text-align: center;">굿즈이미지</th>
 					    <th>굿즈가격</th>
+					    <th>주문상태</th>
+					    <th>주문취소</th>
 					  </tr>
 					 <c:forEach var="ro" items="${realoList}" >
-					  <tr>
+					  <tr onclick="orderdetail('${ro.orderNo}')">
 					    <td></td>
 					    <td>${ro.orderNo}</td>
+					    <td>${ro.orderDate}orderDate</td>
 					    <td>${ro.goodsName}</td>
-					    <td>${ro.goodsFilePath}||${ro.goodsChangeName}</td>
-					    <td>${ro.goodsPrice}</td>
+					    <td><img src="${ro.goodsChangeName}" width="100" height="100" ></td>
+					    <td>
+						    <%--<fmt:formatNumber value="${ro.goodsPrice}" pattern="#,###원"/> --%>
+					         ${ro.goodsPrice}원
+					    </td>
+					    <td>주문 진행중</td>
+					    <td><a class="btn btn-primary" onclick="orderCancel('${ro.orderNo}');" id="month6-order" href="#" role="button" style="background-color:black;width:92px;">주문취소</a></td>
 					  </tr>
 					 </c:forEach >
 				 </table>
+				 <br><br><br>
              </div>
-                 <script>
-                       $(function () {
-                           // startDate는 시작일자를 언제로 설정할지를 결정하는 변수로
-                           // startDate값에 따라 컨트롤러에서 시작일을 변경하도록 되어 있음
-                           var startDay = 0;
-                           $("#today-order").click(function () {
-                               startDay = 1; // 오늘 날짜
-                               console.log(startDay);
-                               selectOrderList(startDay);
-                           });
-                           $("#week-order").click(function () {
-                               startDay = 2;  // 일주일 전
-                               selectOrderList(startDay);
-                           });
-                           $("#month-order").click(function () {
-                               startDay = 3;  // 한 달 전
-                               selectOrderList(startDay);
-                           });
-                           $("#month3-order").click(function () {
-                               startDay = 4;  // 세 달 전
-                               selectOrderList(startDay);
-                           });
-                           $("#month6-order").click(function () {
-                               startDay = 5;  // 여섯 달 전
-                               selectOrderList(startDay);
-                           });
-                       })
-
-                       var selectOrderList = function (startDay) {
-                           console.log("startDay : " + startDay);
-
-                           $.ajax({
-                               url: "selectoListbyDate.my",
-                               data: {
-                                   startDay: startDay
-                               },
-                               type: "post",
-                               success: function (realoList) {
-                                   console.log("통신성공");
-                                   console.log("realoList : " + realoList);
-
-                                   $("#orderListArea").html(realoList);
-
-                                   /* str += "<tr><td colspan='3' align='center'><h3>조회된 결과가 없습니다.</h3></td></tr>";
-                                   $("#orderListArea").html(str);*/
-                               },
-                               error: function () {
-                                   console.log("통신실패");
-                               }
-                           })
-                       }
-                  </script>
-                   
             <div class="card">
               <br>
               <h3 style="color:black; margin-left:3%; margin-top:2%;">캐릭터별 좋아요 순위</h3>
@@ -380,6 +326,16 @@ Coded by www.creative-tim.com
 				 <canvas id="myChart" style="margin-left:15%; margin-bottom:15%; width=400vh height=100vw" ></canvas>
               </div>
               <div class="card-body">
+                 <h2>각각 아래에 이미지를 뽑아준다</h2>
+                 <table border="1" align="center">
+                  <tr>
+					<td>d</td>				                  
+					<td>d</td>				                  
+					<td>d</td>				                  
+					<td>d</td>				                  
+					<td>d</td>				                  
+                  </tr>
+                 </table>
                
               </div>
               <div class="card-footer">
@@ -390,6 +346,14 @@ Coded by www.creative-tim.com
             </div>
             
 			<script type="text/javascript">
+			
+				//주문내역 tr누르면 주문상세내역으로 가는 함수
+			    function orderdetail(orderNo) {
+                	console.log(orderNo);
+					location.href="orderDetail.my?orderNo="+orderNo;
+				}
+			
+			
 				//페이지 로드되면 그래프가져오는 함수실행	
 				$(document).ready(function(){ 
 			 		  getGraph();
@@ -493,39 +457,39 @@ Coded by www.creative-tim.com
         </div>
         
         <div class="row">
-          <div class="col-md-4">
-            <div class="card ">
-              <div class="card-header ">
-                <h5 class="card-title" style="color:blue"></h5>
-              </div>
-              <div class="card-body ">
-                <canvas id="chartEmail"></canvas>
-              </div>
-              <div class="card-footer ">
-                <div class="legend">
-                </div>
-                <hr>
-                <div class="stats">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-8">
-            <div class="card card-chart">
-              <div class="card-header">
-              </div>
-              <div class="card-body">
-              </div>
-              <div class="card-footer">
-                <div class="chart-legend">
-                </div>
-                <hr />
-                <div class="card-stats">
-                  <h3 style="color:red">영역3</h3>
-                </div>
-              </div>
-            </div>
-          </div>
+<!--           <div class="col-md-4"> -->
+<!--             <div class="card "> -->
+<!--               <div class="card-header "> -->
+<!--                 <h5 class="card-title" style="color:blue"></h5> -->
+<!--               </div> -->
+<!--               <div class="card-body "> -->
+<%--                 <canvas id="chartEmail"></canvas> --%>
+<!--               </div> -->
+<!--               <div class="card-footer "> -->
+<!--                 <div class="legend"> -->
+<!--                 </div> -->
+<!--                 <hr> -->
+<!--                 <div class="stats"> -->
+<!--                 </div> -->
+<!--               </div> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--           <div class="col-md-8"> -->
+<!--             <div class="card card-chart"> -->
+<!--               <div class="card-header"> -->
+<!--               </div> -->
+<!--               <div class="card-body"> -->
+<!--               </div> -->
+<!--               <div class="card-footer"> -->
+<!--                 <div class="chart-legend"> -->
+<!--                 </div> -->
+<!--                 <hr /> -->
+<!--                 <div class="card-stats"> -->
+<!--                   <h3 style="color:red">영역3</h3> -->
+<!--                 </div> -->
+<!--               </div> -->
+<!--             </div> -->
+<!--           </div> -->
         </div>
       </div>
       <footer class="footer footer-black  footer-white ">
