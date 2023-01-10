@@ -76,18 +76,18 @@
 			                        <div class="portfolio-item">
 			                            <div class="thumbnail">
 			                            	<input type="hidden" id="boardNo" name="boardNo" value="${ b.boardNo }">
-			                                <img class="img-fluid" src="${ pageContext.request.contentType }${ b.changeName }" alt="..." />
+			                                <img class="img-fluid" src="${ pageContext.request.contentType }${ b.changeName }" alt="..." />	                                
 			                            </div>
 			                            <div class="portfolio-caption">
 			                                <div class="portfolio-caption-heading"></div>
-			                                <div class="portfolio-caption-subheading text-muted">No.${ b.boardNo } ${ b.boardTitle }</div>
-			                      			<br>
+			                                <div class="portfolio-caption-subheading text-muted"><p style="font-size:x-large;">${ b.boardTitle }</p></div>
+			                      			
 			   								<c:choose>
 			   									<c:when test="${ b.memberLike eq 1 }">	   										              
-			   										<span class="likeFont">좋아요 </span><img class="likeBtn" onclick="likeGo('${ b.boardNo }');" src="${ pageContext.request.contentType }resources/character/likeImg/free-icon-heart-true.png" title="heart icons"></a>               
+			   										<span class="likeFont">좋아요 </span><img class="likeBtn" onclick="likeGo('${ b.boardNo }');" src="${ pageContext.request.contentType }resources/character/likeImg/free-icon-heart-true.png" title="heart icons"><br><span class="likeFont">총 좋아요 수 : ${ b.like }</span>   
 			   									</c:when>
 			   									<c:otherwise>		   																	                                        			   										
-			   										<span class="likeFont">좋아요 </span><img class="likeBtn" onclick="likeGo('${ b.boardNo }');" src="${ pageContext.request.contentType }resources/character/likeImg/free-icon-heart-false.png" title="heart icons"></a>							                                        			   										
+			   										<span class="likeFont">좋아요 </span><img class="likeBtn" onclick="likeGo('${ b.boardNo }');" src="${ pageContext.request.contentType }resources/character/likeImg/free-icon-heart-false.png" title="heart icons"><br><span class="likeFont">총 좋아요 수 : ${ b.like }</span>		                                        			   										
 			   									</c:otherwise>
 			   								</c:choose>
 			                            </div>
