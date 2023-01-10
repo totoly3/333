@@ -72,7 +72,7 @@
 			                </c:choose>
                              <c:choose>
 			            		<c:when test="${not empty loginUser }">
-									<li><a href="">Wish</a></li>
+									<li><a href="wish.ca">Wish</a></li>
 			            		</c:when>
 			            		<c:otherwise>
 			                		<li><a href="#" onclick="pleaseLogin();">Wish</a></li>
