@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% String filePath = request.getContextPath(); %>
-    
 <!doctype html>
 <html lang="en">
 <head>
@@ -44,6 +41,7 @@
 			width:60%;
 			margin:auto;
 		}
+		/*리모콘*/
         .remoteDiv{
          	position: absolute;
 /*         	border: 1px solid lightgray; */
@@ -55,6 +53,42 @@
 			float: right;
 			z-index:100;
         }
+        /*검색*/
+		.search-box53:hover{
+		  /* box-shadow: 0px 0px .5px 1px #000000; */
+		  width: 282px;
+		}
+		.search-btn53{
+		  text-decoration: none;
+		  float: right;
+		  width: 30px;
+		  height: 30px;
+		  background-color: #fff;
+		  border-radius: 50%;
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		  color: #000000;
+		}
+		.search-box53:hover > .search-btn{
+		  background-color: #fff;
+		}
+		.search-txt{
+		  display: flex;
+		  padding: 0;
+		  width: 0px;
+		  border:none;
+		  background: none;
+		  outline: none;
+		  float: left;
+		  font-size: 1rem;
+		  line-height: 30px;
+		  transition: .4s;
+		}
+		.search-box53:hover > .search-txt{
+		  width: 240px;
+		  padding: 0 6px;
+		}
 	</style>
 </head>
 
@@ -71,6 +105,15 @@
     <!-- 팝업 -->
     <%-- 	<jsp:include page="popup1.jsp"/> --%>
     <jsp:include page="popup2.jsp"/>
+    
+    <!-- 알람 메세지 영역 -->
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alert("${ alertMsg }");
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+	</c:if>
+	
     <!--================ Start header Top Area =================-->
     <section class="header-top" style="height:80px;">
         <div class="container">
@@ -97,7 +140,20 @@
                 <div class="col-lg-4 col-md-6 col-sm-6 search-trigger">
                     <div class="right-button">
                         <ul>
-                            <li><a id="search" href="javascript:void(0)"><i class="fas fa-search"></i></a></li>
+                            <li>
+                            	<div class="search-box53">
+							      	<input type="text" class="search-txt" id="keyword" name="keyword" placeholder="검색어를 입력해주세요">
+							      	<a class="search-btn53" href="#" onclick="searchGoods();">
+							      		<i class="fas fa-search"></i>
+							      	</a>
+							    </div>
+                            </li>
+                            <script>
+                            	function searchGoods(){
+//                             		console.log("아무말");
+                            		location.href="searchGoods.go?keyword="+$("#keyword").val();
+                            	}
+                            </script>
                             <c:choose>
 			            		<c:when test="${not empty loginUser }">
 									<li><a href="cart.ca">Cart</a></li>
@@ -116,7 +172,7 @@
 			                </c:choose>
                              <c:choose>
 			            		<c:when test="${not empty loginUser }">
-									<li><a href="wish.ca">Wish</a></li>
+									<li><a href=""wishList.my"">Wish</a></li>
 			            		</c:when>
 			            		<c:otherwise>
 			                		<li><a href="#" onclick="pleaseLogin();">Wish</a></li>
@@ -132,15 +188,15 @@
                 window.alert("로그인 후 이용가능합니다.");
             }	
         </script>
-        <div class="search_input" id="search_input_box">
-            <div class="container">
-                <form class="d-flex justify-content-between search-inner">
-                    <input type="text" class="form-control" id="search_input" placeholder="Search Here">
-                    <button type="submit" class="btn"></button>
-                    <span class="ti-close" id="close_search" title="Close Search"></span>
-                </form>
-            </div>
-        </div>
+<!--         <div class="search_input" id="search_input_box"> -->
+<!--             <div class="container"> -->
+<!--                 <form class="d-flex justify-content-between search-inner"> -->
+<!--                     <input type="text" class="form-control" id="search_input" placeholder="Search Here"> -->
+<!--                     <button type="submit" class="btn"></button> -->
+<!--                     <span class="ti-close" id="close_search" title="Close Search"></span> -->
+<!--                 </form> -->
+<!--             </div> -->
+<!--         </div> -->
     </section>
     <!--================ End header top Area =================-->
 

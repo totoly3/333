@@ -594,6 +594,7 @@ public class MyPageController {
 		//~멤버번호를 가지고 찜한 리스트 조회
 		ArrayList<WishGoods> wList=mypageService.selectWishList(mNo);
 		model.addAttribute("wList", wList);
+		System.out.println("wishList.my -> wList : "+ wList);
 		
 		return "mypage/wish";	
 	}

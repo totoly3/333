@@ -365,7 +365,7 @@
    
     <!-- 위시리스트 조회 -->
 	<select id="selectWishList" resultMap="WishListResultSet" >   		
-	SELECT G_NO,G_NAME,G_PRICE,G_ORIGIN_NAME1,G_CHANGE_NAME2,G_FILE_PATH
+	SELECT G_NO,G_NAME,G_PRICE,G_ORIGIN_NAME1,G_CHANGE_NAME1,G_FILE_PATH
 	FROM TB_GOODS
 	JOIN TB_WISH USING(G_NO)
 	WHERE M_NO=#{memberNo}
