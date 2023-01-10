@@ -40,34 +40,31 @@
 		  font-family: Pretendard;
 		}
 		
-		
-		
-		p{
-		  width: 100px;
-		  height: 125px;
-		  background: #febf00;
-		  display: flex;
-		  justify-content: center;
-		  align-items: center;
-		  font-size: 1.3rem;
-		  font-weight: bold;
-		  
-		  position: absolute;
-		  left: 400px;
-		  top: 400px;
-		  
-		  user-select: none;
-		  
-		  /*  drag cursor   */
-		  cursor: grab;
-		}
-		
-		div:active {
-		  cursor: grabbing;
-		}
-				
-		</style>
-
+		.star {
+	    position: relative;
+	    font-size: 2rem;
+	    color: #ddd;
+	  }
+	  
+	  .star input {
+	    width: 100%;
+	    height: 100%;
+	    position: absolute;
+	    left: 0;
+	    opacity: 0;
+	    cursor: pointer;
+	  }
+	  
+	  .star span {
+	    width: 0;
+	    position: absolute; 
+	    left: 0;
+	    color: red;
+	    overflow: hidden;
+	    pointer-events: none;
+	  }
+			
+</style>		
 
 
 
@@ -77,18 +74,24 @@
 		       <h1>놀이터</h1>	
 		       
      <div class="wrap">
-      <header>
-        <h1>이상형 월드컵</h1>
-        <pre id="roundTitle">           이상형 월드컵에 참여해 주세요.</pre>
-      </header>
-      <div class="content default" id="content">
-        <button id="button1" onclick="start()">게임 참여</button>
-        <button id="button2" > stop !!</button>
-      </div>
-      
-      
-     <p class="mover" margin-left:150px;>drag</p> 
-      
+   
+	
+	<span class="star">
+	  ★★★★★
+	  <span>★★★★★</span>
+	  <input type="range" oninput="drawStar(this)" value="1" step="1" min="0" max="10">
+	</span>
+		<script>
+			const drawStar = (target) => {
+				  document.querySelector(`.star span`).style.width = `${target.value * 10}%`;
+				}
+				  
+				  
+				// JQUERY CODE
+				const drawStar = (target) => {
+				  $(`.star span`).css({ width: `${target.value * 10}%` });
+				}
+      </script>
       
     </div>
     <br><br>
@@ -124,51 +127,10 @@
 			  // 목표 수치
 			  const max =76000;
 			  
-			  setTimeout(() => counter($counter, max), 2000);
+			  setTimeout(() => counter($counter, max), 500);
 			}
 			
-			
-			const draggable = ($target) => {
-				  let isPress = false,
-				      prevPosX = 0,
-				      prevPosY = 0;
-				  
-				  $target.onmousedown = start;
-				  $target.onmouseup = end;
-				    
-				  // 상위 영역
-				  window.onmousemove = move;
-				 
-				  function start(e) {
-				    prevPosX = e.clientX;
-				    prevPosY = e.clientY;
-
-				    isPress = true;
-				  }
-
-				  function move(e) {
-				    if (!isPress) return;
-
-				    const posX = prevPosX - e.clientX; 
-				    const posY = prevPosY - e.clientY; 
-				    
-				    prevPosX = e.clientX; 
-				    prevPosY = e.clientY;
-				    
-				    $target.style.left = ($target.offsetLeft - posX) + "px";
-				    $target.style.top = ($target.offsetTop - posY) + "px";
-				  }
-
-				  function end() {
-				    isPress = false;
-				  }
-				}
-
-				window.onload = () => {
-				  const $target = document.querySelector(".mover");
-				  
-				  draggable($target);
-				}
+		
 			
 	</script>
 		       	
