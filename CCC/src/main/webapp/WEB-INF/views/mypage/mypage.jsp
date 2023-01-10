@@ -181,11 +181,11 @@ Coded by www.creative-tim.com
             <div class="card card-stats">
               <div class="card-body ">
                 <div class="row">
-                  <div class="col-5 col-md-4">
-                    <div class="icon-big text-center icon-warning">
-                      <i class="nc-icon nc-globe text-warning"></i>
-                    </div>
-                  </div>
+<!--                   <div class="col-5 col-md-4"> -->
+<!--                     <div class="icon-big text-center icon-warning"> -->
+<!--                       <i class="nc-icon nc-globe text-warning"></i> -->
+<!--                     </div> -->
+<!--                   </div> -->
                   <div class="col-7 col-md-8" onclick="location.href='profileEnroll.me'">
                     <div class="numbers">
                       <p class="card-category">회원정보</p>
@@ -199,7 +199,6 @@ Coded by www.creative-tim.com
                 <hr>
                 <div class="stats">
                   <i class="fa fa-refresh"></i>
-                  Update Now
                 </div>
               </div>
             </div>
@@ -213,9 +212,9 @@ Coded by www.creative-tim.com
                       <i class="nc-icon nc-money-coins text-success"></i>
                     </div>
                   </div>
-                  <div class="col-7 col-md-8" onclick="location.href='orderDetail.my?oNo=1'">
+                  <div class="col-7 col-md-8" onclick="location.href='cartList2.my'">
                     <div class="numbers">
-                         <p class="card-category">상제주문내역</p>
+                         <p class="card-category">장바구니</p>
                       <p class="card-title">
                       <p>
                     </div>
@@ -226,7 +225,6 @@ Coded by www.creative-tim.com
                 <hr>
                 <div class="stats">
                   <i class="fa fa-calendar-o"></i>
-                  Last day
                 </div>
               </div>
             </div>
@@ -253,7 +251,6 @@ Coded by www.creative-tim.com
                 <hr>
                 <div class="stats">
                   <i class="fa fa-clock-o"></i>
-                  In the last hour
                 </div>
               </div>
             </div>
@@ -293,7 +290,7 @@ Coded by www.creative-tim.com
                   <br>
 				 
 				 <table class="table" id="orderListArea" style="margin-left:60px ;width:90%; text-align: center;">
-					 <tr style="background-color:#EA4F4D;">
+					 <tr  style="background-color:#EA4F4D;">
 					    <th></th>
 					    <th style="width:80px;">주문번호</th>
 					    <th style="width:75px;">주문일자</th>
@@ -304,12 +301,12 @@ Coded by www.creative-tim.com
 					    <th>주문취소</th>
 					  </tr>
 					 <c:forEach var="ro" items="${realoList}" >
-					  <tr>
+					  <tr onclick="orderdetail('${ro.orderNo}')">
 					    <td></td>
 					    <td>${ro.orderNo}</td>
 					    <td>${ro.orderDate}orderDate</td>
 					    <td>${ro.goodsName}</td>
-					    <td> <img alt="" src="${ro.goodsFilePath}||${ro.goodsChangeName}" width="100" height="100"></td>
+					    <td><img src="${ro.goodsChangeName}" width="100" height="100" ></td>
 					    <td>
 						    <%--<fmt:formatNumber value="${ro.goodsPrice}" pattern="#,###원"/> --%>
 					         ${ro.goodsPrice}원
@@ -349,6 +346,14 @@ Coded by www.creative-tim.com
             </div>
             
 			<script type="text/javascript">
+			
+				//주문내역 tr누르면 주문상세내역으로 가는 함수
+			    function orderdetail(orderNo) {
+                	console.log(orderNo);
+					location.href="orderDetail.my?orderNo="+orderNo;
+				}
+			
+			
 				//페이지 로드되면 그래프가져오는 함수실행	
 				$(document).ready(function(){ 
 			 		  getGraph();
@@ -452,39 +457,39 @@ Coded by www.creative-tim.com
         </div>
         
         <div class="row">
-          <div class="col-md-4">
-            <div class="card ">
-              <div class="card-header ">
-                <h5 class="card-title" style="color:blue"></h5>
-              </div>
-              <div class="card-body ">
-                <canvas id="chartEmail"></canvas>
-              </div>
-              <div class="card-footer ">
-                <div class="legend">
-                </div>
-                <hr>
-                <div class="stats">
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-8">
-            <div class="card card-chart">
-              <div class="card-header">
-              </div>
-              <div class="card-body">
-              </div>
-              <div class="card-footer">
-                <div class="chart-legend">
-                </div>
-                <hr />
-                <div class="card-stats">
-                  <h3 style="color:red">영역3</h3>
-                </div>
-              </div>
-            </div>
-          </div>
+<!--           <div class="col-md-4"> -->
+<!--             <div class="card "> -->
+<!--               <div class="card-header "> -->
+<!--                 <h5 class="card-title" style="color:blue"></h5> -->
+<!--               </div> -->
+<!--               <div class="card-body "> -->
+<%--                 <canvas id="chartEmail"></canvas> --%>
+<!--               </div> -->
+<!--               <div class="card-footer "> -->
+<!--                 <div class="legend"> -->
+<!--                 </div> -->
+<!--                 <hr> -->
+<!--                 <div class="stats"> -->
+<!--                 </div> -->
+<!--               </div> -->
+<!--             </div> -->
+<!--           </div> -->
+<!--           <div class="col-md-8"> -->
+<!--             <div class="card card-chart"> -->
+<!--               <div class="card-header"> -->
+<!--               </div> -->
+<!--               <div class="card-body"> -->
+<!--               </div> -->
+<!--               <div class="card-footer"> -->
+<!--                 <div class="chart-legend"> -->
+<!--                 </div> -->
+<!--                 <hr /> -->
+<!--                 <div class="card-stats"> -->
+<!--                   <h3 style="color:red">영역3</h3> -->
+<!--                 </div> -->
+<!--               </div> -->
+<!--             </div> -->
+<!--           </div> -->
         </div>
       </div>
       <footer class="footer footer-black  footer-white ">

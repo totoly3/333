@@ -54,12 +54,12 @@
 		<result property="orderDeliveryStatus" column="O_DELIVERY_STATUS"/>
 		<result property="orderStatus" column="O_STATUS"/>
 		
-<!-- 		<result property="orderDetailNo" column="OD_NO"/> -->
-<!-- 		<result property="goodsNo" column="G_NO"/> -->
-<!-- 		<result property="goodsPrice" column="G_PRICE"/> -->
-<!-- 		<result property="quantity" column="QUANTITY"/> -->
-<!-- 		<result property="option1" column="OPTION1"/> -->
-<!-- 		<result property="option2" column="OPTION2"/>		 -->
+		<result property="orderDetailNo" column="OD_NO"/>
+		<result property="goodsNo" column="G_NO"/>
+		<result property="goodsPrice" column="G_PRICE"/>
+		<result property="quantity" column="QUANTITY"/>
+		<result property="option1" column="OPTION1"/>
+		<result property="option2" column="OPTION2"/>		
 		
 		<result property="goodsName" column="G_NAME"/>
 		<result property="goodsOriginName" column="G_ORIGIN_NAME1"/>

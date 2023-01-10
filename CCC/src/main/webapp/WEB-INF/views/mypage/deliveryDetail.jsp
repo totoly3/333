@@ -16,7 +16,7 @@
             margin:auto;
         }
         .innerOuter {
-            border:1px solid lightgray;
+            border:1px solid lightgray !important;
             width:80%;
             margin:auto;
             padding:5% 10%;
@@ -30,23 +30,17 @@
 <body>
         
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/> 
-
     <div class="orderdetail content">
         <br><br>
         <div class="innerOuter">
             <h2 align="center">배송상세</h2>
             <br>
-            <a class="btn btn-secondary" style="float:right;" href="">주문상세</a>
+<!--             <a class="btn btn-secondary" style="float:right;" href="">주문상세</a> -->
             <br><br>
             
 	            <p>주문자: ${loginUser.memberName}님</p>
 	            
-<%-- 	            ${deliInfo} --%>
-	      
-<%-- 	            ${deliInfo.orderDeliveryStatus} --%>
-	            
-	            <!-- 배송상태를 나타내는 div영역 -->
-	            <div style="background-color: pink; width: 900px; height: 200px;">
+	            <!-- 배송상태를 나타내는 영역 -->
 	               <c:choose>
 		            <c:when test="${deliInfo.orderDeliveryStatus}=='N'">
 			            <!-- 배송상태에 따라 다르게 출력한다. -->
@@ -60,7 +54,6 @@
 		               <p>배송중</p>
 		            </c:otherwise>
 	               </c:choose>
-	            </div>
 	            <br>
 	            <br>
 	            
@@ -135,7 +128,6 @@
         </div>
        <br><br>
     </div>
-   
     
 </body>
 </html>

@@ -34,7 +34,7 @@
     <div class="orderdetail content">
         <br><br>
         <div class="innerOuter">
-            <h2 align="center">기간별 주문내역</h2>
+            <h2 align="center">주문내역</h2>
             <br>
             <br><br>
             
@@ -60,7 +60,7 @@
 				    <th>주문취소</th>
 				  </tr>
 				 <c:forEach var="ro" items="${realoList}" >
-				  <tr>
+				  <tr onclick="orderdetail('${ro.orderNo}')">
 				    <td>${ro.orderNo}</td>
 				    <td>${ro.orderDate}orderDate</td>
 				    <td>${ro.goodsName}</td>
@@ -81,8 +81,12 @@
             
            <script>
            
-               //페이지가 띄워지면 실행
+                function orderdetail(orderNo) {
+                	console.log(orderNo);
+					location.href="orderDetail.my?orderNo="+orderNo;
+				}
            
+               //페이지가 띄워지면 실행
                  $(function () {
                      // startDate는 시작일자를 언제로 설정할지를 결정하는 변수로
                      // startDate값에 따라 컨트롤러에서 시작일을 변경하도록 되어 있음

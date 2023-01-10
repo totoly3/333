@@ -197,7 +197,7 @@ Coded by www.creative-tim.com
                 <div class="button-container">
                   <div class="row">
                     <div class="col-lg-3 col-md-6 col-6 ml-auto">
-                      <h5>수상회수<br><small>1회</small></h5>
+                      <h5>수상횟수<br><small>1회</small></h5>
                     </div>
                     <div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
                       <h5>등록캐릭터 개수<br><small>7개</small></h5>
