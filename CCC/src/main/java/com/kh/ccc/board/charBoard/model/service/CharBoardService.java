@@ -1,10 +1,10 @@
 package com.kh.ccc.board.charBoard.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.kh.ccc.board.charBoard.model.vo.CharAttach;
 import com.kh.ccc.board.charBoard.model.vo.CharBoard;
-import com.kh.ccc.board.charBoard.model.vo.CharBoardSearch;
 import com.kh.ccc.board.charBoard.model.vo.CharLike;
 import com.kh.ccc.board.charBoard.model.vo.CharReply;
 import com.kh.ccc.board.charBoard.model.vo.Character;
@@ -45,8 +45,10 @@ public interface CharBoardService {
 	//게시글 삭제
 	int deleteBoard(int bno);
 	
-	//게시글 검색
-	ArrayList<CharBoard> charBoardSearch(CharBoardSearch c);
+	//1.검색 게시글의 총 개수 반환
+	int searchCount(HashMap<String,String> map);
+	//2.검색 게시글의 리스트 반환
+	ArrayList<CharBoard> charBoardSearch(HashMap<String,String> map,PageInfo pi);
 	
 	//1.좋아요 조회
 	CharLike selectLike(CharLike cl);
@@ -78,5 +80,8 @@ public interface CharBoardService {
 	int maxStep(int reGroupNo);
 	//대댓글 (대댓글의 계층을 나눠주는 메서드)
 	void updateStep(CharReply cr);
+	
+	//로그인유저 좋아요 리스트 조회
+	ArrayList<CharLike> checkLikeList(int memberNo);
 	
 }

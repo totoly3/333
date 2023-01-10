@@ -48,7 +48,11 @@ import com.kh.ccc.shop.goods.model.vo.GoodsReview;
 	public ArrayList<GoodsReview> selectReviewList(int gno) {
 		return goodsDao.selectReviewList(sqlSession, gno);
 	}
-	
+
+	@Override
+	public ArrayList<Goods> searchList(String keyword) {
+		return goodsDao.searchList(sqlSession, keyword);
+	}
 
 }
 

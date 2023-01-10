@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>캐릭터 썸네일 게시판</title>
+<title>캐캐캐::캐릭터 게시판</title>
  	<!-- jQuery 라이브러리 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
    
@@ -34,9 +34,15 @@
 	            float:left;
 	            margin:5px;
 	        }
-	        .select {width:20%;}
-	        .text {width:53%;}
-	        .searchBtn {width:20%;}
+	        .select { width:20%; }
+	        .text { width:53%; }
+	        .searchBtn { width:20%; }
+	        .likeBtn {
+	        	width:30px;
+	        	height:30px;
+	        }
+	        .likeBtn:hover { cursor:pointer; }
+	        .likeFont { font-weight : bold; }
         </style>
         
     </head>
@@ -69,21 +75,28 @@
 			                        <!-- Portfolio item 1-->
 			                        <div class="portfolio-item">
 			                            <div class="thumbnail">
-			                            	<input type="hidden" name="boardNo" value="${ b.boardNo }">
-			                                <img class="img-fluid" src="${ pageContext.request.contentType }${ b.changeName }" alt="..." />
+			                            	<input type="hidden" id="boardNo" name="boardNo" value="${ b.boardNo }">
+			                                <img class="img-fluid" src="${ pageContext.request.contentType }${ b.changeName }" alt="..." />	                                
 			                            </div>
 			                            <div class="portfolio-caption">
 			                                <div class="portfolio-caption-heading"></div>
-			                                <div class="portfolio-caption-subheading text-muted">No.${ b.boardNo } ${ b.boardTitle }</div>		                            
-			                                <button id="likeBtn" onclick="likeGo('${ b.boardNo }');" class="btn btn-success">좋아요</button>		                             
-			                                <button id="likeBtn" onclick="likeGo('${ b.boardNo }');" class="btn btn-success" style="background : red;">좋아요</button>
+			                                <div class="portfolio-caption-subheading text-muted"><p style="font-size:x-large;">${ b.boardTitle }</p></div>
+			                      			
+			   								<c:choose>
+			   									<c:when test="${ b.memberLike eq 1 }">	   										              
+			   										<span class="likeFont">좋아요 </span><img class="likeBtn" onclick="likeGo('${ b.boardNo }');" src="${ pageContext.request.contentType }resources/character/likeImg/free-icon-heart-true.png" title="heart icons"><br><span class="likeFont">총 좋아요 수 : ${ b.like }</span>   
+			   									</c:when>
+			   									<c:otherwise>		   																	                                        			   										
+			   										<span class="likeFont">좋아요 </span><img class="likeBtn" onclick="likeGo('${ b.boardNo }');" src="${ pageContext.request.contentType }resources/character/likeImg/free-icon-heart-false.png" title="heart icons"><br><span class="likeFont">총 좋아요 수 : ${ b.like }</span>		                                        			   										
+			   									</c:otherwise>
+			   								</c:choose>
 			                            </div>
 			                        </div>
 			                    </div> 
                 			</c:forEach>
                 		</c:when>
                 		<c:otherwise>
-                			조회된 게시글이 없습니당..
+                			조회된 캐릭터가 없습니다.
                 		</c:otherwise>
                 	</c:choose>
                 </div>
@@ -95,22 +108,23 @@
 	            	<!-- currentPage 1이면 숨기기 -->
 	            	<c:choose>
 	            		<c:when test="${ pi.currentPage ne 1 }">
-	                  <li class="page-item"><a class="page-link" href="list.ch?currentPage=${ pi.currentPage - 1 }">Previous</a></li>
+	                  <li class="page-item"><a class="page-link" href="list.ch?currentPage=${ pi.currentPage -1 }">Previous</a></li>
 	            		</c:when>
 	            		<c:otherwise>
-	                  <li class="page-item disabled"><a class="page-link" href="list.ch?currentPage=${ pi.currentPage - 1 }">Previous</a></li>
+	                  <li class="page-item disabled"><a class="page-link" href="list.ch?currentPage=${ pi.currentPage -1 }">Previous</a></li>
 	            		</c:otherwise>
 	            	</c:choose>
-	            		<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-	                  <li class="page-item"><a class="page-link" href="list.ch?currentPage=${ p }">${ p }</a></li>
-	            		</c:forEach>
+	            	<!-- controller에서 넘어온 pi의 startPage와 endPage생성 -->
+            		<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+                  		<li class="page-item"><a class="page-link" href="list.ch?currentPage=${ p }">${ p }</a></li>
+            		</c:forEach>	
 	            	<!-- currentPage가 maxPage와 일치하면 숨기기 -->
 	            	<c:choose>
 	            		<c:when test="${ pi.currentPage eq pi.maxPage }">	                		
-	                  <li class="page-item disabled"><a class="page-link" href="list.ch?currentPage=${ pi.currentPage + 1 }">Next</a></li>
+	                  <li class="page-item disabled"><a class="page-link" href="list.ch?currentPage=${ pi.currentPage +1 }">Next</a></li>
 	            		</c:when>
 	            		<c:otherwise>
-	                  <li class="page-item"><a class="page-link" href="list.ch?currentPage=${ pi.currentPage + 1 }">Next</a></li>
+	                  <li class="page-item"><a class="page-link" href="list.ch?currentPage=${ pi.currentPage +1 }">Next</a></li>
 	            		</c:otherwise>
 	            	</c:choose>
 	            </ul>
@@ -132,21 +146,23 @@
 			</form>
 		<br><br><br>
         </section>
+        
+        <!-- 만약 condition에 검색 데이터가 있다면 -->
+        <c:if test="${ not empty condition }">
+        	<script>
+        		$(function(){
+        			$("#searchForm option[value=${ condition }]").attr("selected",true);
+        		})
+        	</script>
+        </c:if>
 
         <!-- 썸네일 캐릭터를 클릭하면 해당 게시글의 번호를 가지고 상세조회 페이지로 넘어가도록 -->
 		<script>
-			let charListBoardNo;
-			
 			$(function(){
-// 				selectListLike();
-				
 				$(".thumbnail").click(function(){
 					location.href="detail.ch?bno="+$(this).children().eq(0).val();
-				});				
+				});
 			});
-			
-			//좋아요 조회 (게시글 번호,로그인유저 번호,캐릭터 번호)
-
 			
 			//좋아요 등록 및 취소 (게시글 번호,로그인유저 번호,캐릭터 번호)
 			function likeGo(charListBoardNo){
@@ -157,20 +173,14 @@
 						memberNo : ${ loginUser.memberNo }
 					},
 					success : function(result){
-						console.log("통신성공!");
-	       				
-	       				if(result == "NNNNY"){
-	       					$("#likeBtn").attr("class","btn btn-danger");
-	       				}else{
-	       					$("#likeBtn").attr("class","btn btn-success");        					
-	       				}
+						//통신성공하면 페이지 새로고침하도록
+						location.reload();
 					},
 					error : function(){
 						console.log("통신실패");
 					}
 				})
 			}
-			
 		</script>
 	</body>
 </html>

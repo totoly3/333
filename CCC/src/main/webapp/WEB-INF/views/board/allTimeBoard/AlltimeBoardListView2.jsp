@@ -15,6 +15,8 @@
 
 
 	<link href="resources/css/freeboard/style_fr.css" rel="stylesheet">
+
+   
 	
 </head>
 <body>
@@ -26,13 +28,9 @@
 
 	
 
-	<div class="sec-week-wrap" style="margin:100px;" > 광고영역
+	<div class="sec-week-wrap" style="margin:100px;" >
 	
-					<span class="area_ad">
-						<span class="frame_g"></span>	
-				        <strong adfit-title="" class="tit_ad">와.. 이걸 왜 이제 알았지?</strong>
-				        <span adfit-profile-name="" class="desc_ad">홀릭팩토리</span>
-			      </span>
+				
 					
 					
 		<div class="fix-timeline">
@@ -70,7 +68,9 @@
 											<span class="rank n01">순위</span>
 											좋아요 👍
 											<p class="score1">1등 좋아요 갯수는 과연?<span class="txt">👍</span>👍👍</p>
+									
 										</div>
+											
 										<div class="graph-area type1">
 											<!--  -->
 											<div class="rankName">
@@ -328,7 +328,9 @@
 			                +"<div >" +"<p ><img src='" + result[2].changeName  + "' style='height: 20%; width: 70%;'></p></div>"
 			          	 +"</div>";
 				         
-			          $(".score1").html(resultStr); //1등좋아요  
+			          $(".score1").html(resultStr); //1등좋아요 
+			          $(".count").html(resultStr); //1등좋아요  
+			          $(".count").html(resultStr); //1등좋아요  
 					  $(".rankName> div").html(resultStrName); //1등 이름 
 					  $(".img-area div").html(resultStrimg); //1등은 이미지만 
 					  
@@ -346,7 +348,6 @@
 				}	
 			});
 		}
-		
 		
 		
 	</script>

@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.kh.ccc.board.charBoard.model.vo.CharAttach;
-import com.kh.ccc.board.charBoard.model.vo.CharBoard;
 import com.kh.ccc.member.model.vo.Member;
+import com.kh.ccc.shop.cart.model.service.CartService;
+import com.kh.ccc.shop.cart.model.vo.Cart;
 import com.kh.ccc.shop.goods.model.service.GoodsService;
 import com.kh.ccc.shop.goods.model.vo.Goods;
 import com.kh.ccc.shop.goods.model.vo.GoodsReview;
@@ -214,7 +213,7 @@ public class GoodsController {
 			gr.setChangeName("resources/goodsImg/"+changeName);
 		}
 		
-		int result = goodsService.insertReview(gr);
+		int result =  goodsService.insertReview(gr);
 		
 		if(result > 0) {
 			System.out.println("굿즈리뷰 등록 성공");
@@ -228,5 +227,20 @@ public class GoodsController {
 		mv.setViewName("redirect:/detail.go?gno="+gr.getGoodsNo());
 		return mv;
 	}
+	
+	//검색하기
+	@RequestMapping("searchGoods.go")
+	public String searchList(@RequestParam(value="keyword", required=false) String keyword, HttpSession session, Model model) {
 		
+		System.out.println("keyword::" + keyword);
+		ArrayList<Goods> list = new ArrayList<>();
+		
+		list = goodsService.searchList(keyword);
+		 
+        model.addAttribute("list", list);
+        System.out.println("list.go :: " +list);
+        
+		return "shop/goods/goodsSearchView";
+	
+	}
 }

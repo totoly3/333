@@ -44,5 +44,9 @@ public class GoodsDao {
 	public ArrayList<GoodsReview> selectReviewList(SqlSessionTemplate sqlSession, int goodsNo) {
 		return (ArrayList)sqlSession.selectList("goodsMapper.selectReviewList", goodsNo);
 	}
-	
+
+	//검색 기능
+	public ArrayList<Goods> searchList(SqlSessionTemplate sqlSession, String keyword) {
+		return (ArrayList)sqlSession.selectList("goodsMapper.searchList", keyword);
+	}
 }

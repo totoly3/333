@@ -23,9 +23,75 @@
     <link href="resources/css/goods/css/responsive.css" rel="stylesheet">
     <link href="resources/css/goods/css/responsive.css" rel="stylesheet">
     
+    <!-- jquery -->
+   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
+    <style>
+    	.search-box53{
+		  position: absolute;
+		  top: 50%;
+		  left: 50%;
+		  transform: translate(-50%,-50%);
+		  height: 30px;
+		  background-color: #fff;
+		  border-radius: 30px;
+		  transition: 0.4s;
+		  width:30px;
+		}
+		#jini45{
+			width:60%;
+			margin:auto;
+		}
+		.search-box53:hover{
+		  /* box-shadow: 0px 0px .5px 1px #000000; */
+		  width: 282px;
+		}
+		.search-btn53{
+		  text-decoration: none;
+		  float: right;
+		  width: 30px;
+		  height: 30px;
+		  background-color: #fff;
+		  border-radius: 50%;
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		  color: #000000;
+		}
+		.search-box53:hover > .search-btn{
+		  background-color: #fff;
+		}
+		.search-txt{
+		  display: flex;
+		  padding: 0;
+		  width: 0px;
+		  border:none;
+		  background: none;
+		  outline: none;
+		  float: left;
+		  font-size: 1rem;
+		  line-height: 30px;
+		  transition: .4s;
+		}
+		.search-box53:hover > .search-txt{
+		  width: 240px;
+		  padding: 0 6px;
+		}
+    </style>
 </head>
 <body>
-
+	<c:choose>
+		<c:when test="${not empty loginUser}">
+			<div class="remoteDiv">
+				<span id="remoteSpan1">Welcome </span>
+				<span id="remoteSpan2">${loginUser.memberName}</span>
+				<span id="remoteSpan3">님!</span>
+			</div>
+		</c:when>
+	</c:choose>
+	<!-- 팝업 -->
+   	<jsp:include page="popup1.jsp"/>
     <!--================ Start header Top Area =================-->
     <section class="header-top" style="height:80px;">
         <div class="container">
@@ -42,7 +108,7 @@
                     </div>
                 </div>
                 <div class="col-6 col-lg-4 col-md-6 col-sm-6 logo-wrapper">
-                    <a href="goodsMain.go" class="logo">
+                    <a href="redirect:" class="logo">
                         <!-- <img src="resources/css/goods/img/logo.png" alt=""> -->
                         <img src="resources/css/goods/img/chalogo3.jpg" alt="">
                         
@@ -52,11 +118,47 @@
                 <div class="col-lg-4 col-md-6 col-sm-6 search-trigger">
                     <div class="right-button">
                         <ul>
+                        	<li>
+                            	<div class="search-box53">
+							      	<input type="text" class="search-txt" id="keyword" name="keyword" placeholder="검색어를 입력해주세요">
+							      	<a class="search-btn53" href="#" onclick="searchGoods();">
+							      		<i class="fas fa-search"></i>
+							      	</a>
+							    </div>
+                            </li>
+                            <script>
+                            	function searchGoods(){
+//                             		console.log("아무말");
+                            		location.href="searchGoods.go?keyword="+$("#keyword").val();
+                            	}
+                            </script>
                            <!-- <li><a id="search" href="javascript:void(0)"><i class="fas fa-search"></i></a></li> -->
-                            <li><a id="search" href="javascript:void(0)"><i class="fas fa-search"></i></a></li>
-                            <li><a href="cart.ca">Cart</a></li>
-                            <li><a href="loginform.me">Login</a></li>
-                            <li><a href="">Wish</a></li>
+                            <!-- <li><a id="search" href="javascript:void(0)"><i class="fas fa-search"></i></a></li> -->
+
+                            <c:choose>
+			            		<c:when test="${not empty loginUser }">
+									<li><a href="cart.ca">Cart</a></li>
+			            		</c:when>
+			            		<c:otherwise>
+			                		<li><a href="#" onclick="pleaseLogin();">Cart</a></li>
+			            		</c:otherwise>
+			                </c:choose>
+			                <c:choose>
+			            		<c:when test="${empty loginUser }">
+									<li><a href="loginform.me">Login</a></li>
+			            		</c:when>
+			            		<c:otherwise>
+			                		<li><a href="mypage.me">MyPage</a></li>
+			            		</c:otherwise>
+			                </c:choose>
+                             <c:choose>
+			            		<c:when test="${not empty loginUser }">
+									<li><a href="wishList.my">Wish</a></li>
+			            		</c:when>
+			            		<c:otherwise>
+			                		<li><a href="#" onclick="pleaseLogin();">Wish</a></li>
+			            		</c:otherwise>
+			                </c:choose>
                         </ul>
                     </div>
                 </div>
@@ -74,12 +176,18 @@
     </section>
     
     <script>
-	    $("#search").click(function(){
-			$(".search_input").css("display","block");
-		})
-		$("#close_search").click(function(){
-    		$(".search_input").css("display","none");
-    	})
+        function pleaseLogin(){
+			window.alert("로그인 후 이용가능합니다.");
+		}	
+    	
+    	/* 줄바꿈 */
+    	//enter => <br>
+			var text = $('textarea').val();
+			text = text.replace(/(?:\r\n|\r|\n)/g, '<br>');
+			
+			//<br> => enter
+			var text = $('textarea').val();
+			text = text.split('<br>').join("\r\n");
     </script>
     
     <!--================ End header top Area =================-->
@@ -97,7 +205,7 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                         <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
-                        	<li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
+                        	<li class="nav-item active"><a class="nav-link" href="goodsMain.go">Home</a></li>
                         	<!-- 데코 드롭다운 -->
                        		<li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Decoration</a>

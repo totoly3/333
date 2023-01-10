@@ -577,7 +577,11 @@ public class MyPageController {
 
 	}
 
+
 	// 캐릭터별 좋아요 데이터 가져옴
+
+	
+
 	@ResponseBody
 	@RequestMapping(value = "dataSelect.my", produces = "application/json;charset=UTF-8")
 	public String dataSelect(HttpSession session) {

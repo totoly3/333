@@ -9,6 +9,7 @@
 	<typeAliases>
 		<!-- 관리자 -->
 		<typeAlias type="com.kh.ccc.admin.model.vo.Admin" alias="admin"/>
+		<typeAlias type="com.kh.ccc.admin.model.vo.AdminAttach" alias="adminAttach"/>
 		<!-- 일반회원 -->
 		<typeAlias type="com.kh.ccc.member.model.vo.Member" alias="member"/>
 		<!-- 자유게시판 -->
@@ -29,7 +30,7 @@
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharAttach" alias="charAttach"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharLike" alias="charLike"/>
 		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharReply" alias="charReply"/>
-		<typeAlias type="com.kh.ccc.board.charBoard.model.vo.CharBoardSearch" alias="charBoardSearch"/>		
+		
 		<!-- 금지어 -->
 		<typeAlias type="com.kh.ccc.common.model.vo.Ward" alias="ward"/>
 		<!-- 공지사항 -->
@@ -69,10 +70,6 @@
 		<mapper resource="/mappers/member-mapper.xml"/>
 		<mapper resource="/mappers/myPage-mapper.xml"/>
 
-		<mapper resource="/mappers/admin-mapper.xml"/>
-
-		<mapper resource="/mappers/alltimeboard-mapper.xml"/>
-		
 		<mapper resource="/mappers/order-mapper.xml"/>
 		
 		<mapper resource="/mappers/notice-mapper.xml"/>
