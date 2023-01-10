@@ -8,11 +8,9 @@ public class Admin {
 //	A_NO	NUMBER
 //	AG_NO	NUMBER
 //	A_ID	VARCHAR2(30 BYTE)
-//	A_PWD	VARCHAR2(30 BYTE)
+//	A_PWD	VARCHAR2(200 BYTE)
 //	A_NAME	VARCHAR2(30 BYTE)
-//	A_RESIDENT_NO	VARCHAR2(30 BYTE)
 //	A_EMAIL	VARCHAR2(30 BYTE)
-//	A_PHONE	VARCHAR2(30 BYTE)
 //	A_HIRE_DATE	DATE
 //	A_MODIFY_DATE	DATE
 //	A_QUIT_DATE	DATE
@@ -23,9 +21,7 @@ public class Admin {
 	private String aId;
 	private String aPwd;
 	private String aName;
-	private String aResidentNo;
 	private String aEmail;
-	private String aPhone;
 	private Date aHireDate;
 	private Date aModifyDate;
 	private Date aQuitDate;
@@ -43,9 +39,7 @@ public class Admin {
 		this.aId = aId;
 		this.aPwd = aPwd;
 		this.aName = aName;
-		this.aResidentNo = aResidentNo;
 		this.aEmail = aEmail;
-		this.aPhone = aPhone;
 		this.aHireDate = aHireDate;
 		this.aModifyDate = aModifyDate;
 		this.aQuitDate = aQuitDate;
@@ -92,28 +86,12 @@ public class Admin {
 		this.aName = aName;
 	}
 
-	public String getaResidentNo() {
-		return aResidentNo;
-	}
-
-	public void setaResidentNo(String aResidentNo) {
-		this.aResidentNo = aResidentNo;
-	}
-
 	public String getaEmail() {
 		return aEmail;
 	}
 
 	public void setaEmail(String aEmail) {
 		this.aEmail = aEmail;
-	}
-
-	public String getaPhone() {
-		return aPhone;
-	}
-
-	public void setaPhone(String aPhone) {
-		this.aPhone = aPhone;
 	}
 
 	public Date getaHireDate() {
@@ -151,9 +129,8 @@ public class Admin {
 	@Override
 	public String toString() {
 		return "Admin [aNo=" + aNo + ", aGno=" + aGno + ", aId=" + aId + ", aPwd=" + aPwd + ", aName=" + aName
-				+ ", aResidentNo=" + aResidentNo + ", aEmail=" + aEmail + ", aPhone=" + aPhone + ", aHireDate="
-				+ aHireDate + ", aModifyDate=" + aModifyDate + ", aQuitDate=" + aQuitDate + ", aStatus=" + aStatus
-				+ "]";
+				+ ", aEmail=" + aEmail + ", aHireDate=" + aHireDate + ", aModifyDate=" + aModifyDate + ", aQuitDate="
+				+ aQuitDate + ", aStatus=" + aStatus + "]";
 	}
 
 }

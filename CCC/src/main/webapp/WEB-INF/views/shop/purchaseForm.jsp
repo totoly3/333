@@ -13,6 +13,8 @@
 <!--     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"> -->
 <!--     부트스트랩에서 제공하고 있는 스크립트 -->
 <!--     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
+	<!-- iamport 라이브러리 -->
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <title>CCC::구매페이지</title>
     <style>
     	#headerRaiseUp{
@@ -116,6 +118,12 @@
         	outline:none;
         	border: none;
         }
+        .passData2{
+        	width: 40px;
+        	text-align:center;
+        	outline:none;
+        	border: none;
+        }
     </style>
 </head>
 <body>
@@ -176,10 +184,10 @@
 				<div class="goodsInfo">
 	                <table id="goodsInfoTBL" class="purchaseNormalTb">
 	                    <tr align="center">
-	                        <th style="width:20%;">주문 상품명</th>
-	                        <th style="width:20%;">가격</th>
-	                        <th style="width:20%;">수량</th>
-	                        <th style="width:20%;">상품 합계</th>
+	                        <th style="width:40%;">주문 상품명</th>
+	                        <th style="width:15%;">가격</th>
+	                        <th style="width:10%;">수량</th>
+	                        <th style="width:15%;">상품 합계</th>
 	                        <th style="width:10%;">옵션1</th>
 	                        <th style="width:10%;">옵션2</th>
 	                    </tr>
@@ -197,7 +205,7 @@
 				                        	<input class="passData" type="text" id="goodsPrice" name="order[${status.index}].goodsPrice" value="<fmt:formatNumber value="${c.goodsPrice }" pattern="#,###,###" />" readonly>
 				                        </td>
 				                        <td>
-					                        <input class="passData" type="text" id="quantity" name="order[${status.index}].quantity" value="${c.quantity}" readonly>
+					                        <input class="passData2" type="text" id="quantity" name="order[${status.index}].quantity" value="${c.quantity}" readonly>
 					                        <span>개</span>
 				                        </td>
 				                        <td>
