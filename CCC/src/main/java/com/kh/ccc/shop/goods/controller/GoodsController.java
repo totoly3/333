@@ -244,18 +244,18 @@ public class GoodsController {
 	
 	}
 	//문의글 등록
-	@RequestMapping("goodsQna.go")
-	public String goodsQna(@RequestParam(value="keyword", required=false) String keyword, HttpSession session, Model model) {
-		
-		ArrayList<Goods> list = new ArrayList<>();
-		
-		list = goodsService.goodsQna();
-		 
-        model.addAttribute("list", list);
-        System.out.println("list.go :: " +list);
-        
-		return "shop/goods/goodsSearchView";
-	
-	}
+//	@RequestMapping("goodsQna.go")
+//	public String goodsQna(@RequestParam(value="keyword", required=false) String keyword, HttpSession session, Model model) {
+//		
+//		ArrayList<Goods> list = new ArrayList<>();
+//		
+//		list = goodsService.goodsQna();
+//		 
+//        model.addAttribute("list", list);
+//        System.out.println("list.go :: " +list);
+//        
+//		return "shop/goods/goodsSearchView";
+//	
+//	}
 		
 }

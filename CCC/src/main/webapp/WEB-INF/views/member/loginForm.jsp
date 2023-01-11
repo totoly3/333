@@ -26,7 +26,7 @@
                 <div class="form-group py-1 pb-2">
                     <div class="input-field">
                         <span class="fas fa-lock p-2"></span>
-                        <input type="text" name="memberPwd" placeholder="비밀번호" required class="">
+                        <input type="password" name="memberPwd" placeholder="비밀번호" required class="">
                         <button class="btn bg-white text-muted">
                             <span class="far fa-eye-slash"></span> </button> </div>
                 </div>
