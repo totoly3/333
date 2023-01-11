@@ -77,7 +77,7 @@ table th {
      	</span>
      	
         <div id="tablearea"> 
-	        <table class=".carttable">
+	        <table class=".carttable" style="width: 1000px;">
 	            <hr style="width:800px; height:2px; background-color:black; ">
 	            <br>
 	            <br>
@@ -97,8 +97,8 @@ table th {
 	                    <th style="background-color:#EA4F4D;">이미지</th>
 	                    <th style="background-color:#EA4F4D;">상품명</th>
 	                    <th style="background-color:#EA4F4D;">가격</th>
-	                    <th style="background-color:#EA4F4D;">수량</th>
-	                    <th style="background-color:#EA4F4D;">합계</th>
+	                    <th style="background-color:#EA4F4D;width:200px;">수량</th>
+	                    <th style="background-color:#EA4F4D;width:150px;">합계</th>
 	                    <th style="width:120px;background-color:#EA4F4D;"></th>
 	                </tr>
 	            </thead>
@@ -113,7 +113,7 @@ table th {
 		                        <input type="hidden" class="individual_count_input" value="${c.quantity}">
 		                        <input type="hidden" class="individual_totalPrice_input" value="${c.goodsPrice*c.quantity}">
 		                    </td>
-		                    <td><img src="${c.goodsAttachFilePath}||${c.goodsAttachChangeName}" alt="img" class="wishimg"></td>
+		                    <td><img src="${c.goodsAttachChangeName}" alt="img" class="wishimg" style="width:100px;height:100px;"></td>
 		                    <td>
 			                    <div>
 			                                          상품명:${c.goodsName}
@@ -128,15 +128,15 @@ table th {
 			                    </div>
 		                    </td>
 		                    <td>
-		                       <input type="text" id="inputquantity" value="${c.quantity}" style="width:40px;" size="3">
-		                       <div class="countbuttonarea">
+		                      <div class="countbuttonarea">
 		                         <div>
-<%-- 		                         <input type="button" onclick="plusbtn('${c.quantity}');" class="quantity_btn plus_btn" value="+" style="width:20px;"> --%>
-		                         <button onclick="plusbtn('${c.quantity}','${c.cartNo}');">+</button>
-		                         <button onclick="minusbtn('${c.quantity}','${c.cartNo}');">-</button>
-<%-- 		                         <input type="button" onclick="minusbtn('${c.quantity}');" class="quantity_btn minus_btn" value="-" style="width:20px;">  --%>
-<%-- 		                         <input type="button" onclick="updateCount('${c.cartNo}','${c.quantity}');" value="수량변경" >  --%>
-		                       </div>
+			                       <input type="text" id="inputquantity" value="${c.quantity}" style="width:40px;margin-bottom:3px;margin-left:5px;	" size="2">
+									<%--<input type="button" onclick="plusbtn('${c.quantity}');" class="quantity_btn plus_btn" value="+" style="width:20px;"> --%>
+		                           <button class="quantity_btn plus_btn" value="수량변경" style="width:20px;margin-left:3px;">+</button> 
+		                           <button class="quantity_btn minus_btn" value="-" style="width:20px;">-</button><br> 
+		                          </div>
+		                          <a class="quantity_modify_btn" onclick="modifybtn('${c.cartNo}')" value="${c.cartNo}">변경</a>
+		                       </div>  
 		                    </td>
 		                    <td>
 		                                               합계: <span><fmt:formatNumber value="${c.goodsPrice*c.quantity}" pattern="#,###원" /></span>  
@@ -159,7 +159,7 @@ table th {
         <br><br><br><br>
         <div id="totalpricearea" align="center">
             <table class=".carttable">
-	            <hr style="width:800px; height:2px; background-color:black;">
+	            <hr style="width:1000px; height:2px; background-color:black;">
 	            <br><br>
 	            <thead>
 	                <tr>
@@ -184,6 +184,13 @@ table th {
 	        </table>
         </div>
         
+        <!-- 수량조정 form -->
+        <form action="cart/update" method="post" class="quantity_update_form">
+			<input type="hidden" name="cartNo" class="update_cartNo">
+			<input type="hidden" name="quantity" class="update_quantity">
+			<input type="hidden" name="memberNo" value="${loginUser.memberNo}">
+		</form>
+        
         <br><br>
         <div id="buttonarea" align="center">
            <button class="wishview" style="margin-bottom: 10px;background-color:#EA4F4D; width:120px;">주문하기</button>
@@ -192,20 +199,45 @@ table th {
         
         <script type="text/javascript">
         
-             function plusbtn(quantity,cartNo) {
-				console.log(quantity);
-				console.log(cartNo);
-            	 
-				//let plusquantity+=parseInt('quantity'+1);
-				//console.log(plusquantity);
-			 }
-             
-             
-             function minusbtn() {
+             //플러스버튼 클릭시 값수정
+	         $(".plus_btn").on("click", function(){
+	        	 let quantity = $(this).parent("div").find("input").val();
+	        	 //console.log(quantity);
+	        	 $(this).parent("div").find("input").val(++quantity);
+	         });
+	        
+	        
+             //마이너스 버튼 클릭시 값수정
+	         $(".minus_btn").on("click", function(){
+	        	 let quantity = $(this).parent("div").find("input").val();
+	        	 if(quantity > 1){
+	        	 $(this).parent("div").find("input").val(--quantity);		
+	        	}
+	         });
+        
+             //수량변경 버튼클릭시 카트번호와 상품수량을 form에 넣는다.
+        	 function modifybtn(cartNo) {
+        		 //카트no는 버튼을 눌렀을시에 실행되는 함수에 담아서 가져오고 count는 input태그에서 가져오자
+				let count = $(this).parent("div").find("input").val)();
+				console.log(count);
 				
 			}
-        
-
+	        
+			 //수량수정버튼 클릭시
+			 
+// 			 $(".quantity_modify_btn").on("click", function(){
+// 				 let cartNo = $(this).val(); //변경버튼의 데이터 
+// 				 //let count = $(this).parent("td").find("input").val(); //변경버튼 상위요소에서 input의 값(수량값)
+// 				 console.log(cartNo);
+// 				 //console.log(Count);
+// 				 $(".update_cartNo").val(cartNo);
+// 				 $(".update_quantity").val(Count);
+// 				 $(".quantity_update_form").submit();
+//              });
+			 
+			 
+       
+			 
 	         $(document).ready(function(){
 	        	
 	            //장바구니 총계산영역 
@@ -263,7 +295,7 @@ table th {
 		           		 //td태그를 순회해서 얻은 총가격(input태그의 값을 얻어오면 string타입으로 인식되기 때문에 parseInt로 int타입으로 변경해줌)
 		           		 totalPrice+=parseInt($(element).find(".individual_totalPrice_input").val());
 		           		 
-					  }
+					   }
 	           		  
 	   			  });
 	   			  
@@ -283,7 +315,6 @@ table th {
 	   			  
 	   			  //구한값 화면에 뿌리기
 	   			  //통화형식으로 출력될수 있도록 대상변수에 toLocaleString()메서드를 호출한다.
-	   			  
 	   			  //총가격
 	   			  $(".totalPrice_td").text(totalPrice.toLocaleString());
 	   			  
