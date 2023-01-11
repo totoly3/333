@@ -64,7 +64,7 @@
 				    <td>${ro.orderNo}</td>
 				    <td>${ro.orderDate}orderDate</td>
 				    <td>${ro.goodsName}</td>
-				    <td> <img alt="" src="${ro.goodsFilePath}||${ro.goodsChangeName}" width="100" height="100"></td>
+				    <td> <img alt="" src="${ro.goodsChangeName}" width="100" height="100"></td>
 				    <td>
 					    <%--<fmt:formatNumber value="${ro.goodsPrice}" pattern="#,###원"/> --%>
 				         ${ro.goodsPrice}원
