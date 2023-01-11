@@ -46,6 +46,12 @@ public interface AdminService {
 	//로그인
 	Admin loginAdmin(String aId);
 
+	//문의 답글필요
+	int selectQcount();
+
+	//누적 주문수량
+	int selectOrderCount();
+
 
 
 

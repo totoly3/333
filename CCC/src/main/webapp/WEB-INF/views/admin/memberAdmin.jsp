@@ -30,7 +30,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>일반관리자 HOME</title>
+        <title>HOME</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="resources/memberAdmin/css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
@@ -49,7 +49,7 @@
     
         <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
             <!-- Navbar Brand-->
-            <a class="navbar-brand ps-3" href="index.html">오상희님, 환영합니다!</a>
+            <a class="navbar-brand ps-3" href="index.html">${loginAdmin.getaName()} 님, 환영합니다!</a>
             <!-- Sidebar Toggle-->
             <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
             <!-- Navbar Search-->
@@ -96,12 +96,12 @@
                             
                             <a class="nav-link" href="mainAdmin.ad">
                                 <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                               	관리자 HOME
+                               	MAIN ADMIN
                             </a>
-                            <div class="sb-sidenav-menu-heading">Interface</div>
+                            <div class="sb-sidenav-menu-heading">Menu</div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                                	특수관리자
+                                	Admin List
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
@@ -141,7 +141,7 @@
                                     </div>
                                 </nav>
                             </div>
-                            <div class="sb-sidenav-menu-heading">Addons</div>
+                            <div class="sb-sidenav-menu-heading">Detail</div>
                             <a class="nav-link" href="resources/memberAdmin/charts.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                                 Charts
@@ -154,7 +154,7 @@
                     </div>
                     <div class="sb-sidenav-footer">
                         <div class="small">Logged in as:</div>
-                        	관리자: 오상희
+                        	관리자: ${loginAdmin.getaName()}
                     </div>
                 </nav>
             </div>
@@ -177,11 +177,11 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-s font-weight-bold text-danger text-uppercase mb-1">
-                                               	 &ensp;전체 회원수</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">&ensp;${listCount}명</div>
+                                               	 &ensp;GOODS 누적 판매량</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">&ensp;97 개</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -195,11 +195,11 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-s font-weight-bold text-warning text-uppercase mb-1">
-                                                 &ensp;새로운 게시글 수</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">&ensp;36개</div>
+                                                 &ensp;전체 회원수</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">&ensp;${listCount}명</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -212,7 +212,7 @@
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-s font-weight-bold text-success text-uppercase mb-1">목표 대비 달성률 (캐릭터수)
+                                            <div class="text-s font-weight-bold text-success text-uppercase mb-1">목표 회원 달성률
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
@@ -241,8 +241,8 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-s font-weight-bold text-info text-uppercase mb-1">
-                                                 &ensp;불법게시물 신고</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">&ensp;17건</div>
+                                                 &ensp;미답변 게시글 </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">&ensp;${qCount }건</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -448,11 +448,168 @@
       
         </script>
         
-
-
         
 
-     
+	<script type="text/javascript">
+		
+            var context = document.getElementById('AreaChart').getContext('2d');
+            var pie = document.getElementById('BarChart').getContext('2d');
+
+
+            let today=new Date();
+    		var year=today.getFullYear();
+    		
+            var myChart = new Chart(context, {
+                type: 'bar', // 차트의 형태
+                data: { // 차트에 들어갈 데이터
+                	
+                    labels: [
+                        //x 축
+                        year-5,year-4,year-3,year-2,year-1,year
+                    ],
+                    datasets: [
+                        { //데이터
+                            label: 'test1', //차트 제목
+                            fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                            
+                            data: [
+                               // ${iList[0]}  x축 label에 대응되는 데이터 값
+                               //13,25,39,58,43,20
+                               ${countList[0]},${countList[1]},${countList[2]},${countList[3]},${countList[4]},${countList[5]}
+
+                            ], 
+                            backgroundColor: [
+                                //색상
+                                'rgb(59, 174, 218)', //파
+                                'rgb(255, 99, 132)', //빨
+                                'rgb(255, 212, 0)', //노
+                                'rgb(255, 127, 0)', //주
+                                'rgb(153, 102, 255)',//보
+                                'rgb(0, 239, 145)' //초
+                            ],
+                            borderColor: [
+                                //경계선 색상
+                                'rgba(59, 174, 218, 1)', //파
+                                'rgba(255, 99, 132, 1)', //빨              
+                                'rgba(255, 212, 0, 1)', //노
+                                'rgba(255, 127, 0, 1)', //주
+                                'rgba(153, 102, 255, 1)',//보
+                                'rgba(0, 239, 145, 1)' //초
+                            ],
+                            borderWidth: 1 //경계선 굵기
+                        }
+                    ]
+                },
+                options: {
+                	   legend: {display: false},
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+            
+            
+            
+            let now=new Date();
+    		var month=now.getMonth()+1;
+    		
+    		//월
+    		var arr = ${monthList};
+			console.log(arr.join(','));
+			
+			//값
+			var arr2 = ${countMonthList};
+			console.log(arr2.join(','));
+			
+			
+            var myChart = new Chart(pie, {
+                type: 'line', // 차트의 형태
+                data: { // 차트에 들어갈 데이터
+                	
+                     //labels: [
+                         //x 축
+                        //'JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'
+                        //1,2,3,4,5,6,7,8,9,10,11,12
+                   // ],
+						
+					labels:arr,
+                    datasets: [
+                        { //데이터
+                            label: 'test1', //차트 제목
+                            fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                            
+                            data: [
+                               //x축 label에 대응되는 데이터 값
+                               //13,25,39,58,43,20,36,47,50,60,62,70
+                               ${countMonthList[0]},${countMonthList[1]},${countMonthList[2]},${countMonthList[3]},${countMonthList[4]}
+                               ,${countMonthList[5]},${countMonthList[6]},${countMonthList[7]},${countMonthList[8]},${countMonthList[9]}
+                               ,${countMonthList[10]},${countMonthList[11]}
+				
+                            	
+
+                            ], 
+                            backgroundColor: [
+                              //색상
+              			 	 'rgba(255, 0, 0, 0.3)' //빨
+              			 	 //'rgba(0, 255, 0, 0.3)' //초
+              			 	 //'rgba(0, 0, 255, 0.3)'//파
+              			  
+
+                            ],
+                            borderColor: [
+                            	//경계선 색상
+							'rgba(255, 0, 0, 0.3)' //빨
+                          
+
+                            ],
+                          pointRadius:0,
+                            fill:true,
+                            borderWidth: 5 //경계선 굵기
+       
+                        }/* ,
+                        {
+                            label: 'test2',
+                            fill: false,
+                            data: [
+                                8, 34, 12, 24
+                            ],
+                            backgroundColor: 'rgb(157, 109, 12)',
+                            borderColor: 'rgb(157, 109, 12)'
+                        } */
+                    ]
+                },
+                options: {
+                	   legend: {display: false},
+                    scales: {
+
+                        yAxes: [
+	
+                            {
+                                ticks: {
+                            
+                                    beginAtZero: true
+                                }
+ 
+                                
+                                
+                            }
+                        ]
+
+   
+                    }
+                }
+            });
+ 
+            
+
+        </script>
+
         
     </body>
 </html>
