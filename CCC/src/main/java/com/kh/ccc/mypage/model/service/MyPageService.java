@@ -53,7 +53,7 @@ public interface MyPageService {
 	ArrayList<Order> selectOrderListView(OrderListByDate tbd);
 
 	//기간별 주문리스트(실제 주문리스트)
-	ArrayList<MyOrderDetail> selectRealOrderListView(int orderNo);
+	MyOrderDetail selectRealOrderListView(int orderNo);
 
 	//장바구니 조회
 	ArrayList<Cart> selectCartList(int memberNo);
