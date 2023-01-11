@@ -191,6 +191,12 @@ public class MyPageDao {
 	public void addCartGoods(SqlSessionTemplate sqlSession, Cart cart) {
 		sqlSession.insert("myPageMapper.addCartGoods",cart) ;
 	}
+
+
+	//카트 수량변경
+	public int updateCartCount(SqlSessionTemplate sqlSession,Cart cart) {
+		return sqlSession.update("myPageMapper.updateCartCount",cart);
+	}
 	
 	
 }

@@ -54,7 +54,6 @@
         url('./fonts/inter-v12-latin-700.woff') format('woff');
       /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
     }
-    
     #fadejini1{
     	position:relative;
     	
@@ -104,12 +103,48 @@
 	.dropdown22:hover .dropdown-content {display: block;}
 	.dropdown22:hover .dropbtn {background-color: #E42525; color:white;}
    
-  </style>
-
+        /*리모콘*/
+        .remoteDiv{
+         	position: absolute;
+/*         	border: 1px solid lightgray; */
+        	right: 220px;
+        	top: 40px;
+        	font-size: 11px;
+/* 			display: none; */
+			color: black;
+			float: right;
+			z-index:100;
+        }
+        #logOutBtn{
+        	border: none;
+        	background-color:lightpink;
+        	border-radius: 5px;
+        }
+    </style>
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#navScroll">
-
+	<c:choose>
+		<c:when test="${not empty loginUser}">
+			<div class="remoteDiv">
+				<span id="remoteSpan1">${loginUser.memberName}</span>
+				<span id="remoteSpan2">님 환영합니다! </span>
+				<button id="logOutBtn" onclick="logOut();"> 로그아웃</button>
+			</div>
+		</c:when>
+	</c:choose>
+	<script>
+		function logOut(){
+			location.href="logout.me";
+		}
+	</script>
+	<!-- 알람 메세지 영역 -->
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alert("${ alertMsg }");
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+	</c:if>
   <nav id="navScroll" class="navbar navbar-expand-lg navbar-light fixed-top" tabindex="0" >
     <div class="container" >
       <a class="navbar-brand pe-4 fs-4" href="/">
@@ -235,11 +270,6 @@
 				window.alert("로그인 후 이용가능합니다.");
 			}
 	    </script>
-        
-        
-        
-        
-        
 
       </div>
     </div>
@@ -272,7 +302,6 @@
     })
   </script>
   
-
 </body>
 
 </html>

@@ -55,6 +55,7 @@
       /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
     }
     
+<<<<<<< HEAD
     #fadejini1{
     	position:relative;
     	
@@ -350,7 +351,7 @@
     })
   </script>
   
-
+    <br clear="both">
 </body>
 
 </html>
