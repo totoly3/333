@@ -13,11 +13,26 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
+    
+    	
+		.w-btn-pink-outline {
+		    border: 3px solid #eedfe5;
+		    color: #6e6e6e;
+		}
+		
+		.w-btn-pink-outline:hover {
+		    background-color: #f199bc;
+		    color: #d4dfe6;
+		  
+		}
+    
         .content {
             background-color:rgb(247, 245, 245);
             width:80%;
             margin:auto;
         }
+        
+        
         .innerOuter {
             border:1px solid lightgray;
             width:80%;
@@ -49,11 +64,11 @@
             <h1>자유게시판</h1>
             <br>
    
-            <a class="btn btn-secondary" style="float:right;" href="insert.fpom">글쓰기</a>
+            <a class="w-btn-pink-outline" style="float:right;" href="insert.fpom" >글쓰기</a>
         
             <br>
             <br>
-            <table id="boardList" class="table table-hover" align="center">
+            <table id="boardList" class="table table-hover"  align="center">
                 <thead>
                     <tr class="ct">
                     	<th><input type="checkbox"></th>
@@ -119,9 +134,9 @@
             
             	<!-- 삭제버튼 구현 --> 
           	<div id="deleteKey" style="float:right">
-   				<a class="btn btn-outline-dark"  id="checkAll">전체선택</a>
-   				<a class="btn btn-outline-dark"  id="unCheckAll">전체해제</a>
-   				<a class="btn btn-secondary"  onclick="deleteClick()">선택된 글 삭제</a>
+   				<a class="w-btn-pink-outline"  id="checkAll">전체선택</a>
+   				<a class="w-btn-pink-outline" id="unCheckAll">전체해제</a>
+   				<a class="w-btn-pink-outline"  onclick="deleteClick()">선택된 글 삭제</a>
 			</div>
             
          	<div id="search-area">
