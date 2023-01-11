@@ -190,6 +190,7 @@
 		              Character &nbsp;&nbsp;&nbsp;&nbsp;
 		            </a>
 		           	  <div class="dropdown-content">
+		           	  	  <a href="contest.go">Contest</a>
 						  <a href="list.ch">Character</a>
 						  <a href="list.alltimelistgo">CHAx3 Award</a>
 						  <a href="worldCupForm.ut">World Cup</a>

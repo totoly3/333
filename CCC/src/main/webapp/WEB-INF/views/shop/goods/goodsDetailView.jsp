@@ -297,8 +297,40 @@ function ODPorderinfo(){
     * End of Function About Amplitude
     * */
 </script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Jua&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+  <style>
+	  a {
+	  text-decoration-line: none;
+	}
+
+    .btn13{ 
+      text-decoration: none;
+      font-size:1.2rem;
+      padding:0px 10px 0px 10px;
+      display:inline-block;
+      border-radius: 5px;
+      transition:all 0.1s;
+      font-family: 'Nanum Pen Script', cursive;
+      color:white;
+    }
+    .btn13:active{
+      transform: translateY(3px);
+    }
+    .btn13.red{
+      background-color: #ff521e;
+      border-bottom:3px solid #c1370e;
+    }
+    .btn13.red:active{
+      border-bottom:2px solid #c1370e;
+    }
+    
+    
+    
 .bnr-coupon {display:block; margin-top:10px; margin-bottom:-10px; cursor:pointer;}
 .bnr-coupon img {width:440px;}
 .popup-lyr {display:none;}
@@ -832,8 +864,7 @@ $(function() {
 											<fmt:formatNumber value="${g.goodsPrice*0.89*0.9}" pattern="#,###" />원  [10%]
 										</strong>&nbsp;
 										
-                                                    <a href="" onclick="goLoginPage(); return false;" class="btn btnS2 btnGrn fn btnW75"><span class="download">쿠폰다운</span></a>&nbsp;
-                                                
+                                             <a href="" onclick="goLoginPage(); return false;" class="btn btnS2 btnGrn fn btnW75"><span class="download">쿠폰다운</span></a>&nbsp; 
 										<!-- '2013년 1월 1일부로 모든 카드 무이자혜택 제거 - 추후 필요하면 설정
 										<div class="infoMoreViewV15">
 											<span class="more1V15">무이자 할부 안내</span>
@@ -854,11 +885,7 @@ $(function() {
 
 							<div class="detailInfoV15">
 								
-									<dl class="saleInfo">
-										<dt>마일리지</dt>
-										
-										<dd><strong>224 Point ~</strong></dd>
-									</dl>
+									
 									
 								<dl class="saleInfo">
 									<dt>배송구분</dt>
@@ -1059,9 +1086,9 @@ $(function() {
 					
 						<li id="tab01" onclick="goToByScroll('1');"><p>상품 설명</p></li>
 						
-						<li id="tab02" onclick="goToByScroll('2');"><p>상품 후기 (<strong class="fs11">5</strong>)</p></li>
-						<li id="tab03" onclick="goToByScroll('3');" style="display:none;"><p>테스터 후기 <span class="fn">(<strong class="fs11"><span id="lyTesterCnt">0</span></strong>)</span></p></li>
-						<li id="tab04" style="display:none;" onclick="goToByScroll('4');"><p>Q&amp;A <span class="fn">(<strong class="fs11"><span id="lyQnACnt">0</span></strong>)</span></p></li>
+						<li id="tab02" onclick="goToByScroll('2');"><p>상품 후기 <strong class="fs11"></strong></p></li>
+						<li id="tab03" onclick="goToByScroll('3');" style="display:none;"><p>테스터 후기 <span class="fn"><strong class="fs11"><span id="lyTesterCnt"></span></strong></span></p></li>
+						<li id="tab04" style="display:none;" onclick="goToByScroll('4');"><p>Q&amp;A <span class="fn"><strong class="fs11"><span id="lyQnACnt"></span></strong></span></p></li>
 						
 						<li id="tab06" onclick="goToByScroll('6');"><p>배송/교환/환불</p></li>
 					
@@ -1256,10 +1283,10 @@ $(function() {
 	<div class="sorting tMar05">
 		
 		<ul class="tabMenuV15">
-			<li><a href="" onclick="chgEvalVal('a'); return false;" id="evalall" class="on">전체 (<strong>5</strong>)</a></li>
-			<li><a href="" onclick="chgEvalVal('p'); return false;" id="evalph">포토 (<strong>3</strong>)</a></li>
+			<li><a href="" id="evalall" class="on">전체 <!-- ( --><strong><!-- 5 --></strong><!-- ) --></a></li>
+			<li><a href="" id="evalph">포토 <!-- ( --><strong><!-- 5 --></strong><!-- ) --></a></li>
             
-			    <li><a href="" onclick="chgEvalVal('o'); return false;" id="evaloff">매장 (<strong>0</strong>)</a></li>
+			    <li><a href="" id="evaloff">매장 (<strong>0</strong>)</a></li>
 			
 		</ul>
 		
@@ -1273,7 +1300,7 @@ $(function() {
 			<span id="lyEvalSelBox">
 			<select name="sortMtd" title="상품 후기 정렬 옵션" class="optSelect2" onchange="$('#sortMethod').val(this.value);fnChgEvalMove(1)">
 				<option value="ne">최신후기순</option>
-				<option value="be">우수상품후기순</option>
+				<!-- <option value="be">우수상품후기순</option> -->
 			</select>
 			</span>
 		
@@ -1300,13 +1327,42 @@ $(function() {
 			</thead>
 			<tbody>
 			
+			<c:if test="${empty list}">
+				<br>
+				<div style="text-align:center;"> 작성된 후기가 없습니다. </div>
+			</c:if>
 			
 			<c:forEach var="r" items="${list}">
 				<tr>
-					<td><img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" alt="별5개" /></td>
-					<td class="lt">
+					<td>
+						<!-- <img src="//fiximage.10x10.co.kr/web2019/common/ico_review_star_05.png" alt="별5개" /> -->
 						
-						<a href="" onclick="return false;" class="talkShort"><img src="${r.changeName }" alt="포토" style="width:100px;" class="thumbnailjini"/>&nbsp;&nbsp;&nbsp;&nbsp; ${r.grContent }</a>
+						<c:choose>
+							 <c:when test="${r.grScore eq 5}">
+							 	<img src="resources/css/goods/img/star5.jpg" alt="별5개"/>
+							 </c:when>
+							 <c:when test="${r.grScore eq 4}">
+							 	<img src="resources/css/goods/img/star4.jpg" alt="별4개"/>
+							 </c:when>
+							<c:when test="${r.grScore eq 3}">
+							 	<img src="resources/css/goods/img/star3.jpg" alt="별3개"/>
+							 </c:when>
+							 <c:when test="${r.grScore eq 2}">
+							 	<img src="resources/css/goods/img/star2.jpg" alt="별2개"/>
+							 </c:when>
+							 <c:when test="${r.grScore eq 1}">
+							 	<img src="resources/css/goods/img/star1.jpg" alt="별1개"/>
+							 </c:when>
+						</c:choose>
+						
+					</td>
+					<td class="lt">
+						<c:if test="${not empty r.changeName }">
+							<a href="" onclick="return false;" class="talkShort"><img src="${r.changeName }" alt="포토" style="width:100px;" class="thumbnailjini"/></a>
+						</c:if>
+					</td>
+					<td class="lt" style="width:400px;">
+						${r.grContent }
 					</td>
 					<td>${r.grCreateDate}</td>
 					<td>${r.memberName}</td>
@@ -1317,11 +1373,7 @@ $(function() {
 			</c:forEach>
 			
 			
-			
-		
-			
-			
-			<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+		<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
         <script type="text/javascript">
             $(document).ready(function() {
                  
