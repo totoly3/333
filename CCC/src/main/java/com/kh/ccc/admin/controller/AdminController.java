@@ -105,8 +105,7 @@ public class AdminController {
 
 		model.addAttribute("countList",countList);
 
-		
-		//차트2
+		//barChart
 		ArrayList<String> monthList = new ArrayList<String>();
 		
 		for(int i=12; i>=1; i--) {
@@ -125,6 +124,23 @@ public class AdminController {
 		
 		model.addAttribute("monthList",monthList);
 		model.addAttribute("countMonthList",countMonthList);
+		
+		//문의 답글필요
+		int qCount = adminService.selectQcount();
+		
+		model.addAttribute("qCount",qCount);
+		
+		
+		/*
+		
+		//누적 주문수량
+		int countOrder = adminService.selectOrderCount();
+		
+		model.addAttribute("countOrder",countOrder);
+		System.out.println(countOrder);
+		
+		*/
+		
 		
 		return "admin/memberAdmin";
 		
@@ -362,7 +378,7 @@ public class AdminController {
 		
 		model.addAttribute("adList",adList);	
 		
-		System.out.println(adList);
+		//System.out.println(adList);
 			
 		return "admin/adminListConfirm";
 
@@ -422,7 +438,6 @@ public class AdminController {
 			//System.out.println(aPwd);
 				
 			Admin loginAdmin = adminService.loginAdmin(aId); // loginAdmin는 아이디로 조회해온 회원정보 (aPwd는 암호화됨)
-			//$2a$10$53xIUC1n7VnfZ1u9jMZyKeHBz2AgxTK36L4QcHsA2kGEm/XucW9pa
 			
 			if(loginAdmin != null && bcryptpasswordEncoder.matches(aPwd, loginAdmin.getaPwd())) {
 				session.setAttribute("loginAdmin", loginAdmin);
@@ -442,9 +457,10 @@ public class AdminController {
 			
 			session.removeAttribute("loginAdmin");
 			
-			return "redirect:/";
+			return "admin/mainAdmin";
 		}
 		
-			
+		
+		
 		
 }

@@ -63,11 +63,13 @@
                   
                 </div>
                 <div class="row">
+                
+               
                     <div class="col-lg-4" id="imgClick">
 
                     		<input type="hidden" value="${aList[0].aNo}">
                        		 <div class="team-member">
-                            <img class="mx-auto rounded-circle" src="${ adList[0].adminChangeFile }${ adList[0].adminChangeName }" alt="..." />
+                            <img class="mx-auto rounded-circle" src="${adList[0].adminChangeFile}${ adList[0].adminChangeName }" alt="..." />
                             <h4>${aList[0].aName}</h4>
                             <p class="text-muted">Leader/총괄</p>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker Twitter Profile"><i class="fab fa-twitter"></i></a>
@@ -77,7 +79,9 @@
                         
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    
+                    
+                    <div class="col-lg-4" id="imgClick">
                     	<input type="hidden" value="${aList[1].aNo}">
                         <div class="team-member" id="imgClick">
                             <img class="mx-auto rounded-circle" src="${ adList[1].adminChangeFile }${ adList[1].adminChangeName }" alt="..." />
@@ -89,10 +93,10 @@
                         </div>
                     </div>
                     <div class="col-lg-4"  id="imgClick">
-                      <input type="hidden" value="${aList[3].aNo}">
+                      <input type="hidden" value="${aList[2].aNo}">
                         <div class="team-member">
-                            <img class="mx-auto rounded-circle" src="${ adList[3].adminChangeFile }${ adList[3].adminChangeName }" alt="..." />
-                            <h4>${aList[3].aName}</h4>
+                            <img class="mx-auto rounded-circle" src="${ adList[2].adminChangeFile }${ adList[2].adminChangeName }" alt="..." />
+                            <h4>${aList[2].aName}</h4>
                             <p class="text-muted">Staff/대회담당</p>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker Twitter Profile"><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker Facebook Profile"><i class="fab fa-facebook-f"></i></a>
@@ -102,38 +106,43 @@
                
                 </div>
                 
+             
+                
 
                 
                 <br>
                 
                 <!-- 2번째줄 -->
                 
-                            <div class="row">
+                   <div class="row">
                     <div class="col-lg-4">
-                        <div class="team-member">
-                            <img class="mx-auto rounded-circle" src="resources/profileList/assets/img/team/1.jpg" alt="..." />
-                            <h4>추지은</h4>
-                         	<p class="text-muted">Lead Marketer</p>
+                        <div class="team-member" id="imgClick">
+                       	 <input type="hidden" value="${aList[3].aNo}">
+                            <img class="mx-auto rounded-circle" src="${ adList[3].adminChangeFile }${ adList[3].adminChangeName }" alt="..." />
+                            <h4>${aList[3].aName}</h4>
+                         	<p class="text-muted">Staff/대회담당</p>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen Twitter Profile"><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen Facebook Profile"><i class="fab fa-facebook-f"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen LinkedIn Profile"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="team-member">
-                            <img class="mx-auto rounded-circle" src="resources/profileList/assets/img/team/2.jpg" alt="..." />
-                            <h4>김병철</h4>
-                            <p class="text-muted">Lead Marketer</p>
+                        <div class="team-member" id="imgClick">
+                         <input type="hidden" value="${aList[4].aNo}">
+                            <img class="mx-auto rounded-circle" src="${ adList[4].adminChangeFile }${ adList[4].adminChangeName }" alt="..." />
+                            <h4>${aList[4].aName}</h4>
+                            <p class="text-muted">Staff/대회담당</p>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen Twitter Profile"><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen Facebook Profile"><i class="fab fa-facebook-f"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Diana Petersen LinkedIn Profile"><i class="fab fa-linkedin-in"></i></a>
                         </div>
                     </div>
                     <div class="col-lg-4">
-                        <div class="team-member">
-                            <img class="mx-auto rounded-circle" src="resources/profileList/assets/img/team/3.jpg" alt="..." />
-                            <h4>조진희</h4>
-                            <p class="text-muted">Lead Developer</p>
+                        <div class="team-member" id="imgClick">
+                         <input type="hidden" value="${aList[5].aNo}">
+                            <img class="mx-auto rounded-circle" src="${ adList[5].adminChangeFile }${ adList[5].adminChangeName }" alt="..." />
+                            <h4>${aList[5].aName}</h4>
+                            <p class="text-muted">Staff/굿즈담당</p>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker Twitter Profile"><i class="fab fa-twitter"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker Facebook Profile"><i class="fab fa-facebook-f"></i></a>
                             <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Larry Parker LinkedIn Profile"><i class="fab fa-linkedin-in"></i></a>
@@ -151,6 +160,7 @@
                 </div>
                 
                  <a href="member.ad" id="btnbtn"  class="btn btn-danger align-self-center">Main</a>
+                
                 
             </div>
         </section>
