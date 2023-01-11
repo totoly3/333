@@ -16,24 +16,7 @@
 
 	<link href="resources/css/freeboard/style_fr.css" rel="stylesheet">
 
-   <Style>
-   @import url("https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800,900&display=swap");
-   .w-btn-neon2{
-            position: relative;
-            border: none;
-            min-width: 200px;
-            min-height: 50px;
-            background: linear-gradient( 90deg, rgba(129, 230, 217, 1) 0%, rgba(79, 209, 197, 1) 100% );
-            border-radius: 1000px;
-            color: darkslategray;
-            cursor: pointer;
-            box-shadow: 12px 12px 24px rgb(79 209 197 / 64%);
-            font-weight: 700;
-            transition: 0.3s;
-           
-        }
    
-   </Style>
 	
 </head>
 <body>
@@ -59,7 +42,7 @@
 				<h1><b>CCC 역대 수상작</b></h1>
 			<div class="sec-title">
 				<h2>
-					 <button type="button" class="w-btn-neon2"  onclick="ThisMonthLikes();">이번달 좋아요 높은순</button>
+					 <button type="button" class="btn btn-primary"  onclick="ThisMonthLikes();">이번달 좋아요 높은순</button>
 		  	
 		 		 	 <button type="button" class="btn btn-danger"  onclick="ThisYearLikes();">올해 좋아요 높은순</button>
 				</h2>
