@@ -26,7 +26,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 	
 </head>
 <body>
-	<%-- 	    <jsp:include page="/WEB-INF/views/common/header.jsp"/>   --%>
+	<%--<jsp:include page="/WEB-INF/views/common/header.jsp"/>   --%>
 
 	<div class="container">
 		<!-- Top Navigation -->
@@ -48,8 +48,7 @@
 			<br>
 			<br> <a class="btn btn-primary" id="today-order"
 				href="enrollForm.mychar;" role="button"
-				style="margin-left: 2px; background-color: #EA4F4D; color: white;">로그인
-				됐을때만 새 캐릭터 등록</a>
+				style="margin-left: 2px; background-color: #EA4F4D; color: white;width:90px; ">새 캐릭터 등록</a>
 		</header>
 		<section class="grid-wrap">
 			<ul class="grid swipe-down" id="grid">
@@ -72,15 +71,7 @@
 		</section>
 		
 		<section class="related">
-			<p>If you enjoyed this demo you might also like:</p>
-			<a href="http://tympanus.net/Development/ThumbnailGridAnimations/">
-				<img
-				src="http://tympanus.net/codrops/wp-content/uploads/2013/10/ThumbnailGridAnimations1-300x162.jpg" />
-				<h3>Animations for Thumbnail Grids</h3>
-			</a> <a href="http://tympanus.net/Development/GridLoadingEffects/"> <img
-				src="http://tympanus.net/codrops/wp-content/uploads/2013/07/GridLoadingEffects-300x162.png" />
-				<h3>Grid Loading Effects</h3>
-			</a>
+			<p style="color: red;font-weight: bold;">HARD CHARAC</p>
 		</section>
 		<script type="text/javascript">
 		  

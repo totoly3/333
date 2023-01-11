@@ -30,8 +30,6 @@ public class GoodsController {
 	
 	@Autowired private GoodsService goodsService;
 	
-	@Autowired private CartService cartService;
-	
 	//굿즈 메인 페이지로 보내기
 	@RequestMapping("goodsMain.go")
 	public String GoodsMainPage() {
@@ -215,7 +213,7 @@ public class GoodsController {
 			gr.setChangeName("resources/goodsImg/"+changeName);
 		}
 		
-		int result = goodsService.insertReview(gr);
+		int result =  goodsService.insertReview(gr);
 		
 		if(result > 0) {
 			System.out.println("굿즈리뷰 등록 성공");
@@ -230,4 +228,19 @@ public class GoodsController {
 		return mv;
 	}
 	
+	//검색하기
+	@RequestMapping("searchGoods.go")
+	public String searchList(@RequestParam(value="keyword", required=false) String keyword, HttpSession session, Model model) {
+		
+		System.out.println("keyword::" + keyword);
+		ArrayList<Goods> list = new ArrayList<>();
+		
+		list = goodsService.searchList(keyword);
+		 
+        model.addAttribute("list", list);
+        System.out.println("list.go :: " +list);
+        
+		return "shop/goods/goodsSearchView";
+	
+	}
 }

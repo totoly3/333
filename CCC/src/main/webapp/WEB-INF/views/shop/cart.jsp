@@ -259,18 +259,18 @@
     <br><br><br><br><br>
     
     <div class="remoteCartDiv">
-    	<span id="remoteController">인기 굿즈</span><br>
+    	<span id="remoteController">할인 상품!</span><br>
     	<div class="remoteItem">
-			<span class="remoteSpan">1번 항목</span><br>
-			<a href="detail.go?gno=33"><img src="resources/goodsImg/2023010518452614246.jpg" class="img-fluid" alt="Colorlib Template"></a>
+<!-- 			<span class="remoteSpan">1번 항목</span><br> -->
+			<a href="detail.go?gno=33"><img src="resources/goodsImg/2023010517290215130.jpg" class="img-fluid" alt="Colorlib Template"></a>
     	</div>
     	<div class="remoteItem">
-			<span class="remoteSpan">2번 항목</span><br>
-			<a href="detail.go?gno=22"><img src="resources/goodsImg/2023010518452655890.jpg" class="img-fluid" alt="Colorlib Template"></a>
+<!-- 			<span class="remoteSpan">2번 항목</span><br> -->
+			<a href="detail.go?gno=22"><img src="resources/goodsImg/2023010517290278305.jpg" class="img-fluid" alt="Colorlib Template"></a>
     	</div>
     	<div class="remoteItem">
-			<span class="remoteSpan">3번 항목</span><br>
-			<a href="detail.go?gno=34"><img src="resources/goodsImg/2023010518463862204.jpg" class="img-fluid" alt="Colorlib Template"></a>
+<!-- 			<span class="remoteSpan">3번 항목</span><br> -->
+			<a href="detail.go?gno=34"><img src="resources/goodsImg/2023010517292621987.jpg" class="img-fluid" alt="Colorlib Template"></a>
     	</div>
     </div>
 

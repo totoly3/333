@@ -81,11 +81,12 @@ table th {
 	            <hr style="width:800px; height:2px; background-color:black; ">
 	            <br>
 	            <br>
+	            
 	            <thead>
 	                <tr>
 	                    <th style="background-color:#fff;">
 	                    	<!--전체상단 체크박스 -->
-	                        <div><input type="checkbox" name='allCheck' style="zoom:1.3;" ></div>
+	                        <div><input type="checkbox" class="all_check_input" name='allCheck' style="zoom:1.3;" ></div>
 	                    </th>
 	                    <th colspan="3" style="background-color:#fff;">
 	                        <button class="view" style="border:white;margin-bottom: 10px;background-color:#EA4F4D; margin-left:-40px; width:90px; height: 35px;color:white;">전체선택</button>
@@ -112,7 +113,7 @@ table th {
 		                        <input type="hidden" class="individual_count_input" value="${c.quantity}">
 		                        <input type="hidden" class="individual_totalPrice_input" value="${c.goodsPrice*c.quantity}">
 		                    </td>
-		                    <td><img src="${c.goodsFilePath}||${c.goodsChangeName1}" alt="img" class="wishimg"></td>
+		                    <td><img src="${c.goodsAttachFilePath}||${c.goodsAttachChangeName}" alt="img" class="wishimg"></td>
 		                    <td>
 			                    <div>
 			                                          상품명:${c.goodsName}
@@ -166,7 +167,7 @@ table th {
 	            <tbody>
 	                <tr> 
 	                    <td class="totalCount_td">?개</td>
-	                    <td class="totlaPrice_td">?원</td>
+	                    <td class="totalPrice_td">?원</td>
 	                    <td>+</td>
 	                    <td class="deliveryPrice_td">?원</td>
 	                    <td>=</td>
@@ -187,16 +188,16 @@ table th {
 	         $(document).ready(function(){
 	        	
 	           //장바구니 총계산영역 
-			   function setTotalInfo();
+			   setTotalInfo();
 			  
-	         }
+	         };
 	         
 	         /*체크여부 변화에 따른 종합정보 변화*/
 	         $(".individual_cart_checkbox").on("change", function(){
 	        	 
 	        	/*총 주문정보 세팅*/
 	        	//가격,개수,최종가격
-	        	setTototalInfo($(".cart_info_td")); 
+	        	setTotalInfo($(".cart_info_td")); 
 	        	 
 	         });
         	  
@@ -216,17 +217,15 @@ table th {
 	           	  //td태그를 순회하는 코드
 	           	  $(".cart_info_td").each(function(index,element) {
 	           		  
-	           		  if ($(element).find(".individual_cart_checkbox").is(":checked")===true) {
-						
-					  } else {
-                        
+	           		  if ($(element).find(".individual_cart_checkbox").is(":checked")===true) {//체크여부
+	           			  
+	           			 //td태그를 순회해서 얻은 총개수
+		           		 totalCount+=parseInt($(element).find(".individual_count_input").val());
+		           		  
+		           		 //td태그를 순회해서 얻은 총가격(input태그의 값을 얻어오면 string타입으로 인식되기 때문에 parseInt로 int타입으로 변경해줌)
+		           		 totalPrice+=parseInt($(element).find(".individual_totalPrice_input").val());
+						 
 					  }
-	           		  
-	           		  //td태그를 순회해서 얻은 총개수
-	           		  totalCount+=parseInt($(element).find(".individual_count_input").val());
-	           		  
-	           		  //td태그를 순회해서 얻은 총가격(input태그의 값을 얻어오면 string타입으로 인식되기 때문에 parseInt로 int타입으로 변경해줌)
-	           		  totalPrice+=parseInt($(element).find(".individual_totalPrice_input").val());
 	           		  
 	   			  });
 	   			  
@@ -248,7 +247,7 @@ table th {
 	   			  //통화형식으로 출력될수 있도록 대상변수에 toLocaleString()메서드를 호출한다.
 	   			  
 	   			  //총가격
-	   			  $(".totlaPrice_td").text(totalPrice.toLocaleString());
+	   			  $(".totalPrice_td").text(totalPrice.toLocaleString());
 	   			  
 	   			  //총개수
 	   			  $(".totalCount_td").text(totalCount);
@@ -260,8 +259,23 @@ table th {
 	   			  $(".finalTotalPrice_td").text(finalTotalPrice.toLocaleString());	 
         		 
 			  }
+	         
+	         
+	       $(".all_check_input").on("click",function(){
+	    	  
+	    	   /* 체크박스 체크/해제 */
+	    		if($(".all_check_input").prop("checked")){
+	    			$(".individual_cart_checkbox").attr("checked", true);
+	    		} else{
+	    			$(".individual_cart_checkbox").attr("checked", false);
+	    		}
+	    	   
+	    	    //총 주문정보 세팅
+	    		setTotalInfo($(".cart_info_td"));	
+	    	   
+	       });  
 			  
-		  });
+		
           
           //체크박스 설정
           $(function() {

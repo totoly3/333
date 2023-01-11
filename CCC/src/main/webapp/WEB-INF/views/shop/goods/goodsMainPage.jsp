@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<% String filePath = request.getContextPath(); %>
-    
 <!doctype html>
 <html lang="en">
 <head>
@@ -24,15 +21,31 @@
     <link href="resources/css/goods/css/style.css" rel="stylesheet">
     <link href="resources/css/goods/css/responsive.css" rel="stylesheet">
     
-    <!-- css 링크 -->
-    <%-- <link href="${pageContext.request.contextPath}/resources/css/goods/css/bootstrap.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/goods/css/bootstrap.css" rel="stylesheet"> --%>
+    <!-- Slide -->
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="resources/css/goodsSlide/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="resources/css/goodsSlide/css/font-awesome.min.css"/>
+	<link rel="stylesheet" href="resources/css/goodsSlide/css/slicknav.min.css"/>
+	<link rel="stylesheet" href="resources/css/goodsSlide/css/fresco.css"/>
+	<link rel="stylesheet" href="resources/css/goodsSlide/css/slick.css"/>
+
+	<!-- Main Stylesheets -->
+	<link rel="stylesheet" href="resources/css/goodsSlide/css/style.css"/>
 	
 	<style>
-		.remoteDiv{
+		.hero__section{
+			position:relative;
+			top:-200px;
+		}
+		#jini45{
+			width:60%;
+			margin:auto;
+		}
+		/*리모콘*/
+        .remoteDiv{
          	position: absolute;
 /*         	border: 1px solid lightgray; */
-        	right: 350px;
+        	right: 300px;
         	top: 20px;
         	font-size: 10px;
 /* 			display: none; */
@@ -40,25 +53,77 @@
 			float: right;
 			z-index:100;
         }
+        /*검색*/
+		.search-box53:hover{
+		  /* box-shadow: 0px 0px .5px 1px #000000; */
+		  width: 282px;
+		}
+		.search-btn53{
+		  text-decoration: none;
+		  float: right;
+		  width: 30px;
+		  height: 30px;
+		  background-color: #fff;
+		  border-radius: 50%;
+		  display: flex;
+		  justify-content: center;
+		  align-items: center;
+		  color: #000000;
+		}
+		.search-box53:hover > .search-btn{
+		  background-color: #fff;
+		}
+		.search-txt{
+		  display: flex;
+		  padding: 0;
+		  width: 0px;
+		  border:none;
+		  background: none;
+		  outline: none;
+		  float: left;
+		  font-size: 1rem;
+		  line-height: 30px;
+		  transition: .4s;
+		}
+		.search-box53:hover > .search-txt{
+		  width: 240px;
+		  padding: 0 6px;
+		}
+		#logOutBtn{
+        	border: none;
+        	background-color:lightpink;
+        	border-radius: 5px;
+        }
 	</style>
-	
 </head>
 
 <body>
-	<c:choose>
+    <c:choose>
 		<c:when test="${not empty loginUser}">
 			<div class="remoteDiv">
 				<span id="remoteSpan1">Welcome </span>
 				<span id="remoteSpan2">${loginUser.memberName}</span>
-				<span id="remoteSpan3">님!</span>
+				<span id="remoteSpan3">님! </span>
+				<button id="logOutBtn" onclick="logOut();"> 로그아웃</button>
 			</div>
 		</c:when>
 	</c:choose>
-	
-	<!-- 팝업 -->
-<%-- 	<jsp:include page="popup1.jsp"/> --%>
-	<jsp:include page="popup2.jsp"/>
-	
+	<script>
+		function logOut(){
+			location.href="logout.me";
+		}
+	</script>
+    <!-- 팝업 -->
+    <%-- 	<jsp:include page="popup1.jsp"/> --%>
+    <jsp:include page="popup2.jsp"/>
+    
+    <!-- 알람 메세지 영역 -->
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alert("${ alertMsg }");
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+	</c:if>
 	
     <!--================ Start header Top Area =================-->
     <section class="header-top" style="height:80px;">
@@ -76,7 +141,7 @@
                     </div>
                 </div>
                 <div class="col-6 col-lg-4 col-md-6 col-sm-6 logo-wrapper">
-                    <a href="cart.ca" class="logo">
+                    <a href="goodsMain.go" class="logo">
                         <!-- <img src="resources/css/goods/img/logo.png" alt=""> -->
                         <img src="resources/css/goods/img/chalogo3.jpg" alt="">
                         
@@ -86,7 +151,20 @@
                 <div class="col-lg-4 col-md-6 col-sm-6 search-trigger">
                     <div class="right-button">
                         <ul>
-                            <li><a id="search" href="javascript:void(0)"><i class="fas fa-search"></i></a></li>
+                            <li>
+                            	<div class="search-box53">
+							      	<input type="text" class="search-txt" id="keyword" name="keyword" placeholder="검색어를 입력해주세요">
+							      	<a class="search-btn53" href="#" onclick="searchGoods();">
+							      		<i class="fas fa-search"></i>
+							      	</a>
+							    </div>
+                            </li>
+                            <script>
+                            	function searchGoods(){
+//                             		console.log("아무말");
+                            		location.href="searchGoods.go?keyword="+$("#keyword").val();
+                            	}
+                            </script>
                             <c:choose>
 			            		<c:when test="${not empty loginUser }">
 									<li><a href="cart.ca">Cart</a></li>
@@ -105,27 +183,31 @@
 			                </c:choose>
                              <c:choose>
 			            		<c:when test="${not empty loginUser }">
-									<li><a href="">Wish</a></li>
+									<li><a href=""wishList.my"">Wish</a></li>
 			            		</c:when>
 			            		<c:otherwise>
 			                		<li><a href="#" onclick="pleaseLogin();">Wish</a></li>
 			            		</c:otherwise>
 			                </c:choose>
-                            
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="search_input" id="search_input_box">
-            <div class="container">
-                <form class="d-flex justify-content-between search-inner">
-                    <input type="text" class="form-control" id="search_input" placeholder="Search Here">
-                    <button type="submit" class="btn"></button>
-                    <span class="ti-close" id="close_search" title="Close Search"></span>
-                </form>
-            </div>
-        </div>
+        <script>
+            function pleaseLogin(){
+                window.alert("로그인 후 이용가능합니다.");
+            }	
+        </script>
+<!--         <div class="search_input" id="search_input_box"> -->
+<!--             <div class="container"> -->
+<!--                 <form class="d-flex justify-content-between search-inner"> -->
+<!--                     <input type="text" class="form-control" id="search_input" placeholder="Search Here"> -->
+<!--                     <button type="submit" class="btn"></button> -->
+<!--                     <span class="ti-close" id="close_search" title="Close Search"></span> -->
+<!--                 </form> -->
+<!--             </div> -->
+<!--         </div> -->
     </section>
     <!--================ End header top Area =================-->
 
@@ -142,7 +224,7 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                         <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
-                        	<li class="nav-item active"><a class="nav-link" href="${ pageContext.request.contextPath }">Home</a></li>
+                        	<li class="nav-item active"><a class="nav-link" href="goodsMain.go">Home</a></li>
                         	<!-- 데코 드롭다운 -->
                        		<li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Decoration</a>
@@ -224,13 +306,7 @@
         </div>
     </header>
     <!-- End header MEnu Area -->
-	
-	<script>
-		function pleaseLogin(){
-			window.alert("로그인 후 이용가능합니다.");
-		}	
-	</script>
-	
+    
     <!--================Fullwidth block Area =================-->
 
     <section class="fullwidth-block area-padding-bottom">
@@ -261,7 +337,7 @@
                     <div class="single-blog style_two">
                         <div class="thumb">
                             <!-- 사진 -->
-                            <img class="img-fluid" src="resources/css/goods/img/Ardium-Square-paper-point-deco-sticker-18__75048.jpg" alt="">
+                            <img class="img-fluid" src="resources/css/goods/img/Ardium-Square-paper-point-deco-sticker-19__51207.jpg" alt="">
                         </div>
                         <div class="short_details text-center ">
 
@@ -282,9 +358,9 @@
                 <div class="col-lg-12 col-xl-3">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-6 col-xl-12">
-                            <div class="single-blog style-three m_b_30">
+                           <div class="single-blog style-three m_b_30">
                                 <div class="thumb">
-                                    <img class="img-fluid" src="resources/css/goods/img/Ardium-Pop-illustration-message-card-envelope-set-10__81148.jpg" alt="">
+                                    <img class="img-fluid" src="resources/css/goods/img/Ardium-Square-paper-point-deco-sticker-18__75048.jpg" alt="">
                                 </div>
                                 <div class="short_details">
 
@@ -301,7 +377,7 @@
                         <div class="col-12 col-md-6 col-lg-6 col-xl-12">
                             <div class="single-blog style-three">
                                 <div class="thumb">
-                                    <img class="img-fluid" src="resources/css/goods/img/Ardium-Square-paper-point-deco-sticker-19__51207.jpg" alt="">
+                                    <img class="img-fluid" src="resources/css/goods/img/Ardium-Pop-illustration-message-card-envelope-set-10__81148.jpg" alt="">
                                 </div>
                                 <div class="short_details">
 
@@ -320,85 +396,26 @@
             </div>
         </div>
     </section>
+    
+    <br><br>
+    
+ 
 
-    <!--================Fullwidth block Area end =================-->
-
-
-    <!--================ First block section start =================-->      
-
-    <section class="first_block">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-xl-6">
-                    <div class="single-blog row no-gutters style-four border_one">
-                        <div class="col-12 col-sm-5">
-                            <div class="thumb">
-                                <img class="img-fluid" src="resources/css/goods/img/Dash-And-Dot-Lovey-dovey-hologram-deco-sticker-seal-07-12-17__71508.jpg" alt="">
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-7">
-                            <div class="short_details">
-                                <div class="meta-top d-flex">
-                                    <a href="#">Tours & Travel</a>
-                                </div>
-                                <a class="d-block" href="single-blog.html">
-                                    <h4>Brought all day domi
-                                        nion appear from
-                                        subdue dominion
-                                    firmament over face</h4>
-                                </a>
-                                <div class="meta-bottom d-flex" >
-                                    <a href="#">March 12 , 2019 . </a>
-                                    <a class="dark_font" href="#">By Alen Mark</a>
-                                </div>
-                            </div>  
-                        </div>  
-                    </div>      
-                </div>
-
-                <div class="col-lg-4 col-xl-3">
-                    <div class="single-blog style_five">
-                        <div class="thumb">
-                            <img class="img-fluid" src="resources/css/goods/img/ICONIC-Merry-memo-checklist-planner-notepads-06__72379.jpg" alt="">
-                        </div>
-                        <div class="short_details ">
-
-                            <div class="meta-top d-flex">
-                                <a href="#">Tours & Travel</a>
-                            </div>
-                            <a class="d-block" href="single-blog.html">
-                                <h4>Abundantly forth late
-                                appear fourth us.</h4>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-4 col-xl-3">
-                    <div class="single-blog style_five">
-                        <div class="thumb">
-                            <img class="img-fluid" src="resources/css/goods/img/nacoo-anyang-kitty-daily-life-removable-waterproof-sticker-ver2-06__85688.jpg" alt="">
-                        </div>
-                        <div class="short_details ">
-
-                            <div class="meta-top d-flex">
-                                <a href="#">Tours & Travel</a>
-                            </div>
-                            <a class="d-block" href="single-blog.html">
-                                <h4>Abundantly forth late
-                                appear fourth us.</h4>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!--================ First block section end =================-->  
 
     <!--================ Editors Picks section start =================-->  
+    
+    
+    
 
-    <section class="editors_pick area-padding">
+    
+    
+    
+    
+   <!--================ Editors Picks section start =================-->  
+    
+    
+
+   <!--  <section class="editors_pick area-padding">
         <div class="container">
             <div class="row">
                 <div class="area-heading">
@@ -479,132 +496,105 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
 
 
     <!--================ Editors Picks section end =================-->      
 
 
 
-    <!--================ Video section start =================-->  
+    <br><br><br><br><br><br><br><br><br>
+    
+    
+    
+    <!--================Fullwidth block Area end 슬라이드  =================-->
 
-    <div class="video-area background_one area-padding">
-        <div class="container">
-            <div class="row">
-                <div class="area-heading">
-                    <h3>Travel News</h3>
-                    <p>Abundantly creeping saw forth spirit can made appear fourth us.</p>
-                </div>
+	<!-- Hero Section -->
+	<section class="hero__section">
+		<div class="hero-slider">
+			<div class="slide-item">
+				<a class="fresco" href="resources/css/goodsSlides/img/hero-slider/1.jpg" data-fresco-group="projects">
+					<img src="resources/css/goodsSlide/img/hero-slider/1.jpg" alt="">
+				</a>
+			</div>
+			<div class="slide-item">
+				<a class="fresco" href="resources/css/goodsSlide/img/hero-slider/2.jpg" data-fresco-group="projects">
+					<img src="resources/css/goodsSlide/img/hero-slider/2.jpg" alt="">
+				</a>
+			</div>
+			<div class="slide-item">
+				<a class="fresco" href="resources/css/goodsSlide/img/hero-slider/3.jpg" data-fresco-group="projects">
+					<img src="resources/css/goodsSlide/img/hero-slider/3.jpg" alt="">
+				</a>	
+			</div>
+			<div class="slide-item">
+				<a class="fresco" href="resources/css/goodsSlides/img/hero-slider/4.jpg" data-fresco-group="projects">
+					<img src="resources/css/goodsSlides/img/hero-slider/4.jpg" alt="">
+				</a>	
+			</div>
+			<div class="slide-item">
+				<a class="fresco" href="resources/css/goodsSlide/img/hero-slider/5.jpg" data-fresco-group="projects">
+					<img src="resources/css/goodsSlide/img/hero-slider/5.jpg" alt="">
+				</a>	
+			</div>
+			<div class="slide-item">
+				<a class="fresco" href="resources/css/goodsSlide/img/hero-slider/6.jpg" data-fresco-group="projects">
+					<img src="resources/css/goodsSlide/img/hero-slider/6.jpg" alt="">
+				</a>	
+			</div>
+			<div class="slide-item">
+				<a class="fresco" href="resources/css/goodsSlide/img/hero-slider/7.jpg" data-fresco-group="projects">
+					<img src="resources/css/goodsSlide/img/hero-slider/7.jpg" alt="">
+				</a>	
+			</div>
+		</div>
+		<div class="hero-text-slider">
+			<div class="text-item">
+				<h2>─ Goods Sticker ─</h2>
+				<p>HARD-CHARAC</p>
+			</div>
+			<div class="text-item">
+				<h2>─ Pouch/Wallet ─</h2>
+				<p>HARD-CHARAC</p>
+			</div>
+			<div class="text-item">
+				<h2>─ Pop up Card ─</h2>
+				<p>HARD-CHARAC</p>
+			</div>
+			<div class="text-item">
+				<h2>─ Goods Sticker ─</h2>
+				<p>HARD-CHARAC</p>
+			</div>
+			<div class="text-item">
+				<h2>─ Goods Sticker ─</h2>
+				<p>HARD-CHARAC</p>
+			</div>
+			<div class="text-item">
+				<h2>─ Pone Case ─</h2>
+				<p>HARD-CHARAC</p>
+			</div>
+			<div class="text-item">
+				<h2>─ Goods Diary ─</h2>
+				<p>HARD-CHARAC</p>
+			</div>
+		</div>
+	</section>
+	<!--====== Javascripts & Jquery ======-->
+	<script src="resources/css/goodsSlide/js/vendor/jquery-3.2.1.min.js"></script>
+	<script src="resources/css/goodsSlide/js/jquery.slicknav.min.js"></script>
+	<script src="resources/css/goodsSlide/js/slick.min.js"></script>
+	<script src="resources/css/goodsSlide/js/fresco.min.js"></script>
+	<script src="resources/css/goodsSlide/js/main.js"></script>
+			
 
-            </div>
-            <div class="row">
-                <div class="col-lg-7">
-                    <div class="single-blog video-style">
-                        <div class="thumb">
-                            <img class="img-fluid" src="resources/css/goods/img/magazine/11.jpg" alt="">
-                            <div class="play_btn">
-                                <a class="play-video" href="https://www.youtube.com/watch?v=MrRvX5I8PyY" data-animate="zoomIn"
-                                data-duration="1.5s" data-delay="0.1s"><span class="ti-control-play"></span></a>
-                            </div>
-                        </div>
-                        <div class="short_details">
-                            <div class="meta-top d-flex">
-                                <a href="#">shoes</a>/
-                                <a href="#">March 15, 2019</a>
-                            </div>
-                            <a class="d-block" href="single-blog.html">
-                                <h4>Puppy picture gift wrapping package</h4>
-                            </a>
-                            <div class="meta-bottom d-flex">
-                                <a href="#"><i class="ti-comment"></i>05 comment</a>
-                                <a href="#"><i class="ti-heart"></i> 0 like</a>
-                                <a href="#"><i class="ti-eye"></i> 1k view</a>
-                            </div>
-                        </div>
-                    </div> 
+    <!--================ First block section start =================-->     
 
-                </div> 
+    
 
-                <div class="col-lg-5">
-                    <div class="single-blog video-style small row m_b_30">
-                        <div class="thumb col-12 col-sm-5">
-                            <img class="img-fluid" src="resources/css/goods/img/magazine/12.jpg" alt="">
-                            <div class="play_btn">
-                                <a class="play-video" href="https://www.youtube.com/watch?v=MrRvX5I8PyY" data-animate="zoomIn"
-                                data-duration="1.5s" data-delay="0.1s"><span class="ti-control-play"></span></a>
-                            </div>
-                        </div>
-                        <div class="short_details col-12 col-sm-7">
-                            <div class="meta-top d-flex">
-                                <a href="#">Beauty</a>
-                            </div>
-                            <a class="d-block" href="single-blog.html">
-                                <h4>Blessed night morning on
-                                them you great</h4>
-                            </a>
-                            <div class="meta-bottom d-flex">
-                                <a href="#"><i class="ti-time"></i>mar 12</a>
-                                <a href="#"><i class="ti-heart"></i> 0 like</a>
-                                <a href="#"><i class="ti-eye"></i> 1k view</a>
-                            </div>
-                        </div>
-                    </div> 
-
-                    <div class="single-blog video-style small row m_b_30 ">
-                        <div class="thumb col-12 col-sm-5">
-                            <img class="img-fluid" src="resources/css/goods/img/magazine/13.jpg" alt="">
-                            <div class="play_btn">
-                                <a class="play-video" href="https://www.youtube.com/watch?v=MrRvX5I8PyY" data-animate="zoomIn"
-                                data-duration="1.5s" data-delay="0.1s"><span class="ti-control-play"></span></a>
-                            </div>
-                        </div>
-                        <div class="short_details col-12 col-sm-7">
-                            <div class="meta-top d-flex">
-                                <a href="#">Beauty</a>
-                            </div>
-                            <a class="d-block" href="single-blog.html">
-                                <h4>Blessed night morning on
-                                them you great</h4>
-                            </a>
-                            <div class="meta-bottom d-flex">
-                                <a href="#"><i class="ti-time"></i>mar 12</a>
-                                <a href="#"><i class="ti-heart"></i> 0 like</a>
-                                <a href="#"><i class="ti-eye"></i> 1k view</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="single-blog video-style small row">
-                        <div class="thumb col-12 col-sm-5">
-                            <img class="img-fluid" src="resources/css/goods/img/magazine/14.jpg" alt="">
-                            <div class="play_btn">
-                                <a class="play-video" href="https://www.youtube.com/watch?v=MrRvX5I8PyY" data-animate="zoomIn"
-                                data-duration="1.5s" data-delay="0.1s"><span class="ti-control-play"></span></a>
-                            </div>
-                        </div>
-                        <div class="short_details col-12 col-sm-7">
-                            <div class="meta-top d-flex">
-                                <a href="#">Beauty</a>
-                            </div>
-                            <a class="d-block" href="single-blog.html">
-                                <h4>Blessed night morning on
-                                them you great</h4>
-                            </a>
-                            <div class="meta-bottom d-flex">
-                                <a href="#"><i class="ti-time"></i>mar 12</a>
-                                <a href="#"><i class="ti-heart"></i> 0 like</a>
-                                <a href="#"><i class="ti-eye"></i> 1k view</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
+    <div id="jini45">
+	    <img src="resources/css/goods/img/mainjini2.jpg">
     </div>
 
-
-    <!--================ Video section end =================-->  
 
 
     <!--================ three-block section start =================-->  

@@ -8,9 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class WishGoods {
+	
 	//wish영역
 	private int memberNo; //M_NO NUMBER 멤버넘버
-	private int goodsNumber; //	G_NO NUMBER 굿즈넘버
+
 	
 	//join goods영역
 	private int goodsNo;

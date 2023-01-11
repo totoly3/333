@@ -16,7 +16,7 @@
 
 	<link href="resources/css/freeboard/style_fr.css" rel="stylesheet">
 
-
+   
 	
 </head>
 <body>
@@ -28,13 +28,9 @@
 
 	
 
-	<div class="sec-week-wrap" style="margin:100px;" > 광고영역
+	<div class="sec-week-wrap" style="margin:100px;" >
 	
-					<span class="area_ad">
-						<span class="frame_g"></span>	
-				        <strong adfit-title="" class="tit_ad">와.. 이걸 왜 이제 알았지?</strong>
-				        <span adfit-profile-name="" class="desc_ad">홀릭팩토리</span>
-			      </span>
+				
 					
 					
 		<div class="fix-timeline">
