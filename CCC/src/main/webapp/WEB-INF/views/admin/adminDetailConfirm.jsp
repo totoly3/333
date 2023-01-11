@@ -120,7 +120,7 @@
 		<div id="photo" style="margin:center">	
 											
       		<div id="char1" style="float:right">
-				<img class="mx-auto rounded-circle" height="350" width="350" src="${ at[0].adminChangeFile }${ at[0].adminChangeName }" alt="" />
+				<img class="mx-auto rounded-circle" height="350" width="350" src="${ at[0].adminChangeFile }${ at[0].adminChangeName }" alt="나와라" />
 			</div>	
 			
 		</div>									

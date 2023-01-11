@@ -51,7 +51,7 @@
 		            </c:when>
 		            <c:otherwise>
 		               <!-- if 만약 도착하지 않았다면 -->
-		               <p>배송중</p>
+		               <p>배송준비중</p>
 		            </c:otherwise>
 	               </c:choose>
 	            <br>
@@ -103,13 +103,13 @@
 	             <tr>
 	              <td>배송비</td>
 	              <td></td>
-	              <td><fmt:formatNumber  value="${deliInfo.deliveryFee}" pattern="#,###원"/>
+	              <td>2,500원
 	              </td>
 	             </tr>
 	            <tr>
 	              <td>택배회사</td>
 	              <td></td>
-	              <td>${deliInfo.orderPackage}</td>
+	              <td>우체국</td>
 	             </tr>
 		       </table>
 		       

@@ -32,8 +32,7 @@
         	.thumbnail:hover {cursor:pointer; opacity: 0.5;}
 			
 			#searchForm {
-				width:80%;
-				margin:auto;
+				width:fit-content; margin:auto;
 	        }
 	        #searchForm>* {
 	            float:left;
@@ -46,8 +45,33 @@
 	        	width:30px;
 	        	height:30px;
 	        }
-	        .likeBtn:hover { cursor:pointer; }
+	        .likeBtn:hover { cursor : pointer; }
 	        .likeFont { font-weight : bold; }
+	        #insertCharacterBtn { border : 3px solid black; }
+	        
+	        /*버튼 만들기*/
+	        .btn77 {
+		      text-decoration: none;
+		      font-size:2rem;
+		      color:white;
+		      padding:10px 20px 10px 20px;
+		      margin:20px;
+		      display:inline-block;
+		      border-radius: 10px;
+		      transition:all 0.1s;
+		      text-shadow: 0px -2px rgba(0, 0, 0, 0.44);
+		      font-family: 'Lobster', cursive; <!-- google font -->
+		    }
+		    .btn77:active{
+		      transform: translateY(3px);
+		    }
+		    .btn77.blue{
+		      background-color: #1f75d9;
+		      border-bottom:5px solid #165195;
+		    }
+		    .btn77.blue:active{
+		      border-bottom:2px solid #165195;
+		    }
         </style>
         
     </head>
@@ -64,12 +88,7 @@
                     <br><br>
 					<!-- 로그인 유저만 글작성 가능하도록 -->
                     <c:if test="${ not empty loginUser }">
-						<a href="insert.ch" class="btn btn-danger btn-icon-split">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-check"></i>
-                            </span>
-						    <span class="text">당신의 캐릭터를 등록해주세요!</span>
-						</a>	
+						<a class="btn77 blue" href="#blue">당신의 캐릭터를 등록하세요!</a>
 					</c:if>
                 </div>
                 <br><br>
@@ -141,17 +160,15 @@
 			
 			<!-- 검색바 영역 -->
 			<form id="searchForm" action="search.ch" method="get" align="center">
-		        <div class="select">
-		            <select class="custom-select" name="condition">
+		        <div class="selectCharacterBoardCondition">
+		            <select class="selectCondition" name="condition" style="width:150px; height:30px;">
 		                <option value="writer">창작자</option>
 		                <option value="title">캐릭터이름</option>
 		                <option value="content">캐릭터설명</option>
 		            </select>
+		            <input type="text" id="textkeyword" name="keyword" style="width:500px;">
+			        <button type="submit" style="width:150px; height:30px; border:1px solid">검색</button>
 		        </div>
-		        <div class="text">
-		            <input type="text" id="textkeyword" class="form-control" name="keyword">
-		        </div>
-		        <button type="submit" class="searchBtn btn btn-secondary">검색</button>
 			</form>
 		<br><br><br>
         </section>

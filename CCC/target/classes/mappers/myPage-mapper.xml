@@ -215,7 +215,7 @@
 		    MCA_CHANGE_NAME,
 		    MCA_LEVEL
 		) VALUES (
-		    SEQ_MCA.NEXTVAL,
+		    SEQ_MCA_NO.NEXTVAL,
 		    SEQ_CNO.CURRVAL,
 		    #{originName},
 		    #{changeName},
@@ -282,9 +282,8 @@
      
    <!--주문상세조회 /주문과 배송비 JOIN-->
    <select id="selectMyOrderDetail" resultMap="myOrderDetailResultSet">
-	   SELECT O_NO,O_DATE,D_NAME,D_FEE,O_FINAL_AMOUNT,O_ADDRESS,O_STATUS
+	   SELECT O_NO,O_DATE,O_FINAL_AMOUNT,O_ADDRESS,O_STATUS
 	   FROM TB_ORDER O
-	   JOIN TB_DELIVERY_FEE D USING(D_NO)
 	   WHERE O_NO=#{orderNo}
    </select>
    
@@ -308,25 +307,18 @@
    <!-- 배송조회용 -->
    <select id="selectDeliveryDetail" resultMap="deliveryDetailResultSet" parameterType="orderDetail"> 
 	    SELECT 
-		D_NO,
-		D_NAME,
-		D.D_FEE,
-		
-		O_INVOICE_NO,
-		O_RECEIVER_NAME,
-		O_ADDRESS,
-		O_ADDRESS_DETAIL,
-		O_ZIP_CODE,
-		O_COMMENT,
-		O_PHONE,
-		O_DELIVERY_COMPANY,
-		O_DELIVERY_STATUS,
-		O_STATUS
-		FROM TB_DELIVERY_FEE D
-		JOIN TB_ORDER O USING(D_NO)
-		JOIN TB_ORDER_DETAIL OD USING(O_NO)
+			O_INVOICE_NO,
+			O_RECEIVER_NAME,
+			O_ADDRESS,
+			O_ADDRESS_DETAIL,
+			O_ZIP_CODE,
+			O_COMMENT,
+			O_PHONE,
+			O_DELIVERY_COMPANY,
+			O_DELIVERY_STATUS,
+			O_STATUS
+		FROM TB_ORDER 
 		WHERE O_NO=#{orderNo}
-		AND OD_NO=#{orderDetailNo}
    </select>
    
    <!-- 기간별 날짜 조회 1. 주문번호 먼저 가져옴-->

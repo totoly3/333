@@ -42,17 +42,8 @@ public class NoticeController {
 			, Model model, HttpSession session) {
 		
 		
-		// 관리자 자동 로그인 코드
-		Admin loginAdmin = new Admin();
-		loginAdmin.setaNo(1);	// 번호
-		loginAdmin.setaGno(1);	// 등급 번호
-		loginAdmin.setaId("admin");
-		loginAdmin.setaName("오상희");
-		
-		
 //		System.out.println("관리자 자동 로그인");
 //		System.out.println(loginAdmin);
-		session.setAttribute("loginAdmin", loginAdmin);
 //		session.setAttribute("alertMsg", loginAdmin.getAdminName()+"님 어서오세요!");
 		
 		System.out.println("list.no:: currentPage : "+currentPage);

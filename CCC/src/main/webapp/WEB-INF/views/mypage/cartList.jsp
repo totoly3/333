@@ -71,6 +71,7 @@ table th {
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	 
+	 <br><br> <br><br> <br><br>
     <div class="cart outer">
         <span align="center;">
      	<h3 align="center">장바구니 &nbsp;</h3>  
@@ -78,7 +79,7 @@ table th {
      	
         <div id="tablearea"> 
 	        <table class=".carttable" style="width: 1000px;">
-	            <hr style="width:800px; height:2px; background-color:black; ">
+	            <hr style="width:800px; height:2px; background-color:black;margin-left:30px; ">
 	            <br>
 	            <br>
 	            
@@ -129,10 +130,10 @@ table th {
 		                    </td>
 		                    <td>
 		                      <div class="countbuttonarea">
-		                         <div>
+		                          <div>
 			                       <input type="text" id="inputquantity" value="${c.quantity}" style="width:40px;margin-bottom:3px;margin-left:5px;	" size="2">
 									<%--<input type="button" onclick="plusbtn('${c.quantity}');" class="quantity_btn plus_btn" value="+" style="width:20px;"> --%>
-		                           <button class="quantity_btn plus_btn" value="수량변경" style="width:20px;margin-left:3px;">+</button> 
+		                           <button type="button" class="quantity_btn plus_btn" value="수량변경" style="width:20px;margin-left:3px;">+</button> 
 		                           <button class="quantity_btn minus_btn" value="-" style="width:20px;">-</button><br> 
 		                          </div>
 		                          <a class="quantity_modify_btn" onclick="modifybtn('${c.cartNo}')" value="${c.cartNo}">변경</a>
@@ -202,7 +203,7 @@ table th {
              //플러스버튼 클릭시 값수정
 	         $(".plus_btn").on("click", function(){
 	        	 let quantity = $(this).parent("div").find("input").val();
-	        	 //console.log(quantity);
+	        	 console.log(quantity);
 	        	 $(this).parent("div").find("input").val(++quantity);
 	         });
 	        
@@ -218,7 +219,8 @@ table th {
              //수량변경 버튼클릭시 카트번호와 상품수량을 form에 넣는다.
         	 function modifybtn(cartNo) {
         		 //카트no는 버튼을 눌렀을시에 실행되는 함수에 담아서 가져오고 count는 input태그에서 가져오자
-				let count = $(this).parent("div").find("input").val)();
+        		 console.log("cartNo : "+cartNo);
+				let count = $(this).prev().find("input").val();
 				console.log(count);
 				
 			}
@@ -259,11 +261,9 @@ table th {
 		    	  
 		    	   /* 체크박스 체크/해제 */
 		    		if($(".all_check_input").prop("checked")){
-		    			
 		    			$(".individual_cart_checkbox").attr("checked", true);
 		    			
 		    		} else{
-		    			
 		    			$(".individual_cart_checkbox").attr("checked", false);
 		    		}
 		    	   

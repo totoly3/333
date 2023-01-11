@@ -52,7 +52,7 @@
          <style>
         	.adminInfo{
         		position : relative;
-        		left : 700px;
+        		left : 600px;
         	}
         	
         	#char1{
@@ -61,7 +61,7 @@
         	}
         	.col-lg-8{
         		position : relative;
-        		left : -200px;
+        		left : -100px;
         	}
         	.card-title{
         		position : relative;

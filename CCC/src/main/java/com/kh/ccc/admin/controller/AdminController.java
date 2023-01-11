@@ -131,7 +131,6 @@ public class AdminController {
 		model.addAttribute("qCount",qCount);
 		
 		
-		
 		//누적 주문수량
 		int countOrder = adminService.selectOrderCount();
 		
