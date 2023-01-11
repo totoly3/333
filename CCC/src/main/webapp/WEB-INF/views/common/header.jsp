@@ -159,7 +159,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 	        <div class="dropdown22">
 		          <li class="nav-item">
-		            <a href="#top" class="nav-link" style="font-weight:bold">
+		            <a href="${ pageContext.request.contextPath }" class="nav-link" style="font-weight:bold">
 		              &nbsp;&nbsp;&nbsp; Home &nbsp;&nbsp;&nbsp;&nbsp;
 		            </a>
 		          </li>

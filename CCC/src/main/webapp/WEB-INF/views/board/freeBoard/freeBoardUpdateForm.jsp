@@ -85,7 +85,7 @@
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
    
 <div class="container">
-  <h1>자유게시판 수정하는곳이다아ㅏㅏㅏㅏ</h1>
+  <h1>자유게시판 수정하는곳이다아</h1>
   <p></p>
   
   
