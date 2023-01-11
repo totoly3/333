@@ -59,11 +59,6 @@
 <link rel="stylesheet" type="text/css" href="/lib/css/temp_w.css?v=1.00" />
 <script type="text/javascript" src="/lib/js/jquery.numspinner.min.js"></script>
 <script type="text/javascript">
-function jsCheckLimit() {
-	if ("False"=="False") {
-		jsChklogin('False');
-	}
-}
 
 // 확인 후 로그인 페이지로 이동
 function jsChkConfirmLogin(msg) {
@@ -72,7 +67,7 @@ function jsChkConfirmLogin(msg) {
 		var winLogin = window.open('/login/PopLoginPage.asp','popLogin','width=400,height=300');
 		winLogin.focus();
 	}
-}
+} 
 
 $(function() {
 	//동영상 이미지 추가시(추후개발)
@@ -1386,7 +1381,7 @@ $("#detail02").dblclick(function(e){
 					<!-- (6/9) Q&A ------------------------------------->
 					
 <script type="text/javascript">
-<!--
+
 	// 탭표시
 	$("#lyQnACnt").html("4");
 	$("#tab04").show();
@@ -1568,7 +1563,7 @@ $("#detail02").dblclick(function(e){
 		return re.test(phone);
 	}
 
-//-->
+//
 </script>
 <div class="section qnaV15" id="detail04">
 	<div class="sorting">
@@ -1578,41 +1573,38 @@ $("#detail02").dblclick(function(e){
 		</div>
 	</div>
 	<div id="inquiryForm" class="boardForm tMar05">
-		<form name="qnaform" method="post" action="http://www.10x10.co.kr/my10x10/doitemqna.asp" onsubmit="return false;">
-		<input type="hidden" name="id" value="" />
-		<input type="hidden" name="itemid" value="5055471" />
-		<input type="hidden" name="cdl" value="045" />
-		<input type="hidden" name="disp" value="121115105107" />
-		<input type="hidden" name="qadiv" value="02" />
-		<input type="hidden" name="mode" value="write" />
-		<fieldset>
-		<legend>상품문의 입력 폼</legend>
-			<div class="sorting">
-				<h4><strong>상품문의</strong></h4>
-				<div class="option">
-					<input type="hidden" id="emailok" name="emailok" value="N">
-					<input type="hidden" id="secretyn" name="secretyn" value="N">
-					<span>
-						<input type="checkbox" name="qnaEmail" class="check" id="qnaEmail" onclick="jsQNACheck('e');" /> <label for="qnaEmail">이메일 답변 받기</label>
-						<input type="text" name="usermail" title="이메일" value="" class="txtInp emailInfo"  onclick="jsCheckLimit();" readonly />
-					</span>
-					<span class="lPad20"><input type="checkbox" class="check" id="qnaSecret" name="qnaSecret" onclick="jsQNACheck('s');" /> <label for="qnaSecret">비밀글로 문의하기</label></span>
-				</div>
-			</div>
-			<div>
-				<textarea name="contents" id="qnaMsg" cols="100" rows="6" onclick="jsCheckLimit();" readonly>로그인 후 글을 남길 수 있습니다.</textarea>
-			</div>
-			<ul class="list01V15">
-				<li>주문 후 주문/배송/취소 등에 관한 문의는 마이텐바이텐 &gt; <a href="/my10x10/qna/myqnalist.asp">1:1 상담</a>을 이용해주시기 바랍니다. <a href="/my10x10/qna/myqnalist.asp" class="more2V15">주문/배송/취소 문의</a></li>
-				<li>고객님이 작성하신 문의 및 답변은 마이텐바이텐 &gt; <a href="/my10x10/myitemqna.asp">상품 Q&amp;A</a> 에서도 확인이 가능합니다.</li>
-				<li>텐바이텐 APP을 이용하시면 좀 더 편리하게 답변을 받으실 수 있습니다.</li>
-				<li>상품과 관련없는 문의는 강제 삭제 될 수 있습니다.</li>
-			</ul>
-			<div class="btnArea ct tMar30">
-				<a href="" class="btn btnS1 btnRed btnW100" onclick="jsCheckLimit();return false;">등록</a>
-				<a href="" class="btn btnS1 btnGry btnW100" onclick="$('#inquiryForm').hide();return false;">취소</a>
-			</div>
-		</fieldset>
+	
+		<form name="qnaform" method="post" action="searchGoods.go">
+			<input type="hidden" name="id" value="" />			
+			<fieldset>
+				<legend>상품문의 입력 폼</legend>
+					<div class="sorting">
+						<h4><strong>상품문의</strong></h4>
+						<div class="option">
+							<input type="hidden" id="emailok" name="emailok" value="N">
+							<input type="hidden" id="secretyn" name="secretyn" value="N">
+							<span>
+								<input type="checkbox" name="qnaEmail" class="check" id="qnaEmail" onclick="GotoItemQnA();" /> <label for="qnaEmail">이메일 답변 받기</label>
+								<input type="text" name="usermail" title="usermail value="" class="txtInp emailInfo"  onclick="jsCheckLimit();"/>
+							</span>
+							<span class="lPad20"><input type="checkbox" class="check" id="qnaSecret" name="qnaSecret" onclick="jsQNACheck('s');" /> <label for="qnaSecret">비밀글로 문의하기</label></span>
+						</div>
+					</div>
+					<div>
+						<textarea name="contents" id="qnaMsg" cols="100" rows="6" placeholder="문의하실 글을 작성해주세요."></textarea>
+						<!-- <textarea name="contents" id="qnaMsg" cols="100" rows="6" onclick="jsCheckLimit();" placeholder="문의하실 글을 작성해주세요."></textarea> -->
+					</div>
+					<ul class="list01V15">
+						<li>주문 후 주문/배송/취소 등에 관한 문의는 마이텐바이텐 &gt; <a href="/my10x10/qna/myqnalist.asp">1:1 상담</a>을 이용해주시기 바랍니다. <a href="/my10x10/qna/myqnalist.asp" class="more2V15">주문/배송/취소 문의</a></li>
+						<li>고객님이 작성하신 문의 및 답변은 마이텐바이텐 &gt; <a href="/my10x10/myitemqna.asp">상품 Q&amp;A</a> 에서도 확인이 가능합니다.</li>
+						<li>텐바이텐 APP을 이용하시면 좀 더 편리하게 답변을 받으실 수 있습니다.</li>
+						<li>상품과 관련없는 문의는 강제 삭제 될 수 있습니다.</li>
+					</ul>
+					<div class="btnArea ct tMar30">
+						<a href="goodsQna.go" class="btn btnS1 btnRed btnW100">등록</a>
+						<a href="" class="btn btnS1 btnGry btnW100" onclick="$('#inquiryForm').hide();return false;">취소</a>
+					</div>
+			</fieldset>
 		</form>
 	</div>
 

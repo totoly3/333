@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>     
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>      
 <!--
 =========================================================
 * Paper Dashboard 2 - v2.0.1
@@ -308,8 +309,7 @@ Coded by www.creative-tim.com
 					    <td>${ro.goodsName}</td>
 					    <td><img src="${ro.goodsChangeName}" width="100" height="100" ></td>
 					    <td>
-						    <%--<fmt:formatNumber value="${ro.goodsPrice}" pattern="#,###원"/> --%>
-					         ${ro.goodsPrice}원
+					        <fmt:formatNumber value="${ro.goodsPrice}" pattern="#,###원"/>
 					    </td>
 					    <td>주문 진행중</td>
 					    <td><a class="btn btn-primary" onclick="orderCancel('${ro.orderNo}');" id="month6-order" href="#" role="button" style="background-color:black;width:92px;">주문취소</a></td>
@@ -326,16 +326,15 @@ Coded by www.creative-tim.com
 				 <canvas id="myChart" style="margin-left:15%; margin-bottom:15%; width=400vh height=100vw" ></canvas>
               </div>
               <div class="card-body">
-                 <h2>각각 아래에 이미지를 뽑아준다</h2>
-                 <table border="1" align="center">
-                  <tr>
-					<td>d</td>				                  
-					<td>d</td>				                  
-					<td>d</td>				                  
-					<td>d</td>				                  
-					<td>d</td>				                  
-                  </tr>
-                 </table>
+<!--                  <table border="1" align="center"> -->
+<!--                   <tr> -->
+<!-- 					<td>d</td>				                   -->
+<!-- 					<td>d</td>				                   -->
+<!-- 					<td>d</td>				                   -->
+<!-- 					<td>d</td>				                   -->
+<!-- 					<td>d</td>				                   -->
+<!--                   </tr> -->
+<!--                  </table> -->
                
               </div>
               <div class="card-footer">
