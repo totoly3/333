@@ -71,8 +71,8 @@
             <br>
             <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
             <c:if test="${not empty loginUser}">
-            	<button class="btn" onclick="insertQ();">글쓰기</a>
-	            <button class="btn" onclick="mylistQ();">내 글 보기</a>
+            	<button class="btn" onclick="insertQ();">글쓰기</button>
+	            <button class="btn" onclick="mylistQ();">내 글 보기</button>
             </c:if>
             <script>
             	function insertQ(){

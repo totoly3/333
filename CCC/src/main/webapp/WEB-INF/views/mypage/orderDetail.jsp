@@ -39,7 +39,6 @@
     <jsp:include page="/WEB-INF/views/common/header.jsp"/>
     <div class="content">
         <br><br>
-        
         <div class="innerOuter">
             <h2 align="center">주문상세</h2>
             <br>
@@ -47,7 +46,7 @@
                         날짜: ${myOrderDetail.orderDate}일 <br>
                         주문번호: ${myOrderDetail.orderNo}
             </div>
-
+			
             <hr style="color:lightgray">
            <!--상품개수만큼 돌려주는 테이블영역-->
            <c:forEach var="o" items="${orderDetail}">
@@ -55,19 +54,19 @@
                 <tr>
                     <td>
                         <div class="deliverystatus">
-                            <img src="${myOrderDetail.goodsChangeName}" width="100" height="100" style="margin-top: 20px;">
+                            <img src="${o.goodsChangeName}" width="100" height="100" style="margin-top: 20px;">
                             <span style="font-size: 20px; color:green;">배송완료</span>
                         </div>
                         <br>
                         <div>
-                        	<span>제품명:${myOrderDetail.goodsName}</span><br>
+                        	<span>제품명:${o.goodsName}</span><br>
                             <span>가격:<fmt:formatNumber  value="${o.goodsPrice}" pattern="#,###원"/> </span><span>개수: ${o.quantity}개</span>
                         </div>
                     </td>
                     <td style="width:100px;" align="right;">
                         <div class="orderDetailbutton">
-                            <button onclick="deliveryDetail('${o.orderNo}',${o.orderDetailNo})" align="right;"  style="width:117px;margin-left: 100px;margin-bottom:8px; ">배송조회</button>
-                            <button onclick="orderrefund('${o.orderNo}',${o.orderDetailNo})" align="right;" style="width:117px;margin-left: 100px;margin-bottom:8px; ">교환.반품신청</button>
+                            <button onclick="deliveryDetail('${o.orderNo}',${o.orderDetailNo})"   style="width:117px;margin-left: 100px;margin-bottom:8px; ">배송조회</button>
+                            <button onclick="orderrefund('${o.orderNo}',${o.orderDetailNo})"  style="width:117px;margin-left: 100px;margin-bottom:8px; ">교환.반품신청</button>
                             <button align="right;" style="width:117px;margin-left: 100px;margin-bottom:8px; ">리뷰 작성하기</button>
                         </div>
                     </td>
@@ -92,7 +91,7 @@
                 </tr>
                 <tr>
                     <td>받는 주소</td>
-                    <td>${myOrderDetail.deliveryName}</td>
+                    <td>${myOrderDetail.orderAddress}</td>
                 </tr>
                 <tr>
                     <td></td>

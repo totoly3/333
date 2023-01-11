@@ -107,7 +107,7 @@
         .remoteDiv{
           	position: absolute; 
 /*           	border: 1px solid lightgray; */
-         	right: 220px; 
+         	right: 90px; 
          	top: 46px; 
         	font-size: 12px;
         	font-family: '맑은고딕';
@@ -261,11 +261,23 @@
             </c:choose>
                 
           <div class="dropdown22">
-	          <li class="nav-item">
-	            <a href="mainAdmin.ad" class="nav-link" style="color:#EA4F4D; font-weight:bold; text-shadow: 5px 5px 5px 5px white;">
-	              Admin &nbsp;&nbsp;&nbsp;&nbsp;
-	            </a>
-	          </li>
+          
+	          <c:choose>
+		          <c:when test="${empty loginAdmin }">
+			          <li class="nav-item">
+			            <a href="login.ad" class="nav-link" style="color:#EA4F4D; font-weight:bold; text-shadow: 5px 5px 5px 5px white;">
+			              Admin &nbsp;&nbsp;&nbsp;&nbsp;
+			            </a>
+			          </li>
+		          </c:when>
+				  <c:otherwise>
+				  	 <li class="nav-item">
+			            <a href="mainAdmin.ad" class="nav-link" style="color:#EA4F4D; font-weight:bold; text-shadow: 5px 5px 5px 5px white;">
+			              Admin &nbsp;&nbsp;&nbsp;&nbsp;
+			            </a>
+			          </li>
+				  </c:otherwise>
+			  </c:choose>
 	      </div>
 	      <c:choose>
 			<c:when test="${not empty loginUser}">

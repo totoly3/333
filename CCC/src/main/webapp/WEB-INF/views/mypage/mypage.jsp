@@ -290,10 +290,9 @@ Coded by www.creative-tim.com
 					    <th></th>
 					    <th style="width:80px;">주문번호</th>
 					    <th style="width:200px;">주문일자</th>
-					    <th>굿즈명</th>
+					    <th style="width:280px;">굿즈명</th>
 					    <th style="text-align: center;">굿즈이미지</th>
 					    <th>굿즈가격</th>
-					    <th>주문상태</th>
 					    <th>주문취소</th>
 					  </tr>
 					 <c:forEach var="ro" items="${realoList}" >
@@ -306,7 +305,6 @@ Coded by www.creative-tim.com
 					    <td>
 					        <fmt:formatNumber value="${ro.goodsPrice}" pattern="#,###원"/>
 					    </td>
-					    <td>주문 진행중</td>
 					    <td><a class="btn btn-primary" onclick="orderCancel('${ro.orderNo}');" id="month6-order" href="#" role="button" style="background-color:black;width:92px;">주문취소</a></td>
 					  </tr>
 					 </c:forEach >

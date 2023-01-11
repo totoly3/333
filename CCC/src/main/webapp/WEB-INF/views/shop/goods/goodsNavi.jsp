@@ -82,7 +82,7 @@
         .remoteDiv{
          	position: absolute;
 /*          	border: 1px solid lightgray;  */
-        	right: 380px;
+        	right: 220px;
         	top: 17px;
         	font-size: 11px;
 /* 			display: none; */

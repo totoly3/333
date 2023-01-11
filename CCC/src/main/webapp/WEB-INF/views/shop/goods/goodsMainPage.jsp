@@ -45,7 +45,7 @@
         .remoteDiv{
          	position: absolute;
 /*         	border: 1px solid lightgray; */
-        	right: 365px;
+        	right: 205px;
         	top: 20px;
         	font-size: 10px;
 /* 			display: none; */

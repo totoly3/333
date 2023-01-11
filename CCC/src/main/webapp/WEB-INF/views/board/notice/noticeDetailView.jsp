@@ -89,22 +89,7 @@
             </div>
             <br><br>
 
-            <!-- 댓글 기능은 나중에 ajax 배우고 나서 구현할 예정! 우선은 화면구현만 해놓음 -->
-            <table id="replyArea" class="table" align="center">
-                <thead>
-                    <tr>
-                        <th colspan="2">
-                            <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
-                        </th>
-                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
-                    </tr>
-                    <tr>
-                        <td colspan="3">댓글(<span id="rcount"></span>)</td>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+            
         </div>
         <br><br>
         <script>

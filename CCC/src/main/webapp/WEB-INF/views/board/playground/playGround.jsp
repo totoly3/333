@@ -126,7 +126,12 @@
 		
 		#horseABC {
 		color : red;
-		}	
+		}
+		
+		.allTimeOuter{
+			margin:auto;
+			width: 70%;
+		}
 			
 </style>		
 
@@ -161,6 +166,8 @@
 </head>
 <body>
    <jsp:include page="/WEB-INF/views/common/header.jsp"/>
+   <br><br>    <br><br><br><br>
+   <div class="allTimeOuter">
 		       <h1>놀이터</h1>	
 		         <div>
 				 	 <h2 class="count"  margin-left:150px;>0</h2>
@@ -295,7 +302,7 @@
 					    }
 					}
 					</script>
-		    
+		  </div>  
 	</body>
 
 </html>

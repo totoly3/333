@@ -452,8 +452,8 @@
 
 	<script type="text/javascript">
 		
-            var context = document.getElementById('AreaChart').getContext('2d');
-            var pie = document.getElementById('BarChart').getContext('2d');
+            var context = document.getElementById('myAreaChart').getContext('2d');
+            var pie = document.getElementById('myBarChart').getContext('2d');
 
 
             let today=new Date();

@@ -577,7 +577,8 @@ public class MyPageController {
 
 		// ~join한 주문객체가져옴(SELECT) 객체하나
 		MyOrderDetail myOrderDetail = mypageService.myOrderDetail(Integer.parseInt(orderNo));
-
+		System.out.println(myOrderDetail);
+		
 		// 로그인이 되어있다면
 		if (loginUser != null) {
 
