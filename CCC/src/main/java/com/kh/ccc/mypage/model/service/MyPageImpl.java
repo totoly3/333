@@ -67,7 +67,7 @@ public class MyPageImpl implements MyPageService{
 //		
 //		return count;
 //	}
-
+//0111 지은 git
 
 	//상세보기 글조회
 	@Override
