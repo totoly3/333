@@ -333,7 +333,7 @@
 		WHERE C_NO = #{ refBno }
 	</update>
 	
-	<!-- 좋아요 추가 (TB_CHARACTER) -->
+	<!-- 좋아요 추가 (TB_CHARACTER_BOARD) -->
 	<update id="insertTbCharBoard" parameterType="charLike">
 		UPDATE TB_CHARACTER_BOARD
 		SET CB_LIKE = CB_LIKE + 1

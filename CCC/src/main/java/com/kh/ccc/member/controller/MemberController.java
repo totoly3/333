@@ -94,11 +94,17 @@ public class MemberController {
 	
 	//아래는 로그아웃 	
 	@RequestMapping("logout.me")
-	public String logOutMember(HttpSession session){
+	public String logOutMember(HttpSession session, HttpServletRequest request){
+		
 		//	session.invalidate();  둘중하나 쓰면됨   
 		session.removeAttribute("loginUser");
-		return "redirect:/";
+		session.setAttribute("alertMsg", "로그아웃되었습니다.");
 		
+		String prevUri = request.getHeader("Referer");
+		if(prevUri != null) {
+			return "redirect:" + prevUri;
+		}
+		return "redirect:/";
 	}
 		
 

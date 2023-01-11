@@ -57,7 +57,7 @@
                     <br><br>
 					<!-- 로그인 유저만 글작성 가능하도록 -->
                     <c:if test="${ not empty loginUser }">
-						<a href="insert.ch" class="btn btn-success btn-icon-split">
+						<a href="insert.ch" class="btn btn-danger btn-icon-split">
                             <span class="icon text-white-50">
                                 <i class="fas fa-check"></i>
                             </span>
@@ -84,10 +84,10 @@
 			                      			
 			   								<c:choose>
 			   									<c:when test="${ b.memberLike eq 1 }">	   										              
-			   										<span class="likeFont">좋아요 </span><img class="likeBtn" onclick="likeGo('${ b.boardNo }');" src="${ pageContext.request.contentType }resources/character/likeImg/free-icon-heart-true.png" title="heart icons"><br><span class="likeFont">총 좋아요 수 : ${ b.like }</span>   
+			   										<span class="likeFont">좋아요 </span><img class="likeBtn" onclick="likeGo('${ b.boardNo }');" src="${ pageContext.request.contentType }resources/character/likeImg/free-icon-heart-true.png" title="heart icons"><br><span class="likeFont">좋아요 수 : ${ b.like }</span>   
 			   									</c:when>
 			   									<c:otherwise>		   																	                                        			   										
-			   										<span class="likeFont">좋아요 </span><img class="likeBtn" onclick="likeGo('${ b.boardNo }');" src="${ pageContext.request.contentType }resources/character/likeImg/free-icon-heart-false.png" title="heart icons"><br><span class="likeFont">총 좋아요 수 : ${ b.like }</span>		                                        			   										
+			   										<span class="likeFont">좋아요 </span><img class="likeBtn" onclick="likeGo('${ b.boardNo }');" src="${ pageContext.request.contentType }resources/character/likeImg/free-icon-heart-false.png" title="heart icons"><br><span class="likeFont">좋아요 수 : ${ b.like }</span>		                                        			   										
 			   									</c:otherwise>
 			   								</c:choose>
 			                            </div>
@@ -108,10 +108,10 @@
 	            	<!-- currentPage 1이면 숨기기 -->
 	            	<c:choose>
 	            		<c:when test="${ pi.currentPage ne 1 }">
-	                  <li class="page-item"><a class="page-link" href="list.ch?currentPage=${ pi.currentPage -1 }">Previous</a></li>
+	                  		<li class="page-item"><a class="page-link" href="list.ch?currentPage=${ pi.currentPage -1 }">Previous</a></li>
 	            		</c:when>
 	            		<c:otherwise>
-	                  <li class="page-item disabled"><a class="page-link" href="list.ch?currentPage=${ pi.currentPage -1 }">Previous</a></li>
+	                  		<li class="page-item disabled"><a class="page-link" href="list.ch?currentPage=${ pi.currentPage -1 }">Previous</a></li>
 	            		</c:otherwise>
 	            	</c:choose>
 	            	<!-- controller에서 넘어온 pi의 startPage와 endPage생성 -->
