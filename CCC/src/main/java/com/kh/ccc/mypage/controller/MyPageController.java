@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -343,7 +344,6 @@ public class MyPageController {
 	}
 
 	// 주문영역------------------------------------------------------------------------------------------------------
-
 	// 기간별 주문내역 조회 단순이동
 	@RequestMapping(value = "selectoListbyDate2.my")
 	public String selectoListbyDate2(HttpSession session, Model model) {
@@ -579,9 +579,6 @@ public class MyPageController {
 
 
 	// 캐릭터별 좋아요 데이터 가져옴
-
-	
-
 	@ResponseBody
 	@RequestMapping(value = "dataSelect.my", produces = "application/json;charset=UTF-8")
 	public String dataSelect(HttpSession session) {
@@ -596,8 +593,7 @@ public class MyPageController {
 
 	}
 
-	// 찜하기
-	// 영역-----------------------------------------------------------------------------------------------------
+	//찜하기영역-----------------------------------------------------------------------------------------------------
 	// 찜한 리스트 조회
 	@RequestMapping("wishList.my")
 	public String selectWishList(HttpSession session, Model model) {
@@ -654,8 +650,7 @@ public class MyPageController {
 
 	}
 
-	// 장바구니
-	// 영역--------------------------------------------------------------------------------------------------
+	// 장바구니영역--------------------------------------------------------------------------------------------------
 	// 장바구니 추가
 	@ResponseBody
 	@RequestMapping(value = "findCartGoods.my", produces = "application/text;charset=utf8")
@@ -706,5 +701,25 @@ public class MyPageController {
 		return "mypage/cartList";
 
 	 }
+	
+
+	//장바구니 수량수정
+	@PatchMapping ("updateCartCount.my")
+	public String updateCartCount(Cart cart) {
+		
+		//cart객체
+		mypageService.updateCartCount(cart);
+		
+		return "redirect:/cartList";
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

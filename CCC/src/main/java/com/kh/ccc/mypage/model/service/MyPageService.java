@@ -73,4 +73,10 @@ public interface MyPageService {
 	//장바구니 추가2. 장바구니에 상품없었을 때에 실제 추가작업
 	void addCartGoods(Cart cart);
 	
+	//장바구니 수량수정
+	int updateCartCount(Cart cart);
+	
+	
+	
+	
 }
