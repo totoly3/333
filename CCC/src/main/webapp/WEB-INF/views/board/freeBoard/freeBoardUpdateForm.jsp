@@ -83,7 +83,7 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-   
+   <br><br><br><br><br><br>
 <div class="container">
   <h1>자유게시판 수정하는곳이다아</h1>
   <p></p>

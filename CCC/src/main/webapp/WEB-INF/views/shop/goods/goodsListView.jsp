@@ -321,12 +321,15 @@
 
 <br><br><br><br><br><br><br>
 
-
-<c:if test="${not empty loginUser}">
-		<!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
-		<a class="btn btn-secondary" style="float:left;" href="insert.bo">글쓰기</a>
-	</c:if>
-	<a class="btn btn-secondary" style="float:left;" href="insert.go">글쓰기</a>
+	<c:choose>
+		<c:when test="${not empty loginUser}">
+			<!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
+			<a class="btn btn-secondary" style="float:left;" href="insert.go">글쓰기</a>
+		</c:when>
+		<c:otherwise>
+			<a class="btn btn-secondary" style="float:left;" href="#">글쓰기</a>
+		</c:otherwise>
+	</c:choose>
 
 	<section class="ftco-section">
 

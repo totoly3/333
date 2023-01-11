@@ -11,7 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .content {
-            background-color:rgb(247, 245, 245);
+/*             background-color:rgb(247, 245, 245); */
             width:80%;
             margin:auto;
         }
@@ -22,7 +22,27 @@
             padding:5% 10%;
             background-color:white;
         }
-
+		
+		.detailQBtn{
+			height: 30px;
+			font-size: 12px;
+			border-radius: 3px;
+			width: 110px;
+			margin-bottom: 3px;
+			background-color: coral;
+			color: white;
+			border:0px;
+			float:right;
+			margin-right:30px;
+		}
+		
+		.detailQBtn:hover{
+			font-size: 13px;
+			color: lightgray;
+			font-weight: bold;
+			background-color: coral;
+		}
+		
         table * {margin:5px;}
         table {width:100%;}
     </style>
@@ -30,14 +50,19 @@
 <body>
         
     <jsp:include page="../../common/header.jsp"/>
-
+	<br><br><br><br><br><br>
     <div class="content">
         <br><br>
         <div class="innerOuter">
             <h2>문의게시판 상세보기</h2>
             <br>
-            <a class="btn btn-secondary" style="float:right;" href="list.qu">목록으로</a>
+            <button class="detailQBtn" style="float:right;" onclick="listQ();">목록으로</button>
             <br><br>
+            <script>
+            	function listQ(){
+            		location="list.qu";
+            	}
+            </script>
 
             <table id="contentArea" algin="center" class="table">
                 <tr>
@@ -97,13 +122,24 @@
             <div align="center">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
                 <c:if test="${ (not empty loginUser) and (loginUser.memberName eq q.questionWriter) }">
-	                <a class="btn btn-primary" href="updateForm.qu?qno=${q.questionNo }">수정하기</a>
+	                <button class="detailQBtn" onclick="updateForm();">수정하기</button>
                 </c:if>
-                <a class="btn btn-danger" href="delete.qu?qno=${q.questionNo }">삭제하기</a>
+                <button class="detailQBtn" onclick="deleteQ();">삭제하기</button>
                 <c:if test="${not empty loginAdmin }">
-                	<a class="btn btn-primary" href="responseForm.qu?qno=${q.questionNo }">답변하기</a>
+                	<button class="detailQBtn" onclick="responseForm();">답변하기</button>
                 </c:if>
             </div>
+            <script>
+            	function updateForm(){
+            		location.href="updateForm.qu?qno="+${q.questionNo }
+            	}
+            	function deleteQ(){
+            		location.href="delete.qu?qno="+${q.questionNo }
+            	}
+            	function responseForm(){
+            		location.href="responseForm.qu?qno="+${q.questionNo }
+            	}
+            </script>
             <br><br>
         </div>
     </div>
