@@ -15,7 +15,34 @@
 
 
 	<link href="resources/css/freeboard/style_fr.css" rel="stylesheet">
-
+	
+	<style>
+		.alltimeBtn{
+			height: 33px;
+        	font-size: 20px;
+        	font-weight: bold;
+		}
+		.alltimeBtn:hover{
+			font-size: 21px;
+		}
+		.thisMonthBtn{
+			border-radius: 3px;
+			width: 250px;
+			margin-bottom: 3px;
+			background-color: coral;
+			color: black;
+			border:0px;
+			margin-right: 50px;
+		}
+		.thisYearBtn{
+			border-radius: 3px;
+			width: 220px;
+			margin-bottom: 3px;
+			background-color: coral;
+			color: black;
+			border:0px;
+		}
+	</style>
    
 	
 </head>
@@ -42,9 +69,9 @@
 				<h1><b>CCC 역대 수상작</b></h1>
 			<div class="sec-title">
 				<h2>
-					 <button type="button" class="btn btn-primary"  onclick="ThisMonthLikes();">이번달 좋아요 높은순</button>
+					 <button type="button" class="alltimeBtn thisMonthBtn"  onclick="ThisMonthLikes();">이번달 좋아요 높은순</button>
 		  	
-		 		 	 <button type="button" class="btn btn-danger"  onclick="ThisYearLikes();">올해 좋아요 높은순</button>
+		 		 	 <button type="button" class="alltimeBtn thisYearBtn"  onclick="ThisYearLikes();">올해 좋아요 높은순</button>
 				</h2>
 			</div>
 		</div>
