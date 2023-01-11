@@ -222,7 +222,7 @@ public class CharBoardController {
 		int boardNo = updateCb.getBoardNo();
 		ArrayList<CharAttach> caList = boardService.selectAttach(boardNo);
 				
-		//게시판 첨부파일등록 이미지 경로
+		//게시판 첨부파일 이미지 경로
 		String charBoardFilePath = "resources/character/charBoardImg/";
  		
 		//--------기존 첨부파일 수정 시작
@@ -235,16 +235,16 @@ public class CharBoardController {
 			int delAttachResult = 0;
 			int deleteAllOldAttach = 0;
 			String realPath = "";
-				//삭제 선택된 기존의 첨부파일 삭제하기 (수정페이지에서 기존 첨부파일을 지우지 않았다면==있다면)
+				//삭제 선택된 기존의 첨부파일 삭제 (수정페이지에서 기존 첨부파일을 지우지 않았다면==기존 파일이 있다면)
 				if( oldCaList != null ) {
 					for(CharAttach ca : caList) {
-					
-						if(!oldCaList.contains(ca.getLevel())) { //기존 파일의 레벨 번호가 없다면
+						//기존 파일의 레벨 번호가 없다면
+						if(!oldCaList.contains(ca.getLevel())) { 
 							CharAttach deleteCa = new CharAttach();
 							deleteCa.setLevel(ca.getLevel());
 							deleteCa.setRefBno(boardNo);
 							
-							//기존파일의 레벨과 게시글 번호를 가지고 기존 첨부파일을 삭제하는 메소드
+							//기존파일의 레벨과 게시글 번호를 가지고 기존 첨부파일을 삭제
 							delAttachResult = boardService.deleteCharAttachByCaNo(deleteCa);
 							
 							realPath = session.getServletContext().getRealPath(ca.getChangeName());
@@ -260,7 +260,7 @@ public class CharBoardController {
 				}else { //기존 첨부파일을 다 지웠으면 (null이면)
 					//기존 첨부파일 모두 DB에서 제거 (게시글번호 이용)
 					deleteAllOldAttach = boardService.deleteAllOldAttach(boardNo);
-					//기존 첨부파일의 실제 파일 경로로 파일도 제거
+					//기존 첨부파일의 실제 파일 경로로 파일 제거
 					for( CharAttach ca : caList ) {
 						realPath = session.getServletContext().getRealPath(ca.getChangeName());
 						new File(realPath).delete();						
@@ -297,7 +297,6 @@ public class CharBoardController {
 		}
 		
 		//--------새로운 첨부파일 시작
-		
 		int result = 0; //결과값을 담을 변수
 		String changeName = "";
 		if(upfileList != null) { //게시글 수정 시 새로운 첨부파일이 있다면
@@ -401,7 +400,7 @@ public class CharBoardController {
 		CharLike clSelect = boardService.selectLike(cl);
 			
 		//좋아요가 없다면 좋아요 등록
-		if((clSelect.getCharLike() == 0)) {
+		if( (clSelect.getCharLike() == 0) ) {
 			//TB_CHARACTER_LIKE / TB_CHARACTER 테이블에 좋아요 추가
 			int insertResult = boardService.insertLike(cl);
 			
@@ -424,7 +423,7 @@ public class CharBoardController {
 		CharLike clSelect = boardService.selectLike(cl);
 		
 		//좋아요가 없다면 좋아요 등록
-		if((clSelect.getCharLike() == 0)) {
+		if( (clSelect.getCharLike() == 0) ) {
 			//TB_CHARACTER_LIKE / TB_CHARACTER 테이블에 좋아요 추가
 			int insertResult = boardService.insertLike(cl);
 			
