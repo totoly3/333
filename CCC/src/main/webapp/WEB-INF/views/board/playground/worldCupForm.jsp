@@ -8,6 +8,7 @@
 </head>
 <body>
 	<jsp:include page="../../common/header.jsp"/>
+	<br><br><br><br><br><br>
     <div id="cupOuter" align="center">
     	<h1 align="center">캐릭터 월드컵</h1>
         <h4 align="center">최고의 캐릭터를 꼽아 보세요!!</h4>

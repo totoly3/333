@@ -80,22 +80,79 @@ public class UtilController {
 		
 		// 하지만 지금은 더미가 없으므로 임의로 데이터만 넣어서 개발
 		ArrayList<Character> clist = new ArrayList<>();
-		for(int i=0; i<no; i++) {
-			Character c = new Character();
-			c.setCharNo(i+1);
-			c.setCharName("캐릭터 이름 "+(i+1));
-			c.setCharContent("캐릭터 설명"+(i+1));
-			c.setMemberNo(i+1);
-			c.setChangeName("resources/worldCup/img/WC"+(i+1)+".png");
-			clist.add(c);
-		}
+	
+		Character c1 = new Character();
+		c1.setCharNo(1);
+		c1.setCharName("캐릭터 이름 "+(1));
+		c1.setCharContent("캐릭터 설명"+(1));
+		c1.setMemberNo(1);
+		c1.setChangeName("resources/worldCup/img/WC1.jpeg");
+		clist.add(c1);
+		
+		Character c2 = new Character();
+		c2.setCharNo(1);
+		c2.setCharName("캐릭터 이름 "+(2));
+		c2.setCharContent("캐릭터 설명"+(2));
+		c2.setMemberNo(2);
+		c2.setChangeName("resources/worldCup/img/WC2.jpg");
+		clist.add(c2);
+		
+		Character c3 = new Character();
+		c3.setCharNo(1);
+		c3.setCharName("캐릭터 이름 "+(3));
+		c3.setCharContent("캐릭터 설명"+(3));
+		c3.setMemberNo(3);
+		c3.setChangeName("resources/worldCup/img/WC3.jpg");
+		clist.add(c3);
+		
+		Character c4 = new Character();
+		c4.setCharNo(1);
+		c4.setCharName("캐릭터 이름 "+(4));
+		c4.setCharContent("캐릭터 설명"+(4));
+		c4.setMemberNo(4);
+		c4.setChangeName("resources/worldCup/img/WC4.jpg");
+		clist.add(c4);
+		
+		Character c5 = new Character();
+		c5.setCharNo(1);
+		c5.setCharName("캐릭터 이름 "+(5));
+		c5.setCharContent("캐릭터 설명"+(5));
+		c5.setMemberNo(5);
+		c5.setChangeName("resources/worldCup/img/WC5.jpg");
+		clist.add(c5);
+		
+		Character c6 = new Character();
+		c6.setCharNo(6);
+		c6.setCharName("캐릭터 이름 "+(6));
+		c6.setCharContent("캐릭터 설명"+(6));
+		c6.setMemberNo(6);
+		c6.setChangeName("resources/worldCup/img/WC6.jpg");
+		clist.add(c6);
+		
+		Character c7 = new Character();
+		c7.setCharNo(7);
+		c7.setCharName("캐릭터 이름 "+(7));
+		c7.setCharContent("캐릭터 설명"+(7));
+		c7.setMemberNo(7);
+		c7.setChangeName("resources/worldCup/img/WC7.gif");
+		clist.add(c7);
+		
+		Character c8 = new Character();
+		c8.setCharNo(1);
+		c8.setCharName("캐릭터 이름 "+(8));
+		c8.setCharContent("캐릭터 설명"+(8));
+		c8.setMemberNo(8);
+		c8.setChangeName("resources/worldCup/img/WC8.gif");
+		clist.add(c8);
+		
+		
 		System.out.println("캐릭터리스트 : "+clist);
 		model.addAttribute("clist", clist);
 		
 		return "board/playground/worldCup";
 	}
 	
-	@RequestMapping(value="competition.go")
+	@RequestMapping(value="contest.go")
 	public String goCompetition(Model model) {
 		
 		
