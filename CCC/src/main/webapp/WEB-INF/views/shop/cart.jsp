@@ -15,10 +15,9 @@
     <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
 <!--     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
     <style>
-    	#headerRaiseUp{
-            z-index: 8;
-            position: relative;
-            top: -155px;
+    	#cartOuter{
+            margin: auto;
+            width:70%;
         }
         #cart-area th{
         	border-top: 2px solid lightgray;
@@ -133,8 +132,8 @@
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
-<div class="container" id="headerRaiseUp">
-	<br><br>
+<div class="container" id="cartOuter">
+	<br><br><br><br><br><br>
     <!-- CART START-->
     <div class="cartDiv">
         <form action="">

@@ -11,7 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .content {
-            background-color:rgb(247, 245, 245);
+/*             background-color:rgb(247, 245, 245); */
             width:80%;
             margin:auto;
         }
@@ -32,7 +32,7 @@
     <jsp:include page="../../common/header.jsp"/>
 
     <div class="content">
-        <br><br>
+        <br><br><br><br><br><br>
         <div class="innerOuter">
             <h2>공지사항 수정하기</h2>
             <br>

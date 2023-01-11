@@ -11,7 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .content {
-            background-color:rgb(247, 245, 245);
+/*             background-color:rgb(247, 245, 245); */
             width:80%;
             margin:auto;
         }
@@ -22,15 +22,34 @@
             padding:5% 10%;
             background-color:white;
         }
-
+		.updateQBtn{
+			font-size: 12px;
+			height: 30px;
+			border-radius: 3px;
+			width: 110px;
+			margin-bottom: 3px;
+			background-color: coral;
+			color: white;
+			border:0px;
+			float:right;
+			margin-right:30px;
+		}
+		
+		.updateQBtn:hover{
+			font-size: 13px;
+			color: lightgray;
+			font-weight: bold;
+			background-color: coral;
+		}
+		
         #updateForm>table {width:100%;}
         #updateForm>table * {margin:5px;}
     </style>
 </head>
 <body>
-        
+    
     <jsp:include page="../../common/header.jsp"/>
-
+	<br><br><br><br><br><br>
     <div class="content">
         <br><br>
         <div class="innerOuter">
@@ -60,12 +79,12 @@
                             	<div>
                             	<a href="" id="" download="${qa.questionAttachChangeName }">${qa.questionAttachOriginName }</a>
                             	<input type="hidden" id="qa_${var.index }" name="oldQa" value="${qa.questionAttachNo }">
-                            	<input type="button" id="deleteAttachBtn_${var.index }" value="파일삭제"><br>
+                            	<button type="button" class="updateQBtn" id="deleteAttachBtn_${var.index }" value="파일삭제"></button><br>
                             	</div>
                            	</c:forEach>
                      		새로 업로드할 파일 : <br>
                      		<div id="newQa-area">
-                        		<input type="button" id="addAttachBtn" value="파일추가"><br>
+                        		<input type="button" class="updateQBtn" id="addAttachBtn" value="파일추가"><br>
                         	</div>
                         </td>
                     </tr>
@@ -101,8 +120,8 @@
                 <br>
 
                 <div align="center">
-                    <button type="submit" class="btn btn-primary">수정하기</button>
-                    <button type="button" class="btn btn-danger" onclick="javascript:history.go(-1);">이전으로</button>
+                    <button type="submit" class="updateQBtn">수정하기</button>
+                    <button type="button" class="updateQBtn" onclick="javascript:history.go(-1);">이전으로</button>
                 </div>
             </form>
         </div>

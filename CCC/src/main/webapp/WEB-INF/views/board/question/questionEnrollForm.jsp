@@ -10,7 +10,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .content {
-            background-color:rgb(247, 245, 245);
+/*             background-color:rgb(247, 245, 245); */
             width:80%;
             margin:auto;
         }
@@ -21,7 +21,27 @@
             padding:5% 10%;
             background-color:white;
         }
-
+		
+		.insertQ{
+			font-size: 12px;
+			height: 30px;
+			border-radius: 3px;
+			width: 110px;
+			margin-bottom: 3px;
+			background-color: coral;
+			color: white;
+			border:0px;
+			float:right;
+			margin-right:30px;
+		}
+		
+		.insertQ:hover{
+			font-size: 13px;
+			color: lightgray;
+			font-weight: bold;
+			background-color: coral;
+		}
+		
         #enrollForm>table {width:100%;}
         #enrollForm>table * {margin:5px;}
         #addAttach-area {width:100%;}
@@ -34,7 +54,7 @@
 <body>
         
     <jsp:include page="../../common/header.jsp"/>
-
+	<br><br><br><br><br><br>
     <div class="content">
         <br><br>
         <div class="innerOuter">
@@ -68,7 +88,7 @@
                     </tr>
                     <tr>
                         <th>첨부파일</th>
-                        <td><input type="button" id="addAttachBtn" value="파일추가">최대 5개까지 가능합니다.</td>
+                        <td><button type="button" id="addAttachBtn" class="insertQ">파일추가</button>최대 5개까지 가능합니다.</td>
                     </tr>
                 </table>
 				<table algin="center" id="addAttach-table"></table>
@@ -100,8 +120,8 @@
                 </script>
 
                 <div align="center">
-                    <button type="submit" class="btn btn-primary">등록하기</button>
-                    <button type="reset" class="btn btn-danger">초기화</button>
+                    <button type="submit" class="insertQ">등록하기</button>
+                    <button type="reset" class="insertQ">초기화</button>
                 </div>
             </form>
         </div>
