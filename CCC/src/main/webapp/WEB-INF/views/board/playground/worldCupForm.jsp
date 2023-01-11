@@ -5,12 +5,31 @@
 <head>
 <meta charset="UTF-8">
 <title>CCC::WorldCup</title>
+<style>
+	#goBtn{
+		font-size: 12px;
+		height: 30px;
+		border-radius: 3px;
+		width: 150px;
+		margin-bottom: 3px;
+		background-color: #EA4F4D;
+		color: white;
+		border:0px;
+		margin-right:30px;
+	}
+	#goBtn:hover{
+		font-size: 13px;
+		color: white;
+		font-weight: bold;
+		background-color: rgb(243, 131, 131);
+	}
+</style>
 </head>
 <body>
 	<jsp:include page="../../common/header.jsp"/>
 	<br><br><br><br><br><br>
     <div id="cupOuter" align="center">
-    	<h1 align="center">캐릭터 월드컵</h1>
+    	<h1 align="center">캐릭터 월드컵</h1><br>
         <h4 align="center">최고의 캐릭터를 꼽아 보세요!!</h4>
         <br><br>
         <select id="selectbox" name="selectbox">

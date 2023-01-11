@@ -110,11 +110,11 @@
         /*리모콘*/
         .remoteCartDiv{
         	position: fixed;
-        	border: 1px solid lightgray;
+/*         	border: 1px solid lightgray; */
         	width: 150px;
         	height: 300px;
         	right: 10px;
-        	bottom: 300px;
+        	bottom: 450px;
 /* 			display: none; */
         }
         .categoryTag{
@@ -258,18 +258,20 @@
     <br><br><br><br><br>
     
     <div class="remoteCartDiv">
-    	<span id="remoteController">할인 상품!</span><br>
+<!--     	<span id="remoteController">할인 상품!</span><br> -->
     	<div class="remoteItem">
 <!-- 			<span class="remoteSpan">1번 항목</span><br> -->
-			<a href="detail.go?gno=33"><img src="resources/goodsImg/2023010517290215130.jpg" class="img-fluid" alt="Colorlib Template"></a>
+			<a href="detail.go?gno=33"><img src="resources/goodsImg/2023010518180147435.jpg" class="img-fluid" alt="Colorlib Template"></a>
     	</div>
+    	<br>
     	<div class="remoteItem">
 <!-- 			<span class="remoteSpan">2번 항목</span><br> -->
-			<a href="detail.go?gno=22"><img src="resources/goodsImg/2023010517290278305.jpg" class="img-fluid" alt="Colorlib Template"></a>
+			<a href="detail.go?gno=41"><img src="resources/goodsImg/2023010518192452093.jpg" class="img-fluid" alt="Colorlib Template"></a>
     	</div>
+    	<br>
     	<div class="remoteItem">
 <!-- 			<span class="remoteSpan">3번 항목</span><br> -->
-			<a href="detail.go?gno=34"><img src="resources/goodsImg/2023010517292621987.jpg" class="img-fluid" alt="Colorlib Template"></a>
+			<a href="detail.go?gno=39"><img src="resources/goodsImg/2023010518192437047.jpg" class="img-fluid" alt="Colorlib Template"></a>
     	</div>
     </div>
 

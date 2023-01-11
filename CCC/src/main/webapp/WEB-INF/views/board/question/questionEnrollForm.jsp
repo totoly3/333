@@ -28,7 +28,7 @@
 			border-radius: 3px;
 			width: 110px;
 			margin-bottom: 3px;
-			background-color: coral;
+			background-color: #EA4F4D;
 			color: white;
 			border:0px;
 			float:right;
@@ -39,7 +39,7 @@
 			font-size: 13px;
 			color: lightgray;
 			font-weight: bold;
-			background-color: coral;
+			background-color: rgb(243, 131, 131);
 		}
 		
         #enrollForm>table {width:100%;}
