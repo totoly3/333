@@ -148,6 +148,29 @@ public class AdminServiceImpl implements AdminService{
 	}
 
 
+	//문의 답글필요
+	@Override
+	public int selectQcount() {
+
+		int qCount = adminDao.selectQcount(sqlSession);
+		
+		return qCount;
+		
+	}
+
+
+	//누적 주문수량
+	@Override
+	public int selectOrderCount() {
+
+		int countOrder = adminDao.selectOrderCount(sqlSession);
+		
+		return countOrder;
+		
+		
+	}
+
+
 
 
 

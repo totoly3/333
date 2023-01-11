@@ -21,14 +21,19 @@
      <link href="resources/mainAdmin/css/styles.css" rel="stylesheet" />
         
         <style>
+        	/* outer */
+        	#charOuter{
+        		width: 60%;
+        		margin: auto;
+        	}
         	/* 페이징 영역 */
         	#pagingArea {width:fit-content; margin:auto;} 
         	/* 썸네일 호버 */
         	.thumbnail:hover {cursor:pointer; opacity: 0.5;}
 			
-	         #searchForm {
-	            width:80%;
-	            margin:auto;
+			#searchForm {
+				width:80%;
+				margin:auto;
 	        }
 	        #searchForm>* {
 	            float:left;
@@ -51,8 +56,10 @@
         
         <!-- Portfolio Grid-->
         <section class="page-section bg-light" id="portfolio">
-            <div class="container">
+<!--             <div class="container"> -->
+			<div id="charOuter">
                 <div class="text-center">
+                	<br><br><br>
                     <h2 class="section-heading text-uppercase">캐릭터 썸네일 게시판</h2>
                     <br><br>
 					<!-- 로그인 유저만 글작성 가능하도록 -->
@@ -101,6 +108,7 @@
                 	</c:choose>
                 </div>
             </div>
+            <br><br>
         
 	        <!-- 페이징 영역 -->
 			<div id="pagingArea">
@@ -129,6 +137,7 @@
 	            	</c:choose>
 	            </ul>
 			</div>
+			<br>
 			
 			<!-- 검색바 영역 -->
 			<form id="searchForm" action="search.ch" method="get" align="center">

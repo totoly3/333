@@ -20,12 +20,12 @@
     <style>
         .content {
             background-color:rgb(247, 245, 245);
-            width:100%;
+            width:80%;
             margin:auto;
         }
         .innerOuter {
             border:1px solid lightgray;
-            width:80%;
+            width:100%;
             margin:auto;
             padding:5% 10%;
             background-color:white;

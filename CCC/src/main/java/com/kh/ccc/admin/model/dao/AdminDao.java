@@ -142,6 +142,26 @@ public class AdminDao {
 
 			return sqlSession.selectOne("adminMapper.loginAdmin",aId);
 		}
+
+	
+	//문의 답글필요
+	public int selectQcount(SqlSessionTemplate sqlSession) {
+
+		int qCount =sqlSession.selectOne("adminMapper.selectQcount");
+		
+		return qCount;
+		
+	}
+
+	
+	//누적 주문수량
+	public int selectOrderCount(SqlSessionTemplate sqlSession) {
+
+		int countOrder =sqlSession.selectOne("adminMapper.selectOrderCount");
+		
+		return countOrder;
+		
+	}
 		
 		
 	
