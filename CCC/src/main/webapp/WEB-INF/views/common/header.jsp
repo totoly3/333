@@ -16,7 +16,7 @@
   <meta name="HandheldFriendly" content="true">
   <title>CHAx3 HARD-CHARAC</title>
   <link rel="stylesheet" href="resources/mainView/css/theme.min.css">
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <style>
     /* inter-300 - latin */
     @font-face {
@@ -105,15 +105,15 @@
    
         /*리모콘*/
         .remoteDiv{
-         	position: absolute;
-/*         	border: 1px solid lightgray; */
+   /*      	position: absolute;
+         	border: 1px solid lightgray; 
         	right: 220px;
         	top: 40px;
-        	font-size: 11px;
-/* 			display: none; */
-			color: black;
+        	font-size: 11px;*/
+/*  			display: none; */
+/*			color: black;
 			float: right;
-			z-index:100;
+			z-index:100;*/
         }
         #logOutBtn{
         	border: none;
@@ -126,7 +126,7 @@
 <body data-bs-spy="scroll" data-bs-target="#navScroll">
 	<c:choose>
 		<c:when test="${not empty loginUser}">
-			<div class="remoteDiv">
+			<div class="remoteDivs">
 				<span id="remoteSpan1">${loginUser.memberName}</span>
 				<span id="remoteSpan2">님 환영합니다! </span>
 				<button id="logOutBtn" onclick="logOut();"> 로그아웃</button>
@@ -259,6 +259,15 @@
 	            </a>
 	          </li>
 	      </div>
+	      <c:choose>
+			<c:when test="${not empty loginUser}">
+				<div class="remoteDiv">
+					<span id="remoteSpan1">${loginUser.memberName}</span>
+					<span id="remoteSpan2">님 환영합니다! </span>
+					<button id="logOutBtn" onclick="logOut();"> 로그아웃</button>
+				</div>
+			</c:when>
+		  </c:choose>
 
         </ul>
        

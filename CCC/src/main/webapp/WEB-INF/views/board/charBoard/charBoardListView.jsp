@@ -21,6 +21,11 @@
      <link href="resources/mainAdmin/css/styles.css" rel="stylesheet" />
         
         <style>
+        	/* outer */
+        	#charOuter{
+        		width: 60%;
+        		margin: auto;
+        	}
         	/* 페이징 영역 */
         	#pagingArea {width:fit-content; margin:auto;} 
         	/* 썸네일 호버 */
@@ -51,7 +56,8 @@
         
         <!-- Portfolio Grid-->
         <section class="page-section bg-light" id="portfolio">
-            <div class="container">
+<!--             <div class="container"> -->
+			<div id="charOuter">
                 <div class="text-center">
                 	<br><br><br>
                     <h2 class="section-heading text-uppercase">캐릭터 썸네일 게시판</h2>
