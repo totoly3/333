@@ -31,9 +31,9 @@
         	/* 썸네일 호버 */
         	.thumbnail:hover {cursor:pointer; opacity: 0.5;}
 			
-	         #searchForm {
-	            width:80%;
-	            margin:auto;
+			#searchForm {
+				width:80%;
+				margin:auto;
 	        }
 	        #searchForm>* {
 	            float:left;

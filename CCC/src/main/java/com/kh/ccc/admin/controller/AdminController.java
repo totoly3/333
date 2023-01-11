@@ -131,7 +131,6 @@ public class AdminController {
 		model.addAttribute("qCount",qCount);
 		
 		
-		/*
 		
 		//누적 주문수량
 		int countOrder = adminService.selectOrderCount();
@@ -139,7 +138,6 @@ public class AdminController {
 		model.addAttribute("countOrder",countOrder);
 		System.out.println(countOrder);
 		
-		*/
 		
 		
 		return "admin/memberAdmin";
