@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 public class MyOrderDetail {
 	
     //주문
+	private Date orderDate;	    	  //O_DATE	DATE 주문일자
 	private int orderNo;	  		  //O_NO	NUMBER 주문번호 *
 	private int memberNo;	  		  //M_NO	NUMBER 사용자번호 *
 	private int deliveryNo;	    	  //D_NO	NUMBER 배송비번호  *
-	private Date orderDate;	    	  //O_DATE	DATE 주문일자
 	private int orderFinalAmount;	  //O_FINAL_AMOUNT NUMBER 최종결제금액
 	private String orderInvoidNo;	  //O_INVOICE_NO	VARCHAR2(20 BYTE) 송장번호
 	private String orderReceiverName; //O_RECEIVER_NAME	VARCHAR2(20 BYTE) 수신자명

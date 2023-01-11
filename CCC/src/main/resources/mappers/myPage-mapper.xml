@@ -339,13 +339,15 @@
    
    <!--기간별 날짜조회 2. 실제주문리스트 가져옴-->
    <select id="selectRealOrderListView"  resultMap="myOrderDetailResultSet" parameterType="_int">
-        SELECT O_NO,G_NAME,G_ORIGIN_NAME1,G_CHANGE_NAME1,G_FILE_PATH,G.G_PRICE
-		FROM TB_GOODS G
-		JOIN TB_ORDER_DETAIL OD USING(G_NO)
-		JOIN TB_ORDER O USING(O_NO)
-		WHERE O_NO=1
-		AND G_STATUS='Y'
-		ORDER BY G.G_PRICE DESC
+        SELECT ROWNUM,A.*
+        FROM(SELECT O_NO,O_DATE,G_NO,G.G_NAME,G_ORIGIN_NAME1,G_CHANGE_NAME1,G_FILE_PATH,G.G_PRICE
+            FROM TB_ORDER O
+            JOIN TB_ORDER_DETAIL OD USING(O_NO)
+            JOIN TB_GOODS G USING(G_NO)
+            WHERE O_NO=#{orderNo}
+            AND O_STATUS='Y'
+            ORDER BY O_DATE DESC)A
+        WHERE ROWNUM=1
    </select>
    
    <!-- 마이페이지 들어갈때 주문목록조회 -->

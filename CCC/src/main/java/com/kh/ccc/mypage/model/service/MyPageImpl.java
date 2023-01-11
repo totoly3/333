@@ -164,9 +164,9 @@ public class MyPageImpl implements MyPageService{
 
 	//실제 배송조회
 	@Override
-	public ArrayList<MyOrderDetail> selectRealOrderListView(int orderNo) {
+	public MyOrderDetail selectRealOrderListView(int orderNo) {
 		
-		ArrayList<MyOrderDetail> realOlist=myPageDao.selectRealOrderListView(sqlSession,orderNo);
+		MyOrderDetail realOlist=myPageDao.selectRealOrderListView(sqlSession,orderNo);
 		
 		return  realOlist;
 	}
