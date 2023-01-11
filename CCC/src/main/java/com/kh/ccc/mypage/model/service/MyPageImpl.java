@@ -217,7 +217,7 @@ public class MyPageImpl implements MyPageService{
 	@Override
 	public void addCartGoods(Cart cart) {
 	
-	 myPageDao.addCartGoods(sqlSession,cart);
+	  myPageDao.addCartGoods(sqlSession,cart);
 		
 	}
 		

@@ -110,8 +110,8 @@
 
 <body data-bs-spy="scroll" data-bs-target="#navScroll">
 
-  <nav id="navScroll" class="navbar navbar-expand-lg navbar-light fixed-top" tabindex="0"">
-    <div class="container">
+  <nav id="navScroll" class="navbar navbar-expand-lg navbar-light fixed-top" tabindex="0" >
+    <div class="container" >
       <a class="navbar-brand pe-4 fs-4" href="/">
         <img src="resources/mainView/img/chalogo2.jpg">
       </a>
@@ -122,64 +122,124 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <div class="dropdown22">
-	          <li class="nav-item">
-	            <a href="#top" class="nav-link" style="color:#EA4F4D; font-weight:bold">
-	              Home
-	            </a>
-	          </li>
-          </div>
-        <div class="dropdown22">
-	          <li class="nav-item">
-	            <a class="nav-link" style="color:#EA4F4D; font-weight:bold">
-	              Board
-	            </a>
-	           	  <div class="dropdown-content">
-					  <a href="list.no">Notice</a>
-					  <a href="list.fr">Free Board</a>
-					  <a href="list.qu">Question</a>
-				  </div>
-	          </li>
-          </div>
-           <div class="dropdown22">
-	          <li class="nav-item">
-	            <a class="nav-link" style="color:#EA4F4D; font-weight:bold">
-	              Character
-	            </a>
-	           	  <div class="dropdown-content">
-					  <a href="list.ch">Character</a>
-					  <a href="list.alltimelistgo">CHAx3 Award</a>
-					  <a href="worldCupForm.ut">World Cup</a>
-				  </div>
-	          </li>
-          </div>
-          
+	        <div class="dropdown22">
+		          <li class="nav-item">
+		            <a href="#top" class="nav-link" style="font-weight:bold">
+		              &nbsp;&nbsp;&nbsp; Home &nbsp;&nbsp;&nbsp;&nbsp;
+		            </a>
+		          </li>
+	          </div>
+	        <div class="dropdown22">
+		          <li class="nav-item">
+		            <a class="nav-link" style="font-weight:bold;">
+		              Board &nbsp;&nbsp;&nbsp;&nbsp;
+		            </a>
+		           	  <div class="dropdown-content">
+						  <a href="list.no">Notice</a>
+						  <a href="list.fr">Free Board</a>
+						  <a href="list.qu">Question</a>
+					  </div>
+		          </li>
+	          </div>
+	           <div class="dropdown22">
+		          <li class="nav-item">
+		            <a class="nav-link" style="font-weight:bold;">
+		              Character &nbsp;&nbsp;&nbsp;&nbsp;
+		            </a>
+		           	  <div class="dropdown-content">
+						  <a href="list.ch">Character</a>
+						  <a href="list.alltimelistgo">CHAx3 Award</a>
+						  <a href="worldCupForm.ut">World Cup</a>
+					  </div>
+		          </li>
+	          </div>
+	          
+	          <div class="dropdown22">
+		          <li class="nav-item">
+		            <a href="playground.fr" class="nav-link" style="font-weight:bold;">
+		              Play Ground &nbsp;&nbsp;&nbsp;&nbsp;
+		            </a>
+		          </li>
+	          </div>
+	          
+	          <div class="dropdown22">
+		          <li class="nav-item">
+		            <a href="goodsMain.go" class="nav-link" style="font-weight:bold;">
+		              Goods &nbsp;&nbsp;&nbsp;&nbsp;
+		            </a>
+		          </li>
+	          </div>
+	          
+	        </ul>
+	        
+	       
+	        
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			<c:choose>
+            	<c:when test="${empty loginUser }">
+		          <div class="dropdown22">
+			          <li class="nav-item">
+			            <a href="loginform.me" class="nav-link" style="color:#EA4F4D; font-weight:bold;">
+			              Login &nbsp;&nbsp;&nbsp;&nbsp;
+			            </a>
+			          </li>
+			      </div>
+		      </c:when>
+            <c:otherwise>
+		      <div class="dropdown22">
+		          <li class="nav-item">
+		            <a href="mypage.me" class="nav-link" style="color:#EA4F4D; font-weight:bold;">
+		              My Page &nbsp;&nbsp;&nbsp;&nbsp;
+		            </a>
+		          </li>
+		      </div>
+		    </c:otherwise>
+            </c:choose>
+            
+            <c:choose>
+            	<c:when test="${not empty loginUser }">
+			      <div class="dropdown22">
+			          <li class="nav-item">
+			            <a href="cart.ca" class="nav-link" style="color:#EA4F4D; font-weight:bold; text-shadow: 5px 5px 5px 5px white;">
+			              Cart &nbsp;&nbsp;&nbsp;&nbsp;
+			            </a>
+			          </li>
+			      </div>
+			</c:when>
+            <c:otherwise>
+            	<div class="dropdown22">
+			          <li class="nav-item">
+			            <a href="#" class="nav-link" onclick="pleaseLogin();" style="color:#EA4F4D; font-weight:bold; text-shadow: 5px 5px 5px 5px white;">
+			              Cart &nbsp;&nbsp;&nbsp;&nbsp;
+			            </a>
+			          </li>
+			      </div>
+            </c:otherwise>
+            </c:choose>
+                
           <div class="dropdown22">
 	          <li class="nav-item">
-	            <a href="playground.fr" class="nav-link" style="color:#EA4F4D; font-weight:bold">
-	              Play Ground
+	            <a href="login.ad" class="nav-link" style="color:#EA4F4D; font-weight:bold; text-shadow: 5px 5px 5px 5px white;">
+	              Admin &nbsp;&nbsp;&nbsp;&nbsp;
 	            </a>
 	          </li>
-          </div>
-          
-          <div class="dropdown22">
-	          <li class="nav-item">
-	            <a href="goodsMain.go" class="nav-link" style="color:#EA4F4D; font-weight:bold">
-	              Goods &nbsp;
-	            </a>
-	          </li>
-          </div>
-          
-       
-          
-       
+	      </div>
 
         </ul>
        
-        <a href="https://templatedeck.com" aria-label="back to CHAx3" class="link-dark pb-1 link-fancy me-2"> back to CHAx3 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-            class="bi bi-download ms-1" viewBox="0 0 16 16">
-          </svg>
-        </a>
+
+        
+        
+        <script>
+		    function pleaseLogin(){
+				window.alert("로그인 후 이용가능합니다.");
+			}
+	    </script>
+        
+        
+        
+        
+        
 
       </div>
     </div>

@@ -152,7 +152,7 @@ public class MyPageDao {
 	//장바구니 조회
 	public ArrayList<Cart> selectCartList(SqlSessionTemplate sqlSession, int memberNo) {
 		
-	   return (ArrayList)sqlSession.selectList("myPageMapper.selectCartList",memberNo);
+	   return (ArrayList)sqlSession.selectList("cartMapper.selectCartList",memberNo);
 		
 	}
 

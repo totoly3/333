@@ -31,12 +31,19 @@ public class MemberController {
 	public String loginMember(Member m,HttpSession session, HttpServletRequest request) {
 		
 		Member loginUser=memberService.loginMember(m);
-		if (loginUser!=null) { //로그인 성공시
-			System.out.println("로그인 : "+loginUser);
-			session.setAttribute("loginUser", loginUser);
-		}
 		String prevUri = (String)session.getAttribute("prevUri");
 		session.removeAttribute("prevUri");
+		
+		if (loginUser!=null) { //로그인 성공 시
+			System.out.println("로그인 : "+loginUser);
+			session.setAttribute("alertMsg", loginUser.getMemberName()+"님 어서오세요!");
+			session.setAttribute("loginUser", loginUser);
+		}
+		else {	// 로그인 실패 시
+			System.out.println("로그인 실패");
+			session.setAttribute("alertMsg", "로그인에 실패하였습니다.");
+			return "redirect:"+ prevUri;
+		}
 		
 		if(prevUri != null) {
 			return "redirect:" + prevUri;

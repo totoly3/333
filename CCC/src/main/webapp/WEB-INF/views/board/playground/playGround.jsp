@@ -176,7 +176,7 @@
 			</a>
 		</h1>
 			<h2>
-		   Cast lots / Drawing lots / Ghost leg <br/>
+	
 		   (경마로 하는 제비뽑기, 복불복 게임)
 
 			</h2>	
@@ -278,7 +278,23 @@
 		
 			
 	</script>
-		       	
+		    <hr> 
+		    <br>  <br>  <br>  <br>  <br>  	
+		    
+		    
+		                <script>function switchFold(entryId) {
+					    var businessLayer = document.getElementById("businessInfoLayer_" + entryId);
+					
+					    if (businessLayer) {
+					        if (businessLayer.className.indexOf("unfold_license") > 0) {
+					            businessLayer.className = "business_license_layer";
+					        } else {
+					            businessLayer.className = "business_license_layer unfold_license";
+					        }
+					    }
+					}
+					</script>
+		    
 	</body>
 
 </html>

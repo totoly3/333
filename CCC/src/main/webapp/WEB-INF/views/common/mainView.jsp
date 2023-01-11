@@ -130,9 +130,9 @@
             <h1 class="display-1 fw-bold mt-5">CHAx3 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						HARD-CHARAC &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FINAL PROJECT.</h1> <br>
 						
-            <p class="lead">재밌고 행복한 라이프 스타일을 꿈꾸는,</p>
-            <p class="lead">하드캐릭 ( HARD-CHARAC ) 조원들이 모여 만든</p>
-            <p class="lead">CHARACTER x GOODS 홈페이지 캐캐캐 ( CHAx3 ) 입니다.</p>
+            <p class="lead">재밌고 행복한 라이프 스타일을 꿈꾸는</p>
+            <p class="lead">하드캐릭 ( H A R D - C H A R A C ) 조원들이 모여 만든</p>
+            <p class="lead">C H A R A C T E R  x  G O O D S 홈페이지 캐캐캐 ( C H A x 3 ) 입니다.</p>
             <a href="#" class="btn btn-dark btn-xl shadow me-3 rounded-0 my-5">LOOK AROUND</a>
           </div>
 
@@ -156,7 +156,7 @@
 		<img src="resources/mainView/img/main1.jpg" class="shadow ratio ratio-1x1 rounded bg-cover mt-5 bp-center float-end" data-aos="fade-down">
 	
 	
-
+<!-- 
     <div class="py-vh-4 bg-gray-100 w-100 overflow-hidden" id="aboutus">
       <div class="container">
       
@@ -203,7 +203,7 @@
     </div>
 
 
-
+ -->
 
     <div class="position-relative overflow-hidden w-100 bg-light" id="gallery">
       <div class="container-fluid">
@@ -317,9 +317,6 @@
       </div>
     </div>
 
-    <div class="container text-center py-3 small">Made by <a href="https://templatedeck.com" class="link-fancy"
-        target="_blank">templatedeck.com</a> Distributed By <a href="https://themewagon.com">ThemeWagon</a>
-    </div>
   </footer>
   
   

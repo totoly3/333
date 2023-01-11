@@ -9,11 +9,9 @@
 <body>
 
 	<jsp:include page="common/header.jsp"/>
-	
-	<br><br>
+
 	<jsp:include page="common/mainView.jsp"/>
 
-	<br><br><br>
 
 </body>
 </html>
