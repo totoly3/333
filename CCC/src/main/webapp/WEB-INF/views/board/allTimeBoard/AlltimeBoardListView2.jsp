@@ -17,6 +17,8 @@
 	<link href="resources/css/freeboard/style_fr.css" rel="stylesheet">
 	
 	<style>
+	
+	
 		.alltimeBtn{
 			height: 33px;
         	font-size: 20px;
@@ -29,7 +31,7 @@
 			border-radius: 3px;
 			width: 250px;
 			margin-bottom: 3px;
-			background-color: coral;
+			background: linear-gradient( 90deg, rgba(129, 230, 217, 1) 0%, rgba(79, 209, 197, 1) 100% );
 			color: black;
 			border:0px;
 			margin-right: 50px;

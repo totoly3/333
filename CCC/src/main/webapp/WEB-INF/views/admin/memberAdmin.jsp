@@ -178,7 +178,7 @@
                                         <div class="col mr-2">
                                             <div class="text-s font-weight-bold text-danger text-uppercase mb-1">
                                                	 &ensp;GOODS 누적 판매량</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">&ensp;97 개</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">&ensp;${countOrder} 개</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
