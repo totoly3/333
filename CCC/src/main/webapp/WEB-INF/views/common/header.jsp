@@ -4,7 +4,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>CCC</title>
     
     <!-- jQuery 라이브러리 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -122,13 +122,18 @@
         .remoteDiv{
          	position: absolute;
 /*         	border: 1px solid lightgray; */
-        	right: 230px;
-        	top: 60px;
-        	font-size: 10px;
+        	right: 220px;
+        	top: 40px;
+        	font-size: 11px;
 /* 			display: none; */
 			color: black;
 			float: right;
 			z-index:100;
+        }
+        #logOutBtn{
+        	border: none;
+        	background-color:lightpink;
+        	border-radius: 5px;
         }
     </style>
 </head>
@@ -137,10 +142,16 @@
 		<c:when test="${not empty loginUser}">
 			<div class="remoteDiv">
 				<span id="remoteSpan1">${loginUser.memberName}</span>
-				<span id="remoteSpan2">님 환영합니다!</span>
+				<span id="remoteSpan2">님 환영합니다! </span>
+				<button id="logOutBtn" onclick="logOut();"> 로그아웃</button>
 			</div>
 		</c:when>
 	</c:choose>
+	<script>
+		function logOut(){
+			location.href="logout.me";
+		}
+	</script>
 	<!-- 알람 메세지 영역 -->
 	<c:if test="${ not empty alertMsg }">
 		<script>
@@ -169,7 +180,8 @@
 					<div class="dropdown">
 						<button class="dropbtn headerBtn">C H A R A C T E R</button>
 						<div class="dropdown-content">
-							<a href="list.ch">캐릭터 게시판</a>
+							<a href="competition.go">C O M P E T I T I O N</a>
+							<a href="list.ch">C H A R A C T E R</a>
 							<a href="list.alltimelistgo">역대수상작</a>
 							<a href="worldCupForm.ut">W O R L D C U P</a>
 						</div>
@@ -177,7 +189,6 @@
 				</li>
 				<li><a href="playground.fr">P L A Y - G R O U N D</a></li>
 				<li><a href="goodsMain.go">G O O D S</a></li>
-				<li><a href="logout.me">L O G O U T</a></li>
 			</ul>
 		</div>
    </div>

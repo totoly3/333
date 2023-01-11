@@ -39,6 +39,10 @@
 		  transition: 0.4s;
 		  width:30px;
 		}
+		#jini45{
+			width:60%;
+			margin:auto;
+		}
 		.search-box53:hover{
 		  /* box-shadow: 0px 0px .5px 1px #000000; */
 		  width: 282px;
@@ -77,7 +81,17 @@
     </style>
 </head>
 <body>
-
+	<c:choose>
+		<c:when test="${not empty loginUser}">
+			<div class="remoteDiv">
+				<span id="remoteSpan1">Welcome </span>
+				<span id="remoteSpan2">${loginUser.memberName}</span>
+				<span id="remoteSpan3">님!</span>
+			</div>
+		</c:when>
+	</c:choose>
+	<!-- 팝업 -->
+   	<jsp:include page="popup1.jsp"/>
     <!--================ Start header Top Area =================-->
     <section class="header-top" style="height:80px;">
         <div class="container">
@@ -94,7 +108,7 @@
                     </div>
                 </div>
                 <div class="col-6 col-lg-4 col-md-6 col-sm-6 logo-wrapper">
-                    <a href="goodsMain.go" class="logo">
+                    <a href="redirect:" class="logo">
                         <!-- <img src="resources/css/goods/img/logo.png" alt=""> -->
                         <img src="resources/css/goods/img/chalogo3.jpg" alt="">
                         
@@ -114,7 +128,7 @@
                             </li>
                             <script>
                             	function searchGoods(){
-                            		console.log("아무말");
+//                             		console.log("아무말");
                             		location.href="searchGoods.go?keyword="+$("#keyword").val();
                             	}
                             </script>
@@ -139,7 +153,7 @@
 			                </c:choose>
                              <c:choose>
 			            		<c:when test="${not empty loginUser }">
-									<li><a href="wish.ca">Wish</a></li>
+									<li><a href="wishList.my">Wish</a></li>
 			            		</c:when>
 			            		<c:otherwise>
 			                		<li><a href="#" onclick="pleaseLogin();">Wish</a></li>
@@ -165,13 +179,6 @@
         function pleaseLogin(){
 			window.alert("로그인 후 이용가능합니다.");
 		}	
-        
-	    $("#search").click(function(){
-			$(".search_input").css("display","block");
-		})
-		$("#close_search").click(function(){
-    		$(".search_input").css("display","none");
-    	})
     	
     	/* 줄바꿈 */
     	//enter => <br>

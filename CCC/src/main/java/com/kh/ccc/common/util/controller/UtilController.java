@@ -94,5 +94,12 @@ public class UtilController {
 		
 		return "board/playground/worldCup";
 	}
+	
+	@RequestMapping(value="competition.go")
+	public String goCompetition(Model model) {
+		
+		
+		return "common/infoCompetition";
+	}
 
 }

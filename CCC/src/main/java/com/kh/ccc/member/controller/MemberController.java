@@ -31,12 +31,19 @@ public class MemberController {
 	public String loginMember(Member m,HttpSession session, HttpServletRequest request) {
 		
 		Member loginUser=memberService.loginMember(m);
-		if (loginUser!=null) { //로그인 성공시
-			System.out.println("로그인 : "+loginUser);
-			session.setAttribute("loginUser", loginUser);
-		}
 		String prevUri = (String)session.getAttribute("prevUri");
 		session.removeAttribute("prevUri");
+		
+		if (loginUser!=null) { //로그인 성공 시
+			System.out.println("로그인 : "+loginUser);
+			session.setAttribute("alertMsg", loginUser.getMemberName()+"님 어서오세요!");
+			session.setAttribute("loginUser", loginUser);
+		}
+		else {	// 로그인 실패 시
+			System.out.println("로그인 실패");
+			session.setAttribute("alertMsg", "로그인에 실패하였습니다.");
+			return "redirect:"+ prevUri;
+		}
 		
 		if(prevUri != null) {
 			return "redirect:" + prevUri;
@@ -87,11 +94,17 @@ public class MemberController {
 	
 	//아래는 로그아웃 	
 	@RequestMapping("logout.me")
-	public String logOutMember(HttpSession session){
+	public String logOutMember(HttpSession session, HttpServletRequest request){
+		
 		//	session.invalidate();  둘중하나 쓰면됨   
 		session.removeAttribute("loginUser");
-		return "redirect:/";
+		session.setAttribute("alertMsg", "로그아웃되었습니다.");
 		
+		String prevUri = request.getHeader("Referer");
+		if(prevUri != null) {
+			return "redirect:" + prevUri;
+		}
+		return "redirect:/";
 	}
 		
 

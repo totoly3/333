@@ -103,12 +103,14 @@ public class OrderController {
 		// 주문정보 등록
 		int insertOrderResult = orderService.insertOrder(io);
 		if(insertOrderResult > 0) {
+			session.setAttribute("alertMsg", "주문이 되었습니다.");
 			System.out.println("주문등록 성공");
 		}
 		else {
+			session.setAttribute("errorMsg", "주문에 실패하였습니다.");
 			System.out.println("주문등록 실패");
 		}
 		
-		return "redirect:/list.go";
+		return "redirect:/goodsMain.go";
 	}
 }

@@ -2382,9 +2382,17 @@ var NeoclickConversionInnAccountCode="6124a52c47e704b805000009";
 					console.log("결과는 : " + result);
 					if(result > 0){
 						window.alert("관심상품 추가!");
+						var temp = window.confirm("관심상품 페이지로 이동할까요?");
+						if(temp){
+							location.href="wishList.my";
+						}
 					}
 					else{
 						window.alert("관심상품 삭제!");
+						var temp = window.confirm("관심상품 페이지로 이동할까요?");
+						if(temp){
+							location.href="wishList.my";
+						}
 					}
 				},
 				error : function(){
