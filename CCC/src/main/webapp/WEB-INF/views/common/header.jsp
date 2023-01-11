@@ -210,7 +210,7 @@
 						<li><a href="mainAdmin.ad">Admin</a></li>
             		</c:when>
             		<c:otherwise>
-                		<li><a href="member.ad">Admin</a></li>
+                		<li><a href="mainAdmin.ad">Admin</a></li>
             		</c:otherwise>
                 </c:choose>
             </ul>
