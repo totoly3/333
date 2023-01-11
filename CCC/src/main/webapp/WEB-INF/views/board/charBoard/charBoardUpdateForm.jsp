@@ -65,7 +65,7 @@
                         	<br>
                        			<c:forEach var="ca" items="${ caList }" varStatus="var">	
                        				<div>
-			                    		<a href="${ ca.originName }" download="${ ca.originName }">${ ca.originName }</a>
+			                    		<a href="${ ca.originName }" download="${ ca.originName }">${ var.index +1 }번째 첨부파일 : ${ ca.originName }</a>
 			                    		<input type="hidden" id="ca_${ var.index }" name="oldCa" value="${ ca.level }">                     												
 			                    		<input type="button" id="deleteAttachBtn_${ var.index }" value="파일삭제"><br>                   												
                        				</div>
@@ -93,7 +93,7 @@
 	                for(var i=0; i<$("#ca-area a").length; i++){
 	                	//현재 업로드된 파일의 id에 인덱스로 번호를 붙여 해당 파일의 버튼을 클릭했을 때 실행되는 메소드 ()
 	                	$("#deleteAttachBtn_"+i).click(function(){
-	              			console.log( $(this).attr("id") );
+// 	              			console.log( $(this).attr("id") );
 							//클릭된 요소 button(id=deleteAttachBtn_인덱스번호)의 부모요소 div영역을 지워준다.
 							//바로위에 hidden요소로 controller에 파일의 고유 번호(level)를 보낸다.
 	              			$(this).parent().remove();
@@ -137,7 +137,7 @@
                 </script>
 
                 <div align="center">
-                    <button type="submit" class="btn btn-primary" onclick="return badLanguage();">수정하기</button>
+                    <button type="button" class="btn btn-primary" onclick="return badLanguage();">수정하기</button>
                     <button type="button" class="btn btn-danger" onclick="javascript:history.go(-1);">이전으로</button>
                 </div>
             </form>
@@ -147,25 +147,21 @@
     </div>
     
     <script>
-    	//수정내용체크
-    	function badLanguage(){
-    		//게시글 제목,캐릭터 이름,게시글 내용,첨부파일이 작성되었는지 체크
-    		let checkFile = $("#upfile").val();
-    		let checkTitle = $("#boardTitle").val();
-    		let checkCharName = $("#charName").val();
-    		let checkContent = $("#boardContent").val();
+   		let checkFile = $("#upfile").val();
+   		let checkTitle = $("#boardTitle").val();
+   		let checkCharName = $("#charName").val();
+   		let checkContent = $("#boardContent").val();
+   		
+   		//게시글 제목,캐릭터 이름,게시글 내용,첨부파일이 작성되었는지 체크
+   		function badLanguage(){
     		
     		//첨부파일 개수 체크
     		if($("#ca-area a").length == 0){
     			alert("첨부파일은 한개 이상 등록해주셔야 합니다.");
     			return false;
     		}
-
-//     		if( !checkFile ){
-//     			alert("캐릭터 이미지는 한장 이상 등록해주셔야합니다!");
-//     			return false;
-//     		}else 
     		
+    		//게시글 내용 체크
     		if( !checkTitle ){
     			alert("게시글 제목을 입력해 주세요!");
     			return false;
@@ -181,20 +177,28 @@
     		$.ajax({
     			url : "badLanguage.ch",
     			data : {
-    				boardTitle : $("#boardTitle").val(),
-    				charName : $("#charName").val(),
-    				boardContent : $("#boardContent").val()
+    				boardTitle : checkTitle,
+    				charName : checkCharName,
+    				boardContent : checkContent
     			},
     			success : function(result){
+    				
+    				console.log(result);
+    				
     				if(result == "NNNNY"){ //비속어가 있는 경우
 	    				alert("비속어가 있어요! 다시 입력해주세요!");
 	    				$("#boardTitle").val("");
 	    				$("#charName").val("");
 	    				$("#boardContent").val("");
+	    				
 	    				return false;
-    				}else{ //비속어가 없는 경우
+	    				
+    				}else if( result == "NNNNN" ){ //비속어가 없는 경우
 			    		//최종 수정 컨펌
 			    		let updateResult = confirm("게시글을 수정하시겠습니까?");
+    				
+    					console.log(updateResult);
+    					
 			    		if(updateResult){
 			    			$("#updateForm").submit();
 			    		}else{
