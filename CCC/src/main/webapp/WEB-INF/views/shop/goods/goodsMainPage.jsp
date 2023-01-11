@@ -45,13 +45,19 @@
         .remoteDiv{
          	position: absolute;
 /*         	border: 1px solid lightgray; */
-        	right: 300px;
+        	right: 365px;
         	top: 20px;
         	font-size: 10px;
 /* 			display: none; */
 			color: black;
 			float: right;
 			z-index:100;
+        }
+		#logOutBtn{
+        	border: none;
+        	background-color:#F07D9C;
+        	border-radius: 5px;
+        	color: white;
         }
         /*검색*/
 		.search-box53:hover{
@@ -89,11 +95,6 @@
 		  width: 240px;
 		  padding: 0 6px;
 		}
-		#logOutBtn{
-        	border: none;
-        	background-color:lightpink;
-        	border-radius: 5px;
-        }
 	</style>
 </head>
 
@@ -104,7 +105,7 @@
 				<span id="remoteSpan1">Welcome </span>
 				<span id="remoteSpan2">${loginUser.memberName}</span>
 				<span id="remoteSpan3">님! </span>
-				<button id="logOutBtn" onclick="logOut();"> 로그아웃</button>
+				<button id="logOutBtn" onclick="logOut();"> Log out</button>
 			</div>
 		</c:when>
 	</c:choose>
@@ -224,7 +225,7 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
                         <ul class="nav navbar-nav menu_nav ml-auto mr-auto">
-                        	<li class="nav-item active"><a class="nav-link" href="goodsMain.go">Home</a></li>
+                        	<li class="nav-item active"><a class="nav-link" href="${ pageContext.request.contextPath }">Home</a></li>
                         	<!-- 데코 드롭다운 -->
                        		<li class="nav-item submenu dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Decoration</a>

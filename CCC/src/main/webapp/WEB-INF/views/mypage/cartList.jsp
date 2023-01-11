@@ -71,6 +71,7 @@ table th {
 <body>
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	 
+	 <br><br> <br><br> <br><br>
     <div class="cart outer">
         <span align="center;">
      	<h3 align="center">장바구니 &nbsp;</h3>  
@@ -78,7 +79,7 @@ table th {
      	
         <div id="tablearea"> 
 	        <table class=".carttable" style="width: 1000px;">
-	            <hr style="width:800px; height:2px; background-color:black; ">
+	            <hr style="width:800px; height:2px; background-color:black;margin-left:30px; ">
 	            <br>
 	            <br>
 	            

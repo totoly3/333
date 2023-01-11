@@ -103,7 +103,7 @@ Coded by www.creative-tim.com
           <li class="active-pro">
             <a href="./upgrade.html">
               <i class="nc-icon nc-spaceship"></i>
-              <p>Upgrade to PRO</p>
+              <p></p>
             </a>
           </li>
         </ul>
@@ -199,7 +199,6 @@ Coded by www.creative-tim.com
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-refresh"></i>
                 </div>
               </div>
             </div>
@@ -225,7 +224,6 @@ Coded by www.creative-tim.com
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-calendar-o"></i>
                 </div>
               </div>
             </div>
@@ -251,7 +249,6 @@ Coded by www.creative-tim.com
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-clock-o"></i>
                 </div>
               </div>
             </div>
@@ -276,8 +273,6 @@ Coded by www.creative-tim.com
               <div class="card-footer ">
                 <hr>
                 <div class="stats">
-                  <i class="fa fa-refresh"></i>
-                  Update now
                 </div>
               </div>
             </div>
@@ -294,7 +289,7 @@ Coded by www.creative-tim.com
 					 <tr  style="background-color:#EA4F4D;">
 					    <th></th>
 					    <th style="width:80px;">주문번호</th>
-					    <th style="width:75px;">주문일자</th>
+					    <th style="width:200px;">주문일자</th>
 					    <th>굿즈명</th>
 					    <th style="text-align: center;">굿즈이미지</th>
 					    <th>굿즈가격</th>
@@ -305,7 +300,7 @@ Coded by www.creative-tim.com
 					  <tr onclick="orderdetail('${ro.orderNo}')">
 					    <td></td>
 					    <td>${ro.orderNo}</td>
-					    <td>${ro.orderDate}orderDate</td>
+					    <td>${ro.orderDate}</td>
 					    <td>${ro.goodsName}</td>
 					    <td><img src="${ro.goodsChangeName}" width="100" height="100" ></td>
 					    <td>

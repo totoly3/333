@@ -396,8 +396,13 @@ public class MyPageController {
 		// 주문번호 받아오기용 주문리스트
 		ArrayList<Order> oList = null; // 멤버번호,시작일객체,끝일객체 담아가서 담아올 주문리스트
 
-		// 진짜주문리스트
-		ArrayList<MyOrderDetail> realoList = null;
+		// 진짜주문객체
+		MyOrderDetail selectbyDate= null;
+		
+		//주문객체를 담을 리스트
+		//담을 ArrayList 선언후에 객체담아준다.
+		ArrayList<MyOrderDetail> realoList=new ArrayList<MyOrderDetail>();
+		
 
 		switch (startDay) {
 
@@ -417,12 +422,19 @@ public class MyPageController {
 
 			for (Order or : oList) {
 				oNo = or.getOrderNo(); // 주문번호를 뽑아준다.
-				System.out.println(oNo + "????");
+				System.out.println("주문번호"+oNo);
+				
+				selectbyDate = mypageService.selectRealOrderListView(oNo);
+				System.out.println("객체결과!"+selectbyDate);
+				
+				realoList.add(selectbyDate);
 			}
-
-			realoList = mypageService.selectRealOrderListView(oNo);
-
+			
+			System.out.println("리스트결과?" + realoList);
+			
 			mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");
+			//System.out.println("결과" + selectbyDate);
+			
 			break;
 
 		case ONE_WEEK:
@@ -441,15 +453,20 @@ public class MyPageController {
 			System.out.println("sql변경한뒤의 버튼주문조회 ::" + startDateSql + "~" + endDatesql + "까지 조회");
 
 			oList = mypageService.selectOrderListView(tbd);
-
+			
 			for (Order or : oList) {
 				oNo = or.getOrderNo(); // 주문번호를 뽑아준다.
+				System.out.println("주문번호"+oNo);
+				
+				selectbyDate = mypageService.selectRealOrderListView(oNo);
+				System.out.println("객체결과!"+selectbyDate);
+				
+				realoList.add(selectbyDate);
 			}
-
-			realoList = mypageService.selectRealOrderListView(oNo);
+			
+			System.out.println("리스트결과?" + realoList);
+			
 			mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");
-
-			System.out.println("결과" + realoList);
 
 			break;
 
@@ -468,11 +485,18 @@ public class MyPageController {
 
 			for (Order or : oList) {
 				oNo = or.getOrderNo(); // 주문번호를 뽑아준다.
+				System.out.println("주문번호"+oNo);
+				
+				selectbyDate = mypageService.selectRealOrderListView(oNo);
+				System.out.println("객체결과!"+selectbyDate);
+				
+				realoList.add(selectbyDate);
 			}
-
-			realoList = mypageService.selectRealOrderListView(oNo);
+			
+			System.out.println("리스트결과?" + realoList);
+			
 			mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");
-
+			
 			break;
 
 		case THREE_MONTH:
@@ -491,12 +515,18 @@ public class MyPageController {
 
 			for (Order or : oList) {
 				oNo = or.getOrderNo(); // 주문번호를 뽑아준다.
-				// System.out.println(oNo+"????");
+				System.out.println("주문번호"+oNo);
+				
+				selectbyDate = mypageService.selectRealOrderListView(oNo);
+				System.out.println("객체결과!"+selectbyDate);
+				
+				realoList.add(selectbyDate);
 			}
-
-			realoList = mypageService.selectRealOrderListView(oNo);
+			
+			System.out.println("리스트결과?" + realoList);
+			
 			mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");
-
+			
 			break;
 
 		case SIX_MONTH:
@@ -505,6 +535,7 @@ public class MyPageController {
 			before = new SimpleDateFormat("yyyy-MM-dd").format(cal.getTime());
 			// 일주일 전 날짜 스트링을 넣어서 Date타입으로 변경
 			startDateSql = java.sql.Date.valueOf(before);
+			System.out.println("sql변경한뒤의 버튼주문조회 ::" + startDateSql + "~" + endDatesql + "까지 조회");
 
 			tbd.setStartDate(startDateSql);
 			tbd.setEndDate(endDatesql);
@@ -513,14 +544,18 @@ public class MyPageController {
 
 			for (Order or : oList) {
 				oNo = or.getOrderNo(); // 주문번호를 뽑아준다.
+				System.out.println("주문번호"+oNo);
+				
+				selectbyDate = mypageService.selectRealOrderListView(oNo);
+				System.out.println("객체결과!"+selectbyDate);
+				
+				realoList.add(selectbyDate);
 			}
-
-			// oNo뽑는 부분??
-			realoList = mypageService.selectRealOrderListView(oNo);
-			// mv.addObject("realoList",
-			// realoList).setViewName("mypage/mypageSelectOrderList");
-			mv.addObject("realoList", realoList).setViewName("mypage/selectOrderListbyDate2");
-
+			
+			System.out.println("리스트결과?" + realoList);
+			
+			mv.addObject("realoList", realoList).setViewName("mypage/mypageSelectOrderList");
+			
 			break;
 
 		default:
@@ -558,6 +593,7 @@ public class MyPageController {
 		return mv;
 	}
 
+	
 	// 배송조회 >>상세번호
 	@RequestMapping("delivery.my")
 	public String deliveryDetail(String orderDetailNo, int orderNo, HttpSession session, Model model) {
@@ -713,12 +749,6 @@ public class MyPageController {
 		return "redirect:/cartList";
 		
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 
