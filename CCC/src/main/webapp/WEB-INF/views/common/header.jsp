@@ -1,146 +1,143 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="ko">
+<!doctype html>
+<html class="h-100" lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+  <meta name="description" content="A growing collection of ready to use components for the CSS framework Bootstrap 5">
+  <link rel="apple-touch-icon" sizes="180x180" href="resources/mainView/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="resources/mainView/img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="resources/mainView/img/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="resources/mainView/img/favicon.png">
+  <meta name="author" content="Holger Koenemann">
+  <meta name="generator" content="Eleventy v2.0.0">
+  <meta name="HandheldFriendly" content="true">
+  <title>CHAx3 HARD-CHARAC</title>
+  <link rel="stylesheet" href="resources/mainView/css/theme.min.css">
+
+  <style>
+    /* inter-300 - latin */
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 300;
+      font-display: swap;
+      src: local(''),
+        url('./fonts/inter-v12-latin-300.woff2') format('woff2'),
+        /* Chrome 26+, Opera 23+, Firefox 39+ */
+        url('./fonts/inter-v12-latin-300.woff') format('woff');
+      /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    }
+
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: local(''),
+        url('./fonts/inter-v12-latin-500.woff2') format('woff2'),
+        /* Chrome 26+, Opera 23+, Firefox 39+ */
+        url('./fonts/inter-v12-latin-500.woff') format('woff');
+      /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    }
+
+    @font-face {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-display: swap;
+      src: local(''),
+        url('./fonts/inter-v12-latin-700.woff2') format('woff2'),
+        /* Chrome 26+, Opera 23+, Firefox 39+ */
+        url('./fonts/inter-v12-latin-700.woff') format('woff');
+      /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+    }
+    #fadejini1{
+    	position:relative;
+    	
+    }
+    #fadejini2,#fadejini3{
+    	position:absolute;
+
+    }
     
-    <!-- jQuery 라이브러리 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- 부트스트랩에서 제공하고 있는 스타일 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
- 	
- 	<!-- 폰트 -->
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Cute+Font&family=Dongle:wght@300;400;700&family=Jua&family=Nanum+Myeongjo&family=Nanum+Pen+Script&family=Single+Day&family=Stylish&display=swap" rel="stylesheet">
- 	
-    <style>
-	    <!--아래 부분은 드롭다운추가한거 -->
-	    .dropbtn {	  
-		  padding: 16px;
-		  font-size: 16px;
-		  border: none;
-		  position:relative;
-		  z-index:1;
-		}
-		.headerBtn{
-		  	color: white;
-			background-color: #EA4F4D;
-			border: none;
-		}
-		 
-		.dropdown {
-		  position: relative;
-		  display: inline-block;
-		  background-color: #EA4F4D;
-		  text-decoration:none;
-		  color:rgb(255, 255, 255);
-		  font-size:12px;
-		  font-weight:600;
-		  border: none;
-		}
-		 
-		.dropdown-content {
-		  display: none;
-		  border: 0px;
-		  position: absolute;
-		  background-color: #EA4F4D;
-		  min-width: 160px;
-		  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-		  z-index: 1;
-		  
-		}
-		 
-		.dropdown-content a {
-		  color: black;
-		  padding: 12px 16px;
-		  text-decoration: none;
-		  display: block;
-		  
-		}
- 		.dropdown-content a:hover {background-color: #EA004D;}
-		.dropdown:hover .dropdown-content {display: block;}
-		.dropdown:hover .dropbtn {background-color: #E42525;}
-		<!-- 윗부분은 드롭다운 추가 -->
-        div {box-sizing:border-box;}
-        #header {
-            width:80%;
-            height:100px;
-            padding-top:20px;
-            margin:auto;
-        }
-        #header>div {width:100%; margin-bottom:10px;}
-        #header_2 {height:60%;}
-        #header_2>ul {width:100%; height:100%; list-style-type:none; margin:auto; padding:0;}
-        #header_2>ul>li {float:left; width:10%; height:100%; line-height:55px; text-align:center;}
-        #header_2>ul>li a {text-decoration:none; color:rgb(255, 255, 255); font-size:12px; font-weight:600;}
-        
-        /* 세부페이지마다 공통적으로 유지할 style */
-        .content {
-            background-color:rgb(247, 245, 245);
-            width:80%;
-            margin:auto;
-        }
-        .innerOuter {
-            border:1px solid blue;
-            width:80%;
-            margin:auto;
-            padding:5% 10%;
-            background-color:white;
-        }
-        /* 조지니 네비바 style */
-        .logoDiv{
-            width:100%;
-            z-index: 1;
-        }
-        #header_2{
-            z-index: 5;
-            position: relative;
-            top: -75px;
-            left: 30px;
-        }
-        #headerIconDiv>ul {width:100%; height:100%; list-style-type:none; margin:auto; padding:0;}
-        #headerIconDiv>ul>li {float:left; width:4%; height:100%; line-height:55px; text-align:center;}
-        #headerIconDiv>ul>li a {text-decoration:none; color:rgb(255, 255, 255); font-size:12px; font-weight:600;}
-        #headerIconDiv{
-            z-index: 5;
-            position: relative;
-            top: -58px;
-            left: 30px;
-        }
-        #headerIconUl{
-            z-index: 6;
-            position: relative;
-            top: -100px;
-            left: 1300px;
-        }
+    #fadejini4{
+    	position:relative;
+    	top:1100px;
+    	
+    }
+    
+    //드롭다운
+    .dropdown22 {
+	  position: relative;
+	  display: inline-block;
+	  background-color: #EA4F4D;
+	  text-decoration:none;
+	  color:rgb(255, 255, 255);
+	  font-size:15px;
+	  font-weight:600;
+	  border: none;
+	}
+	 
+	.dropdown-content {
+	  display: none;
+	  border: 0px;
+	  position: absolute;
+	  background-color: rgb(255, 255, 255);
+	  min-width: 160px;
+	  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	  z-index: 1;
+	  font-size:15px;
+	}
+	 
+	.dropdown-content a {
+	  color: black;
+	  padding: 12px 16px;
+	  text-decoration: none;
+	  display: block;
+	  font-size:15px;
+	}
+	.dropdown-content a:hover {background-color: #EA004D; color:white;font-size:15px;}
+	.dropdown22:hover .dropdown-content {display: block;}
+	.dropdown22:hover .dropbtn {background-color: #E42525; color:white;}
+   
         /*리모콘*/
         .remoteDiv{
          	position: absolute;
 /*         	border: 1px solid lightgray; */
-        	right: 230px;
-        	top: 60px;
-        	font-size: 10px;
+        	right: 220px;
+        	top: 40px;
+        	font-size: 11px;
 /* 			display: none; */
 			color: black;
 			float: right;
 			z-index:100;
         }
+        #logOutBtn{
+        	border: none;
+        	background-color:lightpink;
+        	border-radius: 5px;
+        }
     </style>
 </head>
-<body>
+
+<body data-bs-spy="scroll" data-bs-target="#navScroll">
 	<c:choose>
 		<c:when test="${not empty loginUser}">
 			<div class="remoteDiv">
 				<span id="remoteSpan1">${loginUser.memberName}</span>
-				<span id="remoteSpan2">님 환영합니다!</span>
+				<span id="remoteSpan2">님 환영합니다! </span>
+				<button id="logOutBtn" onclick="logOut();"> 로그아웃</button>
 			</div>
 		</c:when>
 	</c:choose>
+	<script>
+		function logOut(){
+			location.href="logout.me";
+		}
+	</script>
 	<!-- 알람 메세지 영역 -->
 	<c:if test="${ not empty alertMsg }">
 		<script>
@@ -148,79 +145,163 @@
 		</script>
 		<c:remove var="alertMsg" scope="session"/>
 	</c:if>
-	
-    <div id="logoDiv">
-    	<img src="./resources/header2Img/navi2.jpg" alt="navi2">
-    </div>
-    <div id="header">
-        <div id="header_2">     <!--여기가 리스트 -->
-			<ul>
-				<li><a href="${ pageContext.request.contextPath }">H O M E</a></li>
-				<li>
-					<div class="dropdown">
-						<button class="dropbtn headerBtn">B O A R D</button>
-						<div class="dropdown-content">
-							<a href="list.no">N O T I C E</a>
-							<a href="list.fr">F R E E - B O A R D</a>
-							<a href="list.qu">Q U E S T I O N</a>
-						</div>
-					</div>
-				<li>
-					<div class="dropdown">
-						<button class="dropbtn headerBtn">C H A R A C T E R</button>
-						<div class="dropdown-content">
-							<a href="list.ch">캐릭터 게시판</a>
-							<a href="list.alltimelistgo">역대수상작</a>
-							<a href="worldCupForm.ut">W O R L D C U P</a>
-						</div>
-					</div>
-				</li>
-				<li><a href="playground.fr">P L A Y - G R O U N D</a></li>
-				<li><a href="goodsMain.go">G O O D S</a></li>
-				<li><a href="logout.me">L O G O U T</a></li>
-			</ul>
-		</div>
-   </div>
-   <div id="headerIcon">
-        <div id="headerIconDiv">     <!--여기가 리스트 -->
-            <ul id="headerIconUl">
-                <c:choose>
-            		<c:when test="${empty loginUser }">
-<!-- 	                	<li><a href="loginform.me"><img src="./resources/header2Img/user1.png" width="20px;"></a></li> -->
-	                	<li><a href="loginform.me">Login</a></li>
-            		</c:when>
-            		<c:otherwise>
-<!--             			<li><a href="mypage.me"><img src="./resources/header2Img/user1.png" width="20px;"></a></li> -->
-            			<li><a href="mypage.me">MyPage</a></li>
-            		</c:otherwise>
-                </c:choose>
-<!--                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/key.png" width="25px;"></a></li> -->
-                <c:choose>
-            		<c:when test="${not empty loginUser }">
-						<li><a href="cart.ca">Cart</a></li>
-            		</c:when>
-            		<c:otherwise>
-                		<li><a href="#" onclick="pleaseLogin();">Cart</a></li>
-            		</c:otherwise>
-                </c:choose>
-<!--                 <li><a href="mainAdmin.ad"><img src="./resources/header2Img/menu.png" width="14px;"></a></li> -->
+  <nav id="navScroll" class="navbar navbar-expand-lg navbar-light fixed-top" tabindex="0" >
+    <div class="container" >
+      <a class="navbar-brand pe-4 fs-4" href="/">
+        <img src="resources/mainView/img/chalogo2.jpg">
+      </a>
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+	        <div class="dropdown22">
+		          <li class="nav-item">
+		            <a href="#top" class="nav-link" style="font-weight:bold">
+		              &nbsp;&nbsp;&nbsp; Home &nbsp;&nbsp;&nbsp;&nbsp;
+		            </a>
+		          </li>
+	          </div>
+	        <div class="dropdown22">
+		          <li class="nav-item">
+		            <a class="nav-link" style="font-weight:bold;">
+		              Board &nbsp;&nbsp;&nbsp;&nbsp;
+		            </a>
+		           	  <div class="dropdown-content">
+						  <a href="list.no">Notice</a>
+						  <a href="list.fr">Free Board</a>
+						  <a href="list.qu">Question</a>
+					  </div>
+		          </li>
+	          </div>
+	           <div class="dropdown22">
+		          <li class="nav-item">
+		            <a class="nav-link" style="font-weight:bold;">
+		              Character &nbsp;&nbsp;&nbsp;&nbsp;
+		            </a>
+		           	  <div class="dropdown-content">
+						  <a href="list.ch">Character</a>
+						  <a href="list.alltimelistgo">CHAx3 Award</a>
+						  <a href="worldCupForm.ut">World Cup</a>
+					  </div>
+		          </li>
+	          </div>
+	          
+	          <div class="dropdown22">
+		          <li class="nav-item">
+		            <a href="playground.fr" class="nav-link" style="font-weight:bold;">
+		              Play Ground &nbsp;&nbsp;&nbsp;&nbsp;
+		            </a>
+		          </li>
+	          </div>
+	          
+	          <div class="dropdown22">
+		          <li class="nav-item">
+		            <a href="goodsMain.go" class="nav-link" style="font-weight:bold;">
+		              Goods &nbsp;&nbsp;&nbsp;&nbsp;
+		            </a>
+		          </li>
+	          </div>
+	          
+	        </ul>
+	        
+	       
+	        
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+			<c:choose>
+            	<c:when test="${empty loginUser }">
+		          <div class="dropdown22">
+			          <li class="nav-item">
+			            <a href="loginform.me" class="nav-link" style="color:#EA4F4D; font-weight:bold;">
+			              Login &nbsp;&nbsp;&nbsp;&nbsp;
+			            </a>
+			          </li>
+			      </div>
+		      </c:when>
+            <c:otherwise>
+		      <div class="dropdown22">
+		          <li class="nav-item">
+		            <a href="mypage.me" class="nav-link" style="color:#EA4F4D; font-weight:bold;">
+		              My Page &nbsp;&nbsp;&nbsp;&nbsp;
+		            </a>
+		          </li>
+		      </div>
+		    </c:otherwise>
+            </c:choose>
+            
+            <c:choose>
+            	<c:when test="${not empty loginUser }">
+			      <div class="dropdown22">
+			          <li class="nav-item">
+			            <a href="cart.ca" class="nav-link" style="color:#EA4F4D; font-weight:bold; text-shadow: 5px 5px 5px 5px white;">
+			              Cart &nbsp;&nbsp;&nbsp;&nbsp;
+			            </a>
+			          </li>
+			      </div>
+			</c:when>
+            <c:otherwise>
+            	<div class="dropdown22">
+			          <li class="nav-item">
+			            <a href="#" class="nav-link" onclick="pleaseLogin();" style="color:#EA4F4D; font-weight:bold; text-shadow: 5px 5px 5px 5px white;">
+			              Cart &nbsp;&nbsp;&nbsp;&nbsp;
+			            </a>
+			          </li>
+			      </div>
+            </c:otherwise>
+            </c:choose>
                 
-                <c:choose>
-            		<c:when test="${not empty loginAdmin }">
-						<li><a href="mainAdmin.ad">Admin</a></li>
-            		</c:when>
-            		<c:otherwise>
-                		<li><a href="mainAdmin.ad">Admin</a></li>
-            		</c:otherwise>
-                </c:choose>
-            </ul>
-        </div>
+          <div class="dropdown22">
+	          <li class="nav-item">
+	            <a href="mainAdmin.ad" class="nav-link" style="color:#EA4F4D; font-weight:bold; text-shadow: 5px 5px 5px 5px white;">
+	              Admin &nbsp;&nbsp;&nbsp;&nbsp;
+	            </a>
+	          </li>
+	      </div>
+
+        </ul>
+       
+
+        
+        
+        <script>
+		    function pleaseLogin(){
+				window.alert("로그인 후 이용가능합니다.");
+			}
+	    </script>
+
+      </div>
     </div>
-    <br clear="both">
-    <script>
-	    function pleaseLogin(){
-			window.alert("로그인 후 이용가능합니다.");
-		}
-    </script>
+  </nav>
+
+
+  <script src="resources/mainView/js/bootstrap.bundle.min.js"></script>
+  <script src="resources/mainView/js/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800, // values from 0 to 3000, with step 50ms
+    });
+  </script>
+
+  <script>
+    let scrollpos = window.scrollY;
+    const header = document.querySelector(".navbar");
+    const header_height = header.offsetHeight;
+
+    const add_class_on_scroll = () => header.classList.add("scrolled", "shadow-sm");
+    const remove_class_on_scroll = () => header.classList.remove("scrolled", "shadow-sm");
+
+    window.addEventListener('scroll', function () {
+      scrollpos = window.scrollY;
+
+      if (scrollpos >= header_height) { add_class_on_scroll(); }
+      else { remove_class_on_scroll(); }
+
+      console.log(scrollpos);
+    })
+  </script>
+  
 </body>
+
 </html>

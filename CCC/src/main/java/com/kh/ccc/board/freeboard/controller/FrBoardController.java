@@ -187,7 +187,8 @@ public class FrBoardController {
 							System.out.println("컨트롤러 falist 는 ? "+falist);
 						}
 					}
-				
+					
+					
 					if(falist.isEmpty()) { //글만 작성할때
 						int result1=FrBoardService.insertFrBoardOnlyWrite(fb);
 						

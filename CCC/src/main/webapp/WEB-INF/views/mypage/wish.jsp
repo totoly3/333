@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>       
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>      
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,16 +106,23 @@
                 <tr>
                 	<!-- 선택체크박스 --> 
                     <td><input type="checkbox" name="RowCheck" value="${w.goodsNo}" style="zoom:1.3;"></td>
-                    <td><img src="${w.goodsFilePath}||${w.goodsChangeName1}" alt="img" class="wishimg"></td>
+                    <td><img src="${w.goodsChangeName1}" alt="${w.goodsChangeName1}" class="wishimg"></td>
                     <td>
                         <div>
-                                            무료배송: 
+                        <c:choose>
+                        	<c:when test="${w.goodsPrice < 50000 }">
+                                           배송비 : 2500원  	
+                        	</c:when>
+                        	<c:otherwise>
+                                            배송비 : 무료
+                        	</c:otherwise>
+                        </c:choose>
                         </div>
                         <div>
                                             상품명: ${w.goodsName}
                         </div>
                         <div>
-                                            가격:${w.goodsPrice}
+                                            가격: <fmt:formatNumber  value="${w.goodsPrice}" pattern="#,###원"/>
                         </div>
                     </td>
                     <td>
@@ -141,7 +149,7 @@
         		success:function(result){
         			console.log("통신성공");
         			if (result=='already') {
-						
+        				
         				alert("이미 장바구니에 존재하는 상품입니다.");
         				
 					} else if(result=='add') {

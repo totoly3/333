@@ -384,4 +384,11 @@ public class CartController {
 			return "1";
 		}
 	}
+	
+	@RequestMapping(value="wish.ca")
+	public String goWishList(HttpSession session, Model model) {
+//		System.out.println("진입 wish.ca");
+		
+		return "";
+	}
 }

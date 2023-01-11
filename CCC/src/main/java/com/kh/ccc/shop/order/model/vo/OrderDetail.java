@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 
+//여러 상품리스트가 들어갈 영역
 //굿즈리스트(굿즈+상세주문 join 리스트로 출력)
 public class OrderDetail {
 

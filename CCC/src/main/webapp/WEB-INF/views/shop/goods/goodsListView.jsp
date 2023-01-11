@@ -162,6 +162,7 @@
 		  100% {margin-left: -300%}
 		}
 
+		
  	</style>
  	
     
@@ -188,15 +189,10 @@
 	  <span class="list-button-item"></span> 
 	  <span class="list-button-item"></span> 
 	</div>
-	<br>
+
 	
-	
-	
-	
-	
-	
-	
-	
+	<div class="frame">
+
 	<script>
 		let interval;
 		let activeIndex = 1;
@@ -236,14 +232,11 @@
 	</script>
 	
 
-	
-	
  	
     <div class="container">
         <div class="row justify-content-center pb-5">
 			
 		</div>
-    
     
     
     	<div class="row">

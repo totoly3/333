@@ -152,7 +152,7 @@ public class MyPageDao {
 	//장바구니 조회
 	public ArrayList<Cart> selectCartList(SqlSessionTemplate sqlSession, int memberNo) {
 		
-	   return (ArrayList)sqlSession.selectList("myPageMapper.selectCartList",memberNo);
+	   return (ArrayList)sqlSession.selectList("cartMapper.selectCartList",memberNo);
 		
 	}
 
@@ -190,6 +190,12 @@ public class MyPageDao {
 	//2. 카트 상품추가:실제 INSERT
 	public void addCartGoods(SqlSessionTemplate sqlSession, Cart cart) {
 		sqlSession.insert("myPageMapper.addCartGoods",cart) ;
+	}
+
+
+	//카트 수량변경
+	public int updateCartCount(SqlSessionTemplate sqlSession,Cart cart) {
+		return sqlSession.update("myPageMapper.updateCartCount",cart);
 	}
 	
 	

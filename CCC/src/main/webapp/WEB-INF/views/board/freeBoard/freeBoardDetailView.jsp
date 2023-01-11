@@ -50,7 +50,7 @@
             <h2>자유게시글 상세보기</h2>
             <br>
 
-            <a class="btn btn-secondary" style="float:right;" href="">목록으로</a>
+            <a class="btn btn-secondary" style="float:right;" href="${ pageContext.request.contextPath }">목록으로</a>
             <br><br>
 
             <table id="contentArea" algin="center" class="table">
@@ -339,8 +339,10 @@
             <!--아래는 로그인 유저의 아이디가 글작성자와 일치한다면 수정하기 삭제하기 버튼이 보이게 끔 !  -->
 	         <div align="center" border="1">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-                <a class="btn btn-primary" onclick="postFormSubmit1();">수정하기</a>
-                <a class="btn btn-danger" onclick="postFormSubmit2();">삭제하기</a>
+<%--                 <c:if test="${ loginUser.memberNo eq fb. fWriterNo }"> --%>
+	                <a class="btn btn-primary" onclick="postFormSubmit1();">수정하기</a>
+	                <a class="btn btn-danger" onclick="postFormSubmit2();">삭제하기</a>
+<%--                 </c:if> --%>
             </div>
             <br><br>
             
@@ -401,7 +403,7 @@
 		      <div class="modal-body">
 		      	<textarea id="frContent" rows="2" cols="49.8"
 									style="resize: none;"></textarea>
-					<div id="reply_cnt">(0 / 50)</div>
+					<div id="reply_cnt">(0 / 10)</div>
 		      </div>
 		      <div class="modal-footer">
 		        <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
@@ -540,6 +542,7 @@
 			    	console.log("통신성공");
 			    	if(result =="NNNNY"){
 			    		$("#frContent").val("");
+			    		$("#reply_cnt").html("(0 / 10)");
 			    		selectReplyList();
 			    	}else{
 			    		alert("댓글수정에 실패하였삼");
@@ -550,10 +553,19 @@
 				}
 			})
 		} 	
+    	
+    	//댓글 수정 글자 수 10자 제한 
+    	$('#frContent').on('keyup',function(){
+			$('#reply_cnt').html("("+$(this).val().length+" / 10)");
+			
+			if($(this).val().length > 10){
+				$(this).val($(this).val().substring(0, 10));
+				$('#reply_cnt').html("(10 / 10)");
+			}
+		});
+    	
     	// 댓글 삭제 
     	function deleteReply(frNo){
-    		console.log("frNo "+frNo);
-    		console.log("아무거나 ");
     		$.ajax({
     			url : "deleteFrReply.fr",
     			data : {
@@ -563,7 +575,6 @@
     			},
     			success : function(result){
     				if(result=="yes"){
-	    				console.log("통쉰성겅!");
 	    				alert("댓글을 삭제하였습니다.");
 	    				selectReplyList();
     				}

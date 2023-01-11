@@ -108,33 +108,33 @@ public class FrBoardDao {
 			int result2=1;
 			
 			if(newfrba.size()==1) {
-				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_1",newfrba.get(1));
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_1",newfrba.get(0));
 			}
 			
 			if(newfrba.size()==2) {
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_2",newfrba.get(0));
 				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_2",newfrba.get(1));
-				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_2",newfrba.get(2));
 			}
 			
 			if(newfrba.size()==3) {
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_3",newfrba.get(0));
 				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_3",newfrba.get(1));
 				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_3",newfrba.get(2));
-				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_3",newfrba.get(3));
 			}
 			
 			if(newfrba.size()==4) {
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_4",newfrba.get(0));
 				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_4",newfrba.get(1));
 				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_4",newfrba.get(2));
 				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_4",newfrba.get(3));
-				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_4",newfrba.get(4));
 			}
 			
 			if(newfrba.size()==5) {
+				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_5",newfrba.get(0));
 				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_5",newfrba.get(1));
 				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_5",newfrba.get(2));
 				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_5",newfrba.get(3));
 				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_5",newfrba.get(4));
-				result2*=sqlSession.insert("frBoardMapper.updateFrboard2_5",newfrba.get(5));
 			}
 			
 			

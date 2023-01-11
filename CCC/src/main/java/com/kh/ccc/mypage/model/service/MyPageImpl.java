@@ -67,7 +67,7 @@ public class MyPageImpl implements MyPageService{
 //		
 //		return count;
 //	}
-
+//0111 지은 git
 
 	//상세보기 글조회
 	@Override
@@ -207,17 +207,27 @@ public class MyPageImpl implements MyPageService{
 		return result;
 	}
 
-	//카트 확인작업
+	//카트추가1. 확인작업
 	@Override
 	public boolean findCartGoods(Cart cart) {
 		
 		return myPageDao.findCartGoods(sqlSession,cart);
 	}
 
+	//카트추가2. 실제 추가
 	@Override
 	public void addCartGoods(Cart cart) {
 	
-	 myPageDao.addCartGoods(sqlSession,cart);
+	  myPageDao.addCartGoods(sqlSession,cart);
+		
+	}
+
+	//카트수량변경
+	@Override
+	public int updateCartCount(Cart cart) {
+		
+		int result= myPageDao.updateCartCount(sqlSession,cart);
+		return result;
 		
 	}
 		
