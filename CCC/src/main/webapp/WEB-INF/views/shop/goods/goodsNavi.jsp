@@ -78,6 +78,28 @@
 		  width: 240px;
 		  padding: 0 6px;
 		}
+		/*리모콘*/
+        .remoteDiv{
+         	position: absolute;
+/*          	border: 1px solid lightgray;  */
+        	right: 380px;
+        	top: 17px;
+        	font-size: 11px;
+/* 			display: none; */
+			color: black;
+			float: right;
+			z-index:100;
+        }
+		#logOutBtn{
+			width: 90px;
+			text-align: center;
+        	background-color:#F07D9C;
+        	border-radius: 5px;
+        	color: white;
+        }
+        #remoteSpan3{
+        	margin-right: 5px;
+        }
     </style>
 </head>
 <body>
@@ -86,7 +108,8 @@
 			<div class="remoteDiv">
 				<span id="remoteSpan1">Welcome </span>
 				<span id="remoteSpan2">${loginUser.memberName}</span>
-				<span id="remoteSpan3">님!</span>
+				<span id="remoteSpan3">님! </span>
+				<a id="logOutBtn" href="logout.me"> &nbsp;&nbsp;Log out&nbsp;&nbsp; </a>
 			</div>
 		</c:when>
 	</c:choose>

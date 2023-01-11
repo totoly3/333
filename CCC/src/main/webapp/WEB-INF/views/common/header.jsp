@@ -105,25 +105,32 @@
    
         /*리모콘*/
         .remoteDiv{
-   /*      	position: absolute;
-         	border: 1px solid lightgray; 
-        	right: 220px;
-        	top: 40px;
-        	font-size: 11px;*/
+          	position: absolute; 
+/*           	border: 1px solid lightgray; */
+         	right: 220px; 
+         	top: 46px; 
+        	font-size: 12px;
+        	font-family: '맑은고딕';
 /*  			display: none; */
 /*			color: black;
 			float: right;
 			z-index:100;*/
         }
         #logOutBtn{
+        	width: 67px;
         	border: none;
-        	background-color:lightpink;
-        	border-radius: 5px;
+        	background-color: #EA4F4D;
+        	color:white;
+        	border-radius: 10px;
+        }
+        #logOutBtn:hover{
+        	background-color: #E92421;
         }
     </style>
 </head>
 
 <body data-bs-spy="scroll" data-bs-target="#navScroll">
+	<!-- 
 	<c:choose>
 		<c:when test="${not empty loginUser}">
 			<div class="remoteDivs">
@@ -133,6 +140,7 @@
 			</div>
 		</c:when>
 	</c:choose>
+	 -->
 	<script>
 		function logOut(){
 			location.href="logout.me";
@@ -146,7 +154,7 @@
 		<c:remove var="alertMsg" scope="session"/>
 	</c:if>
   <nav id="navScroll" class="navbar navbar-expand-lg navbar-light fixed-top" tabindex="0" >
-    <div class="container" >
+    <div class="container">
       <a class="navbar-brand pe-4 fs-4" href="/">
         <img src="resources/mainView/img/chalogo2.jpg">
       </a>
@@ -262,17 +270,18 @@
 	      <c:choose>
 			<c:when test="${not empty loginUser}">
 				<div class="remoteDiv">
-					<span id="remoteSpan1">${loginUser.memberName}</span>
-					<span id="remoteSpan2">님 환영합니다! </span>
-					<button id="logOutBtn" onclick="logOut();"> 로그아웃</button>
+			      <div class="dropdown22">
+			          <li class="nav-item">
+							<span id="remoteSpan1">${loginUser.memberName}</span>
+							<span id="remoteSpan2">님 환영합니다! </span>
+							<button id="logOutBtn" onclick="logOut();"> Log out</button>
+			          </li>
+			      </div>
 				</div>
 			</c:when>
 		  </c:choose>
 
         </ul>
-       
-
-        
         
         <script>
 		    function pleaseLogin(){
@@ -283,7 +292,6 @@
       </div>
     </div>
   </nav>
-
 
   <script src="resources/mainView/js/bootstrap.bundle.min.js"></script>
   <script src="resources/mainView/js/aos.js"></script>
