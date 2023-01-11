@@ -161,8 +161,27 @@
 		  95% {margin-left: -200%}
 		  100% {margin-left: -300%}
 		}
-
 		
+		/* 굿즈 등록 버튼 */
+		#insertGoodsDiv{
+			position: absolute;
+/* 			border: 1px solid lightgray; */
+			right: 180px;
+			top: 102px;
+		}
+		#insertGoodsBtn{
+			width: 130px;
+        	border: none;
+        	background-color: #EA4F4D;
+        	color:white;
+        	border-radius: 10px;
+        	font-size:13px;
+		}
+		#insertGoodsBtn:hover{
+			font-size:14px;
+			font-weight: bold;
+			background-color: rgb(219, 102, 132);
+		}
  	</style>
  	
     
@@ -324,11 +343,10 @@
 	<c:choose>
 		<c:when test="${not empty loginUser}">
 			<!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
-			<a class="btn btn-secondary" style="float:left;" href="insert.go">글쓰기</a>
+			<div id="insertGoodsDiv">
+				<button id="insertGoodsBtn" style="float:left;" onclick="location.href='insert.go'"> INSERT GOODS </button>
+			</div>
 		</c:when>
-		<c:otherwise>
-			<a class="btn btn-secondary" style="float:left;" href="#">글쓰기</a>
-		</c:otherwise>
 	</c:choose>
 
 	<section class="ftco-section">
