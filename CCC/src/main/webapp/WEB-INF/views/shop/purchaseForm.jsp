@@ -17,11 +17,9 @@
 	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
     <title>CCC::구매페이지</title>
     <style>
-    	#headerRaiseUp{
-            width:100%;
-            z-index: 8;
-            position: relative;
-            top: -155px;
+    	.purchaseOuter{
+            width:70%;
+            margin: auto;
         }
         .purchaseHeaderSpan{
             font-size: 30px;
@@ -128,7 +126,7 @@
 </head>
 <body>
 	<jsp:include page="../common/header.jsp"/>
-	<br><br>
+	<br><br><br><br><br><br>
     <div class="purchaseOuter container" id="headerRaiseUp">
         <span class="purchaseHeaderSpan">주문 / 결제</span>
         <hr class="purchaseHeaderHr">

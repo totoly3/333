@@ -32,7 +32,7 @@
     <jsp:include page="../../common/header.jsp"/>
 
     <div class="content">
-        <br><br>
+        <br><br><br><br><br><br>
         <div class="innerOuter">
             <h2>공지사항 상세보기</h2>
             <br>

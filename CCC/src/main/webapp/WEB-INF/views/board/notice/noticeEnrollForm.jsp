@@ -36,7 +36,7 @@
     <jsp:include page="../../common/header.jsp"/>
 
     <div class="content">
-        <br><br>
+        <br><br><br><br><br><br>
         <div class="innerOuter">
             <h2>게시글 작성하기</h2>
             <br>

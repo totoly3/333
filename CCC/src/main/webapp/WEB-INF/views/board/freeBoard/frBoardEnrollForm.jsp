@@ -82,7 +82,7 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/common/header.jsp"/>
-   
+   <br><br><br><br><br><br>
 <div class="container">
   <h2></h2>
   <p></p>

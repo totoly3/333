@@ -11,12 +11,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .content {
-            background-color:rgb(233, 35, 55);
+/*             background-color:rgb(233, 35, 55); */
             width:80%;
             margin:auto;
         }
         .innerOuter {
-            border:1px solid hotpink;
+            border:1px solid lightgray;
             width:80%;
             margin:auto;
             padding:5% 10%;
@@ -28,14 +28,6 @@
 
         #pagingArea {width:fit-content; margin:auto;}
         
-        #searchForm {
-            width:80%;
-            margin:auto;
-        }
-        #searchForm>* {
-            float:left;
-            margin:5px;
-        }
         .select {width:20%;}
         .text {width:53%;}
         .searchBtn {width:20%;}
@@ -45,7 +37,7 @@
         	+ tr에 hover하면 변화줄 것. 클릭할 수 있다는 걸 알게끔
         */
         #noticeList tr:hover{
-        	background-color : skyblue;
+        	background-color : lightgray;
         }
     </style>
 </head>
@@ -54,7 +46,7 @@
     <jsp:include page="../../common/header.jsp"/>
 
     <div class="content">
-        <br><br>
+        <br><br><br><br><br><br>
         <div class="innerOuter" style="padding:5% 10%;">
             <h2 align="center;">공지사항</h2>
             <br>
@@ -127,19 +119,6 @@
 
             <br clear="both"><br>
 
-            <form id="searchForm" action="" method="get" align="center">
-                <div class="select">
-                    <select class="custom-select" name="condition">
-                        <option value="writer">작성자</option>
-                        <option value="title">제목</option>
-                        <option value="content">내용</option>
-                    </select>
-                </div>
-                <div class="text">
-                    <input type="text" class="form-control" name="keyword">
-                </div>
-                <button type="submit" class="searchBtn btn btn-secondary">검색</button>
-            </form>
             <br><br>
         </div>
         <br><br>

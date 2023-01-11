@@ -11,12 +11,12 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .content {
-            background-color:rgb(233, 35, 55);
+/*             background-color:rgb(233, 35, 55); */
             width:80%;
             margin:auto;
         }
         .innerOuter {
-            border:1px solid hotpink;
+            border:1px solid lightgray;
             width:80%;
             margin:auto;
             padding:5% 10%;
@@ -39,12 +39,31 @@
         .select {width:20%;}
         .text {width:53%;}
         .searchBtn {width:20%;}
+        
+        .innerOuter button{
+			font-size: 12px;
+			border-radius: 3px;
+			width: 110px;
+			margin-bottom: 3px;
+			background-color: coral;
+			color: white;
+			border:0px;
+			float:right;
+			margin-right:30px;
+		}
+		
+		.innerOuter button:hover{
+			font-size: 13px;
+			color: lightgray;
+			font-weight: bold;
+			background-color: coral;
+		}
     </style>
 </head>
 <body>
     
     <jsp:include page="../../common/header.jsp"/>
-
+	<br><br><br><br><br><br>
     <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
@@ -52,9 +71,17 @@
             <br>
             <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
             <c:if test="${not empty loginUser}">
-            	<a class="btn btn-secondary" style="float:right;" href="insert.qu">글쓰기</a>
-	            <a class="btn btn-secondary" style="float:right; margin-right:30px;" href="mylist.qu">내 글 보기</a>
+            	<button class="btn" onclick="insertQ();">글쓰기</a>
+	            <button class="btn" onclick="mylistQ();">내 글 보기</a>
             </c:if>
+            <script>
+            	function insertQ(){
+            		location.href="insert.qu";
+            	}
+            	function mylistQ(){
+            		location.href="mylist.qu";
+            	}
+            </script>
             <!-- 관리자 로그인 시에만 보이는 체크박스 -->
             <c:if test="${ not empty loginAdmin }">
               	<button type="button" id="deleteChk" class="btn btn-secondary" style="float:right; margin-right:30px;">그룹 글삭제</button>
@@ -145,20 +172,7 @@
             </div>
 
             <br clear="both"><br>
-			<!-- 검색기능 추가해야 함 -->
-            <form id="searchForm" action="" method="get" align="center">
-                <div class="select">
-                    <select class="custom-select" name="condition">
-                        <option value="writer">작성자</option>
-                        <option value="title">제목</option>
-                        <option value="content">내용</option>
-                    </select>
-                </div>
-                <div class="text">
-                    <input type="text" class="form-control" name="keyword">
-                </div>
-                <button type="submit" class="searchBtn btn btn-secondary">검색</button>
-            </form>
+			
             <br><br>
         </div>
         <br><br>
