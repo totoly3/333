@@ -16,7 +16,7 @@
             margin:auto;
         }
         .innerOuter {
-            border:1px solid lightgray;
+            border: 1px solid lightgray !important;
             width:100%;
             margin:auto;
             padding:5% 10%;
@@ -50,9 +50,9 @@
              <br><br>
              <!-- 기존 테이블 영역 -->
              <table class="table" id="orderListArea" style="margin-left:10px ;width:100%; text-align: center;">
-				 <tr style="background-color:#EA4F4D;">
+				 <tr style="background-color:#EA4F4D; vertical-align:middle;">
 				    <th style="width:100px;">주문번호</th>
-				    <th style="width:75px;">주문일자</th>
+				    <th style="width:120px;">주문일자</th>
 				    <th>굿즈명</th>
 				    <th style="text-align: center;">굿즈이미지</th>
 				    <th>굿즈가격</th>
@@ -62,12 +62,12 @@
 				 <c:forEach var="ro" items="${realoList}" >
 				  <tr onclick="orderdetail('${ro.orderNo}')">
 				    <td>${ro.orderNo}</td>
-				    <td>${ro.orderDate}orderDate</td>
+				    <td>${ro.orderDate}</td>
 				    <td>${ro.goodsName}</td>
 				    <td> <img alt="" src="${ro.goodsChangeName}" width="100" height="100"></td>
 				    <td>
-					    <%--<fmt:formatNumber value="${ro.goodsPrice}" pattern="#,###원"/> --%>
-				         ${ro.goodsPrice}원
+					   <fmt:formatNumber value="${ro.goodsPrice}" pattern="#,###원"/>
+<%-- 				         ${ro.goodsPrice}원 --%>
 				    </td>
 				    <td>주문 진행중</td>
 				    <td><a class="btn btn-primary" onclick="orderCancel('${ro.orderNo}');" id="month6-order" href="#" role="button" style="background-color:black;width:92px;">주문취소</a></td>

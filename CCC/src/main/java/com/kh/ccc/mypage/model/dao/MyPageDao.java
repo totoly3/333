@@ -141,10 +141,10 @@ public class MyPageDao {
 	}
 
 	//2. 실제 주문리스트조회 
-	public ArrayList<MyOrderDetail> selectRealOrderListView(SqlSessionTemplate sqlSession, int orderNo) {
+	public MyOrderDetail selectRealOrderListView(SqlSessionTemplate sqlSession, int orderNo) {
 		
 		//주문리스트
-		return (ArrayList)sqlSession.selectList("myPageMapper.selectRealOrderListView",orderNo);
+		return sqlSession.selectOne("myPageMapper.selectRealOrderListView",orderNo);
 		
 	}
 	
