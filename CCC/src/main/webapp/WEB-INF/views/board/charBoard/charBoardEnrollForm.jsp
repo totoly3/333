@@ -34,7 +34,7 @@
 	<jsp:include page="/WEB-INF/views/common/header.jsp"/>
 	
 	<div class="content">
-        <br><br>
+        <br><br><br><br><br><br>
         <div class="innerOuter">
             <h2>게시글 작성하기</h2>
             <br>
@@ -71,7 +71,7 @@
 				</table>
 				<br>
 				<div align="center">
-					<button type="button" id="gogo" class="searchBtn btn btn-secondary" onclick="return badLanguage();">등록하기</button>
+					<button type="button" style="border:1px solid;" onclick="return badLanguage();">등록하기</button>
 				</div>
 			</form>
 	        <br><br>
