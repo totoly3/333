@@ -37,7 +37,7 @@
         	+ tr에 hover하면 변화줄 것. 클릭할 수 있다는 걸 알게끔
         */
         #noticeList tr:hover{
-        	background-color : lightgray;
+        	background-color : rgb(221, 255, 255);
         }
     </style>
 </head>
