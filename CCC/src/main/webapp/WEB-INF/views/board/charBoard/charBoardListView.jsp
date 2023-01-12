@@ -9,69 +9,81 @@
  	<!-- jQuery 라이브러리 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
    
-	 <!-- 여기부터 -->
-	 <!-- Favicon-->
-     <link rel="icon" type="image/x-icon" href="resources/mainAdmin/assets/favicon.ico" />
-     <!-- Font Awesome icons (free version)-->
-     <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-     <!-- Google fonts-->
-     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
-     <!-- Core theme CSS (includes Bootstrap)-->
-     <link href="resources/mainAdmin/css/styles.css" rel="stylesheet" />
-        
-        <style>
-        	/* outer */
-        	#charOuter{
-        		width: 60%;
-        		margin: auto;
-        	}
-        	/* 페이징 영역 */
-        	#pagingArea {width:fit-content; margin:auto;} 
-        	/* 썸네일 호버 */
-        	.thumbnail:hover {cursor:pointer; opacity: 0.5;}
-			
-			#searchForm {
-				width:fit-content; margin:auto;
-	        }
-	        #searchForm>* {
-	            float:left;
-	            margin:5px;
-	        }
-	        .select { width:20%; }
-	        .text { width:53%; }
-	        .searchBtn { width:20%; }
-	        .likeBtn {
-	        	width:30px;
-	        	height:30px;
-	        }
-	        .likeBtn:hover { cursor : pointer; }
-	        .likeFont { font-weight : bold; }
-	        #insertCharacterBtn { border : 3px solid black; }
-	        
-	        /*버튼 만들기*/
-	        .btn77 {
-		      text-decoration: none;
-		      font-size:2rem;
-		      color:white;
-		      padding:10px 20px 10px 20px;
-		      margin:20px;
-		      display:inline-block;
-		      border-radius: 10px;
-		      transition:all 0.1s;
-		      text-shadow: 0px -2px rgba(0, 0, 0, 0.44);
-		      font-family: 'Lobster', cursive; <!-- google font -->
-		    }
-		    .btn77:active{
-		      transform: translateY(3px);
-		    }
-		    .btn77.blue{
-		      background-color: #1f75d9;
-		      border-bottom:5px solid #165195;
-		    }
-		    .btn77.blue:active{
-		      border-bottom:2px solid #165195;
-		    }
+	<!-- 여기부터 -->
+	<!-- Favicon-->
+	<link rel="icon" type="image/x-icon" href="resources/mainAdmin/assets/favicon.ico" />
+	<!-- Font Awesome icons (free version)-->
+	<script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+	<!-- Google fonts-->
+	<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
+	<!-- Core theme CSS (includes Bootstrap)-->
+	<link href="resources/mainAdmin/css/styles.css" rel="stylesheet" />
+        	
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&family=Jua&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+	
+	<style>
+		/* outer */
+		#charOuter{
+			width: 60%;
+			margin: auto;
+		}
+		/* 페이징 영역 */
+		#pagingArea {width:fit-content; margin:auto;} 
+		/* 썸네일 호버 */
+		.thumbnail:hover {cursor:pointer; opacity: 0.5;}
+
+		#searchForm {
+			width:fit-content; margin:auto;
+      	}
+      	#searchForm>* {
+			float:left;
+			margin:5px;
+		}
+      .select { width:20%; }
+      .text { width:53%; }
+      .searchBtn { width:20%; }
+      .likeBtn {
+      	width:30px;
+      	height:30px;
+      }
+      .likeBtn:hover { cursor : pointer; }
+      .likeFont { font-weight : bold; }
+      #insertCharacterBtn { border : 3px solid black; }
+      
+      /*버튼 만들기*/
+	      
+		    
+  
+    .btn13{
+      text-decoration: none;
+      font-size:1.5rem;
+      color:white;
+      padding:5px 20px 6px 20px;
+      margin:100px;
+      display:inline-block;
+      border-radius: 10px;
+      transition:all 0.1s;
+      font-family: 'Do Hyeon', sans-serif;
+      font-family: 'Nanum Pen Script', cursive;
+      font-family: 'Jua', sans-serif;
+    }
+    .btn13:active{
+      transform: translateY(3px);
+    }
+    .btn13.red{
+      background-color: #FF521E;
+      border-bottom:4px solid #C1370E;
+    }
+    .btn13.red:active{
+      border-bottom:2px solid #C1370E;
+    }
+		    
+		    
         </style>
         
     </head>
@@ -83,15 +95,14 @@
 <!--             <div class="container"> -->
 			<div id="charOuter">
                 <div class="text-center">
-                	<br><br><br>
+                	<br><br><br><br><br><br>
                     <h2 class="section-heading text-uppercase">캐릭터 썸네일 게시판</h2>
-                    <br><br>
+                    
 					<!-- 로그인 유저만 글작성 가능하도록 -->
                     <c:if test="${ not empty loginUser }">
-						<a class="btn77 blue" href="#blue">당신의 캐릭터를 등록하세요!</a>
+						<a class="btn13 red" href="insert.ch">당신의 캐릭터를 등록하세요 !</a>
 					</c:if>
                 </div>
-                <br><br>
                 
                 <div class="row">
                 	<c:choose>

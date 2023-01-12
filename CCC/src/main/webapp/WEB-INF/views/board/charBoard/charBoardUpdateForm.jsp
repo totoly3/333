@@ -32,7 +32,7 @@
     <jsp:include page="/WEB-INF/views/common/header.jsp"/>
 
     <div class="content">
-        <br><br>
+        <br><br><br><br><br><br>
         <div class="innerOuter">
             <h2>게시글 수정하기</h2>
             <br>
