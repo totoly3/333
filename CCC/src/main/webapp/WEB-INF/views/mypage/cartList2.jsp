@@ -121,10 +121,9 @@ table th {
 		                    </td>
 		                    <td>
 			                    <div>
-			                      <del>정가: <fmt:formatNumber  value="${c.goodsPrice}" pattern="#,###원"/></del> 
 			                    </div>
 			                    <div>
-			                                            판매가: 미정 <span><fmt:formatNumber value="${c.goodsPrice}" pattern="#,###원"/></span>                   
+			                                            판매가: <span><fmt:formatNumber value="${c.goodsPrice}" pattern="#,###원"/></span>                   
 			                    </div>
 		                    </td>
 		                    <td>

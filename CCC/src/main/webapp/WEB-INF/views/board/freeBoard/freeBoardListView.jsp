@@ -27,7 +27,7 @@
 		}
     
         .content {
-            background-color:rgb(247, 245, 245);
+            background-color:white;
             width:80%;
             margin:auto;
         }

@@ -11,7 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .content {
-            background-color:rgb(247, 245, 245);
+            background-color:white;
             width:80%;
             margin:auto;
         }
@@ -22,9 +22,9 @@
             padding:5% 10%;
             background-color:white;
         }
-        #enrollForm>table {width:100%;}
-        #enrollForm>table * {margin:5px;}
-        #addAttach-area {width:100%;}
+        #enrollForm>table { width:100%; }
+        #enrollForm>table * { margin:5px; }
+        #addAttach-area { width:100%; }
         #addAttach-area>tr {
         	background-color: lightgreen;
         }
@@ -38,7 +38,7 @@
         <div class="innerOuter">
             <h2>게시글 작성하기</h2>
             <br>
-	        <form action="insert.ch" id="enroll-form" method="post" enctype="multipart/form-data">
+	        <form action="insert.ch" id="enrollForm" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="boardWriterNo" value="${ loginUser.memberNo }">
 				<table align="center">
 					<tr>
@@ -74,8 +74,8 @@
 					<button type="button" style="border:1px solid;" onclick="return badLanguage();">등록하기</button>
 				</div>
 			</form>
-	        <br><br>
 		</div>
+	    <br><br>
     </div>
     
     <script>
@@ -88,7 +88,8 @@
 				var addAttach = "<tr>"
 							  + "<th><label for='upfile'></label></th>"
 							  + "<td><input type='file' id='upfile' class='form-control-file border' name='multifile'></td>"
-							  + "<td><a href='#this' name='delete' id='delete"+idx+"' class='btn'>삭제</a></td>";
+							  + "<td><a href='#this' name='delete' id='delete"+idx+"' class='btn'>삭제</a></td>"
+							  + "</tr>";
 				$("#addAttach-table").append(addAttach);
 			}
 			//삭제버튼을 클릭되면 실행되는 함수
@@ -147,7 +148,7 @@
     					var charConfirm = confirm("캐릭터를 등록하시겠습니까?");
     					
     					if(charConfirm){
-	    					$("#enroll-form").submit();
+	    					$("#enrollForm").submit();
 	    					
     					}else{
     						return false;
