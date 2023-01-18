@@ -475,8 +475,8 @@ public class CharBoardController {
 		//int reWriterNo = session.getAttribute("회원번호"); //(ajax에서 넘어옴)
 		int number = boardService.replyMaxNum();   //새 댓글 번호 생성, 참조댓글번호(reGroupNo)는 부모댓글번호(reNo)와 같다 (시퀀스가 필요없다)
 		
-		int reStep = 0, reLevel = 0; 		  //대댓글의 순서와 계층은 0으로 기본 세팅
-		int refBno = cr.getRefBno(); 		  //댓글을 단 게시글 번호 (ajax에서 넘어옴)
+		int reStep = 0, reLevel = 0;	//대댓글의 순서와 계층은 0으로 기본 세팅
+		int refBno = cr.getRefBno(); 	//댓글을 단 게시글 번호 (ajax에서 넘어옴)
 		
 		//어떤 댓글에 댓글을 남긴건지 (ajax에서 넘어옴)
 		//처음 작성하는 부모댓글은 이 시점에서는 댓글 번호가 담기지 않는다
@@ -485,7 +485,6 @@ public class CharBoardController {
 		//부모댓글번호 -부모 자기 자신은 자신의 번호를 reParentNo로 갖는다
 		//위의 maxNum 메소드로 댓글의 번호를 생성하지만 아직 댓글 번호를 넣지 않은 시점이기 때문에
 		//댓글의 답글을 작성하는 경우에만 jsp에서 해당 부모 댓글번호를 가져와 reParentNo에 담긴다
-		int reParentNo = cr.getReNo();
 		
 		String reContent = cr.getReContent(); //대댓글의 내용 (ajax에서 넘어옴)
 		
@@ -548,13 +547,14 @@ public class CharBoardController {
 	public String badLanguage(CharBoard cb) {
 		
 		ArrayList<Ward> wList = boardService.badLanguage();
-	
+		
+		//만약 수정 내용이 바뀌지 않은 경우도 조건에 포함
 		for(int i=0; i<wList.size(); i++) {
-			if( cb.getBoardTitle().contains(wList.get(i).getWardName()) ){
+			if( cb.getBoardTitle() != null && cb.getBoardTitle().contains(wList.get(i).getWardName()) ){
 				return "NNNNY"; 
-			}else if( cb.getCharName().contains(wList.get(i).getWardName()) ) {
+			}else if( cb.getCharName() != null && cb.getCharName().contains(wList.get(i).getWardName()) ) {
 				return "NNNNY";
-			}else if( cb.getBoardContent().contains(wList.get(i).getWardName()) ) {
+			}else if( cb.getBoardContent() != null && cb.getBoardContent().contains(wList.get(i).getWardName()) ) {
 				return "NNNNY";
 			}
 		}

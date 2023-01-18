@@ -44,47 +44,42 @@
 			float:left;
 			margin:5px;
 		}
-      .select { width:20%; }
-      .text { width:53%; }
-      .searchBtn { width:20%; }
-      .likeBtn {
-      	width:30px;
-      	height:30px;
-      }
-      .likeBtn:hover { cursor : pointer; }
-      .likeFont { font-weight : bold; }
-      #insertCharacterBtn { border : 3px solid black; }
+		.select { width:20%; }
+		.text { width:53%; }
+		.searchBtn { width:20%; }
+		.likeBtn {
+			width:30px;
+			height:30px;
+		}
+		.likeBtn:hover { cursor : pointer; }
+		.likeFont { font-weight : bold; }
+		#insertCharacterBtn { border : 3px solid black; }
       
-      /*버튼 만들기*/
-	      
-		    
-  
-    .btn13{
-      text-decoration: none;
-      font-size:1.5rem;
-      color:white;
-      padding:5px 20px 6px 20px;
-      margin:100px;
-      display:inline-block;
-      border-radius: 10px;
-      transition:all 0.1s;
-      font-family: 'Do Hyeon', sans-serif;
-      font-family: 'Nanum Pen Script', cursive;
-      font-family: 'Jua', sans-serif;
-    }
-    .btn13:active{
-      transform: translateY(3px);
-    }
-    .btn13.red{
-      background-color: #FF521E;
-      border-bottom:4px solid #C1370E;
-    }
-    .btn13.red:active{
-      border-bottom:2px solid #C1370E;
-    }
-		    
-		    
-        </style>
+		/*버튼 만들기*/ 
+		.btn13{
+			text-decoration: none;
+			font-size:1.5rem;
+			color:white;
+			padding:5px 20px 6px 20px;
+			margin:5px;
+			display:inline-block;
+			border-radius: 10px;
+			transition:all 0.1s;
+			font-family: 'Do Hyeon', sans-serif;
+			font-family: 'Nanum Pen Script', cursive;
+			font-family: 'Jua', sans-serif;
+		}
+		.btn13:active{
+			transform: translateY(3px);
+		}
+		.btn13.red{
+			background-color: #FF521E;
+			border-bottom:4px solid #C1370E;
+		}
+		.btn13.red:active{
+			border-bottom:2px solid #C1370E;
+		}
+	</style>
         
     </head>
     <body id="page-top">
@@ -95,15 +90,15 @@
 <!--             <div class="container"> -->
 			<div id="charOuter">
                 <div class="text-center">
-                	<br><br><br><br><br><br>
-                    <h2 class="section-heading text-uppercase">캐릭터 썸네일 게시판</h2>
-                    
+                	<br><br><br>
+                    <h2 align="center">캐릭터 썸네일 게시판</h2>
+                    <br>
 					<!-- 로그인 유저만 글작성 가능하도록 -->
                     <c:if test="${ not empty loginUser }">
 						<a class="btn13 red" href="insert.ch">당신의 캐릭터를 등록하세요 !</a>
 					</c:if>
                 </div>
-                
+                <br><br><br>
                 <div class="row">
                 	<c:choose>
                 		<c:when test="${ not empty list }">

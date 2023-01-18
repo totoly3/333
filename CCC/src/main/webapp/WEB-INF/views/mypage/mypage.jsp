@@ -36,6 +36,8 @@ Coded by www.creative-tim.com
   <link href="resources/paper-dashboard-master/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="resources/paper-dashboard-master/assets/demo/demo.css" rel="stylesheet" />
+  <!-- 아이콘 -->
+   <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 </head>
 
 <!--제이쿼리 라이브러리-->
@@ -45,7 +47,7 @@ Coded by www.creative-tim.com
       <div class="logo">
         <a href="https://www.creative-tim.com" class="simple-text logo-mini">
           <div class="logo-image-small">
-            <img src="resources/paper-dashboard-master/assets/img/logo-small.png">
+            <img src="resources/myPage/myChar/2023010715000928874.jpg">
           </div>
           <!-- <p>CT</p> -->
         </a>
@@ -60,50 +62,50 @@ Coded by www.creative-tim.com
         <ul class="nav">
           <li class="active ">
             <a href="./dashboard.html">
-              <i class="nc-icon nc-bank"></i>
-              <p>대회참가내역>참가상세</p>
+              <i class="nc-icon nc-favourite-28 text-primary"></i>
+              <p>대회참가내역</p>
             </a>
           </li>
           <li>
             <a href="selectoListbyDate2.my">
-              <i class="nc-icon nc-diamond"></i>
-              <p>기간별주문목록</p>
+               <i class="nc-icon nc-favourite-28 text-primary"></i>
+              <p>주문내역</p>
             </a>
           </li>
           <li>
             <a href = "orderDetail.my?oNo=1">
-              <i class="nc-icon nc-pin-3"></i>
-              <p>상세주문목록</p>
+              <i class="nc-icon nc-favourite-28 text-primary"></i>
+              <p>취소/반품/환불 내역</p>
             </a>
           </li>
           <li>
             <a href="cartList2.my">
-              <i class="nc-icon nc-bell-55"></i>
-               <p>장바2</p>
+              <i class="nc-icon nc-favourite-28 text-primary"></i>
+               <p>1:1문의</p>
             </a>
           </li>
           <li>
             <a href="./user.html">
-              <i class="nc-icon nc-single-02"></i>
-              <p>User Profile</p>
+               <i class="nc-icon nc-favourite-28 text-primary"></i>
+              <p>내 캐릭터</p>
             </a>
           </li>
           <li>
             <a href="./tables.html">
-              <i class="nc-icon nc-tile-56"></i>
-              <p>Table List</p>
+               <i class="nc-icon nc-favourite-28 text-primary"></i>
+              <p>배송지관리</p>
             </a>
           </li>
           <li>
-            <a href="./typography.html">
-              <i class="nc-icon nc-caps-small"></i>
-              <p>Typography</p>
+            <a href="uploadForm.me">
+              <i class="nc-icon nc-favourite-28 text-primary"></i>
+              <p>다중첨부파일</p>
             </a>
           </li>
           <li class="active-pro">
             <a href="./upgrade.html">
               <i class="nc-icon nc-spaceship"></i>
-              <p></p>
+              <p>설정</p>
             </a>
           </li>
         </ul>
@@ -182,14 +184,14 @@ Coded by www.creative-tim.com
             <div class="card card-stats">
               <div class="card-body ">
                 <div class="row">
-<!--                   <div class="col-5 col-md-4"> -->
-<!--                     <div class="icon-big text-center icon-warning"> -->
-<!--                       <i class="nc-icon nc-globe text-warning"></i> -->
-<!--                     </div> -->
-<!--                   </div> -->
+                  <div class="col-5 col-md-4">
+                    <div class="icon-big text-center icon-warning">
+                      <i class="nc-icon nc-favourite-28 text-primary"></i>
+                    </div>
+                  </div>
                   <div class="col-7 col-md-8" onclick="location.href='profileEnroll.me'">
                     <div class="numbers">
-                      <p class="card-category">회원정보</p>
+                      <p class="card-category" style="font-size: 23px;">회원정보</p>
                       <p class="card-title">
                       <p>
                     </div>
@@ -209,12 +211,12 @@ Coded by www.creative-tim.com
                 <div class="row">
                   <div class="col-5 col-md-4">
                     <div class="icon-big text-center icon-warning">
-                      <i class="nc-icon nc-money-coins text-success"></i>
+                      <i class="nc-icon nc-favourite-28 text-primary"></i>
                     </div>
                   </div>
                   <div class="col-7 col-md-8" onclick="location.href='cartList2.my'">
                     <div class="numbers">
-                         <p class="card-category">장바구니</p>
+                         <p class="card-category" style="font-size: 23px;">장바구니</p>
                       <p class="card-title">
                       <p>
                     </div>
@@ -234,12 +236,12 @@ Coded by www.creative-tim.com
                 <div class="row">
                   <div class="col-5 col-md-4">
                     <div class="icon-big text-center icon-warning">
-                      <i class="nc-icon nc-vector text-danger"></i>
+                    <i class="nc-icon nc-favourite-28 text-primary"></i>
                     </div>
                   </div>
                   <div class="col-7 col-md-8" onclick="location.href='list.mychar2'">
                     <div class="numbers">
-                      <p class="card-category">내 캐릭터</p>
+                      <p class="card-category" style="font-size: 23px;margin-right:5px; ">내 캐릭터</p>
                       <p class="card-title">
                       <p>
                     </div>
@@ -264,7 +266,7 @@ Coded by www.creative-tim.com
                   </div>
                   <div class="col-7 col-md-8">
                     <div class="numbers">
-                      <p class="card-category">관심내역</p>
+                      <p class="card-category"  style="font-size: 23px;margin-right:5px; ">관심내역</p>
                       <p class="card-title">
                     </div>
                   </div>

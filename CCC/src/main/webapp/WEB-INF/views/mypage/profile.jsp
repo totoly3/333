@@ -42,7 +42,7 @@ Coded by www.creative-tim.com
       <div class="logo">
         <a href="https://www.creative-tim.com" class="simple-text logo-mini">
           <div class="logo-image-small">
-            <img src="resources/paper-dashboard-master/assets/img/logo-small.png">
+            <img src="resources/myPage/myChar/2023010715000928874.jpg">
           </div>
           <!-- <p>CT</p> -->
         </a>
@@ -57,49 +57,49 @@ Coded by www.creative-tim.com
         <ul class="nav">
           <li>
             <a href="./dashboard.html">
-              <i class="nc-icon nc-bank"></i>
+              <i class="nc-icon nc-favourite-28 text-primary"></i>
               <p>Dashboard</p>
             </a>
           </li>
           <li>
             <a href="./icons.html">
-              <i class="nc-icon nc-diamond"></i>
+             <i class="nc-icon nc-favourite-28 text-primary"></i>
               <p>Icons</p>
             </a>
           </li>
           <li>
             <a href="./map.html">
-              <i class="nc-icon nc-pin-3"></i>
+              <i class="nc-icon nc-favourite-28 text-primary"></i>
               <p>Maps</p>
             </a>
           </li>
           <li>
             <a href="./notifications.html">
-              <i class="nc-icon nc-bell-55"></i>
+              <i class="nc-icon nc-favourite-28 text-primary"></i>
               <p>Notifications</p>
             </a>
           </li>
           <li class="active ">
             <a href="./user.html">
-              <i class="nc-icon nc-single-02"></i>
+             <i class="nc-icon nc-favourite-28 text-primary"></i>
               <p>User Profile</p>
             </a>
           </li>
           <li>
             <a href="./tables.html">
-              <i class="nc-icon nc-tile-56"></i>
+              <i class="nc-icon nc-favourite-28 text-primary"></i>
               <p>Table List</p>
             </a>
           </li>
           <li>
             <a href="./typography.html">
-              <i class="nc-icon nc-caps-small"></i>
+              <i class="nc-icon nc-favourite-28 text-primary"></i>
               <p>Typography</p>
             </a>
           </li>
           <li class="active-pro">
             <a href="./upgrade.html">
-              <i class="nc-icon nc-spaceship"></i>
+             <i class="nc-icon nc-favourite-28 text-primary"></i>
               <p>Upgrade to PRO</p>
             </a>
           </li>
@@ -197,13 +197,13 @@ Coded by www.creative-tim.com
                 <div class="button-container">
                   <div class="row">
                     <div class="col-lg-3 col-md-6 col-6 ml-auto">
-                      <h5>수상횟수<br><small>1회</small></h5>
+                      <h7>수상횟수<br><small>1회</small></h7>
                     </div>
                     <div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
-                      <h5>등록캐릭터 개수<br><small>7개</small></h5>
+                      <h8>등록캐릭터 개수<br><small>7개</small></h8>
                     </div>
                     <div class="col-lg-3 mr-auto">
-                      <h5>1위 캐릭터<br><small>지니</small></h5>
+                      <h8>1위 캐릭터<br><small>지니</small></h8>
                     </div>
                   </div>
                 </div>
@@ -219,7 +219,7 @@ Coded by www.creative-tim.com
                     <div class="row">
                       <div class="col-md-2 col-2">
                         <div class="avatar">
-                          <img src="resources/paper-dashboard-master/assets/img/faces/ayo-ogunseinde-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                          <img src="resources/myPage/myChar/2023010616455844505.jpg"  alt="Circle Image" class="img-circle img-no-padding img-responsive">
                         </div>
                       </div>
                       <div class="col-md-7 col-7">
@@ -236,11 +236,11 @@ Coded by www.creative-tim.com
                     <div class="row">
                       <div class="col-md-2 col-2">
                         <div class="avatar">
-                          <img src="resources/paper-dashboard-master/assets/img/faces/joe-gardner-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                          <img src="resources/myPage/myChar/2022122619582639972.jpg"  alt="Circle Image" class="img-circle img-no-padding img-responsive">
                         </div>
                       </div>
                       <div class="col-md-7 col-7">
-                        		가나다
+                        		532
                         <br/>
                         <span class="text-success"><small>5위</small></span>
                       </div>
@@ -253,11 +253,11 @@ Coded by www.creative-tim.com
                     <div class="row">
                       <div class="col-md-2 col-2">
                         <div class="avatar">
-                          <img src="resources/paper-dashboard-master/assets/img/faces/clem-onojeghuo-2.jpg" alt="Circle Image" class="img-circle img-no-padding img-responsive">
+                          <img src="resources/myPage/myChar/2022122619482675575.jpg"  alt="Circle Image" class="img-circle img-no-padding img-responsive">
                         </div>
                       </div>
                       <div class="col-ms-7 col-7">
-                                                  당근이
+                                                  어문경
                         <br />
                         <span class="text-danger"><small>7위</small></span>
                       </div>
@@ -344,7 +344,7 @@ Coded by www.creative-tim.com
                     <div class="col-md-12">
                       <div class="form-group">
                         <label></label>
-                        <textarea class="form-control textarea">Oh so, your weak rhyme You doubt I'll bother, reading into it</textarea>
+                        <textarea class="form-control textarea">CREATE! CHOOSE! CHALLENGE! </textarea>
                       </div>
                     </div>
                   </div>
@@ -394,7 +394,7 @@ Coded by www.creative-tim.com
   <script src="resources/paper-dashboard-master/assets/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="resources/paper-dashboard-master/assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script><!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-  <script src="resources/paper-dashboard-master/assets/demo/demo.js"></script>
+  <script src="resources/paper-board-master/assets/demo/demo.js"></script>
 </body>
 
 </html>

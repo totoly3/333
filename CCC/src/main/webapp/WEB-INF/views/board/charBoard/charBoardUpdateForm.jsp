@@ -11,7 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .content {
-            background-color:rgb(247, 245, 245);
+            background-color:white;
             width:80%;
             margin:auto;
         }
@@ -65,7 +65,7 @@
                         	<br>
                        			<c:forEach var="ca" items="${ caList }" varStatus="var">	
                        				<div>
-			                    		<a href="${ ca.originName }" download="${ ca.originName }">${ var.index +1 }번째 첨부파일 : ${ ca.originName }</a>
+			                    		<a href="${ ca.originName }" download="${ ca.originName }">${ var.index +1 }번 첨부파일 : ${ ca.originName }</a>
 			                    		<input type="hidden" id="ca_${ var.index }" name="oldCa" value="${ ca.level }">                     												
 			                    		<input type="button" id="deleteAttachBtn_${ var.index }" value="파일삭제"><br>                   												
                        				</div>
@@ -148,9 +148,19 @@
     
     <script>
    		let checkFile = $("#upfile").val();
-   		let checkTitle = $("#boardTitle").val();
-   		let checkCharName = $("#charName").val();
-   		let checkContent = $("#boardContent").val();
+   		let checkTitle;
+   		let checkCharName;
+   		let checkContent;
+   		
+   		document.getElementById("boardTitle").addEventListener("input",function(){
+   			checkTitle = document.getElementById("boardTitle").value;
+   		});
+   		document.getElementById("charName").addEventListener("input",function(){
+   			checkCharName = document.getElementById("charName").value;
+   		});
+   		document.getElementById("boardContent").addEventListener("input",function(){
+   			checkContent = document.getElementById("boardContent").value;
+   		});
    		
    		//게시글 제목,캐릭터 이름,게시글 내용,첨부파일이 작성되었는지 체크
    		function badLanguage(){
@@ -162,13 +172,13 @@
     		}
     		
     		//게시글 내용 체크
-    		if( !checkTitle ){
+    		if( checkTitle == "" ){
     			alert("게시글 제목을 입력해 주세요!");
     			return false;
-    		}else if( !checkCharName ){
+    		}else if( checkCharName == "" ){
     			alert("캐릭터 이름도 지어주세요!");    			
     			return false;
-    		}else if( !checkContent ){
+    		}else if( checkContent == "" ){
     			alert("게시글 내용을 입력해 주세요!");
     			return false;
     		}
